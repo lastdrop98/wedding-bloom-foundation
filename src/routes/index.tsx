@@ -1,24 +1,39 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Solar Eclipse — Convites de Casamento Digitais" },
+      {
+        name: "description",
+        content:
+          "Solar Eclipse cria convites de casamento digitais elegantes, com confirmação de presença, galeria e programa do dia.",
+      },
+      { property: "og:title", content: "Solar Eclipse — Convites de Casamento Digitais" },
+      {
+        property: "og:description",
+        content: "Convites de casamento digitais elegantes, um para cada casal.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
+      <p className="eyebrow">Convites digitais</p>
+      <h1 className="mt-4 text-5xl font-light tracking-wide text-foreground">Solar Eclipse</h1>
+      <span className="gold-rule mt-6" />
+      <p className="mt-6 max-w-md text-muted-foreground">
+        Cada casamento tem o seu endereço próprio. Peça o link ao casal para abrir o convite.
+      </p>
+      <Link
+        to="/admin"
+        className="mt-10 rounded-md border border-primary px-6 py-2 text-sm tracking-wider text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+      >
+        Área reservada
+      </Link>
+    </main>
   );
 }
