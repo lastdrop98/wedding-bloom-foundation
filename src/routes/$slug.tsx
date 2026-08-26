@@ -95,7 +95,7 @@ function CoverPage() {
           <Link
             to="/$slug/home"
             params={{ slug }}
-            search={inviteType ? { tipo: inviteType } : {}}
+            search={{ tipo: inviteType ?? undefined }}
             onClick={() => {
               void audioRef.current?.play().catch(() => undefined);
             }}

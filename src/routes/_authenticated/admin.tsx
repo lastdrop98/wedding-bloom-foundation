@@ -96,7 +96,7 @@ function AdminPage() {
               </div>
               <div className="flex gap-2">
                 <Button asChild variant="ghost" size="sm">
-                  <Link to="/$slug" params={{ slug: w.slug }}>
+                  <Link to="/$slug" params={{ slug: w.slug }} search={{ tipo: undefined }}>
                     Ver convite
                   </Link>
                 </Button>

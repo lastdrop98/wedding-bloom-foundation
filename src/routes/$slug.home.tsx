@@ -480,7 +480,7 @@ function HomePage() {
         <Link
           to="/$slug"
           params={{ slug }}
-          search={inviteType ? { tipo: inviteType } : {}}
+          search={{ tipo: inviteType ?? undefined }}
           className="text-xs tracking-widest uppercase text-primary underline-offset-4 hover:underline"
         >
           Voltar à capa

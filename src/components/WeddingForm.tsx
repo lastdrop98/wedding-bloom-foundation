@@ -137,7 +137,7 @@ export function WeddingForm({
     payload["slug"] = values["slug"];
 
     const { error } = wedding
-      ? await supabase.from("weddings").update(payload).eq("id", wedding.id)
+      ? await supabase.from("weddings").update(payload as never).eq("id", wedding.id)
       : await supabase.from("weddings").insert(payload as never);
     setBusy(false);
     if (error) {
@@ -166,7 +166,7 @@ export function WeddingForm({
     const column = kind === "cover" ? "cover_image_path" : "music_path";
     const { error: updateError } = await supabase
       .from("weddings")
-      .update({ [column]: path })
+      .update({ [column]: path } as never)
       .eq("id", wedding.id);
     setUploading(null);
     if (updateError) {
