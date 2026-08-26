@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, Outlet } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 
@@ -107,6 +107,7 @@ function CoverPage() {
       </div>
 
       {music && <audio ref={audioRef} src={music} loop preload="auto" />}
+      {music && <audio ref={audioRef} src={music} loop preload="auto" />} <Outlet />
     </main>
   );
 }
