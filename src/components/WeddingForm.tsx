@@ -2,7 +2,12 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import { AUDIO_BUCKET, GALLERY_BUCKET, type Wedding } from "@/lib/wedding";
+import {
+  AUDIO_BUCKET,
+  GALLERY_BUCKET,
+  details as readDetails,
+  type EventRow,
+} from "@/lib/event";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,82 +15,83 @@ import { Textarea } from "@/components/ui/textarea";
 
 type FieldKind = "text" | "date" | "datetime" | "textarea";
 
-const GROUPS: { title: string; fields: { name: keyof Wedding; label: string; kind?: FieldKind }[] }[] =
-  [
-    {
-      title: "Identificação",
-      fields: [
-        { name: "slug", label: "Slug (endereço na URL)" },
-        { name: "template", label: "Template" },
-        { name: "groom_name", label: "Nome do noivo" },
-        { name: "bride_name", label: "Nome da noiva" },
-        { name: "display_names", label: "Nomes a mostrar" },
-        { name: "wedding_date", label: "Data e hora do casamento", kind: "datetime" },
-        { name: "hashtag", label: "Hashtag" },
-      ],
-    },
-    {
-      title: "Pais",
-      fields: [
-        { name: "groom_father_name", label: "Pai do noivo" },
-        { name: "groom_mother_name", label: "Mãe do noivo" },
-        { name: "bride_father_name", label: "Pai da noiva" },
-        { name: "bride_mother_name", label: "Mãe da noiva" },
-      ],
-    },
-    {
-      title: "Cerimónia",
-      fields: [
-        { name: "ceremony_venue", label: "Local" },
-        { name: "ceremony_address", label: "Morada" },
-        { name: "ceremony_time", label: "Hora" },
-      ],
-    },
-    {
-      title: "Cerimónia Civil (opcional)",
-      fields: [
-        { name: "civil_ceremony_venue", label: "Local" },
-        { name: "civil_ceremony_address", label: "Morada" },
-        { name: "civil_ceremony_time", label: "Hora" },
-      ],
-    },
-    {
-      title: "Receção",
-      fields: [
-        { name: "reception_venue", label: "Local" },
-        { name: "reception_address", label: "Morada" },
-        { name: "reception_time", label: "Hora" },
-      ],
-    },
-    {
-      title: "Confirmações e presentes",
-      fields: [
-        { name: "rsvp_deadline", label: "Prazo de confirmação", kind: "date" },
-        { name: "bank_holder", label: "Titular da conta" },
-        { name: "bank_name", label: "Banco" },
-        { name: "bank_account", label: "Conta" },
-        { name: "bank_nib", label: "NIB / IBAN" },
-      ],
-    },
-    {
-      title: "Contactos",
-      fields: [
-        { name: "contact_1_name", label: "Contacto 1 — nome" },
-        { name: "contact_1_phone", label: "Contacto 1 — telefone" },
-        { name: "contact_2_name", label: "Contacto 2 — nome" },
-        { name: "contact_2_phone", label: "Contacto 2 — telefone" },
-      ],
-    },
-    {
-      title: "Versículos (opcional)",
-      fields: [
-        { name: "verse_text", label: "Versículo 1", kind: "textarea" },
-        { name: "verse_reference", label: "Referência 1" },
-        { name: "verse_2_text", label: "Versículo 2", kind: "textarea" },
-        { name: "verse_2_reference", label: "Referência 2" },
-      ],
-    },
-  ];
+type Field = { name: string; label: string; kind?: FieldKind; scope: "column" | "details" };
+
+const GROUPS: { title: string; fields: Field[] }[] = [
+  {
+    title: "Identificação",
+    fields: [
+      { name: "slug", label: "Slug (endereço na URL)", scope: "column" },
+      { name: "template", label: "Template", scope: "column" },
+      { name: "groom_name", label: "Nome do noivo", scope: "details" },
+      { name: "bride_name", label: "Nome da noiva", scope: "details" },
+      { name: "display_names", label: "Nomes a mostrar", scope: "column" },
+      { name: "event_date", label: "Data e hora do evento", kind: "datetime", scope: "column" },
+      { name: "hashtag", label: "Hashtag", scope: "column" },
+    ],
+  },
+  {
+    title: "Pais",
+    fields: [
+      { name: "groom_father_name", label: "Pai do noivo", scope: "details" },
+      { name: "groom_mother_name", label: "Mãe do noivo", scope: "details" },
+      { name: "bride_father_name", label: "Pai da noiva", scope: "details" },
+      { name: "bride_mother_name", label: "Mãe da noiva", scope: "details" },
+    ],
+  },
+  {
+    title: "Cerimónia",
+    fields: [
+      { name: "ceremony_venue", label: "Local", scope: "details" },
+      { name: "ceremony_address", label: "Morada", scope: "details" },
+      { name: "ceremony_time", label: "Hora", scope: "details" },
+    ],
+  },
+  {
+    title: "Cerimónia Civil (opcional)",
+    fields: [
+      { name: "civil_ceremony_venue", label: "Local", scope: "details" },
+      { name: "civil_ceremony_address", label: "Morada", scope: "details" },
+      { name: "civil_ceremony_time", label: "Hora", scope: "details" },
+    ],
+  },
+  {
+    title: "Receção",
+    fields: [
+      { name: "reception_venue", label: "Local", scope: "details" },
+      { name: "reception_address", label: "Morada", scope: "details" },
+      { name: "reception_time", label: "Hora", scope: "details" },
+    ],
+  },
+  {
+    title: "Confirmações e presentes",
+    fields: [
+      { name: "rsvp_deadline", label: "Prazo de confirmação", kind: "date", scope: "column" },
+      { name: "bank_holder", label: "Titular da conta", scope: "details" },
+      { name: "bank_name", label: "Banco", scope: "details" },
+      { name: "bank_account", label: "Conta", scope: "details" },
+      { name: "bank_nib", label: "NIB / IBAN", scope: "details" },
+    ],
+  },
+  {
+    title: "Contactos",
+    fields: [
+      { name: "contact_1_name", label: "Contacto 1 — nome", scope: "column" },
+      { name: "contact_1_phone", label: "Contacto 1 — telefone", scope: "column" },
+      { name: "contact_2_name", label: "Contacto 2 — nome", scope: "column" },
+      { name: "contact_2_phone", label: "Contacto 2 — telefone", scope: "column" },
+    ],
+  },
+  {
+    title: "Versículos (opcional)",
+    fields: [
+      { name: "verse_text", label: "Versículo 1", kind: "textarea", scope: "details" },
+      { name: "verse_reference", label: "Referência 1", scope: "details" },
+      { name: "verse_2_text", label: "Versículo 2", kind: "textarea", scope: "details" },
+      { name: "verse_2_reference", label: "Referência 2", scope: "details" },
+    ],
+  },
+];
 
 function toInputValue(value: unknown, kind?: FieldKind) {
   if (value == null) return "";
@@ -94,22 +100,31 @@ function toInputValue(value: unknown, kind?: FieldKind) {
 }
 
 export function WeddingForm({
-  wedding,
+  event,
+  eventType = "casamento",
   onSaved,
   onCancel,
 }: {
-  wedding: Wedding | null;
+  event: EventRow | null;
+  eventType?: string;
   onSaved: () => void;
   onCancel: () => void;
 }) {
   const [values, setValues] = useState<Record<string, string>>(() => {
+    const detailValues = event ? readDetails(event) : {};
     const base: Record<string, string> = { template: "golden-classic" };
     GROUPS.forEach((g) =>
       g.fields.forEach((f) => {
-        base[f.name as string] = toInputValue(wedding?.[f.name], f.kind);
+        const raw =
+          f.scope === "details"
+            ? (detailValues as Record<string, unknown>)[f.name]
+            : event
+              ? (event as unknown as Record<string, unknown>)[f.name]
+              : null;
+        base[f.name] = toInputValue(raw, f.kind);
       }),
     );
-    if (!wedding) base["template"] = "golden-classic";
+    if (!event) base["template"] = "golden-classic";
     return base;
   });
   const [busy, setBusy] = useState(false);
@@ -126,37 +141,42 @@ export function WeddingForm({
       return;
     }
     setBusy(true);
-    const payload: Record<string, string | null> = {};
+    const payload: Record<string, unknown> = {};
+    const detailPayload: Record<string, string | null> = event ? { ...readDetails(event) } : {};
     GROUPS.forEach((g) =>
       g.fields.forEach((f) => {
-        const raw = values[f.name as string] ?? "";
-        payload[f.name as string] = raw === "" ? null : raw;
+        const raw = values[f.name] ?? "";
+        const value = raw === "" ? null : raw;
+        if (f.scope === "details") detailPayload[f.name] = value;
+        else payload[f.name] = value;
       }),
     );
     payload["template"] = values["template"] || "golden-classic";
     payload["slug"] = values["slug"];
+    payload["event_type"] = event?.event_type ?? eventType;
+    payload["details"] = detailPayload;
 
-    const { error } = wedding
-      ? await supabase.from("weddings").update(payload as never).eq("id", wedding.id)
-      : await supabase.from("weddings").insert(payload as never);
+    const { error } = event
+      ? await supabase.from("events").update(payload as never).eq("id", event.id)
+      : await supabase.from("events").insert(payload as never);
     setBusy(false);
     if (error) {
       toast.error(error.message);
       return;
     }
-    toast.success("Casamento guardado.");
+    toast.success("Evento guardado.");
     onSaved();
   }
 
   async function upload(kind: "cover" | "music", file: File) {
-    if (!wedding) {
-      toast.error("Guarde o casamento antes de enviar ficheiros.");
+    if (!event) {
+      toast.error("Guarde o evento antes de enviar ficheiros.");
       return;
     }
     setUploading(kind);
     const bucket = kind === "cover" ? GALLERY_BUCKET : AUDIO_BUCKET;
     const ext = file.name.split(".").pop() ?? "bin";
-    const path = `${wedding.id}/${kind}-${Date.now()}.${ext}`;
+    const path = `${event.id}/${kind}-${Date.now()}.${ext}`;
     const { error } = await supabase.storage.from(bucket).upload(path, file, { upsert: true });
     if (error) {
       setUploading(null);
@@ -165,9 +185,9 @@ export function WeddingForm({
     }
     const column = kind === "cover" ? "cover_image_path" : "music_path";
     const { error: updateError } = await supabase
-      .from("weddings")
+      .from("events")
       .update({ [column]: path } as never)
-      .eq("id", wedding.id);
+      .eq("id", event.id);
     setUploading(null);
     if (updateError) {
       toast.error(updateError.message);
@@ -184,7 +204,7 @@ export function WeddingForm({
           <legend className="eyebrow">{group.title}</legend>
           <div className="grid gap-4 sm:grid-cols-2">
             {group.fields.map((f) => {
-              const id = String(f.name);
+              const id = f.name;
               return (
                 <div key={id} className={f.kind === "textarea" ? "space-y-2 sm:col-span-2" : "space-y-2"}>
                   <Label htmlFor={id}>{f.label}</Label>
@@ -212,7 +232,7 @@ export function WeddingForm({
 
       <fieldset className="space-y-4">
         <legend className="eyebrow">Ficheiros</legend>
-        {wedding ? (
+        {event ? (
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="cover">Foto de capa</Label>
@@ -227,7 +247,7 @@ export function WeddingForm({
                 }}
               />
               <p className="text-xs text-muted-foreground">
-                Atual: {wedding.cover_image_path ?? "nenhuma"}
+                Atual: {event.cover_image_path ?? "nenhuma"}
               </p>
             </div>
             <div className="space-y-2">
@@ -243,13 +263,13 @@ export function WeddingForm({
                 }}
               />
               <p className="text-xs text-muted-foreground">
-                Atual: {wedding.music_path ?? "nenhuma"}
+                Atual: {event.music_path ?? "nenhuma"}
               </p>
             </div>
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
-            Guarde o casamento primeiro para poder enviar a foto de capa e a música.
+            Guarde o evento primeiro para poder enviar a foto de capa e a música.
           </p>
         )}
       </fieldset>
