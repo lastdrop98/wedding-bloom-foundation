@@ -3,16 +3,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Solar Eclipse — Convites de Casamento Digitais" },
+       { title: "Solar Eclipse — Convites Digitais para Eventos" },
       {
         name: "description",
-        content:
-          "Solar Eclipse cria convites de casamento digitais elegantes, com confirmação de presença, galeria e programa do dia.",
+         content: "Solar Eclipse cria convites digitais elegantes para eventos, com confirmação de presença, galeria e programa do dia.",
       },
-      { property: "og:title", content: "Solar Eclipse — Convites de Casamento Digitais" },
+      { property: "og:title", content: "Solar Eclipse — Convites Digitais para Eventos" },
       {
         property: "og:description",
-        content: "Convites de casamento digitais elegantes, um para cada casal.",
+        content:  "Convites digitais elegantes, um para cada evento.",
       },
     ],
   }),
@@ -26,7 +25,7 @@ function Index() {
       <h1 className="mt-4 text-5xl font-light tracking-wide text-foreground">Solar Eclipse</h1>
       <span className="gold-rule mt-6" />
       <p className="mt-6 max-w-md text-muted-foreground">
-        Cada casamento tem o seu endereço próprio. Peça o link ao casal para abrir o convite.
+        Cada evento tem o seu endereço próprio. Peça o link aos anfitriões para abrir o convite.
       </p>
       <Link
         to="/admin"
