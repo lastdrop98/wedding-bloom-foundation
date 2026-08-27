@@ -5,14 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import {
   AUDIO_BUCKET,
   GALLERY_BUCKET,
-  coupleTitle,
-  fetchWeddingBySlug,
+  eventTitle,
+  fetchEventBySlug,
   formatDatePt,
   inviteBadgeHint,
   inviteBadgeLabel,
   parseInviteType,
   signedUrl,
-} from "@/lib/wedding";
+} from "@/lib/event";
 
 export const Route = createFileRoute("/$slug")({
   ssr: false,
@@ -30,26 +30,26 @@ function CoverPage() {
   const [cover, setCover] = useState<string | null>(null);
   const [music, setMusic] = useState<string | null>(null);
 
-  const { data: wedding, isLoading } = useQuery({
-    queryKey: ["wedding", slug],
+  const { data: event, isLoading } = useQuery({
+    queryKey: ["event", slug],
     queryFn: async () => {
-      const w = await fetchWeddingBySlug(slug);
-      if (!w) throw notFound();
-      return w;
+      const e = await fetchEventBySlug(slug);
+      if (!e) throw notFound();
+      return e;
     },
   });
 
   useEffect(() => {
-    if (!wedding) return;
-    signedUrl(GALLERY_BUCKET, wedding.cover_image_path).then(setCover);
-    signedUrl(AUDIO_BUCKET, wedding.music_path).then(setMusic);
-  }, [wedding]);
+    if (!event) return;
+    signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
+    signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
+  }, [event]);
 
   if (isLoading) {
     return <div className="flex min-h-screen items-center justify-center text-muted-foreground">A carregar…</div>;
   }
 
-  if (!wedding) {
+  if (!event) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-3 px-6 text-center">
         <h1 className="text-2xl font-light">Convite não encontrado</h1>
@@ -66,7 +66,7 @@ function CoverPage() {
         <>
           <img
             src={cover}
-            alt={`Fotografia de ${coupleTitle(wedding)}`}
+            alt={`Fotografia de ${eventTitle(event)}`}
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-background/80" />
@@ -74,14 +74,14 @@ function CoverPage() {
       )}
 
       <div className="relative">
-        <p className="eyebrow">Convite de Casamento</p>
+        <p className="eyebrow">Convite</p>
         <h1 className="mt-6 text-5xl font-light leading-tight tracking-wide md:text-6xl">
-          {coupleTitle(wedding)}
+          {eventTitle(event)}
         </h1>
         <span className="gold-rule mx-auto mt-8" />
-        <p className="mt-8 text-lg text-muted-foreground">{formatDatePt(wedding.wedding_date)}</p>
-        {wedding.hashtag && (
-          <p className="mt-2 text-sm tracking-wider text-primary">{wedding.hashtag}</p>
+        <p className="mt-8 text-lg text-muted-foreground">{formatDatePt(event.event_date)}</p>
+        {event.hashtag && (
+          <p className="mt-2 text-sm tracking-wider text-primary">{event.hashtag}</p>
         )}
 
         {badge && (
@@ -107,7 +107,7 @@ function CoverPage() {
       </div>
 
       {music && <audio ref={audioRef} src={music} loop preload="auto" />}
-      {music && <audio ref={audioRef} src={music} loop preload="auto" />} <Outlet />
+      <Outlet />
     </main>
   );
 }
