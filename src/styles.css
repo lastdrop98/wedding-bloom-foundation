@@ -128,3 +128,13 @@
   height: 1px;
   background: linear-gradient(to right, transparent, var(--color-gold), transparent);
 }
+ /* Esconder a badge de edição do Lovable */ 
+[data-lovable-badge], #lovable-badge, .lovable-badge, iframe[src*="lovable"], a[href*="lovable.dev"], div[class*="lovable-badge"], div[id*="lovable-badge"] 
+{ display: none !important; 
+ visibility: hidden !important; 
+ opacity: 0 !important; 
+ pointer-events: none !important; 
+ width: 0 !important; 
+ height: 0 !important; 
+ position: absolute !important; 
+ overflow: hidden !important; }
