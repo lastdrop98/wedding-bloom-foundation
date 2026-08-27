@@ -7,17 +7,18 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   AUDIO_BUCKET,
   GALLERY_BUCKET,
-  coupleTitle,
-  fetchWeddingBySlug,
-  fetchWeddingContent,
+  detail,
+  eventTitle,
+  fetchEventBySlug,
+  fetchEventContent,
   formatDatePt,
   inviteBadgeHint,
   inviteBadgeLabel,
   mapsUrl,
   parseInviteType,
   signedUrl,
-  type Wedding,
-} from "@/lib/wedding";
+  type EventRow,
+} from "@/lib/event";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -109,7 +110,7 @@ function LocationCard({
   );
 }
 
-function RsvpForm({ wedding, defaultCount }: { wedding: Wedding; defaultCount: number }) {
+function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: number }) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [form, setForm] = useState({
@@ -124,7 +125,7 @@ function RsvpForm({ wedding, defaultCount }: { wedding: Wedding; defaultCount: n
     e.preventDefault();
     setBusy(true);
     const { error } = await supabase.from("rsvps").insert({
-      wedding_id: wedding.id,
+      event_id: event.id,
       guest_name: form.guest_name,
       guest_phone: form.guest_phone || null,
       attending: form.attending === "sim",
@@ -192,7 +193,7 @@ function RsvpForm({ wedding, defaultCount }: { wedding: Wedding; defaultCount: n
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="message">Mensagem para os noivos</Label>
+        <Label htmlFor="message">Mensagem para os anfitriões</Label>
         <Textarea
           id="message"
           rows={3}
@@ -200,9 +201,9 @@ function RsvpForm({ wedding, defaultCount }: { wedding: Wedding; defaultCount: n
           onChange={(e) => setForm({ ...form, message: e.target.value })}
         />
       </div>
-      {wedding.rsvp_deadline && (
+      {event.rsvp_deadline && (
         <p className="text-xs text-muted-foreground">
-          Confirme até {formatDatePt(wedding.rsvp_deadline)}.
+          Confirme até {formatDatePt(event.rsvp_deadline)}.
         </p>
       )}
       <Button type="submit" className="w-full" disabled={busy}>
@@ -221,21 +222,21 @@ function HomePage() {
   const [playing, setPlaying] = useState(false);
   const [galleryUrls, setGalleryUrls] = useState<{ url: string; caption: string | null }[]>([]);
 
-  const { data: wedding, isLoading } = useQuery({
-    queryKey: ["wedding", slug],
-    queryFn: () => fetchWeddingBySlug(slug),
+  const { data: event, isLoading } = useQuery({
+    queryKey: ["event", slug],
+    queryFn: () => fetchEventBySlug(slug),
   });
 
   const { data: content } = useQuery({
-    queryKey: ["wedding-content", wedding?.id],
-    queryFn: () => fetchWeddingContent(wedding!.id),
-    enabled: Boolean(wedding?.id),
+    queryKey: ["event-content", event?.id],
+    queryFn: () => fetchEventContent(event!.id),
+    enabled: Boolean(event?.id),
   });
 
   useEffect(() => {
-    if (!wedding) return;
-    signedUrl(AUDIO_BUCKET, wedding.music_path).then(setMusic);
-  }, [wedding]);
+    if (!event) return;
+    signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
+  }, [event]);
 
   useEffect(() => {
     if (!content?.gallery.length) return;
@@ -252,7 +253,7 @@ function HomePage() {
   if (isLoading) {
     return <div className="flex min-h-screen items-center justify-center text-muted-foreground">A carregar…</div>;
   }
-  if (!wedding) {
+  if (!event) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-3 px-6 text-center">
         <h1 className="text-2xl font-light">Convite não encontrado</h1>
@@ -263,6 +264,7 @@ function HomePage() {
   const badge = inviteBadgeLabel(inviteType);
   const schedule = content?.schedule ?? [];
   const gifts = content?.gifts ?? [];
+  const d = (field: Parameters<typeof detail>[1]) => detail(event, field);
 
   function toggleMusic() {
     const el = audioRef.current;
@@ -278,13 +280,13 @@ function HomePage() {
   return (
     <main className="pb-20">
       <header className="px-6 pt-16 pb-12 text-center">
-        <p className="eyebrow">Convite de Casamento</p>
+        <p className="eyebrow">Convite</p>
         <h1 className="mt-5 text-4xl font-light tracking-wide md:text-5xl">
-          {coupleTitle(wedding)}
+          {eventTitle(event)}
         </h1>
         <span className="gold-rule mx-auto mt-6" />
-        <p className="mt-5 text-muted-foreground">{formatDatePt(wedding.wedding_date)}</p>
-        {wedding.hashtag && <p className="mt-1 text-sm text-primary">{wedding.hashtag}</p>}
+        <p className="mt-5 text-muted-foreground">{formatDatePt(event.event_date)}</p>
+        {event.hashtag && <p className="mt-1 text-sm text-primary">{event.hashtag}</p>}
 
         {badge && (
           <div className="mx-auto mt-8 max-w-sm rounded-md border border-primary/40 bg-card px-5 py-4">
@@ -294,7 +296,7 @@ function HomePage() {
         )}
 
         <div className="mt-10">
-          <Countdown date={wedding.wedding_date} />
+          <Countdown date={event.event_date} />
         </div>
 
         {music && (
@@ -309,25 +311,25 @@ function HomePage() {
         {music && <audio ref={audioRef} src={music} loop preload="auto" />}
       </header>
 
-      {(wedding.verse_text || wedding.verse_2_text) && (
+      {(d("verse_text") || d("verse_2_text")) && (
         <Section title="Palavra">
           <div className="space-y-6 text-center italic text-muted-foreground">
-            {wedding.verse_text && (
+            {d("verse_text") && (
               <p>
-                “{wedding.verse_text}”
-                {wedding.verse_reference && (
+                “{d("verse_text")}”
+                {d("verse_reference") && (
                   <span className="mt-1 block not-italic text-xs tracking-wider text-primary">
-                    {wedding.verse_reference}
+                    {d("verse_reference")}
                   </span>
                 )}
               </p>
             )}
-            {wedding.verse_2_text && (
+            {d("verse_2_text") && (
               <p>
-                “{wedding.verse_2_text}”
-                {wedding.verse_2_reference && (
+                “{d("verse_2_text")}”
+                {d("verse_2_reference") && (
                   <span className="mt-1 block not-italic text-xs tracking-wider text-primary">
-                    {wedding.verse_2_reference}
+                    {d("verse_2_reference")}
                   </span>
                 )}
               </p>
@@ -336,24 +338,26 @@ function HomePage() {
         </Section>
       )}
 
-      <Section title="Os Noivos">
-        <div className="grid gap-6 sm:grid-cols-2">
-          <div className="rounded-md border border-border bg-card p-5 text-center">
-            <p className="eyebrow">A Noiva</p>
-            <p className="mt-2 text-xl">{wedding.bride_name}</p>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Filha de {[wedding.bride_father_name, wedding.bride_mother_name].filter(Boolean).join(" e ")}
-            </p>
+      {(d("bride_name") || d("groom_name")) && (
+        <Section title="Os Noivos">
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="rounded-md border border-border bg-card p-5 text-center">
+              <p className="eyebrow">A Noiva</p>
+              <p className="mt-2 text-xl">{d("bride_name")}</p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Filha de {[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}
+              </p>
+            </div>
+            <div className="rounded-md border border-border bg-card p-5 text-center">
+              <p className="eyebrow">O Noivo</p>
+              <p className="mt-2 text-xl">{d("groom_name")}</p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Filho de {[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}
+              </p>
+            </div>
           </div>
-          <div className="rounded-md border border-border bg-card p-5 text-center">
-            <p className="eyebrow">O Noivo</p>
-            <p className="mt-2 text-xl">{wedding.groom_name}</p>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Filho de {[wedding.groom_father_name, wedding.groom_mother_name].filter(Boolean).join(" e ")}
-            </p>
-          </div>
-        </div>
-      </Section>
+        </Section>
+      )}
 
       <Section title="Programa do Dia">
         {schedule.length > 0 ? (
@@ -373,9 +377,9 @@ function HomePage() {
         ) : (
           <ul className="space-y-4">
             {[
-              { t: wedding.civil_ceremony_time, n: "Cerimónia Civil", v: wedding.civil_ceremony_venue },
-              { t: wedding.ceremony_time, n: "Cerimónia", v: wedding.ceremony_venue },
-              { t: wedding.reception_time, n: "Receção", v: wedding.reception_venue },
+              { t: d("civil_ceremony_time"), n: "Cerimónia Civil", v: d("civil_ceremony_venue") },
+              { t: d("ceremony_time"), n: "Cerimónia", v: d("ceremony_venue") },
+              { t: d("reception_time"), n: "Receção", v: d("reception_venue") },
             ]
               .filter((r) => r.v || r.t)
               .map((r) => (
@@ -395,21 +399,21 @@ function HomePage() {
         <div className="space-y-4">
           <LocationCard
             label="Cerimónia Civil"
-            venue={wedding.civil_ceremony_venue}
-            address={wedding.civil_ceremony_address}
-            time={wedding.civil_ceremony_time}
+            venue={d("civil_ceremony_venue")}
+            address={d("civil_ceremony_address")}
+            time={d("civil_ceremony_time")}
           />
           <LocationCard
             label="Cerimónia"
-            venue={wedding.ceremony_venue}
-            address={wedding.ceremony_address}
-            time={wedding.ceremony_time}
+            venue={d("ceremony_venue")}
+            address={d("ceremony_address")}
+            time={d("ceremony_time")}
           />
           <LocationCard
             label="Receção"
-            venue={wedding.reception_venue}
-            address={wedding.reception_address}
-            time={wedding.reception_time}
+            venue={d("reception_venue")}
+            address={d("reception_address")}
+            time={d("reception_time")}
           />
         </div>
       </Section>
@@ -421,7 +425,7 @@ function HomePage() {
               <figure key={g.url} className="overflow-hidden rounded-md border border-border">
                 <img
                   src={g.url}
-                  alt={g.caption ?? `Fotografia de ${coupleTitle(wedding)}`}
+                  alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
                   loading="lazy"
                   className="h-40 w-full object-cover"
                 />
@@ -436,10 +440,10 @@ function HomePage() {
           <div className="rounded-md border border-border bg-card p-5">
             <p className="eyebrow">Dados bancários</p>
             <dl className="mt-3 space-y-1 text-sm">
-              {wedding.bank_holder && <div>Titular: {wedding.bank_holder}</div>}
-              {wedding.bank_name && <div>Banco: {wedding.bank_name}</div>}
-              {wedding.bank_account && <div>Conta: {wedding.bank_account}</div>}
-              {wedding.bank_nib && <div>NIB/IBAN: {wedding.bank_nib}</div>}
+              {d("bank_holder") && <div>Titular: {d("bank_holder")}</div>}
+              {d("bank_name") && <div>Banco: {d("bank_name")}</div>}
+              {d("bank_account") && <div>Conta: {d("bank_account")}</div>}
+              {d("bank_nib") && <div>NIB/IBAN: {d("bank_nib")}</div>}
             </dl>
           </div>
           {gifts.map((g) => (
@@ -455,15 +459,15 @@ function HomePage() {
       </Section>
 
       <Section title="Confirmação de Presença">
-        <RsvpForm wedding={wedding} defaultCount={inviteType === "casal" ? 2 : 1} />
+        <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} />
       </Section>
 
-      {(wedding.contact_1_name || wedding.contact_2_name) && (
+      {(event.contact_1_name || event.contact_2_name) && (
         <Section title="Contactos">
           <div className="grid gap-4 sm:grid-cols-2 text-center">
             {[
-              { n: wedding.contact_1_name, p: wedding.contact_1_phone },
-              { n: wedding.contact_2_name, p: wedding.contact_2_phone },
+              { n: event.contact_1_name, p: event.contact_1_phone },
+              { n: event.contact_2_name, p: event.contact_2_phone },
             ]
               .filter((c) => c.n)
               .map((c) => (
