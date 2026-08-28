@@ -238,7 +238,7 @@ function PersonCard({
   role: string;
   name: string | null;
   parents: string;
-  photo?: GalleryImage;
+  photo?: GalleryImage | undefined;
 }) {
   return (
     <div className="card-elegant overflow-hidden text-center">
