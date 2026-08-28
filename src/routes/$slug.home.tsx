@@ -21,6 +21,8 @@ import {
 } from "@/lib/event";
 import { Lightbox } from "@/components/invite/Lightbox";
 import { Ornament } from "@/components/invite/Ornament";
+import { FlourishFrame } from "@/components/invite/Flourish";
+import { FlipNumber } from "@/components/invite/FlipNumber";
 import { Reveal } from "@/components/invite/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
