@@ -1,7 +1,8 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 
+import { FlourishFrame } from "@/components/invite/Flourish";
 import { Ornament } from "@/components/invite/Ornament";
 import {
   AUDIO_BUCKET,
@@ -26,10 +27,13 @@ export const Route = createFileRoute("/$slug/")({
 function CoverPage() {
   const { slug } = Route.useParams();
   const { tipo } = Route.useSearch();
+  const navigate = useNavigate();
   const inviteType = parseInviteType(tipo);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [cover, setCover] = useState<string | null>(null);
   const [music, setMusic] = useState<string | null>(null);
+  const [leaving, setLeaving] = useState(false);
+
 
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
