@@ -69,8 +69,23 @@ function CoverPage() {
 
   const badge = inviteBadgeLabel(inviteType);
 
+  function openInvite() {
+    if (leaving) return;
+    void audioRef.current?.play().catch(() => undefined);
+    setLeaving(true);
+    setTimeout(() => {
+      void navigate({
+        to: "/$slug/home",
+        params: { slug },
+        search: { tipo: inviteType ?? undefined },
+      });
+    }, 500);
+  }
+
   return (
-    <main className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center">
+    <main
+      className={`relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center ${leaving ? "page-leave" : "page-enter"}`}
+    >
       {/* Fundo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         {cover ? (
@@ -84,6 +99,8 @@ function CoverPage() {
         )}
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,oklch(0.16_0.02_70/0.35)_0%,oklch(0.16_0.02_70/0.55)_45%,oklch(0.14_0.02_70/0.9)_100%)]" />
       </div>
+
+      <FlourishFrame className="text-gold/60" size={110} />
 
       <div className="relative mx-auto max-w-2xl animate-fade-in">
         <p className="eyebrow text-cream/70">Convite</p>
@@ -110,17 +127,13 @@ function CoverPage() {
         )}
 
         <div className="mt-14">
-          <Link
-            to="/$slug/home"
-            params={{ slug }}
-            search={{ tipo: inviteType ?? undefined }}
-            onClick={() => {
-              void audioRef.current?.play().catch(() => undefined);
-            }}
+          <button
+            type="button"
+            onClick={openInvite}
             className="inline-flex items-center justify-center rounded-sm border border-gold/70 px-10 py-4 font-sans text-[0.7rem] tracking-[0.35em] text-gold uppercase transition-all duration-500 hover:bg-gold hover:text-[oklch(0.18_0.02_70)]"
           >
             Abrir Convite
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -128,6 +141,7 @@ function CoverPage() {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <span className="breathe block h-12 w-px bg-linear-to-b from-transparent to-gold/80" />
       </div>
+
 
       {music && <audio ref={audioRef} src={music} loop preload="auto" />}
     </main>
