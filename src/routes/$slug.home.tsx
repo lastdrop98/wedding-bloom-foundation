@@ -19,6 +19,9 @@ import {
   signedUrl,
   type EventRow,
 } from "@/lib/event";
+import { Lightbox } from "@/components/invite/Lightbox";
+import { Ornament } from "@/components/invite/Ornament";
+import { Reveal } from "@/components/invite/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,20 +35,31 @@ export const Route = createFileRoute("/$slug/home")({
   component: HomePage,
 });
 
+type GalleryImage = { url: string; caption: string | null };
+
 function Section({
   title,
+  eyebrow,
   children,
+  wide,
 }: {
   title: string;
+  eyebrow?: string;
   children: React.ReactNode;
+  wide?: boolean;
 }) {
   return (
-    <section className="border-t border-border/70 px-6 py-14">
-      <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-2xl font-light tracking-wide">{title}</h2>
-        <span className="gold-rule mx-auto mt-4" />
-        <div className="mt-8 text-left">{children}</div>
-      </div>
+    <section className="px-6 py-20 md:py-24">
+      <Reveal className={wide ? "mx-auto max-w-5xl" : "mx-auto max-w-2xl"}>
+        <div className="flex flex-col items-center text-center">
+          {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
+          <h2 className="text-[clamp(1.75rem,5vw,2.75rem)] leading-tight font-light tracking-wide">
+            {title}
+          </h2>
+          <span className="draw-rule mt-5" />
+        </div>
+        <div className="mt-12 text-left">{children}</div>
+      </Reveal>
     </section>
   );
 }
@@ -58,22 +72,20 @@ function Countdown({ date }: { date: string | null }) {
   }, []);
   if (!date) return null;
   const diff = Math.max(0, new Date(date).getTime() - now);
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor((diff % 86400000) / 3600000);
-  const minutes = Math.floor((diff % 3600000) / 60000);
-  const seconds = Math.floor((diff % 60000) / 1000);
   const cells = [
-    { label: "Dias", value: days },
-    { label: "Horas", value: hours },
-    { label: "Minutos", value: minutes },
-    { label: "Segundos", value: seconds },
+    { label: "Dias", value: Math.floor(diff / 86400000) },
+    { label: "Horas", value: Math.floor((diff % 86400000) / 3600000) },
+    { label: "Minutos", value: Math.floor((diff % 3600000) / 60000) },
+    { label: "Segundos", value: Math.floor((diff % 60000) / 1000) },
   ];
   return (
-    <div className="mx-auto grid max-w-md grid-cols-4 gap-3">
+    <div className="mx-auto grid max-w-lg grid-cols-4 gap-3 sm:gap-5">
       {cells.map((c) => (
-        <div key={c.label} className="rounded-md border border-border bg-card px-2 py-4">
-          <p className="text-2xl font-light text-primary">{c.value}</p>
-          <p className="eyebrow mt-1">{c.label}</p>
+        <div key={c.label} className="card-elegant px-2 py-5 text-center">
+          <p className="text-3xl font-light text-primary tabular-nums md:text-4xl">
+            {String(c.value).padStart(2, "0")}
+          </p>
+          <p className="eyebrow mt-2 text-[0.6rem]">{c.label}</p>
         </div>
       ))}
     </div>
@@ -93,16 +105,18 @@ function LocationCard({
 }) {
   if (!venue && !address) return null;
   return (
-    <div className="rounded-md border border-border bg-card p-5">
+    <div className="card-elegant p-7 hover:-translate-y-0.5">
       <p className="eyebrow">{label}</p>
-      {venue && <p className="mt-2 text-lg">{venue}</p>}
-      {address && <p className="text-sm text-muted-foreground">{address}</p>}
-      {time && <p className="mt-1 text-sm text-primary">{time}</p>}
+      {venue && <p className="mt-3 text-2xl font-light">{venue}</p>}
+      {address && <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">{address}</p>}
+      {time && (
+        <p className="mt-3 font-sans text-xs tracking-[0.25em] text-primary uppercase">{time}</p>
+      )}
       <a
         href={mapsUrl(address, venue)}
         target="_blank"
         rel="noreferrer"
-        className="mt-3 inline-block text-xs tracking-wider text-primary underline-offset-4 hover:underline"
+        className="mt-5 inline-block border-b border-gold/50 pb-1 font-sans text-[0.7rem] tracking-[0.25em] text-primary uppercase transition-colors hover:border-gold"
       >
         Ver no mapa
       </a>
@@ -143,14 +157,16 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
 
   if (done) {
     return (
-      <p className="text-center text-muted-foreground">
-        A sua confirmação foi registada. Muito obrigado!
-      </p>
+      <div className="card-elegant p-10 text-center">
+        <Ornament />
+        <p className="mt-6 text-xl font-light">A sua confirmação foi registada.</p>
+        <p className="mt-2 font-sans text-sm text-muted-foreground">Muito obrigado!</p>
+      </div>
     );
   }
 
   return (
-    <form onSubmit={submit} className="space-y-4">
+    <form onSubmit={submit} className="card-elegant space-y-5 p-7 font-sans md:p-9">
       <div className="space-y-2">
         <Label htmlFor="guest_name">Nome</Label>
         <Input
@@ -168,7 +184,7 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
           onChange={(e) => setForm({ ...form, guest_phone: e.target.value })}
         />
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="attending">Vai estar presente?</Label>
           <select
@@ -202,14 +218,48 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
         />
       </div>
       {event.rsvp_deadline && (
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs tracking-wide text-muted-foreground">
           Confirme até {formatDatePt(event.rsvp_deadline)}.
         </p>
       )}
-      <Button type="submit" className="w-full" disabled={busy}>
+      <Button type="submit" className="w-full tracking-[0.2em] uppercase" disabled={busy}>
         Confirmar presença
       </Button>
     </form>
+  );
+}
+
+function PersonCard({
+  role,
+  name,
+  parents,
+  photo,
+}: {
+  role: string;
+  name: string | null;
+  parents: string;
+  photo?: GalleryImage;
+}) {
+  return (
+    <div className="card-elegant overflow-hidden text-center">
+      {photo && (
+        <div className="overflow-hidden">
+          <img
+            src={photo.url}
+            alt={name ?? role}
+            loading="lazy"
+            className="h-64 w-full object-cover transition-transform duration-[1200ms] ease-out hover:scale-105"
+          />
+        </div>
+      )}
+      <div className="p-7">
+        <p className="eyebrow">{role}</p>
+        <p className="mt-3 text-2xl font-light">{name}</p>
+        {parents && (
+          <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">{parents}</p>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -220,7 +270,9 @@ function HomePage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [music, setMusic] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
-  const [galleryUrls, setGalleryUrls] = useState<{ url: string; caption: string | null }[]>([]);
+  const [cover, setCover] = useState<string | null>(null);
+  const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
+  const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
 
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
@@ -236,6 +288,7 @@ function HomePage() {
   useEffect(() => {
     if (!event) return;
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
+    signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
   }, [event]);
 
   useEffect(() => {
@@ -245,18 +298,20 @@ function HomePage() {
         url: await signedUrl(GALLERY_BUCKET, g.image_path),
         caption: g.caption,
       })),
-    ).then((items) =>
-      setGalleryUrls(items.filter((i): i is { url: string; caption: string | null } => Boolean(i.url))),
-    );
+    ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => Boolean(i.url))));
   }, [content]);
 
   if (isLoading) {
-    return <div className="flex min-h-screen items-center justify-center text-muted-foreground">A carregar…</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center font-sans text-xs tracking-[0.3em] text-muted-foreground uppercase">
+        A carregar…
+      </div>
+    );
   }
   if (!event) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-3 px-6 text-center">
-        <h1 className="text-2xl font-light">Convite não encontrado</h1>
+        <h1 className="text-3xl font-light">Convite não encontrado</h1>
       </div>
     );
   }
@@ -273,130 +328,180 @@ function HomePage() {
       el.pause();
       setPlaying(false);
     } else {
-      void el.play().then(() => setPlaying(true)).catch(() => undefined);
+      void el
+        .play()
+        .then(() => setPlaying(true))
+        .catch(() => undefined);
     }
   }
 
   return (
-    <main className="pb-20">
-      <header className="px-6 pt-16 pb-12 text-center">
-        <p className="eyebrow">Convite</p>
-        <h1 className="mt-5 text-4xl font-light tracking-wide md:text-5xl">
-          {eventTitle(event)}
-        </h1>
-        <span className="gold-rule mx-auto mt-6" />
-        <p className="mt-5 text-muted-foreground">{formatDatePt(event.event_date)}</p>
-        {event.hashtag && <p className="mt-1 text-sm text-primary">{event.hashtag}</p>}
-
-        {badge && (
-          <div className="mx-auto mt-8 max-w-sm rounded-md border border-primary/40 bg-card px-5 py-4">
-            <p className="text-sm tracking-wider text-primary">{badge}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{inviteBadgeHint(inviteType)}</p>
-          </div>
-        )}
-
-        <div className="mt-10">
-          <Countdown date={event.event_date} />
+    <main className="pb-24">
+      {/* Cabeçalho imersivo */}
+      <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          {cover ? (
+            <img
+              src={cover}
+              alt={`Fotografia de ${eventTitle(event)}`}
+              className="ken-burns h-full w-full object-cover will-change-transform"
+            />
+          ) : (
+            <div className="h-full w-full bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.32_0.05_150)_0%,oklch(0.22_0.03_140)_45%,oklch(0.16_0.02_90)_100%)]" />
+          )}
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,oklch(0.16_0.02_70/0.35)_0%,oklch(0.16_0.02_70/0.6)_50%,oklch(0.14_0.02_70/0.92)_100%)]" />
         </div>
 
-        {music && (
-          <button
-            type="button"
-            onClick={toggleMusic}
-            className="mt-8 text-xs tracking-widest uppercase text-primary underline-offset-4 hover:underline"
-          >
-            {playing ? "Pausar música" : "Tocar música"}
-          </button>
-        )}
-        {music && <audio ref={audioRef} src={music} loop preload="auto" />}
+        <div className="relative mx-auto max-w-3xl animate-fade-in">
+          <p className="eyebrow text-cream/70">Convite</p>
+          <h1 className="mt-7 text-[clamp(2.5rem,9vw,5rem)] leading-[1.05] font-light tracking-wide text-cream">
+            {eventTitle(event)}
+          </h1>
+          <Ornament className="mt-9" />
+          <p className="mt-8 font-sans text-sm tracking-[0.35em] text-cream/85 uppercase">
+            {formatDatePt(event.event_date)}
+          </p>
+          {event.hashtag && (
+            <p className="mt-3 font-sans text-xs tracking-[0.3em] text-gold uppercase">
+              {event.hashtag}
+            </p>
+          )}
+
+          {badge && (
+            <div className="mx-auto mt-10 max-w-sm rounded-sm border border-gold/50 bg-[oklch(0.16_0.02_70/0.35)] px-6 py-5 backdrop-blur-sm">
+              <p className="font-sans text-[0.7rem] tracking-[0.25em] text-gold uppercase">{badge}</p>
+              <p className="mt-2 font-sans text-xs leading-relaxed text-cream/75">
+                {inviteBadgeHint(inviteType)}
+              </p>
+            </div>
+          )}
+
+          {music && (
+            <button
+              type="button"
+              onClick={toggleMusic}
+              className="mt-10 border-b border-gold/40 pb-1 font-sans text-[0.7rem] tracking-[0.3em] text-gold uppercase transition-colors hover:border-gold"
+            >
+              {playing ? "Pausar música" : "Tocar música"}
+            </button>
+          )}
+          {music && <audio ref={audioRef} src={music} loop preload="auto" />}
+        </div>
+
+        <span className="breathe absolute bottom-8 left-1/2 block h-12 w-px -translate-x-1/2 bg-linear-to-b from-transparent to-gold/80" />
       </header>
+
+      <Section title="Contagem Decrescente" eyebrow="Falta pouco">
+        <Countdown date={event.event_date} />
+      </Section>
+
+      <Ornament />
 
       {(d("verse_text") || d("verse_2_text")) && (
         <Section title="Palavra">
-          <div className="space-y-6 text-center italic text-muted-foreground">
-            {d("verse_text") && (
-              <p>
-                “{d("verse_text")}”
-                {d("verse_reference") && (
-                  <span className="mt-1 block not-italic text-xs tracking-wider text-primary">
-                    {d("verse_reference")}
-                  </span>
-                )}
-              </p>
-            )}
-            {d("verse_2_text") && (
-              <p>
-                “{d("verse_2_text")}”
-                {d("verse_2_reference") && (
-                  <span className="mt-1 block not-italic text-xs tracking-wider text-primary">
-                    {d("verse_2_reference")}
-                  </span>
-                )}
-              </p>
-            )}
+          <div className="grid gap-6">
+            {[
+              { text: d("verse_text"), ref: d("verse_reference") },
+              { text: d("verse_2_text"), ref: d("verse_2_reference") },
+            ]
+              .filter((v) => v.text)
+              .map((v) => (
+                <blockquote key={v.text} className="card-elegant p-8 text-center md:p-10">
+                  <p className="text-xl leading-relaxed font-light italic text-foreground/85">
+                    “{v.text}”
+                  </p>
+                  {v.ref && (
+                    <footer className="mt-5 font-sans text-[0.7rem] tracking-[0.3em] text-primary uppercase">
+                      {v.ref}
+                    </footer>
+                  )}
+                </blockquote>
+              ))}
           </div>
         </Section>
       )}
 
       {(d("bride_name") || d("groom_name")) && (
-        <Section title="Os Noivos">
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div className="rounded-md border border-border bg-card p-5 text-center">
-              <p className="eyebrow">A Noiva</p>
-              <p className="mt-2 text-xl">{d("bride_name")}</p>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Filha de {[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}
-              </p>
+        <>
+          <Ornament />
+          <Section title="Os Noivos" wide>
+            <div className="grid gap-8 sm:grid-cols-2">
+              <PersonCard
+                role="A Noiva"
+                name={d("bride_name")}
+                parents={
+                  [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
+                    ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
+                    : ""
+                }
+                photo={galleryUrls[0]}
+              />
+              <PersonCard
+                role="O Noivo"
+                name={d("groom_name")}
+                parents={
+                  [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
+                    ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
+                    : ""
+                }
+                photo={galleryUrls[1]}
+              />
             </div>
-            <div className="rounded-md border border-border bg-card p-5 text-center">
-              <p className="eyebrow">O Noivo</p>
-              <p className="mt-2 text-xl">{d("groom_name")}</p>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Filho de {[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}
-              </p>
-            </div>
-          </div>
-        </Section>
+          </Section>
+        </>
       )}
 
+      <Ornament />
+
       <Section title="Programa do Dia">
-        {schedule.length > 0 ? (
-          <ul className="space-y-4">
-            {schedule.map((item) => (
-              <li key={item.id} className="flex gap-4 border-b border-border/60 pb-4 last:border-0">
-                <span className="w-20 shrink-0 text-sm text-primary">{item.time_label}</span>
-                <span>
-                  <span className="block">{item.title}</span>
-                  {item.description && (
-                    <span className="block text-sm text-muted-foreground">{item.description}</span>
-                  )}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul className="space-y-4">
-            {[
-              { t: d("civil_ceremony_time"), n: "Cerimónia Civil", v: d("civil_ceremony_venue") },
-              { t: d("ceremony_time"), n: "Cerimónia", v: d("ceremony_venue") },
-              { t: d("reception_time"), n: "Receção", v: d("reception_venue") },
-            ]
-              .filter((r) => r.v || r.t)
-              .map((r) => (
-                <li key={r.n} className="flex gap-4 border-b border-border/60 pb-4 last:border-0">
-                  <span className="w-20 shrink-0 text-sm text-primary">{r.t}</span>
-                  <span>
-                    <span className="block">{r.n}</span>
-                    <span className="block text-sm text-muted-foreground">{r.v}</span>
-                  </span>
-                </li>
-              ))}
-          </ul>
-        )}
+        <ol className="space-y-4">
+          {(schedule.length > 0
+            ? schedule.map((item) => ({
+                key: item.id,
+                time: item.time_label,
+                title: item.title,
+                sub: item.description,
+              }))
+            : [
+                {
+                  key: "civil",
+                  time: d("civil_ceremony_time"),
+                  title: "Cerimónia Civil",
+                  sub: d("civil_ceremony_venue"),
+                },
+                {
+                  key: "cerimonia",
+                  time: d("ceremony_time"),
+                  title: "Cerimónia",
+                  sub: d("ceremony_venue"),
+                },
+                {
+                  key: "rececao",
+                  time: d("reception_time"),
+                  title: "Receção",
+                  sub: d("reception_venue"),
+                },
+              ].filter((r) => r.time || r.sub)
+          ).map((r) => (
+            <li key={r.key} className="card-elegant flex items-start gap-5 p-6">
+              <span className="w-20 shrink-0 font-sans text-xs tracking-[0.2em] text-primary uppercase">
+                {r.time}
+              </span>
+              <span className="min-w-0">
+                <span className="block text-xl font-light">{r.title}</span>
+                {r.sub && (
+                  <span className="mt-1 block font-sans text-sm text-muted-foreground">{r.sub}</span>
+                )}
+              </span>
+            </li>
+          ))}
+        </ol>
       </Section>
 
-      <Section title="Localização">
-        <div className="space-y-4">
+      <Ornament />
+
+      <Section title="Localização" wide>
+        <div className="grid gap-6 md:grid-cols-3">
           <LocationCard
             label="Cerimónia Civil"
             venue={d("civil_ceremony_venue")}
@@ -419,27 +524,37 @@ function HomePage() {
       </Section>
 
       {galleryUrls.length > 0 && (
-        <Section title="Galeria">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {galleryUrls.map((g) => (
-              <figure key={g.url} className="overflow-hidden rounded-md border border-border">
-                <img
-                  src={g.url}
-                  alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
-                  loading="lazy"
-                  className="h-40 w-full object-cover"
-                />
-              </figure>
-            ))}
-          </div>
-        </Section>
+        <>
+          <Ornament />
+          <Section title="Galeria" wide>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+              {galleryUrls.map((g) => (
+                <button
+                  key={g.url}
+                  type="button"
+                  onClick={() => setLightbox(g)}
+                  className="group overflow-hidden rounded-sm border border-gold/30"
+                >
+                  <img
+                    src={g.url}
+                    alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
+                    loading="lazy"
+                    className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                  />
+                </button>
+              ))}
+            </div>
+          </Section>
+        </>
       )}
 
+      <Ornament />
+
       <Section title="Presentes">
-        <div className="space-y-4">
-          <div className="rounded-md border border-border bg-card p-5">
+        <div className="grid gap-6">
+          <div className="card-elegant p-7">
             <p className="eyebrow">Dados bancários</p>
-            <dl className="mt-3 space-y-1 text-sm">
+            <dl className="mt-4 space-y-2 font-sans text-sm text-muted-foreground">
               {d("bank_holder") && <div>Titular: {d("bank_holder")}</div>}
               {d("bank_name") && <div>Banco: {d("bank_name")}</div>}
               {d("bank_account") && <div>Conta: {d("bank_account")}</div>}
@@ -447,49 +562,57 @@ function HomePage() {
             </dl>
           </div>
           {gifts.map((g) => (
-            <div key={g.id} className="rounded-md border border-border bg-card p-5">
-              <p>{g.title}</p>
+            <div key={g.id} className="card-elegant p-7">
+              <p className="text-xl font-light">{g.title}</p>
               {g.description && (
-                <p className="mt-1 text-sm text-muted-foreground">{g.description}</p>
+                <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
               )}
-              {g.link_or_info && <p className="mt-1 text-sm text-primary">{g.link_or_info}</p>}
+              {g.link_or_info && (
+                <p className="mt-3 font-sans text-sm break-words text-primary">{g.link_or_info}</p>
+              )}
             </div>
           ))}
         </div>
       </Section>
 
-      <Section title="Confirmação de Presença">
+      <Ornament />
+
+      <Section title="Confirmação de Presença" eyebrow="RSVP">
         <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} />
       </Section>
 
       {(event.contact_1_name || event.contact_2_name) && (
         <Section title="Contactos">
-          <div className="grid gap-4 sm:grid-cols-2 text-center">
+          <div className="grid gap-6 text-center sm:grid-cols-2">
             {[
               { n: event.contact_1_name, p: event.contact_1_phone },
               { n: event.contact_2_name, p: event.contact_2_phone },
             ]
               .filter((c) => c.n)
               .map((c) => (
-                <div key={c.n} className="rounded-md border border-border bg-card p-4">
-                  <p>{c.n}</p>
-                  <p className="text-sm text-muted-foreground">{c.p}</p>
+                <div key={c.n} className="card-elegant p-7">
+                  <p className="text-xl font-light">{c.n}</p>
+                  <p className="mt-2 font-sans text-sm text-muted-foreground">{c.p}</p>
                 </div>
               ))}
           </div>
         </Section>
       )}
 
-      <div className="px-6 pt-10 text-center">
+      <div className="px-6 pt-12 text-center">
         <Link
           to="/$slug"
           params={{ slug }}
           search={{ tipo: inviteType ?? undefined }}
-          className="text-xs tracking-widest uppercase text-primary underline-offset-4 hover:underline"
+          className="border-b border-gold/40 pb-1 font-sans text-[0.7rem] tracking-[0.3em] text-primary uppercase transition-colors hover:border-gold"
         >
           Voltar à capa
         </Link>
       </div>
+
+      {lightbox && (
+        <Lightbox src={lightbox.url} caption={lightbox.caption} onClose={() => setLightbox(null)} />
+      )}
     </main>
   );
 }
