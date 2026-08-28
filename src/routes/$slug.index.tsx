@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 
+import { Ornament } from "@/components/invite/Ornament";
 import {
   AUDIO_BUCKET,
   GALLERY_BUCKET,
@@ -46,14 +47,18 @@ function CoverPage() {
   }, [event]);
 
   if (isLoading) {
-    return <div className="flex min-h-screen items-center justify-center text-muted-foreground">A carregar…</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center font-sans text-xs tracking-[0.3em] text-muted-foreground uppercase">
+        A carregar…
+      </div>
+    );
   }
 
   if (!event) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-3 px-6 text-center">
-        <h1 className="text-2xl font-light">Convite não encontrado</h1>
-        <p className="text-sm text-muted-foreground">Verifique o endereço que recebeu.</p>
+        <h1 className="text-3xl font-light">Convite não encontrado</h1>
+        <p className="font-sans text-sm text-muted-foreground">Verifique o endereço que recebeu.</p>
       </div>
     );
   }
@@ -61,37 +66,46 @@ function CoverPage() {
   const badge = inviteBadgeLabel(inviteType);
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
-      {cover && (
-        <>
+    <main className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center">
+      {/* Fundo */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        {cover ? (
           <img
             src={cover}
             alt={`Fotografia de ${eventTitle(event)}`}
-            className="absolute inset-0 h-full w-full object-cover"
+            className="ken-burns h-full w-full object-cover will-change-transform"
           />
-          <div className="absolute inset-0 bg-background/80" />
-        </>
-      )}
+        ) : (
+          <div className="h-full w-full bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.32_0.05_150)_0%,oklch(0.22_0.03_140)_45%,oklch(0.16_0.02_90)_100%)]" />
+        )}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,oklch(0.16_0.02_70/0.35)_0%,oklch(0.16_0.02_70/0.55)_45%,oklch(0.14_0.02_70/0.9)_100%)]" />
+      </div>
 
-      <div className="relative">
-        <p className="eyebrow">Convite</p>
-        <h1 className="mt-6 text-5xl font-light leading-tight tracking-wide md:text-6xl">
+      <div className="relative mx-auto max-w-2xl animate-fade-in">
+        <p className="eyebrow text-cream/70">Convite</p>
+        <h1 className="mt-8 text-[clamp(2.75rem,10vw,5.5rem)] leading-[1.05] font-light tracking-wide text-cream">
           {eventTitle(event)}
         </h1>
-        <span className="gold-rule mx-auto mt-8" />
-        <p className="mt-8 text-lg text-muted-foreground">{formatDatePt(event.event_date)}</p>
+
+        <Ornament className="mt-10" />
+
+        <p className="mt-8 font-sans text-sm tracking-[0.35em] text-cream/85 uppercase">
+          {formatDatePt(event.event_date)}
+        </p>
         {event.hashtag && (
-          <p className="mt-2 text-sm tracking-wider text-primary">{event.hashtag}</p>
+          <p className="mt-3 font-sans text-xs tracking-[0.3em] text-gold uppercase">{event.hashtag}</p>
         )}
 
         {badge && (
-          <div className="mx-auto mt-10 max-w-sm rounded-md border border-primary/40 bg-card/70 px-5 py-4">
-            <p className="text-sm tracking-wider text-primary">{badge}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{inviteBadgeHint(inviteType)}</p>
+          <div className="mx-auto mt-12 max-w-sm rounded-sm border border-gold/50 bg-[oklch(0.16_0.02_70/0.35)] px-6 py-5 backdrop-blur-sm">
+            <p className="font-sans text-[0.7rem] tracking-[0.25em] text-gold uppercase">{badge}</p>
+            <p className="mt-2 font-sans text-xs leading-relaxed text-cream/75">
+              {inviteBadgeHint(inviteType)}
+            </p>
           </div>
         )}
 
-        <div className="mt-12">
+        <div className="mt-14">
           <Link
             to="/$slug/home"
             params={{ slug }}
@@ -99,11 +113,16 @@ function CoverPage() {
             onClick={() => {
               void audioRef.current?.play().catch(() => undefined);
             }}
-            className="inline-flex items-center justify-center rounded-md border border-primary px-8 py-3 text-sm tracking-widest uppercase text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+            className="inline-flex items-center justify-center rounded-sm border border-gold/70 px-10 py-4 font-sans text-[0.7rem] tracking-[0.35em] text-gold uppercase transition-all duration-500 hover:bg-gold hover:text-[oklch(0.18_0.02_70)]"
           >
             Abrir Convite
           </Link>
         </div>
+      </div>
+
+      {/* Indicador de scroll */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <span className="breathe block h-12 w-px bg-linear-to-b from-transparent to-gold/80" />
       </div>
 
       {music && <audio ref={audioRef} src={music} loop preload="auto" />}
