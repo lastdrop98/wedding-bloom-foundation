@@ -21,6 +21,8 @@ import {
 } from "@/lib/event";
 import { Lightbox } from "@/components/invite/Lightbox";
 import { Ornament } from "@/components/invite/Ornament";
+import { FlourishFrame } from "@/components/invite/Flourish";
+import { FlipNumber } from "@/components/invite/FlipNumber";
 import { Reveal } from "@/components/invite/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -599,16 +601,23 @@ function HomePage() {
         </Section>
       )}
 
-      <div className="px-6 pt-12 text-center">
+      <footer className="relative mt-16 overflow-hidden border-t border-gold/25 px-6 pt-14 pb-4 text-center">
+        <FlourishFrame size={80} />
+        <Ornament />
+        <p className="mt-6 font-sans text-xs tracking-[0.25em] text-muted-foreground uppercase">
+          Convite criado com ♡ por
+        </p>
+        <p className="mt-2 text-lg font-light tracking-[0.2em] text-primary">Solar Eclipse</p>
         <Link
           to="/$slug"
           params={{ slug }}
           search={{ tipo: inviteType ?? undefined }}
-          className="border-b border-gold/40 pb-1 font-sans text-[0.7rem] tracking-[0.3em] text-primary uppercase transition-colors hover:border-gold"
+          className="mt-8 inline-block border-b border-gold/40 pb-1 font-sans text-[0.7rem] tracking-[0.3em] text-primary uppercase transition-colors hover:border-gold"
         >
           Voltar à capa
         </Link>
-      </div>
+      </footer>
+
 
       {lightbox && (
         <Lightbox src={lightbox.url} caption={lightbox.caption} onClose={() => setLightbox(null)} />
