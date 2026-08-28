@@ -64,11 +64,7 @@ export function eventTypeLabel(type?: string | null) {
 }
 
 /** Buckets são privados: geramos um link assinado de leitura (permitido a qualquer visitante). */
-export async function signedUrl(bucket: string, path?: string | null) {
-  if (!path) return null;
-  const { data } = await supabase.storage.from(bucket).createSignedUrl(path, 60 * 60);
-  return data?.signedUrl ?? null;
-}
+ export async function signedUrl(bucket: string, path?: string | null) { if (!path) return null; if (/^https?:\/\//i.test(path)) return path; const { data } = await supabase.storage.from(bucket).createSignedUrl(path, 60 * 60); return data?.signedUrl ?? null; }
 
 export async function fetchEventBySlug(slug: string) {
   const { data, error } = await supabase
