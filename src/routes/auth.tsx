@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
+import { FlourishFrame } from "@/components/invite/Flourish";
+import { Ornament } from "@/components/invite/Ornament";
+import { Reveal } from "@/components/invite/Reveal";
 import { useIsAdmin } from "@/hooks/use-admin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -61,11 +64,13 @@ function AuthPage() {
 
   if (!loading && user && !isAdmin) {
     return (
-      <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 text-center">
-        <p className="eyebrow">Solar Eclipse</p>
-        <h1 className="mt-4 text-3xl font-light">Sem permissões</h1>
-        <span className="gold-rule mx-auto mt-6" />
-        <p className="mt-6 text-sm text-muted-foreground">
+      <main className="section-dark eclipse-bg relative flex min-h-screen flex-col justify-center overflow-hidden px-6 text-center">
+        <FlourishFrame size={110} />
+        <Reveal className="relative mx-auto w-full max-w-md">
+        <p className="eyebrow text-cream/70">Solar Eclipse</p>
+        <h1 className="mt-4 text-3xl font-light text-cream">Sem permissões</h1>
+        <Ornament className="mt-6" />
+        <p className="mt-6 font-sans text-sm leading-relaxed text-muted-foreground">
           A sua conta ({user.email}) não tem permissões de administrador. Peça a um administrador
           para lhe atribuir o papel <span className="text-foreground">admin</span> na tabela{" "}
           <span className="text-foreground">user_roles</span>, associando o seu ID de utilizador.
@@ -79,19 +84,22 @@ function AuthPage() {
             <Link to="/">Início</Link>
           </Button>
         </div>
+        </Reveal>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center px-6">
+    <main className="section-dark eclipse-bg relative flex min-h-screen flex-col justify-center overflow-hidden px-6">
+      <FlourishFrame size={110} />
+      <Reveal className="relative mx-auto w-full max-w-sm">
       <div className="text-center">
-        <p className="eyebrow">Solar Eclipse</p>
-        <h1 className="mt-3 text-3xl font-light">Área reservada</h1>
-        <span className="gold-rule mx-auto mt-5" />
+        <p className="eyebrow text-cream/70">Solar Eclipse</p>
+        <h1 className="mt-3 text-3xl font-light text-cream">Área reservada</h1>
+        <Ornament className="mt-5" />
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-10 space-y-4">
+      <form onSubmit={handleSubmit} className="card-elegant mt-10 space-y-4 p-7">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -120,11 +128,12 @@ function AuthPage() {
 
       <button
         type="button"
-        className="mt-6 text-center text-xs text-muted-foreground underline-offset-4 hover:underline"
+        className="mt-6 w-full text-center font-sans text-xs text-muted-foreground underline-offset-4 hover:underline"
         onClick={() => setMode(mode === "login" ? "signup" : "login")}
       >
         {mode === "login" ? "Não tenho conta — criar conta" : "Já tenho conta — entrar"}
       </button>
+      </Reveal>
     </main>
   );
 }
