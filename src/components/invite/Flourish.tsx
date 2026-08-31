@@ -15,9 +15,10 @@ export function Flourish({
   className,
   size = 88,
 }: {
-  corner?: Corner;
-  className?: string;
-  size?: number;
+  corner?: Corner | undefined;
+  className?: string | undefined;
+  size?: number | undefined;
+
 }) {
   return (
     <svg
