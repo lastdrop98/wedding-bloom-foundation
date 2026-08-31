@@ -347,3 +347,56 @@
       oklch(0.12 0.01 70) 100%
     );
 }
+
+/* ——— Ornamentos desenhados à mão (stroke draw + brilho) ——— */
+@keyframes ornament-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ornament-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@utility ink-draw {
+  & [data-draw] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  &[data-drawn="true"] [data-draw] {
+    animation:
+      ornament-draw 1.5s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+      ornament-glow 4s ease-in-out 1.6s infinite;
+  }
+
+  & [data-dot] {
+    opacity: 0;
+    transition: opacity 0.9s ease 1.2s;
+  }
+
+  &[data-drawn="true"] [data-dot] {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-draw [data-draw] {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    animation: none !important;
+  }
+  .ink-draw [data-dot] {
+    opacity: 1;
+  }
+}
