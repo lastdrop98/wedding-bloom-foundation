@@ -44,15 +44,18 @@ function Section({
   eyebrow,
   children,
   wide,
+  dark,
 }: {
   title: string;
   eyebrow?: string;
   children: React.ReactNode;
   wide?: boolean;
+  dark?: boolean;
 }) {
   return (
-    <section className="px-6 py-20 md:py-24">
-      <Reveal className={wide ? "mx-auto max-w-5xl" : "mx-auto max-w-2xl"}>
+    <section className={`relative px-6 py-20 md:py-24 ${dark ? "section-dark" : ""}`}>
+      {dark && <FlourishFrame size={80} />}
+      <Reveal className={wide ? "relative mx-auto max-w-5xl" : "relative mx-auto max-w-2xl"}>
         <div className="flex flex-col items-center text-center">
           {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
           <h2 className="text-[clamp(1.75rem,5vw,2.75rem)] leading-tight font-light tracking-wide">
@@ -65,6 +68,7 @@ function Section({
     </section>
   );
 }
+
 
 function Countdown({ date }: { date: string | null }) {
   const [now, setNow] = useState(() => Date.now());
