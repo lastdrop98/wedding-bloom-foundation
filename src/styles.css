@@ -336,3 +336,14 @@
  height: 0 !important; 
  position: absolute !important; 
  overflow: hidden !important; }
+
+/* ——— Fundo dourado/escuro elegante (marca) ——— */
+@utility eclipse-bg {
+  background:
+    radial-gradient(
+      120% 100% at 50% 0%,
+      oklch(0.3 0.05 150) 0%,
+      oklch(0.2 0.03 140) 45%,
+      oklch(0.12 0.01 70) 100%
+    );
+}
