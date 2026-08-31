@@ -44,15 +44,18 @@ function Section({
   eyebrow,
   children,
   wide,
+  dark,
 }: {
   title: string;
   eyebrow?: string;
   children: React.ReactNode;
   wide?: boolean;
+  dark?: boolean;
 }) {
   return (
-    <section className="px-6 py-20 md:py-24">
-      <Reveal className={wide ? "mx-auto max-w-5xl" : "mx-auto max-w-2xl"}>
+    <section className={`relative px-6 py-20 md:py-24 ${dark ? "section-dark" : ""}`}>
+      {dark && <FlourishFrame size={80} />}
+      <Reveal className={wide ? "relative mx-auto max-w-5xl" : "relative mx-auto max-w-2xl"}>
         <div className="flex flex-col items-center text-center">
           {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
           <h2 className="text-[clamp(1.75rem,5vw,2.75rem)] leading-tight font-light tracking-wide">
@@ -65,6 +68,7 @@ function Section({
     </section>
   );
 }
+
 
 function Countdown({ date }: { date: string | null }) {
   const [now, setNow] = useState(() => Date.now());
@@ -400,7 +404,7 @@ function HomePage() {
       <Ornament />
 
       {(d("verse_text") || d("verse_2_text")) && (
-        <Section title="Palavra">
+        <Section title="Palavra" dark>
           <div className="grid gap-6">
             {[
               { text: d("verse_text"), ref: d("verse_reference") },
@@ -455,7 +459,7 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Programa do Dia">
+      <Section title="Programa do Dia" dark>
         <ol className="space-y-4">
           {(schedule.length > 0
             ? schedule.map((item) => ({
@@ -528,7 +532,7 @@ function HomePage() {
       {galleryUrls.length > 0 && (
         <>
           <Ornament />
-          <Section title="Galeria" wide>
+          <Section title="Galeria" wide dark>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               {galleryUrls.map((g) => (
                 <button
@@ -579,7 +583,7 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Confirmação de Presença" eyebrow="RSVP">
+      <Section title="Confirmação de Presença" eyebrow="RSVP" dark>
         <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} />
       </Section>
 
@@ -601,7 +605,7 @@ function HomePage() {
         </Section>
       )}
 
-      <footer className="relative mt-16 overflow-hidden border-t border-gold/25 px-6 pt-14 pb-4 text-center">
+      <footer className="section-dark relative mt-16 overflow-hidden border-t border-gold/25 px-6 pt-14 pb-10 text-center">
         <FlourishFrame size={80} />
         <Ornament />
         <p className="mt-6 font-sans text-xs tracking-[0.25em] text-muted-foreground uppercase">

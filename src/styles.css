@@ -42,38 +42,60 @@
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
   --color-cream: var(--cream);
+  --color-ink: var(--ink);
 }
 
 :root {
   --radius: 0.375rem;
 
-  /* creme */
-  --background: oklch(0.973 0.014 88);
-  --foreground: oklch(0.29 0.02 60);
-  --card: oklch(0.988 0.008 88);
-  --card-foreground: oklch(0.29 0.02 60);
-  --popover: oklch(0.988 0.008 88);
-  --popover-foreground: oklch(0.29 0.02 60);
+  /* branco / creme muito claro */
+  --background: oklch(0.995 0.003 90);
+  --foreground: oklch(0.22 0.012 70);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.012 70);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.012 70);
 
-  /* dourado */
-  --gold: oklch(0.68 0.1 78);
+  /* dourado / preto */
+  --gold: oklch(0.72 0.11 80);
   --gold-soft: oklch(0.88 0.05 88);
-  --cream: oklch(0.973 0.014 88);
+  --cream: oklch(0.975 0.012 88);
+  --ink: oklch(0.12 0.01 70);
 
-  --primary: oklch(0.62 0.1 74);
-  --primary-foreground: oklch(0.99 0.01 88);
-  --secondary: oklch(0.94 0.02 88);
-  --secondary-foreground: oklch(0.35 0.03 66);
-  --muted: oklch(0.94 0.02 88);
-  --muted-foreground: oklch(0.53 0.03 70);
-  --accent: oklch(0.92 0.04 86);
-  --accent-foreground: oklch(0.35 0.03 66);
+  --primary: oklch(0.6 0.11 76);
+  --primary-foreground: oklch(0.99 0.005 90);
+  --secondary: oklch(0.96 0.008 90);
+  --secondary-foreground: oklch(0.28 0.02 66);
+  --muted: oklch(0.96 0.008 90);
+  --muted-foreground: oklch(0.5 0.02 70);
+  --accent: oklch(0.95 0.02 86);
+  --accent-foreground: oklch(0.28 0.02 66);
   --destructive: oklch(0.55 0.19 27);
-  --destructive-foreground: oklch(0.99 0.01 88);
-  --border: oklch(0.88 0.03 84);
-  --input: oklch(0.88 0.03 84);
-  --ring: oklch(0.68 0.1 78);
+  --destructive-foreground: oklch(0.99 0.005 90);
+  --border: oklch(0.9 0.02 84);
+  --input: oklch(0.9 0.02 84);
+  --ring: oklch(0.72 0.11 80);
 }
+
+/* ——— Secção escura (contraste tipo eclipse) ——— */
+@utility section-dark {
+  --background: var(--ink);
+  --foreground: var(--cream);
+  --card: oklch(0.17 0.012 70);
+  --card-foreground: var(--cream);
+  --muted: oklch(0.2 0.012 70);
+  --muted-foreground: oklch(0.78 0.02 84);
+  --secondary: oklch(0.2 0.012 70);
+  --secondary-foreground: var(--cream);
+  --primary: var(--gold);
+  --primary-foreground: var(--ink);
+  --border: color-mix(in oklab, var(--gold) 30%, transparent);
+  --input: color-mix(in oklab, var(--gold) 30%, transparent);
+
+  background-color: var(--ink);
+  color: var(--cream);
+}
+
 
 .dark {
   --background: oklch(0.2 0.015 70);
@@ -314,3 +336,14 @@
  height: 0 !important; 
  position: absolute !important; 
  overflow: hidden !important; }
+
+/* ——— Fundo dourado/escuro elegante (marca) ——— */
+@utility eclipse-bg {
+  background:
+    radial-gradient(
+      120% 100% at 50% 0%,
+      oklch(0.3 0.05 150) 0%,
+      oklch(0.2 0.03 140) 45%,
+      oklch(0.12 0.01 70) 100%
+    );
+}
