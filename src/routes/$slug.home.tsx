@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { Coffee, Gem, Heart, Sparkles, type LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -92,9 +93,10 @@ function Countdown({ date }: { date: string | null }) {
     <div className="mx-auto grid max-w-lg grid-cols-4 gap-3 sm:gap-5">
       {cells.map((c) => (
         <div key={c.label} className="card-elegant px-2 py-5 text-center">
-          <p className="text-3xl font-light text-primary tabular-nums md:text-4xl">
-            {String(c.value).padStart(2, "0")}
-          </p>
+          <FlipNumber
+            value={String(c.value).padStart(2, "0")}
+            className="text-3xl font-light text-primary tabular-nums md:text-4xl"
+          />
           <p className="eyebrow mt-2 text-[0.6rem]">{c.label}</p>
         </div>
       ))}
