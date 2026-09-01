@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { FlourishFrame } from "@/components/invite/Flourish";
 import { Ornament } from "@/components/invite/Ornament";
 import { Reveal } from "@/components/invite/Reveal";
+import { SectionVines, VineDivider } from "@/components/invite/Vines";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,6 +44,7 @@ const FEATURES = [
 function Index() {
   return (
     <main className="section-dark eclipse-bg relative min-h-screen overflow-hidden px-6 py-24">
+      <SectionVines variant="a" />
       <FlourishFrame size={120} />
 
       <div className="relative mx-auto max-w-3xl text-center">
@@ -70,6 +72,8 @@ function Index() {
             </Reveal>
           ))}
         </div>
+
+        <VineDivider className="mt-16" />
 
         <Reveal delay={200}>
           <Link
