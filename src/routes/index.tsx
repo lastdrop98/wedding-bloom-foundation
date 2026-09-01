@@ -64,7 +64,7 @@ function Index() {
             <Reveal key={f.title} delay={i * 120}>
               <div className="card-elegant h-full p-7">
                 <span className="draw-rule" />
-                <p className="mt-5 text-xl font-light text-cream">{f.title}</p>
+                <p className="mt-5 text-xl font-light text-ink">{f.title}</p>
                 <p className="mt-3 font-sans text-sm leading-relaxed text-muted-foreground">
                   {f.text}
                 </p>
