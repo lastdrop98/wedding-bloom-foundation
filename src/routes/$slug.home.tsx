@@ -401,14 +401,14 @@ function HomePage() {
         <span className="breathe absolute bottom-8 left-1/2 block h-12 w-px -translate-x-1/2 bg-linear-to-b from-transparent to-gold/80" />
       </header>
 
-      <Section title="Contagem Decrescente" eyebrow="Falta pouco">
+      <Section title="Contagem Decrescente" eyebrow="Falta pouco" vines="c">
         <Countdown date={event.event_date} />
       </Section>
 
-      <Ornament />
+      <VineDivider className="my-6" />
 
       {(d("verse_text") || d("verse_2_text")) && (
-        <Section title="Palavra" dark>
+        <Section title="Palavra" dark vines="a">
           <div className="grid gap-6">
             {[
               { text: d("verse_text"), ref: d("verse_reference") },
@@ -433,8 +433,8 @@ function HomePage() {
 
       {(d("bride_name") || d("groom_name")) && (
         <>
-          <Ornament />
-          <Section title="Os Noivos" wide>
+          <VineDivider className="my-6" />
+          <Section title="Os Noivos" wide vines="b">
             <div className="grid gap-8 sm:grid-cols-2">
               <PersonCard
                 role="A Noiva"
@@ -463,7 +463,7 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Programa do Dia" dark>
+      <Section title="Programa do Dia" dark vines="a">
         <ol className="space-y-4">
           {(schedule.length > 0
             ? schedule.map((item) => ({
@@ -510,7 +510,7 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Localização" wide>
+      <Section title="Localização" wide vines="b">
         <div className="grid gap-6 md:grid-cols-3">
           <LocationCard
             label="Cerimónia Civil"
@@ -535,8 +535,8 @@ function HomePage() {
 
       {galleryUrls.length > 0 && (
         <>
-          <Ornament />
-          <Section title="Galeria" wide dark>
+          <VineDivider className="my-6" />
+          <Section title="Galeria" wide dark vines="c">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               {galleryUrls.map((g) => (
                 <button
@@ -560,7 +560,7 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Presentes">
+      <Section title="Presentes" vines="b">
         <div className="grid gap-6">
           <div className="card-elegant p-7">
             <p className="eyebrow">Dados bancários</p>
@@ -587,12 +587,12 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Confirmação de Presença" eyebrow="RSVP" dark>
+      <Section title="Confirmação de Presença" eyebrow="RSVP" dark vines="a">
         <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} />
       </Section>
 
       {(event.contact_1_name || event.contact_2_name) && (
-        <Section title="Contactos">
+        <Section title="Contactos" vines="c">
           <div className="grid gap-6 text-center sm:grid-cols-2">
             {[
               { n: event.contact_1_name, p: event.contact_1_phone },
