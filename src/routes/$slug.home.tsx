@@ -554,29 +554,69 @@ function HomePage() {
           <VineDivider className="my-6" />
           <Section title="Os Noivos" wide vines="b">
             <div className="grid gap-8 sm:grid-cols-2">
-              <PersonCard
-                role="A Noiva"
-                name={d("bride_name")}
-                parents={
-                  [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
+              {[
+                {
+                  role: "A Noiva",
+                  name: d("bride_name"),
+                  parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
                     ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
-                    : ""
-                }
-                photo={galleryUrls[0]}
-              />
-              <PersonCard
-                role="O Noivo"
-                name={d("groom_name")}
-                parents={
-                  [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
+                    : "",
+                  photo: galleryUrls[0],
+                },
+                {
+                  role: "O Noivo",
+                  name: d("groom_name"),
+                  parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
                     ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
-                    : ""
-                }
-                photo={galleryUrls[1]}
-              />
+                    : "",
+                  photo: galleryUrls[1],
+                },
+              ].map((p, i) => (
+                <Reveal key={p.role} delay={i * 100}>
+                  <PersonCard role={p.role} name={p.name} parents={p.parents} photo={p.photo} />
+                </Reveal>
+              ))}
             </div>
           </Section>
         </>
+      )}
+
+      {event.event_type === "casamento" && (
+        <Section title="A Nossa História" eyebrow="O caminho até aqui" wide dark vines="b">
+          <StoryTimeline />
+        </Section>
+      )}
+
+      {event.event_type === "casamento" && (
+        <Section title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {PARTY.map((m, i) => {
+              const photo = galleryUrls[2 + i];
+              return (
+                <Reveal key={m.name} delay={i * 100}>
+                  <div className="card-elegant p-6 text-center">
+                    {photo ? (
+                      <img
+                        src={photo.url}
+                        alt={m.name}
+                        loading="lazy"
+                        className="mx-auto h-24 w-24 rounded-full border border-gold/50 object-cover"
+                      />
+                    ) : (
+                      <span className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-gold/60 bg-gold/10 text-2xl font-light text-primary">
+                        {initials(m.name)}
+                      </span>
+                    )}
+                    <p className="mt-4 text-lg font-light">{m.name}</p>
+                    <p className="mt-1 font-sans text-[0.65rem] tracking-[0.3em] text-primary uppercase">
+                      {m.role}
+                    </p>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </Section>
       )}
 
       <Ornament />
