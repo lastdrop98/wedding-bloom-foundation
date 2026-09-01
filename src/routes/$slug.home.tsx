@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { Coffee, Gem, Heart, Sparkles, type LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -92,9 +93,10 @@ function Countdown({ date }: { date: string | null }) {
     <div className="mx-auto grid max-w-lg grid-cols-4 gap-3 sm:gap-5">
       {cells.map((c) => (
         <div key={c.label} className="card-elegant px-2 py-5 text-center">
-          <p className="text-3xl font-light text-primary tabular-nums md:text-4xl">
-            {String(c.value).padStart(2, "0")}
-          </p>
+          <FlipNumber
+            value={String(c.value).padStart(2, "0")}
+            className="text-3xl font-light text-primary tabular-nums md:text-4xl"
+          />
           <p className="eyebrow mt-2 text-[0.6rem]">{c.label}</p>
         </div>
       ))}
@@ -273,6 +275,122 @@ function PersonCard({
   );
 }
 
+type StoryMilestone = { icon: LucideIcon; date: string; title: string; text: string };
+
+const STORY: StoryMilestone[] = [
+  {
+    icon: Coffee,
+    date: "Primavera de 2019",
+    title: "Como nos conhecemos",
+    text: "Um café entre amigos que se transformou numa conversa sem fim.",
+  },
+  {
+    icon: Heart,
+    date: "Verão de 2020",
+    title: "O primeiro encontro",
+    text: "Um pôr-do-sol à beira-mar e a certeza de que algo começava.",
+  },
+  {
+    icon: Gem,
+    date: "Inverno de 2024",
+    title: "O pedido",
+    text: "De joelhos, sob as luzes da cidade, a pergunta mais importante.",
+  },
+  {
+    icon: Sparkles,
+    date: "Em breve",
+    title: "O grande dia",
+    text: "O início da nossa maior aventura — convosco a testemunhar.",
+  },
+];
+
+/** Timeline vertical com linha dourada que se desenha com o scroll. */
+function StoryTimeline() {
+  const ref = useRef<HTMLOListElement | null>(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const passed = vh * 0.7 - rect.top;
+      setProgress(Math.min(1, Math.max(0, passed / (rect.height * 0.9))));
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  return (
+    <ol ref={ref} className="relative mx-auto max-w-3xl">
+      {/* Linha vertical central */}
+      <span className="absolute top-0 bottom-0 left-4 w-px bg-gold/15 md:left-1/2 md:-translate-x-1/2" />
+      <span
+        className="absolute top-0 bottom-0 left-4 w-px origin-top bg-gold/70 transition-transform duration-300 ease-out md:left-1/2 md:-translate-x-1/2"
+        style={{ transform: `scaleY(${progress})` }}
+      />
+      {STORY.map((m, i) => {
+        const Icon = m.icon;
+        const left = i % 2 === 0;
+        return (
+          <li key={m.title} className="relative pb-12 pl-14 last:pb-0 md:w-1/2 md:pl-0"
+            style={{ marginLeft: left ? undefined : "auto" }}
+          >
+            {/* Nó na linha */}
+            <span className="absolute top-6 left-4 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-gold/60 bg-background md:left-auto md:right-0 md:translate-x-1/2"
+              style={left ? undefined : { left: 0, right: "auto", transform: "translateX(-50%)" }}
+            >
+              <Icon className="h-4 w-4 text-primary" strokeWidth={1.5} />
+            </span>
+            <Reveal delay={i * 100} className={left ? "md:pr-14 md:text-right" : "md:pl-14"}>
+              <div className="card-elegant p-6">
+                <p className="font-sans text-[0.65rem] tracking-[0.3em] text-primary uppercase">
+                  {m.date}
+                </p>
+                <p className="mt-2 text-xl font-light">{m.title}</p>
+                <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">
+                  {m.text}
+                </p>
+              </div>
+            </Reveal>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+type PartyMember = { name: string; role: string };
+
+const PARTY: PartyMember[] = [
+  { name: "Miguel Ferreira", role: "Padrinho" },
+  { name: "Inês Rodrigues", role: "Madrinha" },
+  { name: "Tiago Almeida", role: "Padrinho" },
+  { name: "Beatriz Santos", role: "Dama de Honor" },
+];
+
+function initials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
 function HomePage() {
   const { slug } = Route.useParams();
   const { tipo } = Route.useSearch();
@@ -436,29 +554,69 @@ function HomePage() {
           <VineDivider className="my-6" />
           <Section title="Os Noivos" wide vines="b">
             <div className="grid gap-8 sm:grid-cols-2">
-              <PersonCard
-                role="A Noiva"
-                name={d("bride_name")}
-                parents={
-                  [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
+              {[
+                {
+                  role: "A Noiva",
+                  name: d("bride_name"),
+                  parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
                     ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
-                    : ""
-                }
-                photo={galleryUrls[0]}
-              />
-              <PersonCard
-                role="O Noivo"
-                name={d("groom_name")}
-                parents={
-                  [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
+                    : "",
+                  photo: galleryUrls[0],
+                },
+                {
+                  role: "O Noivo",
+                  name: d("groom_name"),
+                  parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
                     ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
-                    : ""
-                }
-                photo={galleryUrls[1]}
-              />
+                    : "",
+                  photo: galleryUrls[1],
+                },
+              ].map((p, i) => (
+                <Reveal key={p.role} delay={i * 100}>
+                  <PersonCard role={p.role} name={p.name} parents={p.parents} photo={p.photo} />
+                </Reveal>
+              ))}
             </div>
           </Section>
         </>
+      )}
+
+      {event.event_type === "casamento" && (
+        <Section title="A Nossa História" eyebrow="O caminho até aqui" wide dark vines="b">
+          <StoryTimeline />
+        </Section>
+      )}
+
+      {event.event_type === "casamento" && (
+        <Section title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {PARTY.map((m, i) => {
+              const photo = galleryUrls[2 + i];
+              return (
+                <Reveal key={m.name} delay={i * 100}>
+                  <div className="card-elegant p-6 text-center">
+                    {photo ? (
+                      <img
+                        src={photo.url}
+                        alt={m.name}
+                        loading="lazy"
+                        className="mx-auto h-24 w-24 rounded-full border border-gold/50 object-cover"
+                      />
+                    ) : (
+                      <span className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-gold/60 bg-gold/10 text-2xl font-light text-primary">
+                        {initials(m.name)}
+                      </span>
+                    )}
+                    <p className="mt-4 text-lg font-light">{m.name}</p>
+                    <p className="mt-1 font-sans text-[0.65rem] tracking-[0.3em] text-primary uppercase">
+                      {m.role}
+                    </p>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </Section>
       )}
 
       <Ornament />
