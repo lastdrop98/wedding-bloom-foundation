@@ -23,6 +23,7 @@ import { Lightbox } from "@/components/invite/Lightbox";
 import { Ornament } from "@/components/invite/Ornament";
 import { FlourishFrame } from "@/components/invite/Flourish";
 import { FlipNumber } from "@/components/invite/FlipNumber";
+import { SectionVines, VineDivider } from "@/components/invite/Vines";
 import { Reveal } from "@/components/invite/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,15 +46,18 @@ function Section({
   children,
   wide,
   dark,
+  vines,
 }: {
   title: string;
   eyebrow?: string;
   children: React.ReactNode;
   wide?: boolean;
   dark?: boolean;
+  vines?: "a" | "b" | "c";
 }) {
   return (
     <section className={`relative px-6 py-20 md:py-24 ${dark ? "section-dark" : ""}`}>
+      {vines && <SectionVines variant={vines} />}
       {dark && <FlourishFrame size={80} />}
       <Reveal className={wide ? "relative mx-auto max-w-5xl" : "relative mx-auto max-w-2xl"}>
         <div className="flex flex-col items-center text-center">
