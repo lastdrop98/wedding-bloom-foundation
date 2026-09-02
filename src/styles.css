@@ -457,7 +457,7 @@
   }
 }
 
-/* ——— As linhas decorativas "correm" continuamente do início ao fim ——— */
+/* ——— As linhas decorativas "correm" continuamente, douradas e visíveis ——— */
 @keyframes vine-run {
   from {
     stroke-dashoffset: 1;
@@ -468,13 +468,15 @@
 }
 
 .vine-run [data-draw] {
-  stroke-dasharray: 0.14 0.86;
-  animation: vine-run 3.5s linear infinite;
+  stroke-dasharray: 0.22 0.78 !important;
+  stroke-width: 2 !important;
+  filter: drop-shadow(0 0 4px var(--color-gold));
+  animation: vine-run 3s linear infinite !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .vine-run [data-draw] {
-    animation: none;
-    stroke-dasharray: none;
+    animation: none !important;
+    stroke-dasharray: none !important;
   }
 }
