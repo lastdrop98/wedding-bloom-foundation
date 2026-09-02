@@ -18,7 +18,7 @@ const STROKE = {
 };
 
 /** Ramo vertical fino e orgânico — transição decorativa entre secções. */
-export function VineVertical({ className, delay, opacity = 0.2, flip }: VineProps) {
+export function VineVertical({ className, delay, opacity = 0.42, flip }: VineProps) {
   return (
     <DrawnSvg
       viewBox="0 0 60 400"
@@ -65,7 +65,7 @@ export function VineVertical({ className, delay, opacity = 0.2, flip }: VineProp
 }
 
 /** Vinha horizontal larga — atravessa por trás do conteúdo. */
-export function VineHorizontal({ className, delay, opacity = 0.16, flip }: VineProps) {
+export function VineHorizontal({ className, delay, opacity = 0.4, flip }: VineProps) {
   return (
     <DrawnSvg
       viewBox="0 0 800 160"
@@ -111,7 +111,7 @@ export function VineHorizontal({ className, delay, opacity = 0.16, flip }: VineP
 }
 
 /** Ramo em arco (art nouveau) — elemento de fundo a meio de secções. */
-export function VineBranch({ className, delay, opacity = 0.18, flip }: VineProps) {
+export function VineBranch({ className, delay, opacity = 0.42, flip }: VineProps) {
   return (
     <DrawnSvg
       viewBox="0 0 320 320"
@@ -178,7 +178,7 @@ export function SectionVines({
             <VineBranch />
           </div>
           <div className="absolute right-0 bottom-0 h-64 w-64 opacity-90">
-            <VineBranch flip delay={300} opacity={0.14} />
+            <VineBranch flip delay={300} opacity={0.32} />
           </div>
         </>
       )}
@@ -190,10 +190,10 @@ export function SectionVines({
       {variant === "c" && (
         <>
           <div className="absolute top-0 left-1/2 h-full w-16 -translate-x-1/2">
-            <VineVertical opacity={0.12} />
+            <VineVertical opacity={0.3} />
           </div>
           <div className="absolute -right-8 bottom-4 h-56 w-56">
-            <VineBranch flip delay={400} opacity={0.14} />
+            <VineBranch flip delay={400} opacity={0.32} />
           </div>
         </>
       )}
