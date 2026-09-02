@@ -577,7 +577,7 @@ function Index() {
             loading="lazy"
             className="size-full scale-x-[-1] object-cover object-center"
           />
-          <div className="veil-deep absolute inset-0" />
+          <div className="veil-soft absolute inset-0" />
         </div>
 
         <SectionVines variant="b" className="opacity-45" />
