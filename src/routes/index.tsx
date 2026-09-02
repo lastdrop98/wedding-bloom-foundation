@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/accordion";
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1761211488163-67bc659a8180?fm=jpg&q=80&w=2400&auto=format&fit=crop";
+  const HERO_IMAGE = "https://images.unsplash.com/photo-1713971384262-8e76b9e9e92d?fm=jpg&q=80&w=2400&auto=format&fit=crop";
 const STEPS_IMAGE =
   "https://images.unsplash.com/photo-1525441273400-056e9c7517b3?fm=jpg&q=80&w=2400&auto=format&fit=crop";
 
@@ -53,15 +53,13 @@ export const Route = createFileRoute("/")({
         content: "Convites digitais elegantes e páginas web feitas à medida por nós.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: HERO_IMAGE },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: HERO_IMAGE },
+       { property: "og:image", content: "/og-image.png" }, { name: "twitter:card", content: "summary_large_image" }, { name: "twitter:image", content: "/og-image.png" },
     ],
   }),
   component: Index,
 });
 
-const WHATSAPP_NUMBER = "+258840000000";
+const WHATSAPP_NUMBER = "+258847404160";
 
 const TEMPLATES = [
   {
@@ -164,13 +162,7 @@ function Index() {
       {/* ——— HERO ——— */}
       <section className="section-dark relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24">
         <div className="absolute inset-0">
-          <img
-            src={HERO_IMAGE}
-            alt="Casal ao pôr-do-sol"
-            className="ken-burns size-full object-cover object-[50%_35%]"
-            fetchPriority="high"
-          />
-          <div className="veil-hero absolute inset-0" />
+          (muda o alt e acrescenta uma camada extra escura por cima): <img src={HERO_IMAGE} alt="Eclipse solar" className="ken-burns size-full object-cover object-center" fetchPriority="high" /> <div className="veil-hero absolute inset-0" /> <div className="absolute inset-0 bg-ink/40" />
         </div>
 
         <SectionVines variant="a" />
@@ -562,13 +554,7 @@ function Index() {
       {/* ——— RODAPÉ ——— */}
       <footer className="section-dark relative overflow-hidden px-6 py-20">
         <div className="absolute inset-0">
-          <img
-            src={HERO_IMAGE}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            className="size-full scale-x-[-1] object-cover object-[50%_80%]"
-          />
+          <img src={HERO_IMAGE} alt="" aria-hidden="true" loading="lazy" className="size-full scale-x-[-1] object-cover object-center" />
           <div className="veil-deep absolute inset-0" />
         </div>
 
