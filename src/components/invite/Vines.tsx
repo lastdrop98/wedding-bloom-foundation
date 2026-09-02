@@ -167,7 +167,10 @@ export function SectionVines({
   return (
     <div
       aria-hidden="true"
-      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
+      className={cn(
+        "vine-glow pointer-events-none absolute inset-0 overflow-hidden",
+        className,
+      )}
     >
       {variant === "a" && (
         <>
@@ -203,7 +206,7 @@ export function VineDivider({ className }: { className?: string | undefined }) {
   return (
     <div
       aria-hidden="true"
-      className={cn("pointer-events-none mx-auto h-28 w-14 opacity-70", className)}
+      className={cn("vine-glow pointer-events-none mx-auto h-28 w-14 opacity-70", className)}
     >
       <VineVertical opacity={0.35} />
     </div>
