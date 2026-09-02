@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/accordion";
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1713971384262-8e76b9e9e92d?fm=jpg&q=80&w=2400&auto=format&fit=crop";
+  "https://images.unsplash.com/photo-1529788295308-1eace6f67388?fm=jpg&q=80&w=2400&auto=format&fit=crop";
 const STEPS_IMAGE =
   "https://images.unsplash.com/photo-1525441273400-056e9c7517b3?fm=jpg&q=80&w=2400&auto=format&fit=crop";
 
@@ -170,11 +170,11 @@ function Index() {
             className="ken-burns size-full object-cover object-center"
             fetchPriority="high"
           />
-          <div className="veil-hero absolute inset-0" />
-          <div className="absolute inset-0 bg-ink/40" />
+          <div className="veil-hero absolute inset-0 opacity-70" />
         </div>
 
-        <SectionVines variant="a" className="opacity-70" />
+        <SectionVines variant="a" className="opacity-80" />
+        <SectionVines variant="c" className="opacity-50 rotate-180" />
         <FlourishFrame size={120} />
 
         <div className="relative z-10 mx-auto max-w-3xl text-center">
@@ -246,6 +246,7 @@ function Index() {
       {/* ——— TUDO O QUE PRECISA ——— */}
       <section className="relative overflow-hidden bg-background px-6 py-28">
         <SectionVines variant="b" className="opacity-60" />
+        <SectionVines variant="a" className="opacity-35 rotate-180" />
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal>
@@ -291,6 +292,7 @@ function Index() {
         </div>
 
         <SectionVines variant="c" className="opacity-70" />
+        <SectionVines variant="b" className="opacity-40 rotate-180" />
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal>
@@ -325,6 +327,7 @@ function Index() {
       {/* ——— CATÁLOGO DE TEMPLATES ——— */}
       <section ref={catalogRef} className="relative overflow-hidden bg-background px-6 py-28">
         <SectionVines variant="b" className="opacity-60" />
+        <SectionVines variant="c" className="opacity-35 rotate-180" />
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal>
@@ -395,6 +398,7 @@ function Index() {
       {/* ——— GESTÃO DE CONVIDADOS (mockup) ——— */}
       <section className="section-dark relative overflow-hidden px-6 py-28">
         <SectionVines variant="a" className="opacity-70" />
+        <SectionVines variant="b" className="opacity-40 rotate-180" />
 
         <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-2">
           <Reveal>
@@ -458,6 +462,7 @@ function Index() {
       {/* ——— PÁGINAS WEB PERSONALIZADAS ——— */}
       <section className="relative overflow-hidden bg-background px-6 py-28">
         <SectionVines variant="c" className="opacity-55" />
+        <SectionVines variant="a" className="opacity-30 rotate-180" />
 
         <div className="relative z-10 mx-auto max-w-4xl">
           <Reveal>
@@ -495,6 +500,7 @@ function Index() {
       {/* ——— FAQ ——— */}
       <section className="section-dark relative overflow-hidden px-6 py-28">
         <SectionVines variant="b" className="opacity-70" />
+        <SectionVines variant="c" className="opacity-40 rotate-180" />
         <FlourishFrame size={100} />
 
         <div className="relative z-10 mx-auto max-w-3xl">
@@ -528,6 +534,7 @@ function Index() {
       {/* ——— PORTFÓLIO ——— */}
       <section className="relative overflow-hidden bg-background px-6 py-28">
         <SectionVines variant="a" className="opacity-50" />
+        <SectionVines variant="b" className="opacity-30 rotate-180" />
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal>
@@ -574,6 +581,7 @@ function Index() {
         </div>
 
         <SectionVines variant="b" className="opacity-45" />
+        <SectionVines variant="c" className="opacity-30 rotate-180" />
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <Ornament className="mx-auto" />
