@@ -67,6 +67,13 @@
   --cream: oklch(0.975 0.012 88);
   --ink: oklch(0.12 0.01 70);
 
+  /* tons quentes (terracota / âmbar / bordô) */
+  --warm: oklch(0.58 0.14 45);
+  --warm-soft: oklch(0.72 0.1 48);
+  --amber: oklch(0.72 0.13 65);
+  --wine: oklch(0.38 0.11 20);
+
+
   --primary: oklch(0.6 0.11 76);
   --primary-foreground: oklch(0.99 0.005 90);
   --secondary: oklch(0.96 0.008 90);
