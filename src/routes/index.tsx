@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/accordion";
 
 const HERO_IMAGE =
-  const HERO_IMAGE = "https://images.unsplash.com/photo-1713971384262-8e76b9e9e92d?fm=jpg&q=80&w=2400&auto=format&fit=crop";
+  "https://images.unsplash.com/photo-1713971384262-8e76b9e9e92d?fm=jpg&q=80&w=2400&auto=format&fit=crop";
 const STEPS_IMAGE =
   "https://images.unsplash.com/photo-1525441273400-056e9c7517b3?fm=jpg&q=80&w=2400&auto=format&fit=crop";
 
@@ -53,7 +53,9 @@ export const Route = createFileRoute("/")({
         content: "Convites digitais elegantes e páginas web feitas à medida por nós.",
       },
       { property: "og:type", content: "website" },
-       { property: "og:image", content: "/og-image.png" }, { name: "twitter:card", content: "summary_large_image" }, { name: "twitter:image", content: "/og-image.png" },
+      { property: "og:image", content: "/og-image.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/og-image.png" },
     ],
   }),
   component: Index,
@@ -162,10 +164,17 @@ function Index() {
       {/* ——— HERO ——— */}
       <section className="section-dark relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24">
         <div className="absolute inset-0">
-          (muda o alt e acrescenta uma camada extra escura por cima): <img src={HERO_IMAGE} alt="Eclipse solar" className="ken-burns size-full object-cover object-center" fetchPriority="high" /> <div className="veil-hero absolute inset-0" /> <div className="absolute inset-0 bg-ink/40" />
+          <img
+            src={HERO_IMAGE}
+            alt="Eclipse solar"
+            className="ken-burns size-full object-cover object-center"
+            fetchPriority="high"
+          />
+          <div className="veil-hero absolute inset-0" />
+          <div className="absolute inset-0 bg-ink/40" />
         </div>
 
-        <SectionVines variant="a" />
+        <SectionVines variant="a" className="opacity-70" />
         <FlourishFrame size={120} />
 
         <div className="relative z-10 mx-auto max-w-3xl text-center">
@@ -236,7 +245,7 @@ function Index() {
 
       {/* ——— TUDO O QUE PRECISA ——— */}
       <section className="relative overflow-hidden bg-background px-6 py-28">
-        <SectionVines variant="b" className="opacity-40" />
+        <SectionVines variant="b" className="opacity-60" />
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal>
@@ -281,7 +290,7 @@ function Index() {
           <div className="veil-soft absolute inset-0" />
         </div>
 
-        <SectionVines variant="c" />
+        <SectionVines variant="c" className="opacity-70" />
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal>
@@ -315,7 +324,7 @@ function Index() {
 
       {/* ——— CATÁLOGO DE TEMPLATES ——— */}
       <section ref={catalogRef} className="relative overflow-hidden bg-background px-6 py-28">
-        <SectionVines variant="b" className="opacity-40" />
+        <SectionVines variant="b" className="opacity-60" />
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal>
@@ -385,7 +394,7 @@ function Index() {
 
       {/* ——— GESTÃO DE CONVIDADOS (mockup) ——— */}
       <section className="section-dark relative overflow-hidden px-6 py-28">
-        <SectionVines variant="a" />
+        <SectionVines variant="a" className="opacity-70" />
 
         <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-2">
           <Reveal>
@@ -448,7 +457,7 @@ function Index() {
 
       {/* ——— PÁGINAS WEB PERSONALIZADAS ——— */}
       <section className="relative overflow-hidden bg-background px-6 py-28">
-        <SectionVines variant="c" className="opacity-35" />
+        <SectionVines variant="c" className="opacity-55" />
 
         <div className="relative z-10 mx-auto max-w-4xl">
           <Reveal>
@@ -485,7 +494,7 @@ function Index() {
 
       {/* ——— FAQ ——— */}
       <section className="section-dark relative overflow-hidden px-6 py-28">
-        <SectionVines variant="b" />
+        <SectionVines variant="b" className="opacity-70" />
         <FlourishFrame size={100} />
 
         <div className="relative z-10 mx-auto max-w-3xl">
@@ -518,7 +527,7 @@ function Index() {
 
       {/* ——— PORTFÓLIO ——— */}
       <section className="relative overflow-hidden bg-background px-6 py-28">
-        <SectionVines variant="a" className="opacity-30" />
+        <SectionVines variant="a" className="opacity-50" />
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal>
@@ -554,11 +563,17 @@ function Index() {
       {/* ——— RODAPÉ ——— */}
       <footer className="section-dark relative overflow-hidden px-6 py-20">
         <div className="absolute inset-0">
-          <img src={HERO_IMAGE} alt="" aria-hidden="true" loading="lazy" className="size-full scale-x-[-1] object-cover object-center" />
+          <img
+            src={HERO_IMAGE}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="size-full scale-x-[-1] object-cover object-center"
+          />
           <div className="veil-deep absolute inset-0" />
         </div>
 
-        <SectionVines variant="b" className="opacity-25" />
+        <SectionVines variant="b" className="opacity-45" />
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <Ornament className="mx-auto" />
