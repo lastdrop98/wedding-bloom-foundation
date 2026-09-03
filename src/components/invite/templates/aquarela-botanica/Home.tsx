@@ -126,6 +126,7 @@ function LocationCard({
 function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: number }) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  const [guestId, setGuestId] = useState<string | null>(null);
   const [form, setForm] = useState({
     guest_name: "",
     guest_phone: "",
@@ -133,6 +134,27 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
     guest_count: String(defaultCount),
     message: "",
   });
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get("g");
+    if (!token) return;
+    supabase
+      .from("guests")
+      .select("id, name, invited_count")
+      .eq("token", token)
+      .eq("event_id", event.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setGuestId(data.id);
+          setForm((f) => ({
+            ...f,
+            guest_name: data.name,
+            guest_count: String(data.invited_count ?? f.guest_count),
+          }));
+        }
+      });
+  }, [event.id]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -145,6 +167,12 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
       guest_count: Number(form.guest_count) || 1,
       message: form.message || null,
     });
+    if (!error && guestId) {
+      await supabase
+        .from("guests")
+        .update({ rsvp_status: form.attending === "sim" ? "sim" : "nao" })
+        .eq("id", guestId);
+    }
     setBusy(false);
     if (error) {
       toast.error("Não foi possível enviar a confirmação.");
@@ -171,6 +199,7 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
         <Input
           id="guest_name"
           required
+          readOnly={Boolean(guestId)}
           value={form.guest_name}
           onChange={(e) => setForm({ ...form, guest_name: e.target.value })}
         />
