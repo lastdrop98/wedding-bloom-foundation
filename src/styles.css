@@ -17,6 +17,7 @@
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
   --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
   --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-script: "Great Vibes", "Cormorant Garamond", cursive;
   --tracking-wider: 0.12em;
 
   --color-background: var(--background);
@@ -47,6 +48,11 @@
   --color-warm-soft: var(--warm-soft);
   --color-amber: var(--amber);
   --color-wine: var(--wine);
+  --color-rose: var(--rose);
+  --color-sage: var(--sage);
+  --color-gold-light: var(--gold-light);
+
+
 
 }
 
@@ -71,7 +77,12 @@
   --warm: oklch(0.58 0.14 45);
   --warm-soft: oklch(0.72 0.1 48);
   --amber: oklch(0.72 0.13 65);
-  --wine: oklch(0.38 0.11 20);
+ --wine: oklch(0.38 0.11 20);
+
+  /* aquarela botânica — rosa empoeirado / verde-sálvia / dourado suave */
+  --rose: oklch(0.74 0.075 15);
+  --sage: oklch(0.7 0.045 150);
+  --gold-light: oklch(0.84 0.07 88);
 
 
   --primary: oklch(0.6 0.11 76);
@@ -478,5 +489,120 @@
   .vine-run [data-draw] {
     animation: none !important;
     stroke-dasharray: none !important;
+  }
+}
+
+/* ═══════════ Template "aquarela-botanica" ═══════════ */
+
+/* Âmbito de cores claro, romântico e floral. */
+@utility aquarela {
+  --background: oklch(0.995 0.004 60);
+  --foreground: oklch(0.3 0.02 20);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.3 0.02 20);
+  --primary: oklch(0.6 0.075 15);
+  --primary-foreground: oklch(0.99 0.004 60);
+  --muted: oklch(0.97 0.008 60);
+  --muted-foreground: oklch(0.52 0.025 30);
+  --border: color-mix(in oklab, var(--sage) 40%, transparent);
+  --input: color-mix(in oklab, var(--sage) 40%, transparent);
+  --ring: var(--rose);
+
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Nomes do casal em script fluido. */
+@utility script-names {
+  font-family: var(--font-script);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+/* Cartão suave com bordo tipo aguarela. */
+@utility card-aquarela {
+  border: 1px solid color-mix(in oklab, var(--sage) 45%, transparent);
+  border-radius: 1.25rem 0.5rem 1.25rem 0.5rem;
+  background: color-mix(in oklab, var(--card) 96%, var(--rose));
+  box-shadow: 0 18px 44px -30px color-mix(in oklab, var(--rose) 70%, transparent);
+  transition:
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--rose) 60%, transparent);
+    box-shadow: 0 26px 52px -26px color-mix(in oklab, var(--rose) 80%, transparent);
+  }
+}
+
+/* Botão com contorno fino irregular, tipo pincelada. */
+@utility btn-brush {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2.25rem;
+  border: 1px solid color-mix(in oklab, var(--rose) 65%, transparent);
+  border-radius: 999px 999px 999px 999px / 60% 60% 60% 60%;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--rose) 80%, black);
+  background: color-mix(in oklab, white 82%, var(--rose));
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--sage) 70%, transparent);
+    background: color-mix(in oklab, white 68%, var(--rose));
+  }
+}
+
+/* Véu claro/rosado sobre a fotografia de capa. */
+@utility veil-rose {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklab, white 62%, transparent) 0%,
+    color-mix(in oklab, var(--rose) 32%, transparent) 45%,
+    color-mix(in oklab, white 82%, transparent) 100%
+  );
+}
+
+/* Pétalas a cair. */
+@keyframes petal-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(6vw, 112vh, 0) rotate(320deg);
+    opacity: 0;
+  }
+}
+
+@utility petal-fall {
+  border-radius: 60% 20% 60% 20%;
+  animation-name: petal-fall;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petal-fall {
+    animation: none;
+    opacity: 0;
   }
 }

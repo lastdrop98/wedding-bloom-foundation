@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { FlourishFrame } from "@/components/invite/Flourish";
 import { Ornament } from "@/components/invite/Ornament";
+import { AquarelaCover } from "@/components/invite/templates/aquarela-botanica/Cover";
 import {
   AUDIO_BUCKET,
   GALLERY_BUCKET,
@@ -65,6 +66,10 @@ function CoverPage() {
         <p className="font-sans text-sm text-muted-foreground">Verifique o endereço que recebeu.</p>
       </div>
     );
+  }
+
+  if (event.template === "aquarela-botanica") {
+    return <AquarelaCover event={event} slug={slug} inviteType={inviteType} />;
   }
 
   const badge = inviteBadgeLabel(inviteType);
