@@ -77,7 +77,12 @@
   --warm: oklch(0.58 0.14 45);
   --warm-soft: oklch(0.72 0.1 48);
   --amber: oklch(0.72 0.13 65);
-  --wine: oklch(0.38 0.11 20);
+ --wine: oklch(0.38 0.11 20);
+
+  /* aquarela botânica — rosa empoeirado / verde-sálvia / dourado suave */
+  --rose: oklch(0.74 0.075 15);
+  --sage: oklch(0.7 0.045 150);
+  --gold-light: oklch(0.84 0.07 88);
 
 
   --primary: oklch(0.6 0.11 76);
