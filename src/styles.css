@@ -17,6 +17,7 @@
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
   --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
   --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-script: "Great Vibes", "Cormorant Garamond", cursive;
   --tracking-wider: 0.12em;
 
   --color-background: var(--background);
@@ -47,6 +48,11 @@
   --color-warm-soft: var(--warm-soft);
   --color-amber: var(--amber);
   --color-wine: var(--wine);
+  --color-rose: var(--rose);
+  --color-sage: var(--sage);
+  --color-gold-light: var(--gold-light);
+
+
 
 }
 
