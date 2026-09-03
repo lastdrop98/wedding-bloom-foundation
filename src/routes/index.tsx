@@ -61,7 +61,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP_NUMBER = "847404160";
+const WHATSAPP_NUMBER = "258847404160";
 
 const TEMPLATES = [
   {
