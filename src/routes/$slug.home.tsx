@@ -26,6 +26,7 @@ import { FlourishFrame } from "@/components/invite/Flourish";
 import { FlipNumber } from "@/components/invite/FlipNumber";
 import { SectionVines, VineDivider } from "@/components/invite/Vines";
 import { Reveal } from "@/components/invite/Reveal";
+import { AquarelaHome } from "@/components/invite/templates/aquarela-botanica/Home";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -442,6 +443,10 @@ function HomePage() {
         <h1 className="text-3xl font-light">Convite não encontrado</h1>
       </div>
     );
+  }
+
+  if (event.template === "aquarela-botanica") {
+    return <AquarelaHome event={event} slug={slug} inviteType={inviteType} />;
   }
 
   const badge = inviteBadgeLabel(inviteType);
