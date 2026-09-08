@@ -72,6 +72,14 @@ const TEMPLATES = [
       "Elegância dramática com fotografia a ecrã inteiro, tipografia serif e acentos dourados sobre preto.",
     features: ["Fotografia em ecrã inteiro", "Animações suaves", "Paleta preto & dourado"],
   },
+  {
+    id: "aquarela-botanica",
+    name: "Aguarela Botânica",
+    badge: "Novo",
+    description:
+      "Romance e delicadeza com flores em aguarela, tipografia script fluida e tons suaves de rosa e verde-sálvia.",
+    features: ["Flores em aguarela", "Tons suaves e românticos", "Tipografia script elegante"],
+  },
 ];
 
 const FEATURES = [
