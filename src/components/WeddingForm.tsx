@@ -11,7 +11,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+
+const TEMPLATE_OPTIONS = [
+  { value: "golden-classic", label: "Noir & Ouro" },
+  { value: "aquarela-botanica", label: "Aguarela Botânica" },
+];
 
 type FieldKind = "text" | "date" | "datetime" | "textarea";
 
