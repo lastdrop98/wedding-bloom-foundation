@@ -227,6 +227,22 @@ export function WeddingForm({
                       value={values[id] ?? ""}
                       onChange={(e) => set(id, e.target.value)}
                     />
+                  ) : f.name === "template" ? (
+                    <Select
+                      value={values[id] || "golden-classic"}
+                      onValueChange={(value) => set(id, value)}
+                    >
+                      <SelectTrigger id={id}>
+                        <SelectValue placeholder="Escolha o template" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {TEMPLATE_OPTIONS.map((opt) => (
+                          <SelectItem key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   ) : (
                     <Input
                       id={id}
