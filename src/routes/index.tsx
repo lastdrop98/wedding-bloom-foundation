@@ -352,53 +352,102 @@ function Index() {
           </Reveal>
 
           <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {TEMPLATES.map((template, i) => (
-              <Reveal key={template.id} delay={i * 120}>
-                <article className="card-elegant flex h-full flex-col overflow-hidden">
-                  <div className="relative aspect-[4/5] overflow-hidden bg-ink">
-                    <div className="absolute inset-0 bg-linear-to-b from-ink via-ink/95 to-gold/20" />
-                    {template.badge ? (
-                      <span className="absolute top-4 left-4 z-10 rounded-full bg-warm px-3 py-1 font-sans text-[0.6rem] tracking-[0.2em] text-cream uppercase">
-                        {template.badge}
-                      </span>
-                    ) : null}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                      <span className="eyebrow text-gold/70">Template</span>
-                      <h3 className="mt-4 text-3xl font-light tracking-wide text-cream">{template.name}</h3>
-                      <Ornament className="mt-6" />
+            {TEMPLATES.map((template, i) => {
+              const isAquarela = template.id === "aquarela-botanica";
+              return (
+                <Reveal key={template.id} delay={i * 120}>
+                  <article className="card-elegant flex h-full flex-col overflow-hidden">
+                    <div
+                      className={cn(
+                        "relative aspect-[4/5] overflow-hidden",
+                        isAquarela ? "bg-rose/10" : "bg-ink",
+                      )}
+                    >
+                      <div
+                        className={cn(
+                          "absolute inset-0",
+                          isAquarela
+                            ? "bg-linear-to-b from-rose/20 via-cream/95 to-sage/20"
+                            : "bg-linear-to-b from-ink via-ink/95 to-gold/20",
+                        )}
+                      />
+                      {template.badge ? (
+                        <span
+                          className={cn(
+                            "absolute top-4 left-4 z-10 rounded-full px-3 py-1 font-sans text-[0.6rem] tracking-[0.2em] uppercase",
+                            isAquarela ? "bg-sage text-cream" : "bg-warm text-cream",
+                          )}
+                        >
+                          {template.badge}
+                        </span>
+                      ) : null}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+                        <span className={cn("eyebrow", isAquarela ? "text-rose/70" : "text-gold/70")}>
+                          Template
+                        </span>
+                        <h3
+                          className={cn(
+                            "mt-4 text-3xl font-light tracking-wide",
+                            isAquarela ? "text-ink" : "text-cream",
+                          )}
+                        >
+                          {template.name}
+                        </h3>
+                        <Ornament className="mt-6" />
+                      </div>
+                      <div className="absolute right-4 bottom-4 left-4 flex gap-2">
+                        <span
+                          className={cn(
+                            "h-1.5 flex-1 rounded-full",
+                            isAquarela ? "bg-rose/30" : "bg-gold/30",
+                          )}
+                        />
+                        <span
+                          className={cn(
+                            "h-1.5 flex-1 rounded-full",
+                            isAquarela ? "bg-sage/30" : "bg-warm/30",
+                          )}
+                        />
+                        <span
+                          className={cn(
+                            "h-1.5 flex-1 rounded-full",
+                            isAquarela ? "bg-gold-light/30" : "bg-gold/10",
+                          )}
+                        />
+                      </div>
                     </div>
-                    <div className="absolute right-4 bottom-4 left-4 flex gap-2">
-                      <span className="h-1.5 flex-1 rounded-full bg-gold/30" />
-                      <span className="h-1.5 flex-1 rounded-full bg-warm/30" />
-                      <span className="h-1.5 flex-1 rounded-full bg-gold/10" />
-                    </div>
-                  </div>
 
-                  <div className="flex flex-1 flex-col p-7">
-                    <p className="font-sans text-sm leading-relaxed text-muted-foreground">{template.description}</p>
-                    <ul className="mt-5 space-y-2">
-                      {template.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2 font-sans text-xs text-ink/80">
-                          <Sparkles className="size-3.5 text-gold" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-auto pt-7">
-                      <a
-                        href={whatsappUrl(`Olá! Gostaria de um convite no estilo ${template.name}.`)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-sm border border-gold/70 px-6 py-3.5 font-sans text-[0.65rem] tracking-[0.25em] text-gold uppercase transition-all duration-500 hover:bg-gold hover:text-ink"
-                      >
-                        <MessageCircle className="size-3.5" />
-                        Quero Este Estilo
-                      </a>
+                    <div className="flex flex-1 flex-col p-7">
+                      <p className="font-sans text-sm leading-relaxed text-muted-foreground">{template.description}</p>
+                      <ul className="mt-5 space-y-2">
+                        {template.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 font-sans text-xs text-ink/80">
+                            <Sparkles className={cn("size-3.5", isAquarela ? "text-rose" : "text-gold")} />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-auto pt-7">
+                        <a
+                          href={whatsappUrl(`Olá! Gostaria de um convite no estilo ${template.name}.`)}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={cn(
+                            "inline-flex w-full items-center justify-center gap-2 rounded-sm border px-6 py-3.5 font-sans text-[0.65rem] tracking-[0.25em] uppercase transition-all duration-500",
+                            isAquarela
+                              ? "border-rose/70 text-rose hover:bg-rose hover:text-cream"
+                              : "border-gold/70 text-gold hover:bg-gold hover:text-ink",
+                          )}
+                        >
+                          <MessageCircle className="size-3.5" />
+                          Quero Este Estilo
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
