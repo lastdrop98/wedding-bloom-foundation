@@ -762,6 +762,11 @@ function HomePage() {
               {d("bank_account") && <div>Conta: {d("bank_account")}</div>}
               {d("bank_nib") && <div>NIB/IBAN: {d("bank_nib")}</div>}
             </dl>
+            {d("bank_nib") && (
+              <GiftQr
+                text={`Banco: ${d("bank_name") ?? ""}\nNIB: ${d("bank_nib")}\nTitular: ${d("bank_holder") ?? ""}`}
+              />
+            )}
           </div>
           {gifts.map((g) => (
             <div key={g.id} className="card-elegant p-7">
@@ -776,6 +781,13 @@ function HomePage() {
           ))}
         </div>
       </Section>
+
+      <Ornament />
+
+      <Section title="Livro de Recados" vines="c">
+        <Guestbook eventId={event.id} />
+      </Section>
+
 
       <Ornament />
 
