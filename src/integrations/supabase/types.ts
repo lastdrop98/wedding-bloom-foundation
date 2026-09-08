@@ -144,6 +144,76 @@ export type Database = {
           },
         ]
       }
+      guestbook: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          message: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          message: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          message?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guestbook_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guests: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          invited_count: number
+          name: string
+          rsvp_status: string
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          invited_count?: number
+          name: string
+          rsvp_status?: string
+          token?: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          invited_count?: number
+          name?: string
+          rsvp_status?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guests_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rsvps: {
         Row: {
           attending: boolean
