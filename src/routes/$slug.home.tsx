@@ -455,8 +455,18 @@ function HomePage() {
       content.gallery.map(async (g) => ({
         url: await signedUrl(GALLERY_BUCKET, g.image_path),
         caption: g.caption,
+        mediaType: g.media_type,
       })),
     ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => Boolean(i.url))));
+  }, [content]);
+
+  useEffect(() => {
+    if (!content?.gifts.length) return;
+    Promise.all(
+      content.gifts.map(async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const),
+    ).then((pairs) =>
+      setGiftPhotos(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])))),
+    );
   }, [content]);
 
   if (isLoading) {
