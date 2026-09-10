@@ -790,17 +790,35 @@ function HomePage() {
               />
             )}
           </div>
-          {gifts.map((g) => (
-            <div key={g.id} className="card-elegant p-7">
-              <p className="text-xl font-light">{g.title}</p>
-              {g.description && (
-                <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
-              )}
-              {g.link_or_info && (
-                <p className="mt-3 font-sans text-sm break-words text-primary">{g.link_or_info}</p>
-              )}
+          {gifts.length > 0 && (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {gifts.map((g, i) => (
+                <Reveal key={g.id} delay={i * 100}>
+                  <div className="card-elegant h-full overflow-hidden">
+                    {giftPhotos[g.id] && (
+                      <img
+                        src={giftPhotos[g.id]}
+                        alt={g.title}
+                        loading="lazy"
+                        className="h-44 w-full object-cover"
+                      />
+                    )}
+                    <div className="p-7">
+                      <p className="text-xl font-light">{g.title}</p>
+                      {g.description && (
+                        <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
+                      )}
+                      {g.link_or_info && (
+                        <p className="mt-3 font-sans text-sm break-words text-primary">
+                          {g.link_or_info}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       </Section>
 
