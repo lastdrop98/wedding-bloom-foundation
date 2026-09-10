@@ -431,6 +431,7 @@ function HomePage() {
   const [cover, setCover] = useState<string | null>(null);
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
+  const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
 
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
