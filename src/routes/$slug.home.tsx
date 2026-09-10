@@ -40,7 +40,7 @@ export const Route = createFileRoute("/$slug/home")({
   component: HomePage,
 });
 
-type GalleryImage = { url: string; caption: string | null };
+type GalleryImage = { url: string; caption: string | null; mediaType?: string };
 
 function Section({
   title,
@@ -431,6 +431,7 @@ function HomePage() {
   const [cover, setCover] = useState<string | null>(null);
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
+  const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
 
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
@@ -455,8 +456,18 @@ function HomePage() {
       content.gallery.map(async (g) => ({
         url: await signedUrl(GALLERY_BUCKET, g.image_path),
         caption: g.caption,
+        mediaType: g.media_type,
       })),
     ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => Boolean(i.url))));
+  }, [content]);
+
+  useEffect(() => {
+    if (!content?.gifts.length) return;
+    Promise.all(
+      content.gifts.map(async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const),
+    ).then((pairs) =>
+      setGiftPhotos(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])))),
+    );
   }, [content]);
 
   if (isLoading) {
@@ -730,21 +741,32 @@ function HomePage() {
           <VineDivider className="my-6" />
           <Section title="Galeria" wide dark vines="c">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              {galleryUrls.map((g) => (
-                <button
-                  key={g.url}
-                  type="button"
-                  onClick={() => setLightbox(g)}
-                  className="group overflow-hidden rounded-sm border border-gold/30"
-                >
-                  <img
+              {galleryUrls.map((g) =>
+                g.mediaType === "video" ? (
+                  <video
+                    key={g.url}
                     src={g.url}
-                    alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
-                    loading="lazy"
-                    className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="h-44 w-full rounded-sm border border-gold/30 bg-black object-cover md:h-60"
                   />
-                </button>
-              ))}
+                ) : (
+                  <button
+                    key={g.url}
+                    type="button"
+                    onClick={() => setLightbox(g)}
+                    className="group overflow-hidden rounded-sm border border-gold/30"
+                  >
+                    <img
+                      src={g.url}
+                      alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
+                      loading="lazy"
+                      className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                    />
+                  </button>
+                ),
+              )}
             </div>
           </Section>
         </>
@@ -768,17 +790,35 @@ function HomePage() {
               />
             )}
           </div>
-          {gifts.map((g) => (
-            <div key={g.id} className="card-elegant p-7">
-              <p className="text-xl font-light">{g.title}</p>
-              {g.description && (
-                <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
-              )}
-              {g.link_or_info && (
-                <p className="mt-3 font-sans text-sm break-words text-primary">{g.link_or_info}</p>
-              )}
+          {gifts.length > 0 && (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {gifts.map((g, i) => (
+                <Reveal key={g.id} delay={i * 100}>
+                  <div className="card-elegant h-full overflow-hidden">
+                    {giftPhotos[g.id] && (
+                      <img
+                        src={giftPhotos[g.id]}
+                        alt={g.title}
+                        loading="lazy"
+                        className="h-44 w-full object-cover"
+                      />
+                    )}
+                    <div className="p-7">
+                      <p className="text-xl font-light">{g.title}</p>
+                      {g.description && (
+                        <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
+                      )}
+                      {g.link_or_info && (
+                        <p className="mt-3 font-sans text-sm break-words text-primary">
+                          {g.link_or_info}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       </Section>
 

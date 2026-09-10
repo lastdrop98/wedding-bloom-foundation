@@ -25,8 +25,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { BerrySprig, BotanicalFrame, EucalyptusSpray, FloralDivider, WatercolorRose } from "./Botanicals";
 import { Petals } from "./Petals";
+import { GiftQr } from "@/components/invite/GiftQr";
+import { Guestbook } from "@/components/invite/Guestbook";
 
-type GalleryImage = { url: string; caption: string | null };
+type GalleryImage = { url: string; caption: string | null; mediaType?: string };
 
 function Section({
   title,

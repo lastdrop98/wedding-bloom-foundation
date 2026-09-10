@@ -78,6 +78,7 @@ export type Database = {
           event_id: string
           id: string
           image_path: string
+          media_type: string
           sort_order: number
         }
         Insert: {
@@ -86,6 +87,7 @@ export type Database = {
           event_id: string
           id?: string
           image_path: string
+          media_type?: string
           sort_order?: number
         }
         Update: {
@@ -94,6 +96,7 @@ export type Database = {
           event_id?: string
           id?: string
           image_path?: string
+          media_type?: string
           sort_order?: number
         }
         Relationships: [
@@ -112,6 +115,7 @@ export type Database = {
           description: string | null
           event_id: string
           id: string
+          image_path: string | null
           link_or_info: string | null
           sort_order: number
           title: string
@@ -121,6 +125,7 @@ export type Database = {
           description?: string | null
           event_id: string
           id?: string
+          image_path?: string | null
           link_or_info?: string | null
           sort_order?: number
           title: string
@@ -130,6 +135,7 @@ export type Database = {
           description?: string | null
           event_id?: string
           id?: string
+          image_path?: string | null
           link_or_info?: string | null
           sort_order?: number
           title?: string

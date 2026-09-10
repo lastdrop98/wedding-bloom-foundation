@@ -11,6 +11,9 @@ import {
   type EventRow,
 } from "@/lib/event";
 import { WeddingForm } from "@/components/WeddingForm";
+import { GalleryManager } from "@/components/GalleryManager";
+import { GiftManager } from "@/components/GiftManager";
+import { GuestManager } from "@/components/GuestManager";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -113,6 +116,14 @@ function AdminPage() {
             onSaved={closeForm}
             onCancel={() => setMode({ kind: "list" })}
           />
+
+          {mode.event && (
+            <div className="mt-12 space-y-12 border-t border-border pt-10">
+              <GalleryManager eventId={mode.event.id} />
+              <GiftManager eventId={mode.event.id} />
+              <GuestManager eventId={mode.event.id} slug={mode.event.slug} />
+            </div>
+          )}
         </div>
       ) : isLoading ? (
         <p className="mt-10 text-muted-foreground">A carregar…</p>
