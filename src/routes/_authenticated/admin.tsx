@@ -113,6 +113,14 @@ function AdminPage() {
             onSaved={closeForm}
             onCancel={() => setMode({ kind: "list" })}
           />
+
+          {mode.event && (
+            <div className="mt-12 space-y-12 border-t border-border pt-10">
+              <GalleryManager eventId={mode.event.id} />
+              <GiftManager eventId={mode.event.id} />
+              <GuestManager eventId={mode.event.id} slug={mode.event.slug} />
+            </div>
+          )}
         </div>
       ) : isLoading ? (
         <p className="mt-10 text-muted-foreground">A carregar…</p>
