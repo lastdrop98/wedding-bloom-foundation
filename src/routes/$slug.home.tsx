@@ -741,21 +741,32 @@ function HomePage() {
           <VineDivider className="my-6" />
           <Section title="Galeria" wide dark vines="c">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              {galleryUrls.map((g) => (
-                <button
-                  key={g.url}
-                  type="button"
-                  onClick={() => setLightbox(g)}
-                  className="group overflow-hidden rounded-sm border border-gold/30"
-                >
-                  <img
+              {galleryUrls.map((g) =>
+                g.mediaType === "video" ? (
+                  <video
+                    key={g.url}
                     src={g.url}
-                    alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
-                    loading="lazy"
-                    className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="h-44 w-full rounded-sm border border-gold/30 bg-black object-cover md:h-60"
                   />
-                </button>
-              ))}
+                ) : (
+                  <button
+                    key={g.url}
+                    type="button"
+                    onClick={() => setLightbox(g)}
+                    className="group overflow-hidden rounded-sm border border-gold/30"
+                  >
+                    <img
+                      src={g.url}
+                      alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
+                      loading="lazy"
+                      className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                    />
+                  </button>
+                ),
+              )}
             </div>
           </Section>
         </>
