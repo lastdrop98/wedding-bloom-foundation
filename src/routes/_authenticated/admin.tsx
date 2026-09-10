@@ -11,6 +11,9 @@ import {
   type EventRow,
 } from "@/lib/event";
 import { WeddingForm } from "@/components/WeddingForm";
+import { GalleryManager } from "@/components/GalleryManager";
+import { GiftManager } from "@/components/GiftManager";
+import { GuestManager } from "@/components/GuestManager";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin")({
