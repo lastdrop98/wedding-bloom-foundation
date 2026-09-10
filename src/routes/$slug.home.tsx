@@ -40,7 +40,7 @@ export const Route = createFileRoute("/$slug/home")({
   component: HomePage,
 });
 
-type GalleryImage = { url: string; caption: string | null };
+type GalleryImage = { url: string; caption: string | null; mediaType?: string };
 
 function Section({
   title,
