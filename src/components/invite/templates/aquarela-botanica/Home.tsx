@@ -529,22 +529,34 @@ export function AquarelaHome({
       {galleryUrls.length > 0 && (
         <Section title="Galeria" wide flora="eucalipto">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-            {galleryUrls.map((g, i) => (
-              <Reveal key={g.url} delay={i * 100}>
-                <button
-                  type="button"
-                  onClick={() => setLightbox(g)}
-                  className="group w-full overflow-hidden rounded-tl-2xl rounded-br-2xl border border-sage/40"
-                >
-                  <img
+            {galleryUrls.map((g, i) =>
+              g.mediaType === "video" ? (
+                <Reveal key={g.url} delay={i * 100}>
+                  <video
                     src={g.url}
-                    alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
-                    loading="lazy"
-                    className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="h-44 w-full rounded-tl-2xl rounded-br-2xl border border-sage/40 bg-black object-cover md:h-60"
                   />
-                </button>
-              </Reveal>
-            ))}
+                </Reveal>
+              ) : (
+                <Reveal key={g.url} delay={i * 100}>
+                  <button
+                    type="button"
+                    onClick={() => setLightbox(g)}
+                    className="group w-full overflow-hidden rounded-tl-2xl rounded-br-2xl border border-sage/40"
+                  >
+                    <img
+                      src={g.url}
+                      alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
+                      loading="lazy"
+                      className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                    />
+                  </button>
+                </Reveal>
+              ),
+            )}
           </div>
         </Section>
       )}
