@@ -571,21 +571,48 @@ export function AquarelaHome({
               {d("bank_account") && <div>Conta: {d("bank_account")}</div>}
               {d("bank_nib") && <div>NIB/IBAN: {d("bank_nib")}</div>}
             </dl>
+            {d("bank_nib") && (
+              <GiftQr
+                text={`Banco: ${d("bank_name") ?? ""}\nNIB: ${d("bank_nib")}\nTitular: ${d("bank_holder") ?? ""}`}
+              />
+            )}
           </div>
-          {gifts.map((g, i) => (
-            <Reveal key={g.id} delay={i * 100}>
-              <div className="card-aquarela p-7">
-                <p className="text-xl font-light">{g.title}</p>
-                {g.description && (
-                  <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
-                )}
-                {g.link_or_info && (
-                  <p className="mt-3 font-sans text-sm break-words text-primary">{g.link_or_info}</p>
-                )}
-              </div>
-            </Reveal>
-          ))}
+          {gifts.length > 0 && (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {gifts.map((g, i) => (
+                <Reveal key={g.id} delay={i * 100}>
+                  <div className="card-aquarela h-full overflow-hidden">
+                    {giftPhotos[g.id] && (
+                      <img
+                        src={giftPhotos[g.id]}
+                        alt={g.title}
+                        loading="lazy"
+                        className="h-44 w-full object-cover"
+                      />
+                    )}
+                    <div className="p-7">
+                      <p className="text-xl font-light">{g.title}</p>
+                      {g.description && (
+                        <p className="mt-2 font-sans text-sm text-muted-foreground">
+                          {g.description}
+                        </p>
+                      )}
+                      {g.link_or_info && (
+                        <p className="mt-3 font-sans text-sm break-words text-primary">
+                          {g.link_or_info}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
+      </Section>
+
+      <Section title="Livro de Recados" flora="eucalipto">
+        <Guestbook eventId={event.id} />
       </Section>
 
       <Section title="Confirmação de Presença" eyebrow="RSVP" flora="rose">
