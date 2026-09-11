@@ -28,7 +28,7 @@ import { Petals } from "./Petals";
 import { GiftQr } from "@/components/invite/GiftQr";
 import { Guestbook } from "@/components/invite/Guestbook";
 
-type GalleryImage = { url: string; caption: string | null; mediaType?: string };
+type GalleryImage = { url: string; caption: string | null; mediaType: string | null };
 
 function Section({
   title,
