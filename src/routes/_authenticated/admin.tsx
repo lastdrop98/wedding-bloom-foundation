@@ -14,6 +14,7 @@ import { WeddingForm } from "@/components/WeddingForm";
 import { GalleryManager } from "@/components/GalleryManager";
 import { GiftManager } from "@/components/GiftManager";
 import { GuestManager } from "@/components/GuestManager";
+import { DeliveryPackage } from "@/components/DeliveryPackage";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -122,6 +123,7 @@ function AdminPage() {
               <GalleryManager eventId={mode.event.id} />
               <GiftManager eventId={mode.event.id} />
               <GuestManager eventId={mode.event.id} slug={mode.event.slug} />
+              <DeliveryPackage slug={mode.event.slug} />
             </div>
           )}
         </div>
