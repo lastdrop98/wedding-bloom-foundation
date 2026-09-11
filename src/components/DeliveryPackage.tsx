@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import QRCode from "qrcode";
 
 import { Button } from "@/components/ui/button";
 
@@ -8,7 +9,22 @@ export function DeliveryPackage({ slug }: { slug: string }) {
   useEffect(() => setOrigin(window.location.origin), []);
 
   const inviteLink = `${origin}/${slug}`;
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(inviteLink)}`;
+
+  const [qrSrc, setQrSrc] = useState<string | null>(null);
+  useEffect(() => {
+    if (!origin) return;
+    let active = true;
+    QRCode.toDataURL(inviteLink, { margin: 1, width: 200, errorCorrectionLevel: "M" })
+      .then((url) => {
+        if (active) setQrSrc(url);
+      })
+      .catch(() => {
+        if (active) setQrSrc(null);
+      });
+    return () => {
+      active = false;
+    };
+  }, [origin, inviteLink]);
 
   async function copy() {
     try {
@@ -27,7 +43,7 @@ export function DeliveryPackage({ slug }: { slug: string }) {
       </p>
 
       <div className="grid gap-6 sm:grid-cols-[auto_1fr] sm:items-start">
-        {origin && (
+        {qrSrc && (
           <img
             src={qrSrc}
             alt={`QR code do convite ${slug}`}
