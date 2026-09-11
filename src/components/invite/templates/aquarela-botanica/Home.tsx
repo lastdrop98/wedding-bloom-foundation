@@ -274,6 +274,7 @@ export function AquarelaHome({
   const [cover, setCover] = useState<string | null>(null);
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
+  const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
 
   const { data: content } = useQuery({
     queryKey: ["event-content", event.id],
@@ -291,8 +292,18 @@ export function AquarelaHome({
       content.gallery.map(async (g) => ({
         url: await signedUrl(GALLERY_BUCKET, g.image_path),
         caption: g.caption,
+        mediaType: g.media_type,
       })),
     ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => Boolean(i.url))));
+  }, [content]);
+
+  useEffect(() => {
+    if (!content?.gifts.length) return;
+    Promise.all(
+      content.gifts.map(async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const),
+    ).then((pairs) =>
+      setGiftPhotos(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])))),
+    );
   }, [content]);
 
   const badge = inviteBadgeLabel(inviteType);

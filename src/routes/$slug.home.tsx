@@ -21,6 +21,8 @@ import {
   type EventRow,
 } from "@/lib/event";
 import { Lightbox } from "@/components/invite/Lightbox";
+import { GiftQr } from "@/components/invite/GiftQr";
+import { Guestbook } from "@/components/invite/Guestbook";
 import { Ornament } from "@/components/invite/Ornament";
 import { FlourishFrame } from "@/components/invite/Flourish";
 import { FlipNumber } from "@/components/invite/FlipNumber";
