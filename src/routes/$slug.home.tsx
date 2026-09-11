@@ -21,6 +21,8 @@ import {
   type EventRow,
 } from "@/lib/event";
 import { Lightbox } from "@/components/invite/Lightbox";
+import { GiftQr } from "@/components/invite/GiftQr";
+import { Guestbook } from "@/components/invite/Guestbook";
 import { Ornament } from "@/components/invite/Ornament";
 import { FlourishFrame } from "@/components/invite/Flourish";
 import { FlipNumber } from "@/components/invite/FlipNumber";
@@ -40,7 +42,7 @@ export const Route = createFileRoute("/$slug/home")({
   component: HomePage,
 });
 
-type GalleryImage = { url: string; caption: string | null; mediaType?: string };
+type GalleryImage = { url: string; caption: string | null; mediaType: string };
 
 function Section({
   title,
@@ -453,12 +455,12 @@ function HomePage() {
   useEffect(() => {
     if (!content?.gallery.length) return;
     Promise.all(
-      content.gallery.map(async (g) => ({
-        url: await signedUrl(GALLERY_BUCKET, g.image_path),
-        caption: g.caption,
-        mediaType: g.media_type,
-      })),
-    ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => Boolean(i.url))));
+      content.gallery.map(async (g) => {
+        const url = await signedUrl(GALLERY_BUCKET, g.image_path);
+        if (!url) return null;
+        return { url, caption: g.caption, mediaType: g.media_type };
+      }),
+    ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => i !== null)));
   }, [content]);
 
   useEffect(() => {

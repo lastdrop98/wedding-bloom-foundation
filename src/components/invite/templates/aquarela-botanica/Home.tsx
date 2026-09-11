@@ -28,7 +28,7 @@ import { Petals } from "./Petals";
 import { GiftQr } from "@/components/invite/GiftQr";
 import { Guestbook } from "@/components/invite/Guestbook";
 
-type GalleryImage = { url: string; caption: string | null; mediaType?: string };
+type GalleryImage = { url: string; caption: string | null; mediaType: string };
 
 function Section({
   title,
@@ -274,6 +274,7 @@ export function AquarelaHome({
   const [cover, setCover] = useState<string | null>(null);
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
+  const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
 
   const { data: content } = useQuery({
     queryKey: ["event-content", event.id],
@@ -288,11 +289,21 @@ export function AquarelaHome({
   useEffect(() => {
     if (!content?.gallery.length) return;
     Promise.all(
-      content.gallery.map(async (g) => ({
-        url: await signedUrl(GALLERY_BUCKET, g.image_path),
-        caption: g.caption,
-      })),
-    ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => Boolean(i.url))));
+      content.gallery.map(async (g) => {
+        const url = await signedUrl(GALLERY_BUCKET, g.image_path);
+        if (!url) return null;
+        return { url, caption: g.caption, mediaType: g.media_type };
+      }),
+    ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => i !== null)));
+  }, [content]);
+
+  useEffect(() => {
+    if (!content?.gifts.length) return;
+    Promise.all(
+      content.gifts.map(async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const),
+    ).then((pairs) =>
+      setGiftPhotos(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])))),
+    );
   }, [content]);
 
   const badge = inviteBadgeLabel(inviteType);
@@ -518,22 +529,34 @@ export function AquarelaHome({
       {galleryUrls.length > 0 && (
         <Section title="Galeria" wide flora="eucalipto">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-            {galleryUrls.map((g, i) => (
-              <Reveal key={g.url} delay={i * 100}>
-                <button
-                  type="button"
-                  onClick={() => setLightbox(g)}
-                  className="group w-full overflow-hidden rounded-tl-2xl rounded-br-2xl border border-sage/40"
-                >
-                  <img
+            {galleryUrls.map((g, i) =>
+              g.mediaType === "video" ? (
+                <Reveal key={g.url} delay={i * 100}>
+                  <video
                     src={g.url}
-                    alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
-                    loading="lazy"
-                    className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="h-44 w-full rounded-tl-2xl rounded-br-2xl border border-sage/40 bg-black object-cover md:h-60"
                   />
-                </button>
-              </Reveal>
-            ))}
+                </Reveal>
+              ) : (
+                <Reveal key={g.url} delay={i * 100}>
+                  <button
+                    type="button"
+                    onClick={() => setLightbox(g)}
+                    className="group w-full overflow-hidden rounded-tl-2xl rounded-br-2xl border border-sage/40"
+                  >
+                    <img
+                      src={g.url}
+                      alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
+                      loading="lazy"
+                      className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
+                    />
+                  </button>
+                </Reveal>
+              ),
+            )}
           </div>
         </Section>
       )}
@@ -548,21 +571,48 @@ export function AquarelaHome({
               {d("bank_account") && <div>Conta: {d("bank_account")}</div>}
               {d("bank_nib") && <div>NIB/IBAN: {d("bank_nib")}</div>}
             </dl>
+            {d("bank_nib") && (
+              <GiftQr
+                text={`Banco: ${d("bank_name") ?? ""}\nNIB: ${d("bank_nib")}\nTitular: ${d("bank_holder") ?? ""}`}
+              />
+            )}
           </div>
-          {gifts.map((g, i) => (
-            <Reveal key={g.id} delay={i * 100}>
-              <div className="card-aquarela p-7">
-                <p className="text-xl font-light">{g.title}</p>
-                {g.description && (
-                  <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
-                )}
-                {g.link_or_info && (
-                  <p className="mt-3 font-sans text-sm break-words text-primary">{g.link_or_info}</p>
-                )}
-              </div>
-            </Reveal>
-          ))}
+          {gifts.length > 0 && (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {gifts.map((g, i) => (
+                <Reveal key={g.id} delay={i * 100}>
+                  <div className="card-aquarela h-full overflow-hidden">
+                    {giftPhotos[g.id] && (
+                      <img
+                        src={giftPhotos[g.id]}
+                        alt={g.title}
+                        loading="lazy"
+                        className="h-44 w-full object-cover"
+                      />
+                    )}
+                    <div className="p-7">
+                      <p className="text-xl font-light">{g.title}</p>
+                      {g.description && (
+                        <p className="mt-2 font-sans text-sm text-muted-foreground">
+                          {g.description}
+                        </p>
+                      )}
+                      {g.link_or_info && (
+                        <p className="mt-3 font-sans text-sm break-words text-primary">
+                          {g.link_or_info}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
+      </Section>
+
+      <Section title="Livro de Recados" flora="eucalipto">
+        <Guestbook eventId={event.id} />
       </Section>
 
       <Section title="Confirmação de Presença" eyebrow="RSVP" flora="rose">
