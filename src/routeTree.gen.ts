@@ -14,7 +14,9 @@ import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as SlugIndexRouteImport } from './routes/$slug.index'
+import { Route as SlugConfirmacoesRouteImport } from './routes/$slug.confirmacoes'
 import { Route as SlugHomeRouteImport } from './routes/$slug.home'
+import { Route as SlugImprimirRouteImport } from './routes/$slug.imprimir'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,9 +43,19 @@ const SlugIndexRoute = SlugIndexRouteImport.update({
   path: '/',
   getParentRoute: () => SlugRoute,
 } as any)
+const SlugConfirmacoesRoute = SlugConfirmacoesRouteImport.update({
+  id: '/confirmacoes',
+  path: '/confirmacoes',
+  getParentRoute: () => SlugRoute,
+} as any)
 const SlugHomeRoute = SlugHomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => SlugRoute,
+} as any)
+const SlugImprimirRoute = SlugImprimirRouteImport.update({
+  id: '/imprimir',
+  path: '/imprimir',
   getParentRoute: () => SlugRoute,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -56,14 +68,18 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRouteWithChildren
   '/auth': typeof AuthRoute
+  '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
+  '/$slug/imprimir': typeof SlugImprimirRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/$slug/': typeof SlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
+  '/$slug/imprimir': typeof SlugImprimirRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/$slug': typeof SlugIndexRoute
 }
@@ -73,22 +89,41 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/$slug': typeof SlugRouteWithChildren
   '/auth': typeof AuthRoute
+  '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
+  '/$slug/imprimir': typeof SlugImprimirRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/$slug/': typeof SlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$slug' | '/auth' | '/$slug/home' | '/admin' | '/$slug/'
+  fullPaths:
+    | '/'
+    | '/$slug'
+    | '/auth'
+    | '/$slug/confirmacoes'
+    | '/$slug/home'
+    | '/$slug/imprimir'
+    | '/admin'
+    | '/$slug/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/$slug/home' | '/admin' | '/$slug'
+  to:
+    | '/'
+    | '/auth'
+    | '/$slug/confirmacoes'
+    | '/$slug/home'
+    | '/$slug/imprimir'
+    | '/admin'
+    | '/$slug'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/$slug'
     | '/auth'
+    | '/$slug/confirmacoes'
     | '/$slug/home'
+    | '/$slug/imprimir'
     | '/_authenticated/admin'
     | '/$slug/'
   fileRoutesById: FileRoutesById
@@ -137,11 +172,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlugIndexRouteImport
       parentRoute: typeof SlugRoute
     }
+    '/$slug/confirmacoes': {
+      id: '/$slug/confirmacoes'
+      path: '/confirmacoes'
+      fullPath: '/$slug/confirmacoes'
+      preLoaderRoute: typeof SlugConfirmacoesRouteImport
+      parentRoute: typeof SlugRoute
+    }
     '/$slug/home': {
       id: '/$slug/home'
       path: '/home'
       fullPath: '/$slug/home'
       preLoaderRoute: typeof SlugHomeRouteImport
+      parentRoute: typeof SlugRoute
+    }
+    '/$slug/imprimir': {
+      id: '/$slug/imprimir'
+      path: '/imprimir'
+      fullPath: '/$slug/imprimir'
+      preLoaderRoute: typeof SlugImprimirRouteImport
       parentRoute: typeof SlugRoute
     }
     '/_authenticated/admin': {
@@ -166,12 +215,16 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface SlugRouteChildren {
+  SlugConfirmacoesRoute: typeof SlugConfirmacoesRoute
   SlugHomeRoute: typeof SlugHomeRoute
+  SlugImprimirRoute: typeof SlugImprimirRoute
   SlugIndexRoute: typeof SlugIndexRoute
 }
 
 const SlugRouteChildren: SlugRouteChildren = {
+  SlugConfirmacoesRoute: SlugConfirmacoesRoute,
   SlugHomeRoute: SlugHomeRoute,
+  SlugImprimirRoute: SlugImprimirRoute,
   SlugIndexRoute: SlugIndexRoute,
 }
 
