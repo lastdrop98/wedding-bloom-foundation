@@ -2,12 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import {
-  AUDIO_BUCKET,
-  GALLERY_BUCKET,
-  details as readDetails,
-  type EventRow,
-} from "@/lib/event";
+import { AUDIO_BUCKET, GALLERY_BUCKET, details as readDetails, type EventRow } from "@/lib/event";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -169,7 +164,10 @@ export function WeddingForm({
     payload["details"] = detailPayload;
 
     const { error } = event
-      ? await supabase.from("events").update(payload as never).eq("id", event.id)
+      ? await supabase
+          .from("events")
+          .update(payload as never)
+          .eq("id", event.id)
       : await supabase.from("events").insert(payload as never);
     setBusy(false);
     if (error) {
@@ -218,7 +216,10 @@ export function WeddingForm({
             {group.fields.map((f) => {
               const id = f.name;
               return (
-                <div key={id} className={f.kind === "textarea" ? "space-y-2 sm:col-span-2" : "space-y-2"}>
+                <div
+                  key={id}
+                  className={f.kind === "textarea" ? "space-y-2 sm:col-span-2" : "space-y-2"}
+                >
                   <Label htmlFor={id}>{f.label}</Label>
                   {f.kind === "textarea" ? (
                     <Textarea
@@ -246,7 +247,13 @@ export function WeddingForm({
                   ) : (
                     <Input
                       id={id}
-                      type={f.kind === "date" ? "date" : f.kind === "datetime" ? "datetime-local" : "text"}
+                      type={
+                        f.kind === "date"
+                          ? "date"
+                          : f.kind === "datetime"
+                            ? "datetime-local"
+                            : "text"
+                      }
                       value={values[id] ?? ""}
                       onChange={(e) => set(id, e.target.value)}
                     />

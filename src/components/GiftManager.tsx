@@ -185,7 +185,11 @@ export function GiftManager({ eventId }: { eventId: string }) {
           />
         </div>
         <div className="flex items-end">
-          <Button type="button" disabled={!title.trim() || add.isPending} onClick={() => add.mutate()}>
+          <Button
+            type="button"
+            disabled={!title.trim() || add.isPending}
+            onClick={() => add.mutate()}
+          >
             {add.isPending ? "A guardar…" : "Adicionar presente"}
           </Button>
         </div>

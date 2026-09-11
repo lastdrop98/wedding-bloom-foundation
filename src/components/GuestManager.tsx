@@ -96,11 +96,7 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
             onChange={(e) => setCount(e.target.value)}
           />
         </div>
-        <Button
-          type="button"
-          disabled={!name.trim() || add.isPending}
-          onClick={() => add.mutate()}
-        >
+        <Button type="button" disabled={!name.trim() || add.isPending} onClick={() => add.mutate()}>
           Adicionar
         </Button>
       </div>
@@ -126,7 +122,12 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <Button type="button" variant="outline" size="sm" onClick={() => copyLink(g.token)}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => copyLink(g.token)}
+                  >
                     Copiar link
                   </Button>
                   <Button

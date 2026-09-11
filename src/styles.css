@@ -51,9 +51,6 @@
   --color-rose: var(--rose);
   --color-sage: var(--sage);
   --color-gold-light: var(--gold-light);
-
-
-
 }
 
 :root {
@@ -77,13 +74,12 @@
   --warm: oklch(0.58 0.14 45);
   --warm-soft: oklch(0.72 0.1 48);
   --amber: oklch(0.72 0.13 65);
- --wine: oklch(0.38 0.11 20);
+  --wine: oklch(0.38 0.11 20);
 
   /* aquarela botânica — rosa empoeirado / verde-sálvia / dourado suave */
   --rose: oklch(0.74 0.075 15);
   --sage: oklch(0.7 0.045 150);
   --gold-light: oklch(0.84 0.07 88);
-
 
   --primary: oklch(0.6 0.11 76);
   --primary-foreground: oklch(0.99 0.005 90);
@@ -118,7 +114,6 @@
   background-color: var(--ink);
   color: var(--cream);
 }
-
 
 .dark {
   --background: oklch(0.2 0.015 70);
@@ -275,7 +270,6 @@
   }
 }
 
-
 /* ——— Revelação ao scroll ——— */
 @utility reveal {
   opacity: 0;
@@ -349,26 +343,32 @@
   }
 }
 
- /* Esconder a badge de edição do Lovable */ 
-[data-lovable-badge], #lovable-badge, .lovable-badge, iframe[src*="lovable"], a[href*="lovable.dev"], div[class*="lovable-badge"], div[id*="lovable-badge"] 
-{ display: none !important; 
- visibility: hidden !important; 
- opacity: 0 !important; 
- pointer-events: none !important; 
- width: 0 !important; 
- height: 0 !important; 
- position: absolute !important; 
- overflow: hidden !important; }
+/* Esconder a badge de edição do Lovable */
+[data-lovable-badge],
+#lovable-badge,
+.lovable-badge,
+iframe[src*="lovable"],
+a[href*="lovable.dev"],
+div[class*="lovable-badge"],
+div[id*="lovable-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  overflow: hidden !important;
+}
 
 /* ——— Fundo dourado/escuro elegante (marca) ——— */
 @utility eclipse-bg {
-  background:
-    radial-gradient(
-      120% 100% at 50% 0%,
-      oklch(0.3 0.05 150) 0%,
-      oklch(0.2 0.03 140) 45%,
-      oklch(0.12 0.01 70) 100%
-    );
+  background: radial-gradient(
+    120% 100% at 50% 0%,
+    oklch(0.3 0.05 150) 0%,
+    oklch(0.2 0.03 140) 45%,
+    oklch(0.12 0.01 70) 100%
+  );
 }
 
 /* ——— Ornamentos desenhados à mão (stroke draw + brilho) ——— */

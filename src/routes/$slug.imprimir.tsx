@@ -20,7 +20,10 @@ export const Route = createFileRoute("/$slug/imprimir")({
   head: ({ params }) => ({
     meta: [
       { title: `Convite para imprimir — ${params.slug}` },
-      { name: "description", content: "Versão para impressão física do convite digital Solar Eclipse." },
+      {
+        name: "description",
+        content: "Versão para impressão física do convite digital Solar Eclipse.",
+      },
       { property: "og:title", content: "Convite para imprimir — Solar Eclipse" },
       { property: "og:description", content: "Versão para impressão física do convite digital." },
       { property: "og:type", content: "website" },
@@ -35,11 +38,21 @@ type ProgramLine = { key: string; time: string | null; title: string; sub: strin
 
 function buildProgram(event: EventRow, schedule: ScheduleItem[]): ProgramLine[] {
   if (schedule.length > 0) {
-    return schedule.map((s) => ({ key: s.id, time: s.time_label, title: s.title, sub: s.description }));
+    return schedule.map((s) => ({
+      key: s.id,
+      time: s.time_label,
+      title: s.title,
+      sub: s.description,
+    }));
   }
   const d = (f: Parameters<typeof detail>[1]) => detail(event, f);
   return [
-    { key: "civil", time: d("civil_ceremony_time"), title: "Cerimónia Civil", sub: d("civil_ceremony_venue") },
+    {
+      key: "civil",
+      time: d("civil_ceremony_time"),
+      title: "Cerimónia Civil",
+      sub: d("civil_ceremony_venue"),
+    },
     { key: "cerimonia", time: d("ceremony_time"), title: "Cerimónia", sub: d("ceremony_venue") },
     { key: "rececao", time: d("reception_time"), title: "Receção", sub: d("reception_venue") },
   ].filter((r) => r.time || r.sub);
@@ -51,7 +64,9 @@ function parentsLine(event: EventRow, side: "groom" | "bride") {
   return [m, f].filter(Boolean).join(" e ");
 }
 
-async function imageToDataUrl(url: string): Promise<{ data: string; format: "JPEG" | "PNG" } | null> {
+async function imageToDataUrl(
+  url: string,
+): Promise<{ data: string; format: "JPEG" | "PNG" } | null> {
   try {
     const res = await fetch(url);
     const blob = await res.blob();
@@ -89,7 +104,11 @@ async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: st
       /* mantém fundo sólido */
     }
     doc.saveGraphicsState();
-    doc.setGState(new (doc as unknown as { GState: new (o: { opacity: number }) => unknown }).GState({ opacity: 0.68 }));
+    doc.setGState(
+      new (doc as unknown as { GState: new (o: { opacity: number }) => unknown }).GState({
+        opacity: 0.68,
+      }),
+    );
     doc.setFillColor(12, 10, 8);
     doc.rect(0, 0, W, H, "F");
     doc.restoreGraphicsState();
@@ -102,7 +121,15 @@ async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: st
   doc.setLineWidth(0.2);
   doc.rect(9, 9, W - 18, H - 18);
 
-  const center = (text: string, y: number, size: number, font: "times" | "helvetica", style: string, color: [number, number, number], spacing = 0) => {
+  const center = (
+    text: string,
+    y: number,
+    size: number,
+    font: "times" | "helvetica",
+    style: string,
+    color: [number, number, number],
+    spacing = 0,
+  ) => {
     doc.setFont(font, style);
     doc.setFontSize(size);
     doc.setTextColor(...color);
@@ -200,7 +227,9 @@ async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: st
   }
 
   const contact = [event.contact_1_name, event.contact_1_phone].filter(Boolean).join(" · ");
-  const rsvp = event.rsvp_deadline ? `Confirmar presença até ${formatDatePt(event.rsvp_deadline)}` : null;
+  const rsvp = event.rsvp_deadline
+    ? `Confirmar presença até ${formatDatePt(event.rsvp_deadline)}`
+    : null;
   let fy = H - 22;
   if (rsvp) {
     center(rsvp, fy, 7.5, "helvetica", "normal", CHAMPAGNE, 0.5);
@@ -293,7 +322,15 @@ function PrintPage() {
 
       <article
         className="print-sheet relative mx-auto aspect-[148/210] w-full max-w-md overflow-hidden bg-[oklch(0.12_0.01_70)] text-center"
-        style={cover ? { backgroundImage: `url(${cover})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+        style={
+          cover
+            ? {
+                backgroundImage: `url(${cover})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+            : undefined
+        }
       >
         <div className="absolute inset-0 bg-[rgb(12,10,8)]/70" />
         <div className="pointer-events-none absolute inset-3 border border-[rgb(201,168,76)]" />
@@ -301,7 +338,9 @@ function PrintPage() {
 
         <div className="relative flex h-full flex-col items-center justify-between px-8 py-10">
           <div className="w-full">
-            <p className="font-sans text-[0.6rem] tracking-[0.4em] text-[rgb(201,168,76)] uppercase">Convite</p>
+            <p className="font-sans text-[0.6rem] tracking-[0.4em] text-[rgb(201,168,76)] uppercase">
+              Convite
+            </p>
             {groom && bride ? (
               <h1 className="mt-6 leading-tight font-light text-[rgb(201,168,76)]">
                 <span className="block text-3xl">{bride}</span>
@@ -309,7 +348,9 @@ function PrintPage() {
                 <span className="block text-3xl">{groom}</span>
               </h1>
             ) : (
-              <h1 className="mt-6 text-3xl leading-tight font-light text-[rgb(201,168,76)]">{eventTitle(event)}</h1>
+              <h1 className="mt-6 text-3xl leading-tight font-light text-[rgb(201,168,76)]">
+                {eventTitle(event)}
+              </h1>
             )}
 
             <div className="mx-auto mt-5 flex items-center justify-center gap-2">
@@ -320,13 +361,17 @@ function PrintPage() {
 
             {(gp || bp) && (
               <div className="mt-4 text-sm italic">
-                <p className="font-sans text-[0.55rem] tracking-[0.3em] uppercase not-italic">Filhos de</p>
+                <p className="font-sans text-[0.55rem] tracking-[0.3em] uppercase not-italic">
+                  Filhos de
+                </p>
                 {bp && <p className="mt-1">{bp}</p>}
                 {gp && <p>{gp}</p>}
               </div>
             )}
 
-            <p className="mt-5 text-sm italic">Têm a honra de convidar para a celebração do seu casamento</p>
+            <p className="mt-5 text-sm italic">
+              Têm a honra de convidar para a celebração do seu casamento
+            </p>
             <p className="mt-4 font-sans text-xs tracking-[0.3em] text-[rgb(201,168,76)] uppercase">
               {formatDatePt(event.event_date)}
             </p>
@@ -346,7 +391,9 @@ function PrintPage() {
           <div className="w-full">
             {program.length > 0 && (
               <div className="mt-6">
-                <p className="font-sans text-[0.6rem] tracking-[0.4em] text-[rgb(201,168,76)] uppercase">Programa do Dia</p>
+                <p className="font-sans text-[0.6rem] tracking-[0.4em] text-[rgb(201,168,76)] uppercase">
+                  Programa do Dia
+                </p>
                 <ul className="mt-3 space-y-2">
                   {program.slice(0, 6).map((p) => (
                     <li key={p.key}>
@@ -361,12 +408,18 @@ function PrintPage() {
             )}
 
             <div className="mt-6 font-sans text-[0.6rem] tracking-[0.15em]">
-              {event.rsvp_deadline && <p>Confirmar presença até {formatDatePt(event.rsvp_deadline)}</p>}
+              {event.rsvp_deadline && (
+                <p>Confirmar presença até {formatDatePt(event.rsvp_deadline)}</p>
+              )}
               {(event.contact_1_name || event.contact_1_phone) && (
-                <p className="mt-1">{[event.contact_1_name, event.contact_1_phone].filter(Boolean).join(" · ")}</p>
+                <p className="mt-1">
+                  {[event.contact_1_name, event.contact_1_phone].filter(Boolean).join(" · ")}
+                </p>
               )}
               {event.hashtag && (
-                <p className="mt-2 tracking-[0.3em] text-[rgb(201,168,76)] uppercase">{event.hashtag}</p>
+                <p className="mt-2 tracking-[0.3em] text-[rgb(201,168,76)] uppercase">
+                  {event.hashtag}
+                </p>
               )}
             </div>
           </div>

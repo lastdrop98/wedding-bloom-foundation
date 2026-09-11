@@ -67,23 +67,23 @@ function AuthPage() {
       <main className="section-dark eclipse-bg relative flex min-h-screen flex-col justify-center overflow-hidden px-6 text-center">
         <FlourishFrame size={110} />
         <Reveal className="relative mx-auto w-full max-w-md">
-        <p className="eyebrow text-cream/70">Solar Eclipse</p>
-        <h1 className="mt-4 text-3xl font-light text-cream">Sem permissões</h1>
-        <Ornament className="mt-6" />
-        <p className="mt-6 font-sans text-sm leading-relaxed text-muted-foreground">
-          A sua conta ({user.email}) não tem permissões de administrador. Peça a um administrador
-          para lhe atribuir o papel <span className="text-foreground">admin</span> na tabela{" "}
-          <span className="text-foreground">user_roles</span>, associando o seu ID de utilizador.
-        </p>
-        <p className="mt-3 text-xs text-muted-foreground">O seu ID: {user.id}</p>
-        <div className="mt-8 flex justify-center gap-3">
-          <Button variant="outline" onClick={handleSignOut}>
-            Terminar sessão
-          </Button>
-          <Button asChild variant="ghost">
-            <Link to="/">Início</Link>
-          </Button>
-        </div>
+          <p className="eyebrow text-cream/70">Solar Eclipse</p>
+          <h1 className="mt-4 text-3xl font-light text-cream">Sem permissões</h1>
+          <Ornament className="mt-6" />
+          <p className="mt-6 font-sans text-sm leading-relaxed text-muted-foreground">
+            A sua conta ({user.email}) não tem permissões de administrador. Peça a um administrador
+            para lhe atribuir o papel <span className="text-foreground">admin</span> na tabela{" "}
+            <span className="text-foreground">user_roles</span>, associando o seu ID de utilizador.
+          </p>
+          <p className="mt-3 text-xs text-muted-foreground">O seu ID: {user.id}</p>
+          <div className="mt-8 flex justify-center gap-3">
+            <Button variant="outline" onClick={handleSignOut}>
+              Terminar sessão
+            </Button>
+            <Button asChild variant="ghost">
+              <Link to="/">Início</Link>
+            </Button>
+          </div>
         </Reveal>
       </main>
     );
@@ -93,46 +93,46 @@ function AuthPage() {
     <main className="section-dark eclipse-bg relative flex min-h-screen flex-col justify-center overflow-hidden px-6">
       <FlourishFrame size={110} />
       <Reveal className="relative mx-auto w-full max-w-sm">
-      <div className="text-center">
-        <p className="eyebrow text-cream/70">Solar Eclipse</p>
-        <h1 className="mt-3 text-3xl font-light text-cream">Área reservada</h1>
-        <Ornament className="mt-5" />
-      </div>
-
-      <form onSubmit={handleSubmit} className="card-elegant mt-10 space-y-4 p-7">
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        <div className="text-center">
+          <p className="eyebrow text-cream/70">Solar Eclipse</p>
+          <h1 className="mt-3 text-3xl font-light text-cream">Área reservada</h1>
+          <Ornament className="mt-5" />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="password">Palavra-passe</Label>
-          <Input
-            id="password"
-            type="password"
-            required
-            minLength={6}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <Button type="submit" className="w-full" disabled={busy}>
-          {mode === "login" ? "Entrar" : "Criar conta"}
-        </Button>
-      </form>
 
-      <button
-        type="button"
-        className="mt-6 w-full text-center font-sans text-xs text-muted-foreground underline-offset-4 hover:underline"
-        onClick={() => setMode(mode === "login" ? "signup" : "login")}
-      >
-        {mode === "login" ? "Não tenho conta — criar conta" : "Já tenho conta — entrar"}
-      </button>
+        <form onSubmit={handleSubmit} className="card-elegant mt-10 space-y-4 p-7">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Palavra-passe</Label>
+            <Input
+              id="password"
+              type="password"
+              required
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <Button type="submit" className="w-full" disabled={busy}>
+            {mode === "login" ? "Entrar" : "Criar conta"}
+          </Button>
+        </form>
+
+        <button
+          type="button"
+          className="mt-6 w-full text-center font-sans text-xs text-muted-foreground underline-offset-4 hover:underline"
+          onClick={() => setMode(mode === "login" ? "signup" : "login")}
+        >
+          {mode === "login" ? "Não tenho conta — criar conta" : "Já tenho conta — entrar"}
+        </button>
       </Reveal>
     </main>
   );

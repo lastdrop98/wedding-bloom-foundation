@@ -11,9 +11,15 @@ export const Route = createFileRoute("/$slug/confirmacoes")({
   head: ({ params }) => ({
     meta: [
       { title: `Confirmações — ${params.slug}` },
-      { name: "description", content: "Painel do casal com as confirmações de presença em tempo real." },
+      {
+        name: "description",
+        content: "Painel do casal com as confirmações de presença em tempo real.",
+      },
       { property: "og:title", content: "Confirmações de presença — Solar Eclipse" },
-      { property: "og:description", content: "Painel do casal com as confirmações de presença em tempo real." },
+      {
+        property: "og:description",
+        content: "Painel do casal com as confirmações de presença em tempo real.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
@@ -105,7 +111,10 @@ function ConfirmationsPage() {
 
       <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-md border border-border bg-card px-4 py-5 text-center">
+          <div
+            key={s.label}
+            className="rounded-md border border-border bg-card px-4 py-5 text-center"
+          >
             <p className="text-3xl font-light text-primary">{s.value}</p>
             <p className="mt-1 font-sans text-[0.65rem] tracking-[0.2em] text-muted-foreground uppercase">
               {s.label}

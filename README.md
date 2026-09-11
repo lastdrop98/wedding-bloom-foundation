@@ -5,6 +5,7 @@ Quero construir a base de um sistema de convites de casamento digitais multi-cli
 BASE DE DADOS (usar Lovable Cloud / Supabase):
 
 Tabela `weddings`:
+
 - id (uuid, pk)
 - slug (text, unique, not null) — identifica cada casamento na URL
 - template (text, not null, default 'golden-classic') — qual design mostrar (por agora só vamos ter 'golden-classic' implementado)
@@ -31,16 +32,19 @@ Tabela `rsvps`: id, wedding_id (fk), guest_name, guest_phone, attending (bool), 
 Storage: dois buckets — "wedding-gallery" (fotos, público para leitura) e "wedding-audio" (música, público para leitura). Upload só para utilizadores autenticados.
 
 Auth e permissões:
+
 - Sistema de login (email/password) com uma tabela `user_roles` (user_id, role) — role 'admin' pode gerir TODOS os casamentos.
 - RLS: leitura pública dos dados de casamento (qualquer pessoa pode ver um convite pelo slug), escrita só para admins autenticados.
 - Cria uma página /auth com login e um aviso "sem permissões" com instruções se o utilizador não for admin.
 
 ROTAS PÚBLICAS (multi-tenant por slug):
+
 - `/:slug` → capa do convite (nome do casal, data, botão "Abrir Convite", toca música ao clicar)
 - `/:slug/home` → página principal do convite: contagem decrescente até à data, secção "Os Noivos" (nomes e pais), Programa do Dia (lista da tabela schedule, ou se vazia usa os campos de cerimónia/receção da tabela weddings), Localização (mapas), Galeria de fotos, Presentes (dados bancários), Formulário de Confirmação de Presença (RSVP) que grava na tabela rsvps.
 - Suporte a parâmetro `?tipo=individual` ou `?tipo=casal` na URL — mostra um selo elegante "Convite válido para 1 pessoa" / "Convite válido para 2 pessoas" na capa E na home, com uma linha por baixo a dizer 'Ao confirmar presença, escreva "1" (ou "2") no campo "Número de convidados"'. Este parâmetro deve ser preservado ao navegar da capa para a home.
 
 PAINEL INTERNO (protegido, só admins):
+
 - `/admin` → lista todos os casamentos (nome do casal, data, slug, link direto). Botão "Novo Casamento" que abre um formulário para criar um casamento novo preenchendo todos os campos da tabela weddings. Cada casamento na lista tem um botão "Editar" que abre o mesmo formulário preenchido, e permite fazer upload de foto de capa e música (guardando nos buckets certos e atualizando cover_image_path/music_path).
 
 Por agora não preciso de mais nenhum design visual além deste — vamos evoluir o template a seguir, este passo é só a fundação funcional.

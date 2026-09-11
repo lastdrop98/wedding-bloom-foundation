@@ -77,7 +77,6 @@ function Section({
   );
 }
 
-
 function Countdown({ date }: { date: string | null }) {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -123,7 +122,9 @@ function LocationCard({
     <div className="card-elegant p-7 hover:-translate-y-0.5">
       <p className="eyebrow">{label}</p>
       {venue && <p className="mt-3 text-2xl font-light">{venue}</p>}
-      {address && <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">{address}</p>}
+      {address && (
+        <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">{address}</p>
+      )}
       {time && (
         <p className="mt-3 font-sans text-xs tracking-[0.25em] text-primary uppercase">{time}</p>
       )}
@@ -377,11 +378,14 @@ function StoryTimeline() {
         const Icon = m.icon;
         const left = i % 2 === 0;
         return (
-          <li key={m.title} className="relative pb-12 pl-14 last:pb-0 md:w-1/2 md:pl-0"
+          <li
+            key={m.title}
+            className="relative pb-12 pl-14 last:pb-0 md:w-1/2 md:pl-0"
             style={{ marginLeft: left ? undefined : "auto" }}
           >
             {/* Nó na linha */}
-            <span className="absolute top-6 left-4 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-gold/60 bg-background md:left-auto md:right-0 md:translate-x-1/2"
+            <span
+              className="absolute top-6 left-4 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-gold/60 bg-background md:left-auto md:right-0 md:translate-x-1/2"
               style={left ? undefined : { left: 0, right: "auto", transform: "translateX(-50%)" }}
             >
               <Icon className="h-4 w-4 text-primary" strokeWidth={1.5} />
@@ -466,7 +470,9 @@ function HomePage() {
   useEffect(() => {
     if (!content?.gifts.length) return;
     Promise.all(
-      content.gifts.map(async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const),
+      content.gifts.map(
+        async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const,
+      ),
     ).then((pairs) =>
       setGiftPhotos(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])))),
     );
@@ -544,7 +550,9 @@ function HomePage() {
 
           {badge && (
             <div className="mx-auto mt-10 max-w-sm rounded-sm border border-gold/50 bg-[oklch(0.16_0.02_70/0.35)] px-6 py-5 backdrop-blur-sm">
-              <p className="font-sans text-[0.7rem] tracking-[0.25em] text-gold uppercase">{badge}</p>
+              <p className="font-sans text-[0.7rem] tracking-[0.25em] text-gold uppercase">
+                {badge}
+              </p>
               <p className="mt-2 font-sans text-xs leading-relaxed text-cream/75">
                 {inviteBadgeHint(inviteType)}
               </p>
@@ -705,7 +713,9 @@ function HomePage() {
               <span className="min-w-0">
                 <span className="block text-xl font-light">{r.title}</span>
                 {r.sub && (
-                  <span className="mt-1 block font-sans text-sm text-muted-foreground">{r.sub}</span>
+                  <span className="mt-1 block font-sans text-sm text-muted-foreground">
+                    {r.sub}
+                  </span>
                 )}
               </span>
             </li>
@@ -808,7 +818,9 @@ function HomePage() {
                     <div className="p-7">
                       <p className="text-xl font-light">{g.title}</p>
                       {g.description && (
-                        <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
+                        <p className="mt-2 font-sans text-sm text-muted-foreground">
+                          {g.description}
+                        </p>
                       )}
                       {g.link_or_info && (
                         <p className="mt-3 font-sans text-sm break-words text-primary">
@@ -829,7 +841,6 @@ function HomePage() {
       <Section title="Livro de Recados" vines="c">
         <Guestbook eventId={event.id} />
       </Section>
-
 
       <Ornament />
 
@@ -871,7 +882,6 @@ function HomePage() {
           Voltar à capa
         </Link>
       </footer>
-
 
       {lightbox && (
         <Lightbox src={lightbox.url} caption={lightbox.caption} onClose={() => setLightbox(null)} />

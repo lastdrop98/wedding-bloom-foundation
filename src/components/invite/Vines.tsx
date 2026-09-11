@@ -167,10 +167,7 @@ export function SectionVines({
   return (
     <div
       aria-hidden="true"
-      className={cn(
-        "vine-run pointer-events-none absolute inset-0 overflow-hidden",
-        className,
-      )}
+      className={cn("vine-run pointer-events-none absolute inset-0 overflow-hidden", className)}
     >
       {variant === "a" && (
         <>

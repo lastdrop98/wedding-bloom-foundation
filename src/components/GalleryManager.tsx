@@ -34,7 +34,11 @@ function Thumb({ item }: { item: GalleryItem }) {
     );
   }
   return url ? (
-    <img src={url} alt={item.caption ?? "Item da galeria"} className="h-16 w-16 shrink-0 rounded-md object-cover" />
+    <img
+      src={url}
+      alt={item.caption ?? "Item da galeria"}
+      className="h-16 w-16 shrink-0 rounded-md object-cover"
+    />
   ) : (
     <div className="h-16 w-16 shrink-0 rounded-md border border-border" />
   );

@@ -41,7 +41,10 @@ function FlipDigit({ char }: { char: string }) {
           {previous}
         </span>
       )}
-      <span key={`in-${current}`} className={previous !== null ? "digit-in absolute inset-0" : "absolute inset-0"}>
+      <span
+        key={`in-${current}`}
+        className={previous !== null ? "digit-in absolute inset-0" : "absolute inset-0"}
+      >
         {current}
       </span>
     </span>

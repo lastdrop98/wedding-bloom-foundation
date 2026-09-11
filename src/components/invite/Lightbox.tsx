@@ -33,7 +33,9 @@ export function Lightbox({
         alt={caption ?? "Fotografia"}
         className="max-h-[80vh] max-w-full rounded-sm border border-gold/30 object-contain shadow-2xl"
       />
-      {caption && <p className="font-sans text-xs tracking-widest text-cream/80 uppercase">{caption}</p>}
+      {caption && (
+        <p className="font-sans text-xs tracking-widest text-cream/80 uppercase">{caption}</p>
+      )}
       <button
         type="button"
         onClick={onClose}

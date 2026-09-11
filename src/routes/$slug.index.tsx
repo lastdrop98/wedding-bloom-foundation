@@ -35,7 +35,6 @@ function CoverPage() {
   const [music, setMusic] = useState<string | null>(null);
   const [leaving, setLeaving] = useState(false);
 
-
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
     queryFn: async () => {
@@ -119,7 +118,9 @@ function CoverPage() {
           {formatDatePt(event.event_date)}
         </p>
         {event.hashtag && (
-          <p className="mt-3 font-sans text-xs tracking-[0.3em] text-gold uppercase">{event.hashtag}</p>
+          <p className="mt-3 font-sans text-xs tracking-[0.3em] text-gold uppercase">
+            {event.hashtag}
+          </p>
         )}
 
         {badge && (
@@ -146,7 +147,6 @@ function CoverPage() {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <span className="breathe block h-12 w-px bg-linear-to-b from-transparent to-gold/80" />
       </div>
-
 
       {music && <audio ref={audioRef} src={music} loop preload="auto" />}
     </main>

@@ -39,7 +39,9 @@ export function DeliveryPackage({ slug }: { slug: string }) {
 
         <div className="space-y-4">
           <div>
-            <p className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase">Link do convite</p>
+            <p className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase">
+              Link do convite
+            </p>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <code className="rounded-md border border-border bg-background px-3 py-2 text-sm break-all">
                 {inviteLink}
@@ -63,8 +65,8 @@ export function DeliveryPackage({ slug }: { slug: string }) {
             </Button>
           </div>
           <p className="text-xs text-muted-foreground">
-            O Painel do Casal pode ser partilhado diretamente com o casal — não precisa de login, basta o
-            link.
+            O Painel do Casal pode ser partilhado diretamente com o casal — não precisa de login,
+            basta o link.
           </p>
         </div>
       </div>

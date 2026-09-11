@@ -3,13 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
-import {
-  EVENT_TYPES,
-  eventTitle,
-  eventTypeLabel,
-  formatDatePt,
-  type EventRow,
-} from "@/lib/event";
+import { EVENT_TYPES, eventTitle, eventTypeLabel, formatDatePt, type EventRow } from "@/lib/event";
 import { WeddingForm } from "@/components/WeddingForm";
 import { GalleryManager } from "@/components/GalleryManager";
 import { GiftManager } from "@/components/GiftManager";

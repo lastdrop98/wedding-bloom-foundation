@@ -23,7 +23,13 @@ import { Reveal } from "@/components/invite/Reveal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { BerrySprig, BotanicalFrame, EucalyptusSpray, FloralDivider, WatercolorRose } from "./Botanicals";
+import {
+  BerrySprig,
+  BotanicalFrame,
+  EucalyptusSpray,
+  FloralDivider,
+  WatercolorRose,
+} from "./Botanicals";
 import { Petals } from "./Petals";
 import { GiftQr } from "@/components/invite/GiftQr";
 import { Guestbook } from "@/components/invite/Guestbook";
@@ -46,13 +52,22 @@ function Section({
   return (
     <section className="relative overflow-hidden px-6 py-20 md:py-24">
       {flora === "rose" && (
-        <WatercolorRose className="pointer-events-none absolute -top-10 -left-12 opacity-50" size={200} />
+        <WatercolorRose
+          className="pointer-events-none absolute -top-10 -left-12 opacity-50"
+          size={200}
+        />
       )}
       {flora === "eucalipto" && (
-        <EucalyptusSpray className="text-sage pointer-events-none absolute -right-6 bottom-0 -scale-x-100 opacity-50" size={190} />
+        <EucalyptusSpray
+          className="text-sage pointer-events-none absolute -right-6 bottom-0 -scale-x-100 opacity-50"
+          size={190}
+        />
       )}
       {flora === "bagas" && (
-        <BerrySprig className="text-rose pointer-events-none absolute top-4 right-4 opacity-50" size={150} />
+        <BerrySprig
+          className="text-rose pointer-events-none absolute top-4 right-4 opacity-50"
+          size={150}
+        />
       )}
       <Reveal className={wide ? "relative mx-auto max-w-5xl" : "relative mx-auto max-w-2xl"}>
         <div className="flex flex-col items-center text-center">
@@ -300,7 +315,9 @@ export function AquarelaHome({
   useEffect(() => {
     if (!content?.gifts.length) return;
     Promise.all(
-      content.gifts.map(async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const),
+      content.gifts.map(
+        async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const,
+      ),
     ).then((pairs) =>
       setGiftPhotos(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])))),
     );
@@ -495,7 +512,9 @@ export function AquarelaHome({
               <span className="min-w-0">
                 <span className="block text-xl font-light">{r.title}</span>
                 {r.sub && (
-                  <span className="mt-1 block font-sans text-sm text-muted-foreground">{r.sub}</span>
+                  <span className="mt-1 block font-sans text-sm text-muted-foreground">
+                    {r.sub}
+                  </span>
                 )}
               </span>
             </li>
@@ -638,7 +657,10 @@ export function AquarelaHome({
       )}
 
       <footer className="relative mt-16 overflow-hidden border-t border-sage/40 px-6 pt-14 pb-10 text-center">
-        <EucalyptusSpray className="text-sage pointer-events-none absolute -bottom-6 -left-6 opacity-50" size={150} />
+        <EucalyptusSpray
+          className="text-sage pointer-events-none absolute -bottom-6 -left-6 opacity-50"
+          size={150}
+        />
         <FloralDivider />
         <p className="mt-6 font-sans text-xs tracking-[0.25em] text-muted-foreground uppercase">
           Convite criado com ♡ por

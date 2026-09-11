@@ -81,9 +81,18 @@ export function Flourish({
 }
 
 /** Os quatro cantos de uma secção. */
-export function FlourishFrame({ className, size }: { className?: string | undefined; size?: number | undefined }) {
+export function FlourishFrame({
+  className,
+  size,
+}: {
+  className?: string | undefined;
+  size?: number | undefined;
+}) {
   return (
-    <div className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)} aria-hidden="true">
+    <div
+      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
+      aria-hidden="true"
+    >
       <Flourish corner="tl" size={size} className="top-3 left-3" />
       <Flourish corner="tr" size={size} delay={150} className="top-3 right-3" />
       <Flourish corner="bl" size={size} delay={300} className="bottom-3 left-3" />
