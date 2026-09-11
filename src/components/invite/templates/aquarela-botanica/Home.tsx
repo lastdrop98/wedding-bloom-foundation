@@ -289,12 +289,12 @@ export function AquarelaHome({
   useEffect(() => {
     if (!content?.gallery.length) return;
     Promise.all(
-      content.gallery.map(async (g) => ({
-        url: await signedUrl(GALLERY_BUCKET, g.image_path),
-        caption: g.caption,
-        mediaType: g.media_type,
-      })),
-    ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => Boolean(i.url))));
+      content.gallery.map(async (g) => {
+        const url = await signedUrl(GALLERY_BUCKET, g.image_path);
+        if (!url) return null;
+        return { url, caption: g.caption, mediaType: g.media_type };
+      }),
+    ).then((items) => setGalleryUrls(items.filter((i): i is GalleryImage => i !== null)));
   }, [content]);
 
   useEffect(() => {
