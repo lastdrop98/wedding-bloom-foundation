@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 const TEMPLATE_OPTIONS = [
   { value: "golden-classic", label: "Noir & Ouro" },
   { value: "aquarela-botanica", label: "Aguarela Botânica" },
+  { value: "emerald-elegante", label: "Emerald Clássico" },
 ];
 
 type FieldKind = "text" | "date" | "datetime" | "textarea";

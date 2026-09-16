@@ -81,7 +81,72 @@ const TEMPLATES = [
       "Romance e delicadeza com flores em aguarela, tipografia script fluida e tons suaves de rosa e verde-sálvia.",
     features: ["Flores em aguarela", "Tons suaves e românticos", "Tipografia script elegante"],
   },
+  {
+    id: "emerald-elegante",
+    name: "Emerald Clássico",
+    badge: "Novo",
+    description:
+      "Formalidade e tradição com fundo claro, acentos dourados e uma estrutura completa inspirada nos convites clássicos.",
+    features: [
+      "Fundo claro e elegante",
+      "Estrutura tradicional completa",
+      "Ideal para cerimónias religiosas",
+    ],
+  },
 ];
+
+const TEMPLATE_STYLES: Record<
+  string,
+  {
+    tileBg: string;
+    tileGradient: string;
+    badgeBg: string;
+    eyebrowText: string;
+    titleText: string;
+    barA: string;
+    barB: string;
+    barC: string;
+    featureIcon: string;
+    ctaBorder: string;
+  }
+> = {
+  "golden-classic": {
+    tileBg: "bg-ink",
+    tileGradient: "bg-linear-to-b from-ink via-ink/95 to-gold/20",
+    badgeBg: "bg-warm text-cream",
+    eyebrowText: "text-gold/70",
+    titleText: "text-cream",
+    barA: "bg-gold/30",
+    barB: "bg-warm/30",
+    barC: "bg-gold/10",
+    featureIcon: "text-gold",
+    ctaBorder: "border-gold/70 text-gold hover:bg-gold hover:text-ink",
+  },
+  "aquarela-botanica": {
+    tileBg: "bg-rose/10",
+    tileGradient: "bg-linear-to-b from-rose/20 via-cream/95 to-sage/20",
+    badgeBg: "bg-sage text-cream",
+    eyebrowText: "text-rose/70",
+    titleText: "text-ink",
+    barA: "bg-rose/30",
+    barB: "bg-sage/30",
+    barC: "bg-gold-light/30",
+    featureIcon: "text-rose",
+    ctaBorder: "border-rose/70 text-rose hover:bg-rose hover:text-cream",
+  },
+  "emerald-elegante": {
+    tileBg: "bg-gold/10",
+    tileGradient: "bg-linear-to-b from-cream via-cream/95 to-gold/25",
+    badgeBg: "bg-gold text-ink",
+    eyebrowText: "text-gold/80",
+    titleText: "text-ink",
+    barA: "bg-gold/40",
+    barB: "bg-gold/25",
+    barC: "bg-gold/10",
+    featureIcon: "text-gold",
+    ctaBorder: "border-gold/70 text-gold hover:bg-gold hover:text-ink",
+  },
+};
 
 const FEATURES = [
   {
@@ -355,69 +420,35 @@ function Index() {
 
           <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {TEMPLATES.map((template, i) => {
-              const isAquarela = template.id === "aquarela-botanica";
+              const style = TEMPLATE_STYLES[template.id] ?? TEMPLATE_STYLES["golden-classic"]!;
               return (
                 <Reveal key={template.id} delay={i * 120}>
                   <article className="card-elegant flex h-full flex-col overflow-hidden">
-                    <div
-                      className={cn(
-                        "relative aspect-[4/5] overflow-hidden",
-                        isAquarela ? "bg-rose/10" : "bg-ink",
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          "absolute inset-0",
-                          isAquarela
-                            ? "bg-linear-to-b from-rose/20 via-cream/95 to-sage/20"
-                            : "bg-linear-to-b from-ink via-ink/95 to-gold/20",
-                        )}
-                      />
+                    <div className={cn("relative aspect-[4/5] overflow-hidden", style.tileBg)}>
+                      <div className={cn("absolute inset-0", style.tileGradient)} />
                       {template.badge ? (
                         <span
                           className={cn(
                             "absolute top-4 left-4 z-10 rounded-full px-3 py-1 font-sans text-[0.6rem] tracking-[0.2em] uppercase",
-                            isAquarela ? "bg-sage text-cream" : "bg-warm text-cream",
+                            style.badgeBg,
                           )}
                         >
                           {template.badge}
                         </span>
                       ) : null}
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                        <span
-                          className={cn("eyebrow", isAquarela ? "text-rose/70" : "text-gold/70")}
-                        >
-                          Template
-                        </span>
+                        <span className={cn("eyebrow", style.eyebrowText)}>Template</span>
                         <h3
-                          className={cn(
-                            "mt-4 text-3xl font-light tracking-wide",
-                            isAquarela ? "text-ink" : "text-cream",
-                          )}
+                          className={cn("mt-4 text-3xl font-light tracking-wide", style.titleText)}
                         >
                           {template.name}
                         </h3>
                         <Ornament className="mt-6" />
                       </div>
                       <div className="absolute right-4 bottom-4 left-4 flex gap-2">
-                        <span
-                          className={cn(
-                            "h-1.5 flex-1 rounded-full",
-                            isAquarela ? "bg-rose/30" : "bg-gold/30",
-                          )}
-                        />
-                        <span
-                          className={cn(
-                            "h-1.5 flex-1 rounded-full",
-                            isAquarela ? "bg-sage/30" : "bg-warm/30",
-                          )}
-                        />
-                        <span
-                          className={cn(
-                            "h-1.5 flex-1 rounded-full",
-                            isAquarela ? "bg-gold-light/30" : "bg-gold/10",
-                          )}
-                        />
+                        <span className={cn("h-1.5 flex-1 rounded-full", style.barA)} />
+                        <span className={cn("h-1.5 flex-1 rounded-full", style.barB)} />
+                        <span className={cn("h-1.5 flex-1 rounded-full", style.barC)} />
                       </div>
                     </div>
 
@@ -431,9 +462,7 @@ function Index() {
                             key={feature}
                             className="flex items-center gap-2 font-sans text-xs text-ink/80"
                           >
-                            <Sparkles
-                              className={cn("size-3.5", isAquarela ? "text-rose" : "text-gold")}
-                            />
+                            <Sparkles className={cn("size-3.5", style.featureIcon)} />
                             {feature}
                           </li>
                         ))}
@@ -447,9 +476,7 @@ function Index() {
                           rel="noreferrer"
                           className={cn(
                             "inline-flex w-full items-center justify-center gap-2 rounded-sm border px-6 py-3.5 font-sans text-[0.65rem] tracking-[0.25em] uppercase transition-all duration-500",
-                            isAquarela
-                              ? "border-rose/70 text-rose hover:bg-rose hover:text-cream"
-                              : "border-gold/70 text-gold hover:bg-gold hover:text-ink",
+                            style.ctaBorder,
                           )}
                         >
                           <MessageCircle className="size-3.5" />

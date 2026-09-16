@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { FlourishFrame } from "@/components/invite/Flourish";
 import { Ornament } from "@/components/invite/Ornament";
 import { AquarelaCover } from "@/components/invite/templates/aquarela-botanica/Cover";
+import { EmeraldCover } from "@/components/invite/templates/emerald-elegante/Cover";
 import {
   AUDIO_BUCKET,
   GALLERY_BUCKET,
@@ -69,6 +70,9 @@ function CoverPage() {
 
   if (event.template === "aquarela-botanica") {
     return <AquarelaCover event={event} slug={slug} inviteType={inviteType} />;
+  }
+  if (event.template === "emerald-elegante") {
+    return <EmeraldCover event={event} slug={slug} inviteType={inviteType} />;
   }
 
   const badge = inviteBadgeLabel(inviteType);
