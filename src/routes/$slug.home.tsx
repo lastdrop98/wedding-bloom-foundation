@@ -509,6 +509,27 @@ function HomePage() {
   const gifts = content?.gifts ?? [];
   const d = (field: Parameters<typeof detail>[1]) => detail(event, field);
 
+  const storyMilestones = [1, 2, 3, 4]
+    .map((n, index) => ({
+      icon: [Coffee, Heart, Gem, Sparkles][index]!,
+      date: d(`story_${n}_date` as Parameters<typeof detail>[1]) ?? "",
+      title: d(`story_${n}_title` as Parameters<typeof detail>[1]) ?? "",
+      text: d(`story_${n}_text` as Parameters<typeof detail>[1]) ?? "",
+    }))
+    .filter((item) => item.date || item.title || item.text);
+
+  const partyMembers = [1, 2, 3, 4]
+    .map((n, index) => ({
+      name: d(`party_${n}_name` as Parameters<typeof detail>[1]) ?? "",
+      role: d(`party_${n}_role` as Parameters<typeof detail>[1]) ?? "",
+      fallback: PARTY[index],
+    }))
+    .map((m) => ({
+      name: m.name || m.fallback?.name || "",
+      role: m.role || m.fallback?.role || "",
+    }))
+    .filter((m) => m.name);
+
   function toggleMusic() {
     const el = audioRef.current;
     if (!el) return;
@@ -683,16 +704,7 @@ function HomePage() {
           dark
           vines="b"
         >
-          <StoryTimeline
-            milestones={[1, 2, 3, 4]
-              .map((n, index) => ({
-                icon: [Coffee, Heart, Gem, Sparkles][index]!,
-                date: d(`story_${n}_date` as Parameters<typeof detail>[1]) ?? "",
-                title: d(`story_${n}_title` as Parameters<typeof detail>[1]) ?? "",
-                text: d(`story_${n}_text` as Parameters<typeof detail>[1]) ?? "",
-              }))
-              .filter((item) => item.date || item.title || item.text)}
-          />
+          <StoryTimeline milestones={storyMilestones.length ? storyMilestones : undefined} />
         </Section>
       )}
 
@@ -707,17 +719,7 @@ function HomePage() {
       {event.event_type === "casamento" && (
         <Section title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {( [1, 2, 3, 4]
-              .map((n, index) => ({
-                name: d(`party_${n}_name` as Parameters<typeof detail>[1]) ?? "",
-                role: d(`party_${n}_role` as Parameters<typeof detail>[1]) ?? "",
-                fallback: PARTY[index],
-              }))
-              .map((m) => ({
-                name: m.name || m.fallback?.name || "",
-                role: m.role || m.fallback?.role || "",
-              }))
-              .filter((m) => m.name) ).map((m, i) => {
+            {partyMembers.map((m, i) => {
               const photo = galleryUrls[2 + i];
               return (
                 <Reveal key={m.name} delay={i * 100}>
