@@ -19,11 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
-const TEMPLATE_OPTIONS = [
-  { value: "golden-classic", label: "Noir & Ouro" },
-  { value: "aquarela-botanica", label: "Aguarela Botânica" },
-];
+import { TEMPLATE_OPTIONS } from "@/lib/templates";
 
 type FieldKind = "text" | "date" | "datetime" | "textarea";
 
