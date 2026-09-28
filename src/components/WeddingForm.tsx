@@ -19,11 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
-const TEMPLATE_OPTIONS = [
-  { value: "golden-classic", label: "Noir & Ouro" },
-  { value: "aquarela-botanica", label: "Aguarela Botânica" },
-];
+import { TEMPLATE_OPTIONS } from "@/lib/templates";
 
 type FieldKind = "text" | "date" | "datetime" | "textarea";
 
@@ -101,6 +97,19 @@ const GROUPS: { title: string; fields: Field[] }[] = [
       { name: "verse_reference", label: "Referência 1", scope: "details" },
       { name: "verse_2_text", label: "Versículo 2", kind: "textarea", scope: "details" },
       { name: "verse_2_reference", label: "Referência 2", scope: "details" },
+    ],
+  },
+  {
+    title: "Selos do convite",
+    fields: [
+      { name: "seal_enabled", label: "Ativar selos (true/false)", scope: "details" },
+      { name: "seal_mode", label: "Modo (one/two)", scope: "details" },
+      { name: "seal_one_text", label: "Selo 1 — texto", scope: "details" },
+      { name: "seal_two_text", label: "Selo 2 — texto", scope: "details" },
+      { name: "seal_one_label", label: "Selo 1 — etiqueta", scope: "details" },
+      { name: "seal_two_label", label: "Selo 2 — etiqueta", scope: "details" },
+      { name: "seal_one_color", label: "Selo 1 — cor", scope: "details" },
+      { name: "seal_two_color", label: "Selo 2 — cor", scope: "details" },
     ],
   },
 ];

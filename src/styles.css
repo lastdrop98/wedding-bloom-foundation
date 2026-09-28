@@ -637,3 +637,120 @@
     break-inside: avoid;
   }
 }
+
+
+/* ——— Solar Eclipse template themes ——— */
+.invite-tone-gold {
+  --gold: oklch(0.72 0.11 80);
+  --gold-soft: oklch(0.88 0.05 88);
+  --primary: oklch(0.60 0.11 76);
+  --ink: oklch(0.12 0.01 70);
+  --cream: oklch(0.975 0.012 88);
+}
+.invite-tone-emerald {
+  --gold: oklch(0.72 0.11 80);
+  --gold-soft: oklch(0.88 0.05 88);
+  --primary: oklch(0.45 0.11 150);
+  --ink: oklch(0.12 0.035 150);
+  --cream: oklch(0.975 0.012 95);
+  --sage: oklch(0.62 0.08 150);
+}
+.invite-tone-midnight {
+  --gold: oklch(0.78 0.08 82);
+  --gold-soft: oklch(0.91 0.035 90);
+  --primary: oklch(0.58 0.12 250);
+  --ink: oklch(0.11 0.035 250);
+  --cream: oklch(0.98 0.008 92);
+}
+.invite-tone-rose {
+  --gold: oklch(0.66 0.09 35);
+  --gold-soft: oklch(0.90 0.045 35);
+  --primary: oklch(0.57 0.11 15);
+  --ink: oklch(0.17 0.025 10);
+  --cream: oklch(0.985 0.012 45);
+  --rose: oklch(0.74 0.09 15);
+}
+.invite-tone-sand {
+  --gold: oklch(0.65 0.09 55);
+  --gold-soft: oklch(0.90 0.045 70);
+  --primary: oklch(0.56 0.10 48);
+  --ink: oklch(0.18 0.025 55);
+  --cream: oklch(0.975 0.018 85);
+  --warm: oklch(0.56 0.13 45);
+}
+.invite-tone-burgundy {
+  --gold: oklch(0.72 0.10 72);
+  --gold-soft: oklch(0.89 0.045 80);
+  --primary: oklch(0.43 0.12 20);
+  --ink: oklch(0.15 0.04 15);
+  --cream: oklch(0.98 0.012 90);
+  --wine: oklch(0.35 0.13 20);
+}
+.invite-tone-sapphire {
+  --gold: oklch(0.74 0.10 82);
+  --gold-soft: oklch(0.90 0.04 90);
+  --primary: oklch(0.48 0.14 250);
+  --ink: oklch(0.12 0.04 250);
+  --cream: oklch(0.99 0.006 95);
+}
+.invite-tone-xiguiane {
+  --gold: oklch(0.67 0.13 55);
+  --gold-soft: oklch(0.88 0.06 75);
+  --primary: oklch(0.47 0.13 35);
+  --ink: oklch(0.18 0.045 40);
+  --cream: oklch(0.975 0.02 80);
+  --warm: oklch(0.52 0.14 40);
+}
+.invite-tone-xiguiane .draw-rule,
+.invite-tone-xiguiane .gold-rule {
+  background-image: linear-gradient(to right, transparent, var(--color-gold), transparent);
+}
+.invite-tone-xiguiane header {
+  background-image:
+    linear-gradient(135deg, color-mix(in oklab, var(--color-primary) 20%, transparent), transparent 45%),
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 9%, transparent) 0 8px, transparent 8px 16px);
+}
+.invite-seal {
+  --seal-accent: var(--color-gold);
+  position: relative;
+  display: inline-flex;
+  width: 108px;
+  height: 108px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--seal-accent) 75%, transparent);
+  color: var(--seal-accent);
+  background: color-mix(in oklab, var(--color-background) 82%, transparent);
+  box-shadow: inset 0 0 0 5px color-mix(in oklab, var(--seal-accent) 8%, transparent), 0 10px 28px -18px color-mix(in oklab, var(--seal-accent) 80%, transparent);
+  text-align: center;
+}
+.invite-seal-ring {
+  position: absolute;
+  inset: 7px;
+  border: 1px dashed color-mix(in oklab, var(--seal-accent) 55%, transparent);
+  border-radius: inherit;
+}
+.invite-seal-text {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  line-height: 1;
+}
+.invite-seal-label {
+  position: relative;
+  z-index: 1;
+  max-width: 78px;
+  margin-top: 7px;
+  font-family: var(--font-sans);
+  font-size: 0.47rem;
+  line-height: 1.25;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.invite-seal-sm {
+  width: 92px;
+  height: 92px;
+}

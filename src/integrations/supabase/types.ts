@@ -150,6 +150,32 @@ export type Database = {
           },
         ]
       }
+      couple_access_tokens: {
+        Row: {
+          created_at: string
+          event_id: string
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          token?: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "couple_access_tokens_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: true
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       guestbook: {
         Row: {
           created_at: string
@@ -325,6 +351,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_couple_rsvps: {
+        Args: {
+          _token: string
+        }
+        Returns: Database["public"]["Tables"]["rsvps"]["Row"][]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
