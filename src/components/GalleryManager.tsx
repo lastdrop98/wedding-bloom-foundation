@@ -45,6 +45,8 @@ export function GalleryManager({ eventId }: { eventId: string }) {
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileKey, setFileKey] = useState(0);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editCaption, setEditCaption] = useState("");
   const key = ["admin-gallery", eventId];
 
   const { data: items, isLoading } = useQuery({
@@ -126,10 +128,15 @@ export function GalleryManager({ eventId }: { eventId: string }) {
     void refresh();
   }
 
-  function editCaption(item: GalleryItem) {
-    const next = window.prompt("Legenda", item.caption ?? "");
-    if (next === null) return;
-    updateItem.mutate({ id: item.id, caption: next.trim() || null });
+  function startCaptionEdit(item: GalleryItem) {
+    setEditingId(item.id);
+    setEditCaption(item.caption ?? "");
+  }
+
+  function saveCaption() {
+    if (!editingId) return;
+    updateItem.mutate({ id: editingId, caption: editCaption.trim() || null });
+    setEditingId(null);
   }
 
   return (
@@ -173,10 +180,20 @@ export function GalleryManager({ eventId }: { eventId: string }) {
             >
               <Thumb item={item} />
               <div className="min-w-40 flex-1">
-                <p className="text-sm">{item.caption || "Sem legenda"}</p>
-                <p className="text-xs text-muted-foreground">
-                  {item.media_type === "video" ? "Vídeo" : "Foto"} · ordem {index + 1}
-                </p>
+                {editingId === item.id ? (
+                  <div className="flex flex-wrap gap-2">
+                    <Input value={editCaption} onChange={(e) => setEditCaption(e.target.value)} placeholder="Legenda" />
+                    <Button type="button" size="sm" onClick={saveCaption} disabled={updateItem.isPending}>Guardar</Button>
+                    <Button type="button" size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancelar</Button>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-sm">{item.caption || "Sem legenda"}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.media_type === "video" ? "Vídeo" : "Foto"} · ordem {index + 1}
+                    </p>
+                  </>
+                )}
               </div>
               <div className="flex flex-wrap gap-2">
                 <Button
@@ -197,7 +214,7 @@ export function GalleryManager({ eventId }: { eventId: string }) {
                 >
                   ↓
                 </Button>
-                <Button type="button" variant="outline" size="sm" onClick={() => editCaption(item)}>
+                <Button type="button" variant="outline" size="sm" onClick={() => startCaptionEdit(item)}>
                   Legenda
                 </Button>
                 <Button
