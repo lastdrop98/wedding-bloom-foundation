@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { EventSeals } from "@/components/invite/InvitationSeal";
 import {
   GALLERY_BUCKET,
   detail,
@@ -169,6 +170,29 @@ async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: st
   y += 10;
   center(formatDatePt(event.event_date).toUpperCase(), y, 11, "helvetica", "normal", GOLD, 1.2);
 
+  const sealEnabled = detail(event, "seal_enabled") === "true";
+  const sealMode = detail(event, "seal_mode");
+  const sealOne = detail(event, "seal_one_text");
+  const sealTwo = detail(event, "seal_two_text");
+  if (sealEnabled && (sealOne || sealTwo)) {
+    y += 7;
+    const seals = sealMode === "two" && sealTwo ? [sealOne, sealTwo].filter(Boolean) : [sealOne].filter(Boolean);
+    const gap = seals.length === 2 ? 30 : 0;
+    seals.forEach((seal, index) => {
+      const x = cx + (index === 0 ? -gap / 2 : gap / 2);
+      doc.setDrawColor(...GOLD);
+      doc.setLineWidth(0.4);
+      doc.circle(x, y, 9);
+      doc.setLineWidth(0.2);
+      doc.circle(x, y, 7.5);
+      doc.setFont("times", "normal");
+      doc.setFontSize(14);
+      doc.setTextColor(...GOLD);
+      doc.text(String(seal), x, y + 2, { align: "center" });
+    });
+    y += 13;
+  }
+
   const verse = detail(event, "verse_text");
   if (verse) {
     y += 9;
@@ -330,6 +354,19 @@ function PrintPage() {
             <p className="mt-4 font-sans text-xs tracking-[0.3em] text-[rgb(201,168,76)] uppercase">
               {formatDatePt(event.event_date)}
             </p>
+
+            <div className="mt-4">
+              <EventSeals
+                enabled={detail(event, "seal_enabled")}
+                mode={detail(event, "seal_mode")}
+                oneText={detail(event, "seal_one_text")}
+                twoText={detail(event, "seal_two_text")}
+                oneLabel={detail(event, "seal_one_label")}
+                twoLabel={detail(event, "seal_two_label")}
+                oneColor={detail(event, "seal_one_color")}
+                twoColor={detail(event, "seal_two_color")}
+              />
+            </div>
 
             {verse && (
               <div className="mt-5 text-xs italic">
