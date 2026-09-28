@@ -340,7 +340,7 @@ const STORY: StoryMilestone[] = [
 ];
 
 /** Timeline vertical com linha dourada que se desenha com o scroll. */
-function StoryTimeline() {
+function StoryTimeline({ milestones = STORY }: { milestones?: StoryMilestone[] }) {
   const ref = useRef<HTMLOListElement | null>(null);
   const [progress, setProgress] = useState(0);
 
@@ -376,7 +376,7 @@ function StoryTimeline() {
         className="absolute top-0 bottom-0 left-4 w-px origin-top bg-gold/70 transition-transform duration-300 ease-out md:left-1/2 md:-translate-x-1/2"
         style={{ transform: `scaleY(${progress})` }}
       />
-      {STORY.map((m, i) => {
+      {milestones.map((m, i) => {
         const Icon = m.icon;
         const left = i % 2 === 0;
         return (
@@ -676,8 +676,23 @@ function HomePage() {
       )}
 
       {event.event_type === "casamento" && (
-        <Section title="A Nossa História" eyebrow="O caminho até aqui" wide dark vines="b">
-          <StoryTimeline />
+        <Section
+          title="A Nossa História"
+          eyebrow={d("story_intro") || "O caminho até aqui"}
+          wide
+          dark
+          vines="b"
+        >
+          <StoryTimeline
+            milestones={[1, 2, 3, 4]
+              .map((n, index) => ({
+                icon: [Coffee, Heart, Gem, Sparkles][index]!,
+                date: d(`story_${n}_date` as Parameters<typeof detail>[1]) ?? "",
+                title: d(`story_${n}_title` as Parameters<typeof detail>[1]) ?? "",
+                text: d(`story_${n}_text` as Parameters<typeof detail>[1]) ?? "",
+              }))
+              .filter((item) => item.date || item.title || item.text)}
+          />
         </Section>
       )}
 
@@ -692,7 +707,17 @@ function HomePage() {
       {event.event_type === "casamento" && (
         <Section title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PARTY.map((m, i) => {
+            {( [1, 2, 3, 4]
+              .map((n, index) => ({
+                name: d(`party_${n}_name` as Parameters<typeof detail>[1]) ?? "",
+                role: d(`party_${n}_role` as Parameters<typeof detail>[1]) ?? "",
+                fallback: PARTY[index],
+              }))
+              .map((m) => ({
+                name: m.name || m.fallback?.name || "",
+                role: m.role || m.fallback?.role || "",
+              }))
+              .filter((m) => m.name) ).map((m, i) => {
               const photo = galleryUrls[2 + i];
               return (
                 <Reveal key={m.name} delay={i * 100}>
