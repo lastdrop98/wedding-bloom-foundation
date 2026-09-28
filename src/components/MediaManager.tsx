@@ -58,9 +58,11 @@ function SlotPreview({ item }: { item: MediaItem }) {
 
   if (item.media_type === "video") {
     return url ? (
-      <video src={url} className="h-24 w-32 rounded-md object-cover" muted playsInline />
+      <video src={url} className="h-24 w-32 rounded-md object-cover" muted playsInline preload="metadata" />
     ) : (
-      <div className="flex h-24 w-32 items-center justify-center rounded-md border border-border text-xs text-muted-foreground">Vídeo</div>
+      <div className="flex h-24 w-32 items-center justify-center rounded-md border border-border text-xs text-muted-foreground">
+        Vídeo
+      </div>
     );
   }
 
@@ -75,6 +77,7 @@ export function MediaManager({ event }: { event: EventRow }) {
   const queryClient = useQueryClient();
   const [fileBySlot, setFileBySlot] = useState<Record<string, File | null>>({});
   const [captionBySlot, setCaptionBySlot] = useState<Record<string, string>>({});
+  const [orderBySlot, setOrderBySlot] = useState<Record<string, string>>({});
   const [musicFile, setMusicFile] = useState<File | null>(null);
   const [musicTitle, setMusicTitle] = useState(() => details(event).music_title ?? "");
   const [musicEnabled, setMusicEnabled] = useState(Boolean(event.music_path));
@@ -97,8 +100,9 @@ export function MediaManager({ event }: { event: EventRow }) {
   const uploadSlot = useMutation({
     mutationFn: async ({ slot, file }: { slot: MediaSlot; file: File }) => {
       const mediaType = file.type.startsWith("video/") ? "video" : "image";
-      if (slot.startsWith("video") && mediaType !== "video") throw new Error("Escolha um vídeo para este campo.");
-      if (!slot.startsWith("video") && mediaType !== "image") throw new Error("Escolha uma imagem para este campo.");
+      const expectsVideo = slot.includes("video");
+      if (expectsVideo && mediaType !== "video") throw new Error("Escolha um vídeo para este campo.");
+      if (!expectsVideo && mediaType !== "image") throw new Error("Escolha uma imagem para este campo.");
 
       const ext = file.name.split(".").pop() ?? (mediaType === "video" ? "mp4" : "jpg");
       const path = event.id + "/slots/" + slot + "-" + Date.now() + "." + ext;
@@ -106,6 +110,7 @@ export function MediaManager({ event }: { event: EventRow }) {
       if (uploadError) throw uploadError;
 
       const existing = media?.find((item) => item.slot === slot);
+      const order = Number(orderBySlot[slot] ?? existing?.sort_order ?? (media?.length ?? 0) + 1);
       const { error: upsertError } = await supabase.from("event_media").upsert(
         {
           event_id: event.id,
@@ -113,7 +118,7 @@ export function MediaManager({ event }: { event: EventRow }) {
           media_type: mediaType,
           storage_path: path,
           caption: captionBySlot[slot]?.trim() || null,
-          sort_order: existing?.sort_order ?? (media?.length ?? 0) + 1,
+          sort_order: Number.isFinite(order) ? order : 1,
         },
         { onConflict: "event_id,slot" },
       );
@@ -121,11 +126,12 @@ export function MediaManager({ event }: { event: EventRow }) {
         await supabase.storage.from(GALLERY_BUCKET).remove([path]);
         throw upsertError;
       }
+
       if (slot === "cover") {
         const { error: coverError } = await supabase.from("events").update({ cover_image_path: path }).eq("id", event.id);
         if (coverError) throw coverError;
       }
-      if (existing?.storage_path) {
+      if (existing?.storage_path && existing.storage_path !== path) {
         await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
       }
     },
@@ -137,9 +143,25 @@ export function MediaManager({ event }: { event: EventRow }) {
     onError: (error) => toast.error(error instanceof Error ? error.message : "Não foi possível atualizar a media."),
   });
 
+  const updateSlot = useMutation({
+    mutationFn: async ({ item, caption, sortOrder }: { item: MediaItem; caption: string; sortOrder: number }) => {
+      const { error } = await supabase
+        .from("event_media")
+        .update({ caption: caption.trim() || null, sort_order: sortOrder })
+        .eq("id", item.id)
+        .eq("event_id", event.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: key });
+      toast.success("Posição atualizada.");
+    },
+    onError: () => toast.error("Não foi possível atualizar a posição."),
+  });
+
   const removeSlot = useMutation({
     mutationFn: async (item: MediaItem) => {
-      const { error } = await supabase.from("event_media").delete().eq("id", item.id);
+      const { error } = await supabase.from("event_media").delete().eq("id", item.id).eq("event_id", event.id);
       if (error) throw error;
       if (item.slot === "cover") {
         const { error: coverError } = await supabase.from("events").update({ cover_image_path: null }).eq("id", event.id);
@@ -157,12 +179,15 @@ export function MediaManager({ event }: { event: EventRow }) {
   const saveMusic = useMutation({
     mutationFn: async () => {
       let musicPath = event.music_path;
+      const previousPath = event.music_path;
+
       if (musicFile) {
         const ext = musicFile.name.split(".").pop() ?? "mp3";
         musicPath = event.id + "/music-" + Date.now() + "." + ext;
         const { error } = await supabase.storage.from(AUDIO_BUCKET).upload(musicPath, musicFile, { upsert: false });
         if (error) throw error;
       }
+
       const currentDetails = details(event);
       const { error } = await supabase
         .from("events")
@@ -172,20 +197,22 @@ export function MediaManager({ event }: { event: EventRow }) {
         })
         .eq("id", event.id);
       if (error) throw error;
-      if (musicFile && event.music_path && event.music_path !== musicPath) {
-        await supabase.storage.from(AUDIO_BUCKET).remove([event.music_path]);
+
+      if (previousPath && previousPath !== musicPath) {
+        await supabase.storage.from(AUDIO_BUCKET).remove([previousPath]);
       }
     },
     onSuccess: () => {
       setMusicFile(null);
       toast.success(musicEnabled ? "Música guardada." : "Música desativada.");
     },
-    onError: () => toast.error("Não foi possível guardar a música."),
+    onError: (error) => toast.error(error instanceof Error ? error.message : "Não foi possível guardar a música."),
   });
 
   const renderSlot = (definition: { value: MediaSlot; label: string; hint: string }, accept: string) => {
     const item = media?.find((entry) => entry.slot === definition.value);
     const file = fileBySlot[definition.value] ?? null;
+    const order = orderBySlot[definition.value] ?? String(item?.sort_order ?? "");
 
     return (
       <div key={definition.value} className="space-y-3 rounded-lg border border-border p-4">
@@ -196,7 +223,8 @@ export function MediaManager({ event }: { event: EventRow }) {
           </div>
           {item && <SlotPreview item={item} />}
         </div>
-        <div className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+
+        <div className="grid gap-3 sm:grid-cols-[1fr_1fr_110px_auto] sm:items-end">
           <div className="space-y-2">
             <Label>Substituir ficheiro</Label>
             <Input
@@ -212,6 +240,15 @@ export function MediaManager({ event }: { event: EventRow }) {
               onChange={(e) => setCaptionBySlot((current) => ({ ...current, [definition.value]: e.target.value }))}
             />
           </div>
+          <div className="space-y-2">
+            <Label>Ordem</Label>
+            <Input
+              type="number"
+              min={0}
+              value={order}
+              onChange={(e) => setOrderBySlot((current) => ({ ...current, [definition.value]: e.target.value }))}
+            />
+          </div>
           <Button
             type="button"
             disabled={!file || uploadSlot.isPending}
@@ -220,10 +257,28 @@ export function MediaManager({ event }: { event: EventRow }) {
             {uploadSlot.isPending ? "A enviar…" : item ? "Substituir" : "Adicionar"}
           </Button>
         </div>
+
         {item && (
-          <Button type="button" variant="ghost" size="sm" onClick={() => removeSlot.mutate(item)} disabled={removeSlot.isPending}>
-            Remover este media
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={updateSlot.isPending}
+              onClick={() =>
+                updateSlot.mutate({
+                  item,
+                  caption: captionBySlot[definition.value] ?? item.caption ?? "",
+                  sortOrder: Math.max(0, Number(order) || 0),
+                })
+              }
+            >
+              Guardar legenda/ordem
+            </Button>
+            <Button type="button" variant="ghost" size="sm" onClick={() => removeSlot.mutate(item)} disabled={removeSlot.isPending}>
+              Remover este media
+            </Button>
+          </div>
         )}
       </div>
     );

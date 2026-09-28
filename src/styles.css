@@ -798,3 +798,168 @@
 .template-design-african-heritage .card-elegant,.template-design-xiguiane-tradicional .card-elegant{border-radius:0;border-width:2px;box-shadow:8px 8px 0 color-mix(in oklab,var(--color-gold) 16%,transparent)}
 .template-design-editorial-dark h1,.template-design-sapphire-editorial h1{font-size:clamp(3.2rem,12vw,7rem);letter-spacing:-.015em}
 .template-design-editorial-dark .eyebrow,.template-design-sapphire-editorial .eyebrow{letter-spacing:.22em}
+
+
+/* ═══════════ Solar Eclipse — expanded template art direction ═══════════ */
+.template-background-media {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: .9;
+}
+
+.template-design-minimalist-white,
+.template-design-minimalist-black {
+  --template-radius: .12rem;
+}
+.template-design-minimalist-white {
+  background: linear-gradient(180deg, color-mix(in oklab, white 96%, var(--color-primary)), var(--color-background));
+}
+.template-design-minimalist-white header {
+  min-height: 94svh;
+  background: radial-gradient(circle at 50% 38%, color-mix(in oklab, white 92%, var(--color-primary)), transparent 62%);
+}
+.template-design-minimalist-white .card-elegant,
+.template-design-minimalist-black .card-elegant {
+  border-radius: .12rem;
+  box-shadow: none;
+}
+.template-design-minimalist-black {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--color-background) 88%, var(--color-primary)), var(--color-background));
+}
+.template-design-minimalist-black header {
+  min-height: 94svh;
+}
+.template-design-minimalist-black h1 {
+  font-weight: 300;
+  letter-spacing: -.035em;
+}
+
+.template-design-cinematic-charcoal header {
+  min-height: 100svh;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-gold) 25%, transparent);
+}
+.template-design-cinematic-charcoal header h1 {
+  max-width: 9ch;
+  font-size: clamp(3.6rem, 13vw, 8rem);
+  line-height: .9;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
+}
+.template-design-cinematic-charcoal .card-elegant {
+  background: color-mix(in oklab, var(--color-background) 82%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.template-design-royal-black-gold header {
+  margin: 1rem;
+  min-height: calc(100svh - 2rem);
+  border: 1px solid color-mix(in oklab, var(--color-gold) 70%, transparent);
+  outline: 2px solid color-mix(in oklab, var(--color-gold) 13%, transparent);
+  outline-offset: 10px;
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--color-gold) 9%, transparent), transparent 35%),
+    radial-gradient(circle at 50% 15%, color-mix(in oklab, var(--color-gold) 12%, transparent), transparent 50%);
+}
+.template-design-royal-black-gold .card-elegant {
+  border-radius: 0;
+  border-width: 1px;
+}
+
+.template-design-romantic-champagne header,
+.template-design-garden-ivory header,
+.template-design-european-ivory header {
+  background:
+    radial-gradient(circle at 15% 18%, color-mix(in oklab, var(--color-gold) 14%, transparent), transparent 28%),
+    radial-gradient(circle at 85% 72%, color-mix(in oklab, var(--color-primary) 9%, transparent), transparent 30%);
+}
+.template-design-romantic-champagne .card-elegant,
+.template-design-garden-ivory .card-elegant,
+.template-design-european-ivory .card-elegant {
+  border-radius: 1.2rem .45rem 1.2rem .45rem;
+}
+
+.template-design-sicilian-terracotta header {
+  background:
+    radial-gradient(circle at 50% 10%, color-mix(in oklab, var(--color-gold) 18%, transparent), transparent 45%),
+    repeating-linear-gradient(90deg, color-mix(in oklab, var(--color-primary) 5%, transparent) 0 2px, transparent 2px 16px);
+}
+.template-design-sicilian-terracotta .card-elegant {
+  border-radius: .35rem;
+  box-shadow: 0 20px 48px -30px color-mix(in oklab, var(--color-primary) 65%, transparent);
+}
+
+.template-design-nikah-emerald header {
+  border-top: 1px solid color-mix(in oklab, var(--color-gold) 55%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--color-gold) 55%, transparent);
+  background-image:
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 8%, transparent) 0 8px, transparent 8px 16px),
+    repeating-linear-gradient(-45deg, color-mix(in oklab, var(--color-primary) 5%, transparent) 0 8px, transparent 8px 16px);
+}
+.template-design-nikah-emerald .card-elegant {
+  border-radius: .3rem 1.1rem .3rem 1.1rem;
+}
+
+.template-design-traditional-bronze header {
+  border: 8px double color-mix(in oklab, var(--color-gold) 52%, transparent);
+  background: linear-gradient(135deg, color-mix(in oklab, var(--color-gold) 9%, transparent), transparent 55%);
+}
+.template-design-traditional-bronze .card-elegant {
+  border-radius: .2rem;
+  box-shadow: 5px 5px 0 color-mix(in oklab, var(--color-gold) 12%, transparent);
+}
+
+.template-design-tropical-sunset header {
+  background:
+    radial-gradient(circle at 18% 28%, color-mix(in oklab, var(--color-primary) 14%, transparent), transparent 30%),
+    radial-gradient(circle at 82% 78%, color-mix(in oklab, var(--color-gold) 16%, transparent), transparent 34%);
+}
+.template-design-tropical-sunset .card-elegant,
+.template-design-floral-pearl .card-elegant {
+  border-radius: 1.5rem .5rem 1.5rem .5rem;
+}
+.template-design-floral-pearl img {
+  border-radius: 1.35rem .5rem 1.35rem .5rem;
+}
+
+.template-design-editorial-dark,
+.template-design-sapphire-editorial {
+  --editorial-line: color-mix(in oklab, var(--color-gold) 35%, transparent);
+}
+.template-design-editorial-dark header::after,
+.template-design-sapphire-editorial header::after {
+  content: "";
+  position: absolute;
+  inset: 1.25rem;
+  border: 1px solid var(--editorial-line);
+  pointer-events: none;
+}
+.template-design-editorial-dark .card-elegant,
+.template-design-sapphire-editorial .card-elegant {
+  border-left-width: 3px;
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 0;
+  border-radius: 0;
+}
+
+@media (max-width: 640px) {
+  .template-design-royal-black-gold header,
+  .template-design-royal-emerald header,
+  .template-design-royal-burgundy header,
+  .template-design-royal-sapphire header,
+  .template-design-baroque-gold header {
+    margin: .65rem;
+    min-height: calc(100svh - 1.3rem);
+  }
+  .template-design-editorial-dark header::after,
+  .template-design-sapphire-editorial header::after {
+    inset: .7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .template-background-media {
+    background-attachment: scroll;
+  }
+}
