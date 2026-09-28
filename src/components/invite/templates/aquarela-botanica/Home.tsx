@@ -125,7 +125,7 @@ function LocationCard({
   );
 }
 
-function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: number }) {
+function RsvpForm({ event, defaultCount, message }: { event: EventRow; defaultCount: number; message?: string | null }) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [guestId, setGuestId] = useState<string | null>(null);
@@ -196,6 +196,7 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
 
   return (
     <form onSubmit={submit} className="card-aquarela space-y-5 p-7 font-sans md:p-9">
+      {message && <p className="text-center text-sm leading-relaxed text-muted-foreground">{message}</p>}
       <div className="space-y-2">
         <Label htmlFor="guest_name">Nome</Label>
         <Input
@@ -658,7 +659,7 @@ export function AquarelaHome({
       </Section>
 
       <Section title="Confirmação de Presença" eyebrow="RSVP" flora="rose">
-        <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} />
+        <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} message={d("rsvp_message")} />
       </Section>
 
       {(event.contact_1_name || event.contact_2_name) && (
