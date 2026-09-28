@@ -142,7 +142,7 @@ function LocationCard({
   );
 }
 
-function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: number }) {
+function RsvpForm({ event, defaultCount, message }: { event: EventRow; defaultCount: number; message?: string | null }) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [guestId, setGuestId] = useState<string | null>(null);
@@ -213,6 +213,7 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
 
   return (
     <form onSubmit={submit} className="card-elegant space-y-5 p-7 font-sans md:p-9">
+      {message && <p className="text-center text-sm leading-relaxed text-muted-foreground">{message}</p>}
       <div className="space-y-2">
         <Label htmlFor="guest_name">Nome</Label>
         <Input
@@ -634,6 +635,14 @@ function HomePage() {
         <span className="breathe absolute bottom-8 left-1/2 block h-12 w-px -translate-x-1/2 bg-linear-to-b from-transparent to-gold/80" />
       </header>
 
+      {d("welcome_message") && (
+        <Section title="Uma mensagem para vocês" eyebrow="Com carinho" vines="b">
+          <div className="card-elegant mx-auto max-w-2xl p-8 text-center md:p-10">
+            <p className="text-lg leading-relaxed font-light whitespace-pre-line">{d("welcome_message")}</p>
+          </div>
+        </Section>
+      )}
+
       <Section title="Contagem Decrescente" eyebrow="Falta pouco" vines="c">
         <Countdown date={event.event_date} />
       </Section>
@@ -797,6 +806,14 @@ function HomePage() {
 
       <Ornament />
 
+      {d("dress_code") && (
+        <Section title="Dress Code" eyebrow="Para o grande dia" vines="c">
+          <div className="card-elegant mx-auto max-w-xl p-8 text-center">
+            <p className="text-lg font-light whitespace-pre-line">{d("dress_code")}</p>
+          </div>
+        </Section>
+      )}
+
       <Section title="Localização" wide vines="b">
         <div className="grid gap-6 md:grid-cols-3">
           <LocationCard
@@ -867,7 +884,13 @@ function HomePage() {
               {d("bank_name") && <div>Banco: {d("bank_name")}</div>}
               {d("bank_account") && <div>Conta: {d("bank_account")}</div>}
               {d("bank_nib") && <div>NIB/IBAN: {d("bank_nib")}</div>}
+              {d("mpesa_number") && <div>M-Pesa: {d("mpesa_number")}</div>}
+              {d("emola_number") && <div>e-Mola: {d("emola_number")}</div>}
+              {d("mkesh_number") && <div>mKesh: {d("mkesh_number")}</div>}
             </dl>
+            {d("bank_payment_note") && (
+              <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">{d("bank_payment_note")}</p>
+            )}
             {d("bank_nib") && (
               <GiftQr
                 text={`Banco: ${d("bank_name") ?? ""}\nNIB: ${d("bank_nib")}\nTitular: ${d("bank_holder") ?? ""}`}
@@ -916,7 +939,11 @@ function HomePage() {
       <Ornament />
 
       <Section title="Confirmação de Presença" eyebrow="RSVP" dark vines="a">
-        <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} />
+        <RsvpForm
+          event={event}
+          defaultCount={inviteType === "casal" ? 2 : 1}
+          message={d("rsvp_message")}
+        />
       </Section>
 
       {(event.contact_1_name || event.contact_2_name) && (
@@ -935,6 +962,13 @@ function HomePage() {
               ))}
           </div>
         </Section>
+      )}
+
+      {d("closing_message") && (
+        <section className="mx-auto max-w-2xl px-6 py-12 text-center">
+          <Ornament />
+          <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">{d("closing_message")}</p>
+        </section>
       )}
 
       <footer className="section-dark relative mt-16 overflow-hidden border-t border-gold/25 px-6 pt-14 pb-10 text-center">
