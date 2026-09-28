@@ -59,7 +59,7 @@ function ConfirmationsPage() {
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "rsvps", filter: `event_id=eq.${eventId}` },
-        () => void queryClient.invalidateQueries({ queryKey: ["rsvps", eventId] }),
+        () => void queryClient.invalidateQueries({ queryKey: ["rsvps", eventId, acesso] }),
       )
       .subscribe();
     return () => {
