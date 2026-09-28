@@ -437,6 +437,7 @@ function HomePage() {
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
   const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
+  const [slotMedia, setSlotMedia] = useState<Record<string, string>>({});
 
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
@@ -454,6 +455,15 @@ function HomePage() {
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
     signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
   }, [event]);
+
+  useEffect(() => {
+    if (!content?.media.length) return;
+    Promise.all(content.media.map(async (m) => [m.slot, await signedUrl(GALLERY_BUCKET, m.storage_path)] as const)).then((pairs) => {
+      const next = Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])));
+      setSlotMedia(next);
+      if (!event?.cover_image_path && next.cover) setCover(next.cover);
+    });
+  }, [content, event?.cover_image_path]);
 
   useEffect(() => {
     if (!content?.gallery.length) return;
@@ -514,7 +524,7 @@ function HomePage() {
   }
 
   return (
-    <main className={`${templateToneClass(event.template)} pb-24`}>
+    <main className={`${templateToneClass(event.template)} template-design-${event.template} pb-24`}>
       <TemplateAtmosphere template={event.template} />
       {/* Cabeçalho imersivo */}
       <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
@@ -626,7 +636,7 @@ function HomePage() {
                   parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
                     ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
                     : "",
-                  photo: galleryUrls[0],
+                  photo: slotMedia.bride ? { url: slotMedia.bride, caption: null, mediaType: "image" } : galleryUrls[0],
                 },
                 {
                   role: "O Noivo",
@@ -634,7 +644,7 @@ function HomePage() {
                   parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
                     ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
                     : "",
-                  photo: galleryUrls[1],
+                  photo: slotMedia.groom ? { url: slotMedia.groom, caption: null, mediaType: "image" } : galleryUrls[1],
                 },
               ].map((p, i) => (
                 <Reveal key={p.role} delay={i * 100}>
@@ -649,6 +659,14 @@ function HomePage() {
       {event.event_type === "casamento" && (
         <Section title="A Nossa História" eyebrow="O caminho até aqui" wide dark vines="b">
           <StoryTimeline />
+        </Section>
+      )}
+
+      {slotMedia.story_video && (
+        <Section title="Uma história em movimento" eyebrow="Vídeo" wide dark vines="b">
+          <div className="overflow-hidden rounded-2xl border border-gold/30 bg-black shadow-2xl">
+            <video src={slotMedia.story_video} controls playsInline preload="metadata" className="max-h-[70vh] w-full object-contain" />
+          </div>
         </Section>
       )}
 

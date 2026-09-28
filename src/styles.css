@@ -781,3 +781,20 @@
 .template-atmosphere-rose .template-orb-a,.template-atmosphere-rose .template-orb-b { opacity:.10; }
 .template-atmosphere-burgundy .template-orb-a { opacity:.18; }
 .template-atmosphere-sapphire .template-orb-a,.template-atmosphere-sapphire .template-orb-b { opacity:.10; }
+
+
+/* Structural visual families */
+.template-design-minimalist-brown .card-elegant,.template-design-minimalist-burgundy .card-elegant,.template-design-minimalist-lavender .card-elegant,.template-design-midnight-blue .card-elegant{border-radius:.15rem;box-shadow:none}
+.template-design-minimalist-brown header,.template-design-minimalist-burgundy header,.template-design-minimalist-lavender header,.template-design-midnight-blue header{min-height:92svh}
+.template-design-minimalist-brown .eyebrow,.template-design-minimalist-burgundy .eyebrow,.template-design-minimalist-lavender .eyebrow,.template-design-midnight-blue .eyebrow{letter-spacing:.42em}
+.template-design-royal-emerald header,.template-design-royal-burgundy header,.template-design-royal-sapphire header,.template-design-baroque-gold header{margin:1rem;min-height:calc(100svh - 2rem);border:1px solid color-mix(in oklab,var(--color-gold) 58%,transparent);outline:1px solid color-mix(in oklab,var(--color-gold) 18%,transparent);outline-offset:8px}
+.template-design-royal-emerald .card-elegant,.template-design-royal-burgundy .card-elegant,.template-design-royal-sapphire .card-elegant,.template-design-baroque-gold .card-elegant{border-radius:0}
+.template-design-garden-green .card-elegant,.template-design-garden-blue .card-elegant,.template-design-romantic-rose .card-elegant,.template-design-aquarela-botanica .card-elegant{border-radius:1.35rem .45rem 1.35rem .45rem}
+.template-design-garden-green img,.template-design-garden-blue img,.template-design-romantic-rose img{border-radius:1.25rem .35rem 1.25rem .35rem}
+.template-design-boho-sand .card-elegant,.template-design-boho-rose .card-elegant,.template-design-mediterranean-blue .card-elegant,.template-design-tropical-green .card-elegant{border-radius:1rem;box-shadow:0 20px 45px -30px color-mix(in oklab,var(--color-primary) 55%,transparent)}
+.template-design-oriental-red header,.template-design-oriental-green header,.template-design-oriental-blue header{background-image:repeating-linear-gradient(45deg,color-mix(in oklab,var(--color-gold) 7%,transparent) 0 10px,transparent 10px 20px),repeating-linear-gradient(-45deg,color-mix(in oklab,var(--color-primary) 5%,transparent) 0 10px,transparent 10px 20px);border-bottom:1px solid color-mix(in oklab,var(--color-gold) 38%,transparent)}
+.template-design-oriental-red .card-elegant,.template-design-oriental-green .card-elegant,.template-design-oriental-blue .card-elegant{border-radius:.2rem}
+.template-design-african-heritage header,.template-design-xiguiane-tradicional header{border-top:7px solid var(--color-primary);border-bottom:7px solid var(--color-gold);background-image:linear-gradient(135deg,color-mix(in oklab,var(--color-primary) 15%,transparent),transparent 55%),repeating-linear-gradient(45deg,color-mix(in oklab,var(--color-gold) 8%,transparent) 0 9px,transparent 9px 18px)}
+.template-design-african-heritage .card-elegant,.template-design-xiguiane-tradicional .card-elegant{border-radius:0;border-width:2px;box-shadow:8px 8px 0 color-mix(in oklab,var(--color-gold) 16%,transparent)}
+.template-design-editorial-dark h1,.template-design-sapphire-editorial h1{font-size:clamp(3.2rem,12vw,7rem);letter-spacing:-.015em}
+.template-design-editorial-dark .eyebrow,.template-design-sapphire-editorial .eyebrow{letter-spacing:.22em}
