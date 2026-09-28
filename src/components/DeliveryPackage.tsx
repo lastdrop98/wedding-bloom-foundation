@@ -2,12 +2,31 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 export function DeliveryPackage({ slug }: { slug: string }) {
   const [origin, setOrigin] = useState("");
-  useEffect(() => setOrigin(window.location.origin), []);
+  const [coupleToken, setCoupleToken] = useState<string | null>(null);
+  useEffect(() => {
+    setOrigin(window.location.origin);
+    void supabase
+      .from("events")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle()
+      .then(async ({ data }) => {
+        if (!data?.id) return;
+        const { data: token } = await supabase
+          .from("couple_access_tokens")
+          .select("token")
+          .eq("event_id", data.id)
+          .maybeSingle();
+        setCoupleToken(token?.token ?? null);
+      });
+  }, [slug]);
 
   const inviteLink = `${origin}/${slug}`;
+  const couplePanelLink = coupleToken ? `${origin}/${slug}/confirmacoes?acesso=${encodeURIComponent(coupleToken)}` : `${origin}/${slug}/confirmacoes`;
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(inviteLink)}`;
 
   async function copy() {
@@ -57,14 +76,13 @@ export function DeliveryPackage({ slug }: { slug: string }) {
               </a>
             </Button>
             <Button asChild variant="outline" size="sm">
-              <a href={`/${slug}/confirmacoes`} target="_blank" rel="noreferrer">
+              <a href={couplePanelLink} target="_blank" rel="noreferrer">
                 Ver Painel do Casal
               </a>
             </Button>
           </div>
           <p className="text-xs text-muted-foreground">
-            O Painel do Casal pode ser partilhado diretamente com o casal — não precisa de login, basta o
-            link.
+            O Painel do Casal usa um link privado único; partilhe-o apenas com o casal.
           </p>
         </div>
       </div>
