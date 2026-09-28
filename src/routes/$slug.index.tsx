@@ -6,6 +6,7 @@ import { FlourishFrame } from "@/components/invite/Flourish";
 import { Ornament } from "@/components/invite/Ornament";
 import { AquarelaCover } from "@/components/invite/templates/aquarela-botanica/Cover";
 import { EventSeals } from "@/components/invite/InvitationSeal";
+import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
 import { templateToneClass } from "@/lib/templates";
 import {
   AUDIO_BUCKET,
@@ -106,6 +107,7 @@ function CoverPage() {
           <div className="h-full w-full bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.32_0.05_150)_0%,oklch(0.22_0.03_140)_45%,oklch(0.16_0.02_90)_100%)]" />
         )}
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,oklch(0.16_0.02_70/0.35)_0%,oklch(0.16_0.02_70/0.55)_45%,oklch(0.14_0.02_70/0.9)_100%)]" />
+        <TemplateAtmosphere template={event.template} />
       </div>
 
       <FlourishFrame className="text-gold/60" size={110} />
