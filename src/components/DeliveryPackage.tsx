@@ -29,12 +29,12 @@ export function DeliveryPackage({ slug }: { slug: string }) {
   const couplePanelLink = coupleToken ? `${origin}/${slug}/confirmacoes?acesso=${encodeURIComponent(coupleToken)}` : `${origin}/${slug}/confirmacoes`;
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(inviteLink)}`;
 
-  async function copy() {
+  async function copy(value: string, success = "Link copiado.") {
     try {
-      await navigator.clipboard.writeText(inviteLink);
-      toast.success("Link do convite copiado.");
+      await navigator.clipboard.writeText(value);
+      toast.success(success);
     } catch {
-      toast.error(inviteLink);
+      toast.error(value);
     }
   }
 
@@ -63,23 +63,24 @@ export function DeliveryPackage({ slug }: { slug: string }) {
               <code className="rounded-md border border-border bg-background px-3 py-2 text-sm break-all">
                 {inviteLink}
               </code>
-              <Button type="button" size="sm" variant="outline" onClick={copy}>
+              <Button type="button" size="sm" variant="outline" onClick={() => copy(inviteLink, "Link do convite copiado.")}>
                 Copiar
               </Button>
             </div>
           </div>
 
+          <div>
+            <p className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase">Convites para impressão</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <Button asChild variant="outline" size="sm"><a href={"/" + slug + "/imprimir?formato=a5"} target="_blank" rel="noreferrer">A5</a></Button>
+              <Button asChild variant="outline" size="sm"><a href={"/" + slug + "/imprimir?formato=a6"} target="_blank" rel="noreferrer">A6</a></Button>
+              <Button asChild variant="outline" size="sm"><a href={"/" + slug + "/imprimir?tipo=individual&formato=a6"} target="_blank" rel="noreferrer">Individual</a></Button>
+              <Button asChild variant="outline" size="sm"><a href={"/" + slug + "/imprimir?tipo=casal&formato=a6"} target="_blank" rel="noreferrer">Casal</a></Button>
+            </div>
+          </div>
           <div className="flex flex-wrap gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={`/${slug}/imprimir`} target="_blank" rel="noreferrer">
-                Ver Versão para Imprimir
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="sm">
-              <a href={couplePanelLink} target="_blank" rel="noreferrer">
-                Ver Painel do Casal
-              </a>
-            </Button>
+            <Button asChild variant="outline" size="sm"><a href={couplePanelLink} target="_blank" rel="noreferrer">Painel do Casal</a></Button>
+            <Button type="button" variant="outline" size="sm" onClick={() => copy(couplePanelLink, "Link privado do casal copiado.")}>Copiar link privado</Button>
           </div>
           <p className="text-xs text-muted-foreground">
             O Painel do Casal usa um link privado único; partilhe-o apenas com o casal.
