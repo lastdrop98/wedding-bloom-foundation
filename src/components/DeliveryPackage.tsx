@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import QRCode from "qrcode";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 export function DeliveryPackage({ slug }: { slug: string }) {
   const [origin, setOrigin] = useState("");
   const [coupleToken, setCoupleToken] = useState<string | null>(null);
+  const [qrSrc, setQrSrc] = useState<string | null>(null);
   useEffect(() => {
     setOrigin(window.location.origin);
     void supabase
@@ -27,7 +29,18 @@ export function DeliveryPackage({ slug }: { slug: string }) {
 
   const inviteLink = `${origin}/${slug}`;
   const couplePanelLink = coupleToken ? `${origin}/${slug}/confirmacoes?acesso=${encodeURIComponent(coupleToken)}` : `${origin}/${slug}/confirmacoes`;
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(inviteLink)}`;
+
+  useEffect(() => {
+    if (!origin) return;
+    QRCode.toDataURL(inviteLink, {
+      width: 320,
+      margin: 2,
+      errorCorrectionLevel: "M",
+      color: { dark: "#111111", light: "#ffffff" },
+    })
+      .then(setQrSrc)
+      .catch(() => setQrSrc(null));
+  }, [inviteLink, origin]);
 
   async function copy(value: string, success = "Link copiado.") {
     try {
@@ -46,14 +59,23 @@ export function DeliveryPackage({ slug }: { slug: string }) {
       </p>
 
       <div className="grid gap-6 sm:grid-cols-[auto_1fr] sm:items-start">
-        {origin && (
-          <img
-            src={qrSrc}
-            alt={`QR code do convite ${slug}`}
-            width={200}
-            height={200}
-            className="rounded-md border border-border bg-white p-2"
-          />
+        {qrSrc && (
+          <div className="space-y-2">
+            <img
+              src={qrSrc}
+              alt={`QR code do convite ${slug}`}
+              width={200}
+              height={200}
+              className="rounded-md border border-border bg-white p-2"
+            />
+            <a
+              href={qrSrc}
+              download={`qr-${slug}.png`}
+              className="block text-center text-xs tracking-[0.18em] text-muted-foreground uppercase hover:text-foreground"
+            >
+              Baixar QR
+            </a>
+          </div>
         )}
 
         <div className="space-y-4">
