@@ -125,7 +125,7 @@ function LocationCard({
   );
 }
 
-function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: number }) {
+function RsvpForm({ event, defaultCount, message }: { event: EventRow; defaultCount: number; message?: string | null }) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [guestId, setGuestId] = useState<string | null>(null);
@@ -196,6 +196,7 @@ function RsvpForm({ event, defaultCount }: { event: EventRow; defaultCount: numb
 
   return (
     <form onSubmit={submit} className="card-aquarela space-y-5 p-7 font-sans md:p-9">
+      {message && <p className="text-center text-sm leading-relaxed text-muted-foreground">{message}</p>}
       <div className="space-y-2">
         <Label htmlFor="guest_name">Nome</Label>
         <Input
@@ -275,6 +276,7 @@ export function AquarelaHome({
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
   const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
+  const [slotMedia, setSlotMedia] = useState<Record<string, string>>({});
 
   const { data: content } = useQuery({
     queryKey: ["event-content", event.id],
@@ -285,6 +287,13 @@ export function AquarelaHome({
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
     signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
   }, [event]);
+
+  useEffect(() => {
+    if (!content?.media.length) return;
+    Promise.all(content.media.map(async (m) => [m.slot, await signedUrl(GALLERY_BUCKET, m.storage_path)] as const)).then((pairs) => {
+      setSlotMedia(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1]))));
+    });
+  }, [content]);
 
   useEffect(() => {
     if (!content?.gallery.length) return;
@@ -329,7 +338,19 @@ export function AquarelaHome({
     <main className="aquarela pb-24">
       <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          {cover ? (
+          {slotMedia.cover_video ? (
+            <video
+              src={slotMedia.cover_video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={cover ?? undefined}
+              aria-label={`Vídeo de abertura de ${eventTitle(event)}`}
+              className="h-full w-full object-cover"
+            />
+          ) : cover ? (
             <img
               src={cover}
               alt={`Fotografia de ${eventTitle(event)}`}
@@ -380,6 +401,14 @@ export function AquarelaHome({
 
         <span className="breathe absolute bottom-8 left-1/2 block h-12 w-px -translate-x-1/2 bg-linear-to-b from-transparent to-rose/70" />
       </header>
+
+      {d("welcome_message") && (
+        <Section title="Uma mensagem para vocês" eyebrow="Com carinho" flora="rose">
+          <div className="card-aquarela mx-auto max-w-2xl p-8 text-center">
+            <p className="text-lg leading-relaxed font-light whitespace-pre-line">{d("welcome_message")}</p>
+          </div>
+        </Section>
+      )}
 
       <Section title="Contagem Decrescente" eyebrow="Falta pouco" flora="bagas">
         <Countdown date={event.event_date} />
@@ -503,6 +532,14 @@ export function AquarelaHome({
         </ol>
       </Section>
 
+      {d("dress_code") && (
+        <Section title="Dress Code" eyebrow="Para o grande dia" flora="bagas">
+          <div className="card-aquarela mx-auto max-w-xl p-8 text-center">
+            <p className="text-lg font-light whitespace-pre-line">{d("dress_code")}</p>
+          </div>
+        </Section>
+      )}
+
       <Section title="Localização" wide flora="rose">
         <div className="grid gap-6 md:grid-cols-3">
           <LocationCard
@@ -570,7 +607,13 @@ export function AquarelaHome({
               {d("bank_name") && <div>Banco: {d("bank_name")}</div>}
               {d("bank_account") && <div>Conta: {d("bank_account")}</div>}
               {d("bank_nib") && <div>NIB/IBAN: {d("bank_nib")}</div>}
+              {d("mpesa_number") && <div>M-Pesa: {d("mpesa_number")}</div>}
+              {d("emola_number") && <div>e-Mola: {d("emola_number")}</div>}
+              {d("mkesh_number") && <div>mKesh: {d("mkesh_number")}</div>}
             </dl>
+            {d("bank_payment_note") && (
+              <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">{d("bank_payment_note")}</p>
+            )}
             {d("bank_nib") && (
               <GiftQr
                 text={`Banco: ${d("bank_name") ?? ""}\nNIB: ${d("bank_nib")}\nTitular: ${d("bank_holder") ?? ""}`}
@@ -616,7 +659,7 @@ export function AquarelaHome({
       </Section>
 
       <Section title="Confirmação de Presença" eyebrow="RSVP" flora="rose">
-        <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} />
+        <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} message={d("rsvp_message")} />
       </Section>
 
       {(event.contact_1_name || event.contact_2_name) && (
@@ -635,6 +678,13 @@ export function AquarelaHome({
               ))}
           </div>
         </Section>
+      )}
+
+      {d("closing_message") && (
+        <section className="mx-auto max-w-2xl px-6 py-12 text-center">
+          <FloralDivider />
+          <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">{d("closing_message")}</p>
+        </section>
       )}
 
       <footer className="relative mt-16 overflow-hidden border-t border-sage/40 px-6 pt-14 pb-10 text-center">
