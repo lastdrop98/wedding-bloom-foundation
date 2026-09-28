@@ -8,6 +8,9 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/$slug/confirmacoes")({
   ssr: false,
+  validateSearch: (search: Record<string, unknown>) => ({
+    acesso: typeof search["acesso"] === "string" ? search["acesso"] : undefined,
+  }),
   head: ({ params }) => ({
     meta: [
       { title: `Confirmações — ${params.slug}` },
@@ -26,6 +29,7 @@ type Rsvp = Tables<"rsvps">;
 
 function ConfirmationsPage() {
   const { slug } = Route.useParams();
+  const { acesso } = Route.useSearch();
   const queryClient = useQueryClient();
 
   const { data: event, isLoading } = useQuery({
@@ -39,21 +43,17 @@ function ConfirmationsPage() {
 
   const eventId = event?.id;
   const { data: rsvps = [] } = useQuery({
-    queryKey: ["rsvps", eventId],
-    enabled: !!eventId,
+    queryKey: ["rsvps", eventId, acesso],
+    enabled: !!eventId && !!acesso,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("rsvps")
-        .select("*")
-        .eq("event_id", eventId!)
-        .order("created_at", { ascending: false });
+      const { data, error } = await supabase.rpc("get_couple_rsvps", { _token: acesso! });
       if (error) throw error;
-      return data as Rsvp[];
+      return (data ?? []) as Rsvp[];
     },
   });
 
   useEffect(() => {
-    if (!eventId) return;
+    if (!eventId || !acesso) return;
     const channel = supabase
       .channel(`rsvps-${eventId}`)
       .on(
@@ -65,7 +65,7 @@ function ConfirmationsPage() {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [eventId, queryClient]);
+  }, [eventId, acesso, queryClient]);
 
   if (isLoading) {
     return (
@@ -78,6 +78,18 @@ function ConfirmationsPage() {
     return (
       <div className="flex min-h-screen items-center justify-center px-6 text-center">
         <h1 className="text-3xl font-light">Evento não encontrado</h1>
+      </div>
+    );
+  }
+
+  if (!acesso) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 px-6 text-center">
+        <p className="eyebrow">Painel privado</p>
+        <h1 className="text-3xl font-light">Acesso reservado ao casal</h1>
+        <p className="max-w-md font-sans text-sm text-muted-foreground">
+          Use o link privado entregue pela Solar Eclipse para consultar as confirmações.
+        </p>
       </div>
     );
   }
