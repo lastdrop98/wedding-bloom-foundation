@@ -725,6 +725,25 @@ function HomePage() {
         </Section>
       )}
 
+      {(slotMedia.section_1 || slotMedia.section_2) && (
+        <Section title="Momentos especiais" eyebrow="Para guardar na memória" wide vines="c">
+          <div className="grid gap-6 md:grid-cols-2">
+            {[slotMedia.section_1, slotMedia.section_2]
+              .filter(Boolean)
+              .map((url, index) => (
+                <div key={url} className="card-elegant overflow-hidden">
+                  <img
+                    src={url}
+                    alt={`Momento especial ${index + 1} de ${eventTitle(event)}`}
+                    loading="lazy"
+                    className="h-72 w-full object-cover md:h-96"
+                  />
+                </div>
+              ))}
+          </div>
+        </Section>
+      )}
+
       {event.event_type === "casamento" && (
         <Section title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
