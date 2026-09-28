@@ -43,6 +43,7 @@ export const WEDDING_DETAIL_FIELDS = [
   "seal_two_label",
   "seal_one_color",
   "seal_two_color",
+  "music_title",
 ] as const;
 
 export type WeddingDetailField = (typeof WEDDING_DETAIL_FIELDS)[number];
