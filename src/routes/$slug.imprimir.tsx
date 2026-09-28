@@ -78,11 +78,13 @@ async function imageToDataUrl(url: string): Promise<{ data: string; format: "JPE
 async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: string | null, inviteType: ReturnType<typeof parseInviteType>, format: "a5" | "a6") {
   const palette = event.template.includes("xiguiane") || event.template.includes("african")
     ? { dark: [17, 35, 28] as [number, number, number], accent: [31, 125, 89] as [number, number, number], light: [225, 238, 226] as [number, number, number] }
-    : event.template.includes("midnight") || event.template.includes("sapphire") || event.template.includes("editorial-dark")
+    : event.template.includes("midnight") || event.template.includes("sapphire") || event.template.includes("editorial-dark") || event.template.includes("cinematic")
       ? { dark: [12, 20, 38] as [number, number, number], accent: [116, 169, 224] as [number, number, number], light: [220, 231, 244] as [number, number, number] }
-      : event.template.includes("rose") || event.template.includes("romantic")
+      : event.template.includes("rose") || event.template.includes("romantic") || event.template.includes("floral") || event.template.includes("tropical-sunset")
         ? { dark: [48, 25, 33] as [number, number, number], accent: [205, 124, 145] as [number, number, number], light: [242, 221, 226] as [number, number, number] }
-        : { dark: [18, 16, 14] as [number, number, number], accent: [201, 168, 76] as [number, number, number], light: [222, 196, 145] as [number, number, number] };
+        : event.template.includes("oriental") || event.template.includes("nikah")
+          ? { dark: [46, 18, 20] as [number, number, number], accent: [211, 166, 72] as [number, number, number], light: [244, 228, 190] as [number, number, number] }
+          : { dark: [18, 16, 14] as [number, number, number], accent: [201, 168, 76] as [number, number, number], light: [222, 196, 145] as [number, number, number] };
   const GOLD = palette.accent;
   const CHAMPAGNE = palette.light;
   const { jsPDF } = await import("jspdf");
@@ -252,6 +254,7 @@ function PrintPage() {
   const { slug } = Route.useParams();
   const { tipo: inviteType, formato } = Route.useSearch();
   const [cover, setCover] = useState<string | null>(null);
+  const [coverVideo, setCoverVideo] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   const { data: event, isLoading } = useQuery({
@@ -273,6 +276,14 @@ function PrintPage() {
     if (!event) return;
     signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
   }, [event]);
+
+  useEffect(() => {
+    if (!content?.media?.length) return;
+    const coverMedia = content.media.find((item) => item.slot === "cover");
+    const videoMedia = content.media.find((item) => item.slot === "cover_video");
+    if (coverMedia && !cover) signedUrl(GALLERY_BUCKET, coverMedia.storage_path).then(setCover);
+    if (videoMedia) signedUrl(GALLERY_BUCKET, videoMedia.storage_path).then(setCoverVideo);
+  }, [content, cover]);
 
   if (isLoading) {
     return (
@@ -309,7 +320,7 @@ function PrintPage() {
   }
 
   return (
-    <main className={`${templateToneClass(event.template)} print-page min-h-screen bg-[oklch(0.12_0.01_70)] px-4 py-10 font-serif text-[rgb(222,196,145)]">
+    <main className={`${templateToneClass(event.template)} template-design-${event.template} print-page min-h-screen bg-[oklch(0.12_0.01_70)] px-4 py-10 font-serif text-[rgb(222,196,145)]">
       <div className="print-actions mx-auto mb-8 flex max-w-md flex-wrap justify-center gap-3">
         <a
           href={inviteType ? `?tipo=${inviteType === "individual" ? "casal" : "individual"}&formato=${formato}` : `?formato=${formato}`}
@@ -338,6 +349,19 @@ function PrintPage() {
         className="print-sheet relative mx-auto aspect-[148/210] w-full max-w-md overflow-hidden bg-[oklch(0.12_0.01_70)] text-center"
         style={cover ? { backgroundImage: `url(${cover})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
       >
+        {coverVideo && (
+          <video
+            src={coverVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={cover ?? undefined}
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-[rgb(12,10,8)]/70" />
         <div className="pointer-events-none absolute inset-3 border border-[rgb(201,168,76)]" />
         <div className="pointer-events-none absolute inset-4 border border-[rgb(201,168,76)]/50" />
