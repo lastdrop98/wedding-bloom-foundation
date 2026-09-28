@@ -13,6 +13,13 @@ const STATUS: Record<string, { label: string; className: string }> = {
   nao: { label: "Não vai", className: "text-red-500" },
 };
 
+function guestWhatsAppUrl(phone: string, link: string, name: string) {
+  const digits = phone.replace(/\D/g, "");
+  const normalized = digits.startsWith("258") ? digits : digits.startsWith("0") ? "258" + digits.slice(1) : "258" + digits;
+  const message = `Olá ${name}! Aqui está o seu convite digital: ${link}`;
+  return `https://wa.me/${normalized}?text=${encodeURIComponent(message)}`;
+}
+
 export function GuestManager({ eventId, slug }: { eventId: string; slug: string }) {
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
@@ -115,10 +122,30 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                   </p>
                   {g.phone && <p className="text-xs text-muted-foreground">{g.phone}</p>}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button type="button" variant="outline" size="sm" onClick={() => copyLink(g.token)}>
                     Copiar link
                   </Button>
+                  {g.phone && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      asChild
+                    >
+                      <a
+                        href={guestWhatsAppUrl(
+                          g.phone,
+                          `${typeof window !== "undefined" ? window.location.origin : ""}/${slug}?g=${g.token}`,
+                          g.name,
+                        )}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        WhatsApp
+                      </a>
+                    </Button>
+                  )}
                   <Button
                     type="button"
                     variant="ghost"
