@@ -18,7 +18,7 @@ export function TemplateAtmosphere({
       <span className="template-orb template-orb-b" />
       {tone === "midnight" && <span className="template-stars" />}
       {tone === "xiguiane" && <span className="template-geometry" />}
-      {tone === "boho" && <span className="template-sun" />}
+      {tone === "sand" && <span className="template-sun" />}
     </div>
   );
 }
