@@ -28,6 +28,8 @@ import { FlourishFrame } from "@/components/invite/Flourish";
 import { FlipNumber } from "@/components/invite/FlipNumber";
 import { SectionVines, VineDivider } from "@/components/invite/Vines";
 import { Reveal } from "@/components/invite/Reveal";
+import { EventSeals } from "@/components/invite/InvitationSeal";
+import { templateToneClass } from "@/lib/templates";
 import { AquarelaHome } from "@/components/invite/templates/aquarela-botanica/Home";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -511,7 +513,7 @@ function HomePage() {
   }
 
   return (
-    <main className="pb-24">
+    <main className={`${templateToneClass(event.template)} pb-24`}>
       {/* Cabeçalho imersivo */}
       <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -550,6 +552,20 @@ function HomePage() {
               </p>
             </div>
           )}
+
+          <div className="mt-8">
+            <EventSeals
+              tipo={inviteType}
+              enabled={d("seal_enabled")}
+              mode={d("seal_mode")}
+              oneText={d("seal_one_text")}
+              twoText={d("seal_two_text")}
+              oneLabel={d("seal_one_label")}
+              twoLabel={d("seal_two_label")}
+              oneColor={d("seal_one_color")}
+              twoColor={d("seal_two_color")}
+            />
+          </div>
 
           {music && (
             <button
