@@ -5,8 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { FlourishFrame } from "@/components/invite/Flourish";
 import { Ornament } from "@/components/invite/Ornament";
 import { AquarelaCover } from "@/components/invite/templates/aquarela-botanica/Cover";
+import { EventSeals } from "@/components/invite/InvitationSeal";
+import { templateToneClass } from "@/lib/templates";
 import {
   AUDIO_BUCKET,
+  detail,
   GALLERY_BUCKET,
   eventTitle,
   fetchEventBySlug,
@@ -89,7 +92,7 @@ function CoverPage() {
 
   return (
     <main
-      className={`relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center ${leaving ? "page-leave" : "page-enter"}`}
+      className={`${templateToneClass(event.template)} relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center ${leaving ? "page-leave" : "page-enter"}`}
     >
       {/* Fundo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -130,6 +133,20 @@ function CoverPage() {
             </p>
           </div>
         )}
+
+        <div className="mt-8">
+          <EventSeals
+            tipo={inviteType}
+            enabled={detail(event, "seal_enabled")}
+            mode={detail(event, "seal_mode")}
+            oneText={detail(event, "seal_one_text")}
+            twoText={detail(event, "seal_two_text")}
+            oneLabel={detail(event, "seal_one_label")}
+            twoLabel={detail(event, "seal_two_label")}
+            oneColor={detail(event, "seal_one_color")}
+            twoColor={detail(event, "seal_two_color")}
+          />
+        </div>
 
         <div className="mt-14">
           <button
