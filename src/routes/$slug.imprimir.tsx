@@ -75,9 +75,6 @@ async function imageToDataUrl(url: string): Promise<{ data: string; format: "JPE
   }
 }
 
-const GOLD: [number, number, number] = [201, 168, 76];
-const CHAMPAGNE: [number, number, number] = [222, 196, 145];
-
 async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: string | null, inviteType: ReturnType<typeof parseInviteType>, format: "a5" | "a6") {
   const palette = event.template.includes("xiguiane") || event.template.includes("african")
     ? { dark: [17, 35, 28] as [number, number, number], accent: [31, 125, 89] as [number, number, number], light: [225, 238, 226] as [number, number, number] }
@@ -186,7 +183,7 @@ async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: st
   center(formatDatePt(event.event_date).toUpperCase(), y, 11, "helvetica", "normal", GOLD, 1.2);
 
   const sealEnabled = detail(event, "seal_enabled") === "true";
-  const sealMode = detail(event, "seal_mode");
+  const sealMode = inviteType === "individual" ? "one" : inviteType === "casal" ? "two" : detail(event, "seal_mode");
   const sealOne = detail(event, "seal_one_text");
   const sealTwo = detail(event, "seal_two_text");
   if (sealEnabled && (sealOne || sealTwo)) {
