@@ -3,6 +3,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type EventRow = Tables<"events">;
 export type GalleryItem = Tables<"gallery">;
+export type EventMediaItem = Tables<"event_media">;
 export type ScheduleItem = Tables<"schedule">;
 export type GiftItem = Tables<"gifts">;
 
@@ -85,7 +86,7 @@ export async function fetchEventBySlug(slug: string) {
 }
 
 export async function fetchEventContent(eventId: string) {
-  const [gallery, schedule, gifts] = await Promise.all([
+  const [gallery, schedule, gifts, media] = await Promise.all([
     supabase
       .from("gallery")
       .select("*")
@@ -101,11 +102,17 @@ export async function fetchEventContent(eventId: string) {
       .select("*")
       .eq("event_id", eventId)
       .order("sort_order", { ascending: true }),
+    supabase
+      .from("event_media")
+      .select("*")
+      .eq("event_id", eventId)
+      .order("sort_order", { ascending: true }),
   ]);
   return {
     gallery: gallery.data ?? [],
     schedule: schedule.data ?? [],
     gifts: gifts.data ?? [],
+    media: media.data ?? [],
   };
 }
 

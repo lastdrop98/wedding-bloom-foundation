@@ -12,6 +12,7 @@ import {
 } from "@/lib/event";
 import { WeddingForm } from "@/components/WeddingForm";
 import { GalleryManager } from "@/components/GalleryManager";
+import { MediaManager } from "@/components/MediaManager";
 import { GiftManager } from "@/components/GiftManager";
 import { GuestManager } from "@/components/GuestManager";
 import { DeliveryPackage } from "@/components/DeliveryPackage";
@@ -143,11 +144,10 @@ function AdminPage() {
           )}
 
           {mode.event && activeSection === "media" && (
-            <div className="space-y-10">
-              <GalleryManager eventId={mode.event.id} />
+            <div className="space-y-12">
+              <MediaManager event={mode.event} />
               <div className="border-t border-border pt-10">
-                <p className="eyebrow">Capa e música</p>
-                <p className="mt-1 text-sm text-muted-foreground">Use o separador Dados & Design para substituir a capa e a música.</p>
+                <GalleryManager eventId={mode.event.id} />
               </div>
             </div>
           )}
