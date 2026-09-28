@@ -38,6 +38,7 @@ function CoverPage() {
   const [cover, setCover] = useState<string | null>(null);
   const [music, setMusic] = useState<string | null>(null);
   const [leaving, setLeaving] = useState(false);
+  const [semanticCover, setSemanticCover] = useState<string | null>(null);
 
 
   const { data: event, isLoading } = useQuery({
@@ -53,6 +54,10 @@ function CoverPage() {
     if (!event) return;
     signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
+    supabase.from("event_media").select("storage_path").eq("event_id", event.id).eq("slot", "cover").maybeSingle().then(({ data }) => {
+      if (!data?.storage_path || event.cover_image_path) return;
+      signedUrl(GALLERY_BUCKET, data.storage_path).then(setSemanticCover);
+    });
   }, [event]);
 
   if (isLoading) {
@@ -93,13 +98,13 @@ function CoverPage() {
 
   return (
     <main
-      className={`${templateToneClass(event.template)} relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center ${leaving ? "page-leave" : "page-enter"}`}
+      className={`${templateToneClass(event.template)} template-design-${event.template} relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center ${leaving ? "page-leave" : "page-enter"}`}
     >
       {/* Fundo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {cover ? (
+        {cover || semanticCover ? (
           <img
-            src={cover}
+            src={cover ?? semanticCover}
             alt={`Fotografia de ${eventTitle(event)}`}
             className="ken-burns h-full w-full object-cover will-change-transform"
           />
