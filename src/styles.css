@@ -754,3 +754,30 @@
   width: 92px;
   height: 92px;
 }
+
+
+/* Template-specific visual atmosphere */
+.template-atmosphere { z-index: -1; }
+.template-orb { position:absolute; width:38vw; height:38vw; max-width:420px; max-height:420px; border-radius:999px; opacity:.14; filter:blur(8px); }
+.template-orb-a { top:-12%; left:-10%; background:var(--color-primary); }
+.template-orb-b { right:-12%; bottom:-16%; background:var(--color-gold); }
+.template-atmosphere-midnight .template-stars {
+  position:absolute; inset:0; opacity:.55;
+  background-image:radial-gradient(circle at 12% 18%, white 0 1px, transparent 1.5px),radial-gradient(circle at 72% 28%, white 0 1px, transparent 1.5px),radial-gradient(circle at 38% 70%, white 0 1px, transparent 1.5px),radial-gradient(circle at 86% 78%, white 0 1px, transparent 1.5px);
+  background-size:180px 180px,230px 230px,210px 210px,260px 260px;
+}
+.template-atmosphere-xiguiane .template-geometry {
+  position:absolute; inset:8%;
+  border:1px solid color-mix(in oklab, var(--color-gold) 30%, transparent);
+  transform:rotate(45deg) scale(.75);
+  box-shadow:0 0 0 28px color-mix(in oklab, var(--color-gold) 7%, transparent),0 0 0 56px color-mix(in oklab, var(--color-primary) 5%, transparent);
+}
+.template-atmosphere-sand .template-sun {
+  position:absolute; width:min(62vw,520px); height:min(62vw,520px); border-radius:999px; left:50%; top:8%; transform:translateX(-50%);
+  border:1px solid color-mix(in oklab, var(--color-gold) 35%, transparent);
+  box-shadow:0 0 0 18px color-mix(in oklab, var(--color-gold) 7%, transparent),0 0 0 38px color-mix(in oklab, var(--color-primary) 5%, transparent);
+}
+.template-atmosphere-emerald .template-orb-a { width:55vw; height:55vw; opacity:.09; }
+.template-atmosphere-rose .template-orb-a,.template-atmosphere-rose .template-orb-b { opacity:.10; }
+.template-atmosphere-burgundy .template-orb-a { opacity:.18; }
+.template-atmosphere-sapphire .template-orb-a,.template-atmosphere-sapphire .template-orb-b { opacity:.10; }
