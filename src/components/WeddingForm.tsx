@@ -99,6 +99,19 @@ const GROUPS: { title: string; fields: Field[] }[] = [
       { name: "verse_2_reference", label: "Referência 2", scope: "details" },
     ],
   },
+  {
+    title: "Selos do convite",
+    fields: [
+      { name: "seal_enabled", label: "Ativar selos (true/false)", scope: "details" },
+      { name: "seal_mode", label: "Modo (one/two)", scope: "details" },
+      { name: "seal_one_text", label: "Selo 1 — texto", scope: "details" },
+      { name: "seal_two_text", label: "Selo 2 — texto", scope: "details" },
+      { name: "seal_one_label", label: "Selo 1 — etiqueta", scope: "details" },
+      { name: "seal_two_label", label: "Selo 2 — etiqueta", scope: "details" },
+      { name: "seal_one_color", label: "Selo 1 — cor", scope: "details" },
+      { name: "seal_two_color", label: "Selo 2 — cor", scope: "details" },
+    ],
+  },
 ];
 
 function toInputValue(value: unknown, kind?: FieldKind) {
