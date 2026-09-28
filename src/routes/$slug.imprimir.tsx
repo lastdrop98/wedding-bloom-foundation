@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { EventSeals } from "@/components/invite/InvitationSeal";
+import { templateToneClass } from "@/lib/templates";
 import {
   GALLERY_BUCKET,
   detail,
@@ -296,7 +297,7 @@ function PrintPage() {
   }
 
   return (
-    <main className="print-page min-h-screen bg-[oklch(0.12_0.01_70)] px-4 py-10 font-serif text-[rgb(222,196,145)]">
+    <main className={`${templateToneClass(event.template)} print-page min-h-screen bg-[oklch(0.12_0.01_70)] px-4 py-10 font-serif text-[rgb(222,196,145)]">
       <div className="print-actions mx-auto mb-8 flex max-w-md flex-wrap justify-center gap-3">
         <button
           type="button"
