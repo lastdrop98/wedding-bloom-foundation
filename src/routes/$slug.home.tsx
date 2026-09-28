@@ -526,10 +526,29 @@ function HomePage() {
   return (
     <main className={`${templateToneClass(event.template)} template-design-${event.template} pb-24`}>
       <TemplateAtmosphere template={event.template} />
+      {slotMedia.background && (
+        <div
+          aria-hidden="true"
+          className="template-background-media pointer-events-none fixed inset-0 -z-20"
+          style={{ backgroundImage: `linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 88%, transparent), color-mix(in oklab, var(--color-background) 96%, transparent)), url(${slotMedia.background})` }}
+        />
+      )}
       {/* Cabeçalho imersivo */}
       <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          {cover ? (
+          {slotMedia.cover_video ? (
+            <video
+              src={slotMedia.cover_video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={cover ?? undefined}
+              aria-label={`Vídeo de abertura de ${eventTitle(event)}`}
+              className="h-full w-full object-cover"
+            />
+          ) : cover ? (
             <img
               src={cover}
               alt={`Fotografia de ${eventTitle(event)}`}
