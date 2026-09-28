@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import { AUDIO_BUCKET, GALLERY_BUCKET, signedUrl, type EventRow } from "@/lib/event";
+import { AUDIO_BUCKET, GALLERY_BUCKET, details, signedUrl, type EventRow } from "@/lib/event";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -76,7 +76,7 @@ export function MediaManager({ event }: { event: EventRow }) {
   const [fileBySlot, setFileBySlot] = useState<Record<string, File | null>>({});
   const [captionBySlot, setCaptionBySlot] = useState<Record<string, string>>({});
   const [musicFile, setMusicFile] = useState<File | null>(null);
-  const [musicTitle, setMusicTitle] = useState("");
+  const [musicTitle, setMusicTitle] = useState(() => details(event).music_title ?? "");
   const [musicEnabled, setMusicEnabled] = useState(Boolean(event.music_path));
 
   const key = ["admin-event-media", event.id];
@@ -121,6 +121,10 @@ export function MediaManager({ event }: { event: EventRow }) {
         await supabase.storage.from(GALLERY_BUCKET).remove([path]);
         throw upsertError;
       }
+      if (slot === "cover") {
+        const { error: coverError } = await supabase.from("events").update({ cover_image_path: path }).eq("id", event.id);
+        if (coverError) throw coverError;
+      }
       if (existing?.storage_path) {
         await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
       }
@@ -137,6 +141,10 @@ export function MediaManager({ event }: { event: EventRow }) {
     mutationFn: async (item: MediaItem) => {
       const { error } = await supabase.from("event_media").delete().eq("id", item.id);
       if (error) throw error;
+      if (item.slot === "cover") {
+        const { error: coverError } = await supabase.from("events").update({ cover_image_path: null }).eq("id", event.id);
+        if (coverError) throw coverError;
+      }
       await supabase.storage.from(GALLERY_BUCKET).remove([item.storage_path]);
     },
     onSuccess: () => {
@@ -155,9 +163,13 @@ export function MediaManager({ event }: { event: EventRow }) {
         const { error } = await supabase.storage.from(AUDIO_BUCKET).upload(musicPath, musicFile, { upsert: false });
         if (error) throw error;
       }
+      const currentDetails = details(event);
       const { error } = await supabase
         .from("events")
-        .update({ music_path: musicEnabled ? musicPath : null })
+        .update({
+          music_path: musicEnabled ? musicPath : null,
+          details: { ...currentDetails, music_title: musicTitle.trim() || null },
+        })
         .eq("id", event.id);
       if (error) throw error;
       if (musicFile && event.music_path && event.music_path !== musicPath) {
