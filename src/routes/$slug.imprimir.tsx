@@ -15,10 +15,15 @@ import {
   signedUrl,
   type EventRow,
   type ScheduleItem,
+  parseInviteType,
 } from "@/lib/event";
 
 export const Route = createFileRoute("/$slug/imprimir")({
   ssr: false,
+  validateSearch: (search: Record<string, unknown>) => ({
+    tipo: parseInviteType(search["tipo"]) ?? undefined,
+    formato: search["formato"] === "a6" ? "a6" : "a5",
+  }),
   head: ({ params }) => ({
     meta: [
       { title: `Convite para imprimir — ${params.slug}` },
@@ -70,18 +75,24 @@ async function imageToDataUrl(url: string): Promise<{ data: string; format: "JPE
   }
 }
 
-const GOLD: [number, number, number] = [201, 168, 76];
-const CHAMPAGNE: [number, number, number] = [222, 196, 145];
-
-async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: string | null) {
+async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: string | null, inviteType: ReturnType<typeof parseInviteType>, format: "a5" | "a6") {
+  const palette = event.template.includes("xiguiane") || event.template.includes("african")
+    ? { dark: [17, 35, 28] as [number, number, number], accent: [31, 125, 89] as [number, number, number], light: [225, 238, 226] as [number, number, number] }
+    : event.template.includes("midnight") || event.template.includes("sapphire") || event.template.includes("editorial-dark")
+      ? { dark: [12, 20, 38] as [number, number, number], accent: [116, 169, 224] as [number, number, number], light: [220, 231, 244] as [number, number, number] }
+      : event.template.includes("rose") || event.template.includes("romantic")
+        ? { dark: [48, 25, 33] as [number, number, number], accent: [205, 124, 145] as [number, number, number], light: [242, 221, 226] as [number, number, number] }
+        : { dark: [18, 16, 14] as [number, number, number], accent: [201, 168, 76] as [number, number, number], light: [222, 196, 145] as [number, number, number] };
+  const GOLD = palette.accent;
+  const CHAMPAGNE = palette.light;
   const { jsPDF } = await import("jspdf");
-  const doc = new jsPDF({ unit: "mm", format: "a5", orientation: "portrait" });
+  const doc = new jsPDF({ unit: "mm", format, orientation: "portrait" });
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
   const cx = W / 2;
 
   // Fundo
-  doc.setFillColor(18, 16, 14);
+  doc.setFillColor(...palette.dark);
   doc.rect(0, 0, W, H, "F");
   const img = coverUrl ? await imageToDataUrl(coverUrl) : null;
   if (img) {
@@ -92,7 +103,7 @@ async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: st
     }
     doc.saveGraphicsState();
     doc.setGState(new (doc as unknown as { GState: new (o: { opacity: number }) => unknown }).GState({ opacity: 0.68 }));
-    doc.setFillColor(12, 10, 8);
+    doc.setFillColor(...palette.dark);
     doc.rect(0, 0, W, H, "F");
     doc.restoreGraphicsState();
   }
@@ -172,7 +183,7 @@ async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: st
   center(formatDatePt(event.event_date).toUpperCase(), y, 11, "helvetica", "normal", GOLD, 1.2);
 
   const sealEnabled = detail(event, "seal_enabled") === "true";
-  const sealMode = detail(event, "seal_mode");
+  const sealMode = inviteType === "individual" ? "one" : inviteType === "casal" ? "two" : detail(event, "seal_mode");
   const sealOne = detail(event, "seal_one_text");
   const sealTwo = detail(event, "seal_two_text");
   if (sealEnabled && (sealOne || sealTwo)) {
@@ -234,11 +245,12 @@ async function generatePdf(event: EventRow, program: ProgramLine[], coverUrl: st
   if (contact) center(contact, fy, 7.5, "helvetica", "normal", CHAMPAGNE, 0.5);
   if (event.hashtag) center(event.hashtag, H - 13, 7, "helvetica", "normal", GOLD, 1);
 
-  doc.save(`convite-${event.slug}.pdf`);
+  doc.save("convite-" + event.slug + "-" + format + (inviteType ? "-" + inviteType : "") + ".pdf");
 }
 
 function PrintPage() {
   const { slug } = Route.useParams();
+  const { tipo: inviteType, formato } = Route.useSearch();
   const [cover, setCover] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -288,7 +300,7 @@ function PrintPage() {
   async function downloadPdf() {
     setBusy(true);
     try {
-      await generatePdf(event!, program, cover);
+      await generatePdf(event!, program, cover, inviteType, formato);
     } catch {
       toast.error("Não foi possível gerar o PDF.");
     } finally {
@@ -299,6 +311,12 @@ function PrintPage() {
   return (
     <main className={`${templateToneClass(event.template)} print-page min-h-screen bg-[oklch(0.12_0.01_70)] px-4 py-10 font-serif text-[rgb(222,196,145)]">
       <div className="print-actions mx-auto mb-8 flex max-w-md flex-wrap justify-center gap-3">
+        <a
+          href={inviteType ? `?tipo=${inviteType === "individual" ? "casal" : "individual"}&formato=${formato}` : `?formato=${formato}`}
+          className="rounded-sm border border-[rgb(201,168,76)] px-6 py-3 font-sans text-[0.7rem] tracking-[0.3em] text-[rgb(201,168,76)] uppercase transition-colors hover:bg-[rgb(201,168,76)]/10"
+        >
+          {inviteType === "individual" ? "Ver versão casal" : inviteType === "casal" ? "Ver versão individual" : "Escolher versão"}
+        </a>
         <button
           type="button"
           disabled={busy}
@@ -358,6 +376,7 @@ function PrintPage() {
 
             <div className="mt-4">
               <EventSeals
+                tipo={inviteType}
                 enabled={detail(event, "seal_enabled")}
                 mode={detail(event, "seal_mode")}
                 oneText={detail(event, "seal_one_text")}
