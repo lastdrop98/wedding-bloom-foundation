@@ -11,15 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { TEMPLATE_OPTIONS } from "@/lib/templates";
+import { TemplatePicker } from "@/components/TemplatePicker";
 
 type FieldKind = "text" | "date" | "datetime" | "textarea";
 
@@ -113,6 +106,15 @@ const GROUPS: { title: string; fields: Field[] }[] = [
     ],
   },
 ];
+
+function SelectNative({ value, onChange, options }: { value: string; onChange: (value: string) => void; options: string[][] }) {
+  return (
+    <select value={value} onChange={(e) => onChange(e.target.value)} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+      <option value="">Escolher…</option>
+      {options.map(([optionValue, label]) => <option key={optionValue} value={optionValue}>{label}</option>)}
+    </select>
+  );
+}
 
 function toInputValue(value: unknown, kind?: FieldKind) {
   if (value == null) return "";
@@ -237,21 +239,9 @@ export function WeddingForm({
                       onChange={(e) => set(id, e.target.value)}
                     />
                   ) : f.name === "template" ? (
-                    <Select
-                      value={values[id] || "golden-classic"}
-                      onValueChange={(value) => set(id, value)}
-                    >
-                      <SelectTrigger id={id}>
-                        <SelectValue placeholder="Escolha o template" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {TEMPLATE_OPTIONS.map((opt) => (
-                          <SelectItem key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <div className="sm:col-span-2">
+                      <TemplatePicker value={values.template || "golden-classic"} onChange={(value) => set("template", value)} />
+                    </div>
                   ) : (
                     <Input
                       id={id}
@@ -266,6 +256,33 @@ export function WeddingForm({
           </div>
         </fieldset>
       ))}
+
+      <fieldset className="space-y-4 rounded-xl border border-border bg-background/40 p-5">
+        <legend className="eyebrow">Selos</legend>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="seal-enabled">Ativar selos</Label>
+            <SelectNative value={values.seal_enabled ?? ""} onChange={(v) => set("seal_enabled", v)} options={[
+              ["true", "Sim"],
+              ["false", "Não"],
+            ]} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="seal-mode">Quantidade</Label>
+            <SelectNative value={values.seal_mode ?? ""} onChange={(v) => set("seal_mode", v)} options={[
+              ["one", "1 selo"],
+              ["two", "2 selos"],
+            ]} />
+          </div>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-2"><Label htmlFor="seal-one-text">Selo 1</Label><Input id="seal-one-text" value={values.seal_one_text ?? ""} onChange={(e) => set("seal_one_text", e.target.value)} placeholder="Ex.: 1" /></div>
+          <div className="space-y-2"><Label htmlFor="seal-two-text">Selo 2</Label><Input id="seal-two-text" value={values.seal_two_text ?? ""} onChange={(e) => set("seal_two_text", e.target.value)} placeholder="Ex.: 2" /></div>
+          <div className="space-y-2"><Label htmlFor="seal-one-label">Etiqueta 1</Label><Input id="seal-one-label" value={values.seal_one_label ?? ""} onChange={(e) => set("seal_one_label", e.target.value)} placeholder="Convite válido" /></div>
+          <div className="space-y-2"><Label htmlFor="seal-two-label">Etiqueta 2</Label><Input id="seal-two-label" value={values.seal_two_label ?? ""} onChange={(e) => set("seal_two_label", e.target.value)} placeholder="Convite válido" /></div>
+        </div>
+        <p className="text-xs leading-relaxed text-muted-foreground">Os selos podem ser usados para convites individuais, de casal ou para a versão tradicional/Xiguiane.</p>
+      </fieldset>
 
       <fieldset className="space-y-4">
         <legend className="eyebrow">Ficheiros</legend>
