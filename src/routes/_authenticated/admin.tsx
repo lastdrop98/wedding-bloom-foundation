@@ -15,6 +15,7 @@ import { GalleryManager } from "@/components/GalleryManager";
 import { GiftManager } from "@/components/GiftManager";
 import { GuestManager } from "@/components/GuestManager";
 import { DeliveryPackage } from "@/components/DeliveryPackage";
+import { ScheduleManager } from "@/components/ScheduleManager";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -39,6 +40,7 @@ function AdminPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>({ kind: "list" });
+  const [activeSection, setActiveSection] = useState("dados");
 
   const { data: events, isLoading } = useQuery({
     queryKey: ["admin-events"],
@@ -92,7 +94,7 @@ function AdminPage() {
                 key={t.value}
                 type="button"
                 disabled={!t.available}
-                onClick={() => setMode({ kind: "form", event: null, eventType: t.value })}
+                onClick={() => { setActiveSection("dados"); setMode({ kind: "form", event: null, eventType: t.value }); }}
                 className="rounded-md border border-border px-5 py-6 text-center transition-colors enabled:hover:border-primary enabled:hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <span className="block text-lg">{t.label}</span>
@@ -111,21 +113,54 @@ function AdminPage() {
               ? `Editar — ${eventTitle(mode.event)}`
               : `Novo evento — ${eventTypeLabel(mode.eventType)}`}
           </h2>
-          <WeddingForm
-            event={mode.event}
-            eventType={mode.eventType}
-            onSaved={closeForm}
-            onCancel={() => setMode({ kind: "list" })}
-          />
+          <div className="mb-8 flex gap-1 overflow-x-auto border-b border-border pb-1">
+            {[
+              ["dados", "Dados & Design"],
+              ["media", "Fotos & Vídeos"],
+              ["programa", "Programa"],
+              ["presentes", "Presentes"],
+              ["convidados", "Convidados"],
+              ["entrega", "Entrega"],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setActiveSection(value)}
+                className={`whitespace-nowrap rounded-t-md px-4 py-3 font-sans text-xs tracking-[0.12em] uppercase transition-colors ${activeSection === value ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"}`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
 
-          {mode.event && (
-            <div className="mt-12 space-y-12 border-t border-border pt-10">
+          {activeSection === "dados" && (
+            <WeddingForm
+              event={mode.event}
+              eventType={mode.eventType}
+              onSaved={closeForm}
+              onCancel={() => setMode({ kind: "list" })}
+            />
+          )}
+
+          {mode.event && activeSection === "media" && (
+            <div className="space-y-10">
               <GalleryManager eventId={mode.event.id} />
-              <GiftManager eventId={mode.event.id} />
-              <GuestManager eventId={mode.event.id} slug={mode.event.slug} />
-              <DeliveryPackage slug={mode.event.slug} />
+              <div className="border-t border-border pt-10">
+                <p className="eyebrow">Capa e música</p>
+                <p className="mt-1 text-sm text-muted-foreground">Use o separador Dados & Design para substituir a capa e a música.</p>
+              </div>
             </div>
           )}
+
+          {mode.event && activeSection === "programa" && <ScheduleManager eventId={mode.event.id} />}
+
+          {mode.event && activeSection === "presentes" && <GiftManager eventId={mode.event.id} />}
+
+          {mode.event && activeSection === "convidados" && (
+            <GuestManager eventId={mode.event.id} slug={mode.event.slug} />
+          )}
+
+          {mode.event && activeSection === "entrega" && <DeliveryPackage slug={mode.event.slug} />}
         </div>
       ) : isLoading ? (
         <p className="mt-10 text-muted-foreground">A carregar…</p>
@@ -153,7 +188,7 @@ function AdminPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setMode({ kind: "form", event: e, eventType: e.event_type })}
+                  onClick={() => { setActiveSection("dados"); setMode({ kind: "form", event: e, eventType: e.event_type }); }}
                 >
                   Editar
                 </Button>
