@@ -71,6 +71,47 @@ export type Database = {
         }
         Relationships: []
       }
+      event_media: {
+        Row: {
+          id: string
+          event_id: string
+          slot: string
+          media_type: string
+          storage_path: string
+          caption: string | null
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          slot: string
+          media_type?: string
+          storage_path: string
+          caption?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          slot?: string
+          media_type?: string
+          storage_path?: string
+          caption?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_media_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       gallery: {
         Row: {
           caption: string | null
@@ -159,17 +200,11 @@ export type Database = {
         Insert: {
           created_at?: string
           event_id: string
-          phone?: string | null
-          invite_type?: string
-          table_label?: string | null
           token?: string
         }
         Update: {
           created_at?: string
           event_id?: string
-          phone?: string | null
-          invite_type?: string
-          table_label?: string | null
           token?: string
         }
         Relationships: [
@@ -235,6 +270,9 @@ export type Database = {
           name: string
           rsvp_status?: string
           token?: string
+          phone?: string | null
+          invite_type?: string
+          table_label?: string | null
         }
         Update: {
           created_at?: string
@@ -244,6 +282,9 @@ export type Database = {
           name?: string
           rsvp_status?: string
           token?: string
+          phone?: string | null
+          invite_type?: string
+          table_label?: string | null
         }
         Relationships: [
           {
