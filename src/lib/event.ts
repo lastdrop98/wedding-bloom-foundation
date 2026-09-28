@@ -34,6 +34,14 @@ export const WEDDING_DETAIL_FIELDS = [
   "verse_reference",
   "verse_2_text",
   "verse_2_reference",
+  "seal_enabled",
+  "seal_mode",
+  "seal_one_text",
+  "seal_two_text",
+  "seal_one_label",
+  "seal_two_label",
+  "seal_one_color",
+  "seal_two_color",
 ] as const;
 
 export type WeddingDetailField = (typeof WEDDING_DETAIL_FIELDS)[number];
