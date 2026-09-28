@@ -17,6 +17,9 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
   const [count, setCount] = useState("1");
+  const [phone, setPhone] = useState("");
+  const [inviteType, setInviteType] = useState("individual");
+  const [tableLabel, setTableLabel] = useState("");
 
   const { data: guests, isLoading } = useQuery({
     queryKey: ["guests", eventId],
@@ -37,12 +40,18 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
         event_id: eventId,
         name: name.trim(),
         invited_count: Math.max(1, Number(count) || 1),
+        phone: phone.trim() || null,
+        invite_type: inviteType,
+        table_label: tableLabel.trim() || null,
       });
       if (error) throw error;
     },
     onSuccess: () => {
       setName("");
       setCount("1");
+      setPhone("");
+      setInviteType("individual");
+      setTableLabel("");
       toast.success("Convidado adicionado.");
       void queryClient.invalidateQueries({ queryKey: ["guests", eventId] });
     },
@@ -76,33 +85,13 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
     <section className="space-y-4">
       <p className="eyebrow">Convidados</p>
 
-      <div className="grid gap-3 sm:grid-cols-[1fr_10rem_auto] sm:items-end">
-        <div className="space-y-2">
-          <Label htmlFor="guest-name">Nome</Label>
-          <Input
-            id="guest-name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nome do convidado"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="guest-count">Número de convidados</Label>
-          <Input
-            id="guest-count"
-            type="number"
-            min={1}
-            value={count}
-            onChange={(e) => setCount(e.target.value)}
-          />
-        </div>
-        <Button
-          type="button"
-          disabled={!name.trim() || add.isPending}
-          onClick={() => add.mutate()}
-        >
-          Adicionar
-        </Button>
+      <div className="grid gap-3 rounded-xl border border-border bg-background/40 p-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="space-y-2"><Label htmlFor="guest-name">Nome</Label><Input id="guest-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome do convidado" /></div>
+        <div className="space-y-2"><Label htmlFor="guest-phone">Telefone</Label><Input id="guest-phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+258 …" /></div>
+        <div className="space-y-2"><Label htmlFor="guest-count">Convidados</Label><Input id="guest-count" type="number" min={1} value={count} onChange={(e) => setCount(e.target.value)} /></div>
+        <div className="space-y-2"><Label htmlFor="guest-type">Tipo</Label><select id="guest-type" value={inviteType} onChange={(e) => setInviteType(e.target.value)} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"><option value="individual">Individual</option><option value="casal">Casal</option></select></div>
+        <div className="space-y-2 sm:col-span-2"><Label htmlFor="guest-table">Mesa</Label><Input id="guest-table" value={tableLabel} onChange={(e) => setTableLabel(e.target.value)} placeholder="Mesa 4 / Família Silva" /></div>
+        <div className="flex items-end sm:col-span-2"><Button type="button" disabled={!name.trim() || add.isPending} onClick={() => add.mutate()}>{add.isPending ? "A adicionar…" : "Adicionar convidado"}</Button></div>
       </div>
 
       {isLoading ? (
@@ -121,9 +110,10 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                 <div>
                   <p>{g.name}</p>
                   <p className="text-sm text-muted-foreground">
-                    {g.invited_count} convidado(s) ·{" "}
+                    {g.invited_count} convidado(s) · {g.invite_type === "casal" ? "casal" : "individual"} · {g.table_label || "sem mesa"} ·{" "}
                     <span className={status.className}>{status.label}</span>
                   </p>
+                  {g.phone && <p className="text-xs text-muted-foreground">{g.phone}</p>}
                 </div>
                 <div className="flex gap-2">
                   <Button type="button" variant="outline" size="sm" onClick={() => copyLink(g.token)}>

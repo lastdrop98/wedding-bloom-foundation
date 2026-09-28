@@ -29,6 +29,7 @@ import { FlipNumber } from "@/components/invite/FlipNumber";
 import { SectionVines, VineDivider } from "@/components/invite/Vines";
 import { Reveal } from "@/components/invite/Reveal";
 import { EventSeals } from "@/components/invite/InvitationSeal";
+import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
 import { templateToneClass } from "@/lib/templates";
 import { AquarelaHome } from "@/components/invite/templates/aquarela-botanica/Home";
 import { Button } from "@/components/ui/button";
@@ -514,6 +515,7 @@ function HomePage() {
 
   return (
     <main className={`${templateToneClass(event.template)} pb-24`}>
+      <TemplateAtmosphere template={event.template} />
       {/* Cabeçalho imersivo */}
       <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">

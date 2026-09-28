@@ -159,11 +159,17 @@ export type Database = {
         Insert: {
           created_at?: string
           event_id: string
+          phone?: string | null
+          invite_type?: string
+          table_label?: string | null
           token?: string
         }
         Update: {
           created_at?: string
           event_id?: string
+          phone?: string | null
+          invite_type?: string
+          table_label?: string | null
           token?: string
         }
         Relationships: [
@@ -212,6 +218,9 @@ export type Database = {
         Row: {
           created_at: string
           event_id: string
+          phone: string | null
+          invite_type: string
+          table_label: string | null
           id: string
           invited_count: number
           name: string

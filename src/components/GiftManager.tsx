@@ -36,6 +36,8 @@ export function GiftManager({ eventId }: { eventId: string }) {
   const [link, setLink] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileKey, setFileKey] = useState(0);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editValues, setEditValues] = useState({ title: "", description: "", link: "" });
   const key = ["admin-gifts", eventId];
 
   const { data: items, isLoading } = useQuery({
@@ -118,19 +120,24 @@ export function GiftManager({ eventId }: { eventId: string }) {
     onError: () => toast.error("Não foi possível guardar a alteração."),
   });
 
-  function edit(item: GiftItem) {
-    const nextTitle = window.prompt("Título", item.title);
-    if (nextTitle === null) return;
-    const nextDescription = window.prompt("Descrição", item.description ?? "");
-    if (nextDescription === null) return;
-    const nextLink = window.prompt("Link ou informação", item.link_or_info ?? "");
-    if (nextLink === null) return;
-    update.mutate({
-      id: item.id,
-      title: nextTitle.trim() || item.title,
-      description: nextDescription.trim() || null,
-      link_or_info: nextLink.trim() || null,
+  function startEdit(item: GiftItem) {
+    setEditingId(item.id);
+    setEditValues({
+      title: item.title,
+      description: item.description ?? "",
+      link: item.link_or_info ?? "",
     });
+  }
+
+  function saveEdit() {
+    if (!editingId || !editValues.title.trim()) return;
+    update.mutate({
+      id: editingId,
+      title: editValues.title.trim(),
+      description: editValues.description.trim() || null,
+      link_or_info: editValues.link.trim() || null,
+    });
+    setEditingId(null);
   }
 
   async function replacePhoto(item: GiftItem, newFile: File) {
@@ -203,15 +210,23 @@ export function GiftManager({ eventId }: { eventId: string }) {
               className="flex flex-wrap items-center gap-4 rounded-md border border-border px-4 py-3"
             >
               <GiftThumb path={item.image_path} />
-              <div className="min-w-40 flex-1">
-                <p>{item.title}</p>
-                {item.description && (
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                )}
-                {item.link_or_info && (
-                  <p className="text-xs break-words text-muted-foreground">{item.link_or_info}</p>
-                )}
-              </div>
+              {editingId === item.id ? (
+                <div className="min-w-60 flex-1 space-y-3">
+                  <Input value={editValues.title} onChange={(e) => setEditValues((v) => ({ ...v, title: e.target.value }))} placeholder="Título" />
+                  <Textarea rows={2} value={editValues.description} onChange={(e) => setEditValues((v) => ({ ...v, description: e.target.value }))} placeholder="Descrição" />
+                  <Input value={editValues.link} onChange={(e) => setEditValues((v) => ({ ...v, link: e.target.value }))} placeholder="Link ou informação" />
+                  <div className="flex gap-2">
+                    <Button type="button" size="sm" onClick={saveEdit} disabled={update.isPending}>Guardar</Button>
+                    <Button type="button" size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancelar</Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="min-w-40 flex-1">
+                  <p>{item.title}</p>
+                  {item.description && <p className="text-sm text-muted-foreground">{item.description}</p>}
+                  {item.link_or_info && <p className="text-xs break-words text-muted-foreground">{item.link_or_info}</p>}
+                </div>
+              )}
               <div className="flex flex-wrap items-center gap-2">
                 <label className="cursor-pointer rounded-md border border-border px-3 py-1.5 text-sm">
                   Foto
@@ -225,7 +240,7 @@ export function GiftManager({ eventId }: { eventId: string }) {
                     }}
                   />
                 </label>
-                <Button type="button" variant="outline" size="sm" onClick={() => edit(item)}>
+                <Button type="button" variant="outline" size="sm" onClick={() => startEdit(item)}>
                   Editar
                 </Button>
                 <Button
