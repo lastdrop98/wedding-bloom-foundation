@@ -65,6 +65,15 @@ const GROUPS: { title: string; fields: Field[] }[] = [
     ],
   },
   {
+    title: "Pagamentos e presentes",
+    fields: [
+      { name: "mpesa_number", label: "M-Pesa", scope: "details" },
+      { name: "emola_number", label: "e-Mola", scope: "details" },
+      { name: "mkesh_number", label: "mKesh", scope: "details" },
+      { name: "bank_payment_note", label: "Nota sobre pagamentos", kind: "textarea", scope: "details" },
+    ],
+  },
+  {
     title: "Confirmações e presentes",
     fields: [
       { name: "rsvp_deadline", label: "Prazo de confirmação", kind: "date", scope: "column" },
