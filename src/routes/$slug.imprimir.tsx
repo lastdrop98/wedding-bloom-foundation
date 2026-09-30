@@ -329,10 +329,10 @@ function PrintPage() {
         backgroundPosition: "center",
       }
     : undefined;
-  const printClassName = `${templateToneClass(event.template)} template-design-${event.template} print-page min-h-screen bg-[oklch(0.12_0.01_70)] px-4 py-10 font-serif text-[rgb(222,196,145)]}`;
+  const printClassName = `${templateToneClass(event.template)} template-design-${event.template} print-page min-h-screen bg-[oklch(0.12_0.01_70)] px-4 py-10 font-serif text-[rgb(222,196,145)]`;
 
   return (
-    <main className={printClassName}
+    <main className={printClassName}>
       <div className="print-actions mx-auto mb-8 flex max-w-md flex-wrap justify-center gap-3">
         <a
           href={versionHref}
