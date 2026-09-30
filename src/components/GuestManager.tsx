@@ -148,8 +148,8 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
       `${origin}/${slug}?g=${g.token}`,
     ]);
     const escape = (value: string) => `"${value.replace(/"/g, '""')}"`;
-    const csv = [header, ...csvRows].map((row) => row.map(escape).join(";")).join("\\r\\n");
-    const blob = new Blob(["\\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+    const csv = [header, ...csvRows].map((row) => row.map(escape).join(";")).join("\r\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
