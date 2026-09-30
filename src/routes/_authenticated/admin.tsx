@@ -106,11 +106,34 @@ function AdminPage() {
         </div>
       ) : mode.kind === "form" ? (
         <div className="mt-10 rounded-md border border-border bg-card p-6">
-          <h2 className="mb-6 text-xl font-light">
-            {mode.event
-              ? `Editar — ${eventTitle(mode.event)}`
-              : `Novo evento — ${eventTypeLabel(mode.eventType)}`}
-          </h2>
+          <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="eyebrow">Editor</p>
+              <h2 className="mt-2 text-xl font-light">
+                {mode.event
+                  ? `Editar — ${eventTitle(mode.event)}`
+                  : `Novo evento — ${eventTypeLabel(mode.eventType)}`}
+              </h2>
+            </div>
+            {mode.event && (
+              <div className="flex flex-wrap gap-2">
+                <Button asChild variant="outline" size="sm">
+                  <a href={`/${mode.event.slug}`} target="_blank" rel="noreferrer">
+                    Abrir convite
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <a
+                    href={`/${mode.event.slug}/imprimir?formato=a5`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Ver impressão
+                  </a>
+                </Button>
+              </div>
+            )}
+          </div>
           <div className="mb-8 flex gap-1 overflow-x-auto border-b border-border pb-1">
             {[
               ["dados", "Dados & Design"],
@@ -178,11 +201,20 @@ function AdminPage() {
                   {eventTypeLabel(e.event_type)} · {formatDatePt(e.event_date)} · /{e.slug}
                 </p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/$slug" params={{ slug: e.slug }} search={{ tipo: undefined }}>
-                    Ver convite
+                    Abrir convite
                   </Link>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <a
+                    href={`/${e.slug}/imprimir?formato=a5`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Impressão
+                  </a>
                 </Button>
                 <Button
                   variant="outline"
