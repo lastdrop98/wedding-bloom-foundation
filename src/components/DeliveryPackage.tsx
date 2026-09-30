@@ -28,7 +28,9 @@ export function DeliveryPackage({ slug }: { slug: string }) {
   }, [slug]);
 
   const inviteLink = `${origin}/${slug}`;
-  const couplePanelLink = coupleToken ? `${origin}/${slug}/confirmacoes?acesso=${encodeURIComponent(coupleToken)}` : `${origin}/${slug}/confirmacoes`;
+  const couplePanelLink = coupleToken
+    ? `${origin}/${slug}/confirmacoes?acesso=${encodeURIComponent(coupleToken)}`
+    : `${origin}/${slug}/confirmacoes`;
 
   useEffect(() => {
     if (!origin) return;
@@ -80,29 +82,73 @@ export function DeliveryPackage({ slug }: { slug: string }) {
 
         <div className="space-y-4">
           <div>
-            <p className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase">Link do convite</p>
+            <p className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase">
+              Link do convite
+            </p>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <code className="rounded-md border border-border bg-background px-3 py-2 text-sm break-all">
                 {inviteLink}
               </code>
-              <Button type="button" size="sm" variant="outline" onClick={() => copy(inviteLink, "Link do convite copiado.")}>
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={() => copy(inviteLink, "Link do convite copiado.")}
+              >
                 Copiar
               </Button>
             </div>
           </div>
 
           <div>
-            <p className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase">Convites para impressão</p>
+            <p className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase">
+              Convites para impressão
+            </p>
             <div className="mt-2 flex flex-wrap gap-2">
-              <Button asChild variant="outline" size="sm"><a href={"/" + slug + "/imprimir?formato=a5"} target="_blank" rel="noreferrer">A5</a></Button>
-              <Button asChild variant="outline" size="sm"><a href={"/" + slug + "/imprimir?formato=a6"} target="_blank" rel="noreferrer">A6</a></Button>
-              <Button asChild variant="outline" size="sm"><a href={"/" + slug + "/imprimir?tipo=individual&formato=a6"} target="_blank" rel="noreferrer">Individual</a></Button>
-              <Button asChild variant="outline" size="sm"><a href={"/" + slug + "/imprimir?tipo=casal&formato=a6"} target="_blank" rel="noreferrer">Casal</a></Button>
+              <Button asChild variant="outline" size="sm">
+                <a href={"/" + slug + "/imprimir?formato=a5"} target="_blank" rel="noreferrer">
+                  A5
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="sm">
+                <a href={"/" + slug + "/imprimir?formato=a6"} target="_blank" rel="noreferrer">
+                  A6
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="sm">
+                <a
+                  href={"/" + slug + "/imprimir?tipo=individual&formato=a6"}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Individual
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="sm">
+                <a
+                  href={"/" + slug + "/imprimir?tipo=casal&formato=a6"}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Casal
+                </a>
+              </Button>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button asChild variant="outline" size="sm"><a href={couplePanelLink} target="_blank" rel="noreferrer">Painel do Casal</a></Button>
-            <Button type="button" variant="outline" size="sm" onClick={() => copy(couplePanelLink, "Link privado do casal copiado.")}>Copiar link privado</Button>
+            <Button asChild variant="outline" size="sm">
+              <a href={couplePanelLink} target="_blank" rel="noreferrer">
+                Painel do Casal
+              </a>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => copy(couplePanelLink, "Link privado do casal copiado.")}
+            >
+              Copiar link privado
+            </Button>
           </div>
           <p className="text-xs text-muted-foreground">
             O Painel do Casal usa um link privado único; partilhe-o apenas com o casal.

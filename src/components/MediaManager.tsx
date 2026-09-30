@@ -39,7 +39,11 @@ const IMAGE_SLOTS: { value: MediaSlot; label: string; hint: string }[] = [
 ];
 
 const VIDEO_SLOTS: { value: MediaSlot; label: string; hint: string }[] = [
-  { value: "cover_video", label: "Vídeo de abertura", hint: "Vídeo curto usado na capa quando o template suportar." },
+  {
+    value: "cover_video",
+    label: "Vídeo de abertura",
+    hint: "Vídeo curto usado na capa quando o template suportar.",
+  },
   { value: "story_video", label: "Vídeo da história", hint: "Vídeo especial dentro do convite." },
 ];
 
@@ -58,7 +62,13 @@ function SlotPreview({ item }: { item: MediaItem }) {
 
   if (item.media_type === "video") {
     return url ? (
-      <video src={url} className="h-24 w-32 rounded-md object-cover" muted playsInline preload="metadata" />
+      <video
+        src={url}
+        className="h-24 w-32 rounded-md object-cover"
+        muted
+        playsInline
+        preload="metadata"
+      />
     ) : (
       <div className="flex h-24 w-32 items-center justify-center rounded-md border border-border text-xs text-muted-foreground">
         Vídeo
@@ -67,7 +77,11 @@ function SlotPreview({ item }: { item: MediaItem }) {
   }
 
   return url ? (
-    <img src={url} alt={item.caption ?? "Media do convite"} className="h-24 w-32 rounded-md object-cover" />
+    <img
+      src={url}
+      alt={item.caption ?? "Media do convite"}
+      className="h-24 w-32 rounded-md object-cover"
+    />
   ) : (
     <div className="h-24 w-32 rounded-md border border-border" />
   );
@@ -101,12 +115,16 @@ export function MediaManager({ event }: { event: EventRow }) {
     mutationFn: async ({ slot, file }: { slot: MediaSlot; file: File }) => {
       const mediaType = file.type.startsWith("video/") ? "video" : "image";
       const expectsVideo = slot.includes("video");
-      if (expectsVideo && mediaType !== "video") throw new Error("Escolha um vídeo para este campo.");
-      if (!expectsVideo && mediaType !== "image") throw new Error("Escolha uma imagem para este campo.");
+      if (expectsVideo && mediaType !== "video")
+        throw new Error("Escolha um vídeo para este campo.");
+      if (!expectsVideo && mediaType !== "image")
+        throw new Error("Escolha uma imagem para este campo.");
 
       const ext = file.name.split(".").pop() ?? (mediaType === "video" ? "mp4" : "jpg");
       const path = event.id + "/slots/" + slot + "-" + Date.now() + "." + ext;
-      const { error: uploadError } = await supabase.storage.from(GALLERY_BUCKET).upload(path, file, { upsert: false });
+      const { error: uploadError } = await supabase.storage
+        .from(GALLERY_BUCKET)
+        .upload(path, file, { upsert: false });
       if (uploadError) throw uploadError;
 
       const existing = media?.find((item) => item.slot === slot);
@@ -128,7 +146,10 @@ export function MediaManager({ event }: { event: EventRow }) {
       }
 
       if (slot === "cover") {
-        const { error: coverError } = await supabase.from("events").update({ cover_image_path: path }).eq("id", event.id);
+        const { error: coverError } = await supabase
+          .from("events")
+          .update({ cover_image_path: path })
+          .eq("id", event.id);
         if (coverError) throw coverError;
       }
       if (existing?.storage_path && existing.storage_path !== path) {
@@ -140,11 +161,20 @@ export function MediaManager({ event }: { event: EventRow }) {
       void queryClient.invalidateQueries({ queryKey: key });
       toast.success("Media atualizada.");
     },
-    onError: (error) => toast.error(error instanceof Error ? error.message : "Não foi possível atualizar a media."),
+    onError: (error) =>
+      toast.error(error instanceof Error ? error.message : "Não foi possível atualizar a media."),
   });
 
   const updateSlot = useMutation({
-    mutationFn: async ({ item, caption, sortOrder }: { item: MediaItem; caption: string; sortOrder: number }) => {
+    mutationFn: async ({
+      item,
+      caption,
+      sortOrder,
+    }: {
+      item: MediaItem;
+      caption: string;
+      sortOrder: number;
+    }) => {
       const { error } = await supabase
         .from("event_media")
         .update({ caption: caption.trim() || null, sort_order: sortOrder })
@@ -161,10 +191,17 @@ export function MediaManager({ event }: { event: EventRow }) {
 
   const removeSlot = useMutation({
     mutationFn: async (item: MediaItem) => {
-      const { error } = await supabase.from("event_media").delete().eq("id", item.id).eq("event_id", event.id);
+      const { error } = await supabase
+        .from("event_media")
+        .delete()
+        .eq("id", item.id)
+        .eq("event_id", event.id);
       if (error) throw error;
       if (item.slot === "cover") {
-        const { error: coverError } = await supabase.from("events").update({ cover_image_path: null }).eq("id", event.id);
+        const { error: coverError } = await supabase
+          .from("events")
+          .update({ cover_image_path: null })
+          .eq("id", event.id);
         if (coverError) throw coverError;
       }
       await supabase.storage.from(GALLERY_BUCKET).remove([item.storage_path]);
@@ -184,7 +221,9 @@ export function MediaManager({ event }: { event: EventRow }) {
       if (musicFile) {
         const ext = musicFile.name.split(".").pop() ?? "mp3";
         musicPath = event.id + "/music-" + Date.now() + "." + ext;
-        const { error } = await supabase.storage.from(AUDIO_BUCKET).upload(musicPath, musicFile, { upsert: false });
+        const { error } = await supabase.storage
+          .from(AUDIO_BUCKET)
+          .upload(musicPath, musicFile, { upsert: false });
         if (error) throw error;
       }
 
@@ -206,10 +245,14 @@ export function MediaManager({ event }: { event: EventRow }) {
       setMusicFile(null);
       toast.success(musicEnabled ? "Música guardada." : "Música desativada.");
     },
-    onError: (error) => toast.error(error instanceof Error ? error.message : "Não foi possível guardar a música."),
+    onError: (error) =>
+      toast.error(error instanceof Error ? error.message : "Não foi possível guardar a música."),
   });
 
-  const renderSlot = (definition: { value: MediaSlot; label: string; hint: string }, accept: string) => {
+  const renderSlot = (
+    definition: { value: MediaSlot; label: string; hint: string },
+    accept: string,
+  ) => {
     const item = media?.find((entry) => entry.slot === definition.value);
     const file = fileBySlot[definition.value] ?? null;
     const order = orderBySlot[definition.value] ?? String(item?.sort_order ?? "");
@@ -230,14 +273,21 @@ export function MediaManager({ event }: { event: EventRow }) {
             <Input
               type="file"
               accept={accept}
-              onChange={(e) => setFileBySlot((current) => ({ ...current, [definition.value]: e.target.files?.[0] ?? null }))}
+              onChange={(e) =>
+                setFileBySlot((current) => ({
+                  ...current,
+                  [definition.value]: e.target.files?.[0] ?? null,
+                }))
+              }
             />
           </div>
           <div className="space-y-2">
             <Label>Legenda opcional</Label>
             <Input
               value={captionBySlot[definition.value] ?? item?.caption ?? ""}
-              onChange={(e) => setCaptionBySlot((current) => ({ ...current, [definition.value]: e.target.value }))}
+              onChange={(e) =>
+                setCaptionBySlot((current) => ({ ...current, [definition.value]: e.target.value }))
+              }
             />
           </div>
           <div className="space-y-2">
@@ -246,7 +296,9 @@ export function MediaManager({ event }: { event: EventRow }) {
               type="number"
               min={0}
               value={order}
-              onChange={(e) => setOrderBySlot((current) => ({ ...current, [definition.value]: e.target.value }))}
+              onChange={(e) =>
+                setOrderBySlot((current) => ({ ...current, [definition.value]: e.target.value }))
+              }
             />
           </div>
           <Button
@@ -275,7 +327,13 @@ export function MediaManager({ event }: { event: EventRow }) {
             >
               Guardar legenda/ordem
             </Button>
-            <Button type="button" variant="ghost" size="sm" onClick={() => removeSlot.mutate(item)} disabled={removeSlot.isPending}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => removeSlot.mutate(item)}
+              disabled={removeSlot.isPending}
+            >
               Remover este media
             </Button>
           </div>
@@ -290,7 +348,8 @@ export function MediaManager({ event }: { event: EventRow }) {
         <p className="eyebrow">Editor de media</p>
         <h3 className="mt-2 text-2xl font-light">Imagens, vídeos e música</h3>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Cada posição tem uma função própria. O conteúdo fica ligado ao evento, não ao template, para que possa trocar o design sem perder as fotografias e vídeos.
+          Cada posição tem uma função própria. O conteúdo fica ligado ao evento, não ao template,
+          para que possa trocar o design sem perder as fotografias e vídeos.
         </p>
       </div>
 
@@ -308,14 +367,20 @@ export function MediaManager({ event }: { event: EventRow }) {
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="font-medium">Música de fundo</p>
-            <p className="mt-1 text-xs text-muted-foreground">O navegador pode exigir uma interação do convidado antes de iniciar o áudio.</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              O navegador pode exigir uma interação do convidado antes de iniciar o áudio.
+            </p>
           </div>
           <Switch checked={musicEnabled} onCheckedChange={setMusicEnabled} />
         </div>
         <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
           <div className="space-y-2">
             <Label>Substituir música</Label>
-            <Input type="file" accept="audio/*" onChange={(e) => setMusicFile(e.target.files?.[0] ?? null)} />
+            <Input
+              type="file"
+              accept="audio/*"
+              onChange={(e) => setMusicFile(e.target.files?.[0] ?? null)}
+            />
           </div>
           <Button type="button" onClick={() => saveMusic.mutate()} disabled={saveMusic.isPending}>
             {saveMusic.isPending ? "A guardar…" : "Guardar música"}
@@ -327,7 +392,9 @@ export function MediaManager({ event }: { event: EventRow }) {
           onChange={(e) => setMusicTitle(e.target.value)}
         />
         <p className="text-xs text-muted-foreground">
-          {event.music_path ? "Existe uma música configurada." : "Ainda não existe música configurada."}
+          {event.music_path
+            ? "Existe uma música configurada."
+            : "Ainda não existe música configurada."}
           {musicTitle ? " — " + musicTitle : ""}
         </p>
       </div>

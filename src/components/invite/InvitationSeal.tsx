@@ -51,8 +51,22 @@ export function EventSeals({
   if (!resolvedOne && !resolvedTwo) return null;
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
-      {resolvedOne && <InvitationSeal text={resolvedOne} label={oneLabel || "Convite válido"} color={oneColor} small={useTwo} />}
-      {useTwo && resolvedTwo && <InvitationSeal text={resolvedTwo} label={twoLabel || "Convite válido"} color={twoColor} small />}
+      {resolvedOne && (
+        <InvitationSeal
+          text={resolvedOne}
+          label={oneLabel || "Convite válido"}
+          color={oneColor}
+          small={useTwo}
+        />
+      )}
+      {useTwo && resolvedTwo && (
+        <InvitationSeal
+          text={resolvedTwo}
+          label={twoLabel || "Convite válido"}
+          color={twoColor}
+          small
+        />
+      )}
     </div>
   );
 }

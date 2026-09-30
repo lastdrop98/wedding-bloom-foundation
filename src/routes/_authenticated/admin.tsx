@@ -3,13 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
-import {
-  EVENT_TYPES,
-  eventTitle,
-  eventTypeLabel,
-  formatDatePt,
-  type EventRow,
-} from "@/lib/event";
+import { EVENT_TYPES, eventTitle, eventTypeLabel, formatDatePt, type EventRow } from "@/lib/event";
 import { WeddingForm } from "@/components/WeddingForm";
 import { GalleryManager } from "@/components/GalleryManager";
 import { MediaManager } from "@/components/MediaManager";
@@ -95,7 +89,10 @@ function AdminPage() {
                 key={t.value}
                 type="button"
                 disabled={!t.available}
-                onClick={() => { setActiveSection("dados"); setMode({ kind: "form", event: null, eventType: t.value }); }}
+                onClick={() => {
+                  setActiveSection("dados");
+                  setMode({ kind: "form", event: null, eventType: t.value });
+                }}
                 className="rounded-md border border-border px-5 py-6 text-center transition-colors enabled:hover:border-primary enabled:hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <span className="block text-lg">{t.label}</span>
@@ -152,7 +149,9 @@ function AdminPage() {
             </div>
           )}
 
-          {mode.event && activeSection === "programa" && <ScheduleManager eventId={mode.event.id} />}
+          {mode.event && activeSection === "programa" && (
+            <ScheduleManager eventId={mode.event.id} />
+          )}
 
           {mode.event && activeSection === "presentes" && <GiftManager eventId={mode.event.id} />}
 
@@ -188,7 +187,10 @@ function AdminPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => { setActiveSection("dados"); setMode({ kind: "form", event: e, eventType: e.event_type }); }}
+                  onClick={() => {
+                    setActiveSection("dados");
+                    setMode({ kind: "form", event: e, eventType: e.event_type });
+                  }}
                 >
                   Editar
                 </Button>

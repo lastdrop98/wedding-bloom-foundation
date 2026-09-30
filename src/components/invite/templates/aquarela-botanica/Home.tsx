@@ -23,7 +23,13 @@ import { Reveal } from "@/components/invite/Reveal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { BerrySprig, BotanicalFrame, EucalyptusSpray, FloralDivider, WatercolorRose } from "./Botanicals";
+import {
+  BerrySprig,
+  BotanicalFrame,
+  EucalyptusSpray,
+  FloralDivider,
+  WatercolorRose,
+} from "./Botanicals";
 import { Petals } from "./Petals";
 import { GiftQr } from "@/components/invite/GiftQr";
 import { Guestbook } from "@/components/invite/Guestbook";
@@ -46,13 +52,22 @@ function Section({
   return (
     <section className="relative overflow-hidden px-6 py-20 md:py-24">
       {flora === "rose" && (
-        <WatercolorRose className="pointer-events-none absolute -top-10 -left-12 opacity-50" size={200} />
+        <WatercolorRose
+          className="pointer-events-none absolute -top-10 -left-12 opacity-50"
+          size={200}
+        />
       )}
       {flora === "eucalipto" && (
-        <EucalyptusSpray className="text-sage pointer-events-none absolute -right-6 bottom-0 -scale-x-100 opacity-50" size={190} />
+        <EucalyptusSpray
+          className="text-sage pointer-events-none absolute -right-6 bottom-0 -scale-x-100 opacity-50"
+          size={190}
+        />
       )}
       {flora === "bagas" && (
-        <BerrySprig className="text-rose pointer-events-none absolute top-4 right-4 opacity-50" size={150} />
+        <BerrySprig
+          className="text-rose pointer-events-none absolute top-4 right-4 opacity-50"
+          size={150}
+        />
       )}
       <Reveal className={wide ? "relative mx-auto max-w-5xl" : "relative mx-auto max-w-2xl"}>
         <div className="flex flex-col items-center text-center">
@@ -125,7 +140,15 @@ function LocationCard({
   );
 }
 
-function RsvpForm({ event, defaultCount, message }: { event: EventRow; defaultCount: number; message?: string | null }) {
+function RsvpForm({
+  event,
+  defaultCount,
+  message,
+}: {
+  event: EventRow;
+  defaultCount: number;
+  message?: string | null;
+}) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [guestId, setGuestId] = useState<string | null>(null);
@@ -196,7 +219,9 @@ function RsvpForm({ event, defaultCount, message }: { event: EventRow; defaultCo
 
   return (
     <form onSubmit={submit} className="card-aquarela space-y-5 p-7 font-sans md:p-9">
-      {message && <p className="text-center text-sm leading-relaxed text-muted-foreground">{message}</p>}
+      {message && (
+        <p className="text-center text-sm leading-relaxed text-muted-foreground">{message}</p>
+      )}
       <div className="space-y-2">
         <Label htmlFor="guest_name">Nome</Label>
         <Input
@@ -290,7 +315,11 @@ export function AquarelaHome({
 
   useEffect(() => {
     if (!content?.media.length) return;
-    Promise.all(content.media.map(async (m) => [m.slot, await signedUrl(GALLERY_BUCKET, m.storage_path)] as const)).then((pairs) => {
+    Promise.all(
+      content.media.map(
+        async (m) => [m.slot, await signedUrl(GALLERY_BUCKET, m.storage_path)] as const,
+      ),
+    ).then((pairs) => {
       setSlotMedia(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1]))));
     });
   }, [content]);
@@ -309,7 +338,9 @@ export function AquarelaHome({
   useEffect(() => {
     if (!content?.gifts.length) return;
     Promise.all(
-      content.gifts.map(async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const),
+      content.gifts.map(
+        async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const,
+      ),
     ).then((pairs) =>
       setGiftPhotos(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])))),
     );
@@ -405,7 +436,9 @@ export function AquarelaHome({
       {d("welcome_message") && (
         <Section title="Uma mensagem para vocês" eyebrow="Com carinho" flora="rose">
           <div className="card-aquarela mx-auto max-w-2xl p-8 text-center">
-            <p className="text-lg leading-relaxed font-light whitespace-pre-line">{d("welcome_message")}</p>
+            <p className="text-lg leading-relaxed font-light whitespace-pre-line">
+              {d("welcome_message")}
+            </p>
           </div>
         </Section>
       )}
@@ -524,7 +557,9 @@ export function AquarelaHome({
               <span className="min-w-0">
                 <span className="block text-xl font-light">{r.title}</span>
                 {r.sub && (
-                  <span className="mt-1 block font-sans text-sm text-muted-foreground">{r.sub}</span>
+                  <span className="mt-1 block font-sans text-sm text-muted-foreground">
+                    {r.sub}
+                  </span>
                 )}
               </span>
             </li>
@@ -566,18 +601,16 @@ export function AquarelaHome({
       {(slotMedia.section_1 || slotMedia.section_2) && (
         <Section title="Momentos especiais" eyebrow="Para guardar na memória" wide flora="bagas">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia.section_1, slotMedia.section_2]
-              .filter(Boolean)
-              .map((url, index) => (
-                <div key={url} className="card-aquarela overflow-hidden">
-                  <img
-                    src={url}
-                    alt={`Momento especial ${index + 1} de ${eventTitle(event)}`}
-                    loading="lazy"
-                    className="h-72 w-full object-cover md:h-96"
-                  />
-                </div>
-              ))}
+            {[slotMedia.section_1, slotMedia.section_2].filter(Boolean).map((url, index) => (
+              <div key={url} className="card-aquarela overflow-hidden">
+                <img
+                  src={url}
+                  alt={`Momento especial ${index + 1} de ${eventTitle(event)}`}
+                  loading="lazy"
+                  className="h-72 w-full object-cover md:h-96"
+                />
+              </div>
+            ))}
           </div>
         </Section>
       )}
@@ -631,7 +664,9 @@ export function AquarelaHome({
               {d("mkesh_number") && <div>mKesh: {d("mkesh_number")}</div>}
             </dl>
             {d("bank_payment_note") && (
-              <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">{d("bank_payment_note")}</p>
+              <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">
+                {d("bank_payment_note")}
+              </p>
             )}
             {d("bank_nib") && (
               <GiftQr
@@ -678,7 +713,11 @@ export function AquarelaHome({
       </Section>
 
       <Section title="Confirmação de Presença" eyebrow="RSVP" flora="rose">
-        <RsvpForm event={event} defaultCount={inviteType === "casal" ? 2 : 1} message={d("rsvp_message")} />
+        <RsvpForm
+          event={event}
+          defaultCount={inviteType === "casal" ? 2 : 1}
+          message={d("rsvp_message")}
+        />
       </Section>
 
       {(event.contact_1_name || event.contact_2_name) && (
@@ -702,12 +741,17 @@ export function AquarelaHome({
       {d("closing_message") && (
         <section className="mx-auto max-w-2xl px-6 py-12 text-center">
           <FloralDivider />
-          <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">{d("closing_message")}</p>
+          <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">
+            {d("closing_message")}
+          </p>
         </section>
       )}
 
       <footer className="relative mt-16 overflow-hidden border-t border-sage/40 px-6 pt-14 pb-10 text-center">
-        <EucalyptusSpray className="text-sage pointer-events-none absolute -bottom-6 -left-6 opacity-50" size={150} />
+        <EucalyptusSpray
+          className="text-sage pointer-events-none absolute -bottom-6 -left-6 opacity-50"
+          size={150}
+        />
         <FloralDivider />
         <p className="mt-6 font-sans text-xs tracking-[0.25em] text-muted-foreground uppercase">
           Convite criado com ♡ por

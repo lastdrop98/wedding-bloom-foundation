@@ -34,7 +34,11 @@ function Thumb({ item }: { item: GalleryItem }) {
     );
   }
   return url ? (
-    <img src={url} alt={item.caption ?? "Item da galeria"} className="h-16 w-16 shrink-0 rounded-md object-cover" />
+    <img
+      src={url}
+      alt={item.caption ?? "Item da galeria"}
+      className="h-16 w-16 shrink-0 rounded-md object-cover"
+    />
   ) : (
     <div className="h-16 w-16 shrink-0 rounded-md border border-border" />
   );
@@ -182,9 +186,27 @@ export function GalleryManager({ eventId }: { eventId: string }) {
               <div className="min-w-40 flex-1">
                 {editingId === item.id ? (
                   <div className="flex flex-wrap gap-2">
-                    <Input value={editCaption} onChange={(e) => setEditCaption(e.target.value)} placeholder="Legenda" />
-                    <Button type="button" size="sm" onClick={saveCaption} disabled={updateItem.isPending}>Guardar</Button>
-                    <Button type="button" size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancelar</Button>
+                    <Input
+                      value={editCaption}
+                      onChange={(e) => setEditCaption(e.target.value)}
+                      placeholder="Legenda"
+                    />
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={saveCaption}
+                      disabled={updateItem.isPending}
+                    >
+                      Guardar
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setEditingId(null)}
+                    >
+                      Cancelar
+                    </Button>
                   </div>
                 ) : (
                   <>
@@ -214,7 +236,12 @@ export function GalleryManager({ eventId }: { eventId: string }) {
                 >
                   ↓
                 </Button>
-                <Button type="button" variant="outline" size="sm" onClick={() => startCaptionEdit(item)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => startCaptionEdit(item)}
+                >
                   Legenda
                 </Button>
                 <Button

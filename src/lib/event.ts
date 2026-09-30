@@ -81,9 +81,7 @@ export type EventDetails = Partial<Record<WeddingDetailField, string | null>>;
 
 export function details(event: Pick<EventRow, "details">): EventDetails {
   const value = event.details;
-  return value && typeof value === "object" && !Array.isArray(value)
-    ? (value as EventDetails)
-    : {};
+  return value && typeof value === "object" && !Array.isArray(value) ? (value as EventDetails) : {};
 }
 
 /** Lê um campo específico de `details`. */
@@ -103,14 +101,15 @@ export function eventTypeLabel(type?: string | null) {
 }
 
 /** Buckets são privados: geramos um link assinado de leitura (permitido a qualquer visitante). */
- export async function signedUrl(bucket: string, path?: string | null) { if (!path) return null; if (/^https?:\/\//i.test(path)) return path; const { data } = await supabase.storage.from(bucket).createSignedUrl(path, 60 * 60); return data?.signedUrl ?? null; }
+export async function signedUrl(bucket: string, path?: string | null) {
+  if (!path) return null;
+  if (/^https?:\/\//i.test(path)) return path;
+  const { data } = await supabase.storage.from(bucket).createSignedUrl(path, 60 * 60);
+  return data?.signedUrl ?? null;
+}
 
 export async function fetchEventBySlug(slug: string) {
-  const { data, error } = await supabase
-    .from("events")
-    .select("*")
-    .eq("slug", slug)
-    .maybeSingle();
+  const { data, error } = await supabase.from("events").select("*").eq("slug", slug).maybeSingle();
   if (error) throw error;
   return data;
 }

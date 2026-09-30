@@ -80,7 +80,6 @@ function Section({
   );
 }
 
-
 function Countdown({ date }: { date: string | null }) {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -126,7 +125,9 @@ function LocationCard({
     <div className="card-elegant p-7 hover:-translate-y-0.5">
       <p className="eyebrow">{label}</p>
       {venue && <p className="mt-3 text-2xl font-light">{venue}</p>}
-      {address && <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">{address}</p>}
+      {address && (
+        <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">{address}</p>
+      )}
       {time && (
         <p className="mt-3 font-sans text-xs tracking-[0.25em] text-primary uppercase">{time}</p>
       )}
@@ -142,7 +143,15 @@ function LocationCard({
   );
 }
 
-function RsvpForm({ event, defaultCount, message }: { event: EventRow; defaultCount: number; message?: string | null }) {
+function RsvpForm({
+  event,
+  defaultCount,
+  message,
+}: {
+  event: EventRow;
+  defaultCount: number;
+  message?: string | null;
+}) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [guestId, setGuestId] = useState<string | null>(null);
@@ -213,7 +222,9 @@ function RsvpForm({ event, defaultCount, message }: { event: EventRow; defaultCo
 
   return (
     <form onSubmit={submit} className="card-elegant space-y-5 p-7 font-sans md:p-9">
-      {message && <p className="text-center text-sm leading-relaxed text-muted-foreground">{message}</p>}
+      {message && (
+        <p className="text-center text-sm leading-relaxed text-muted-foreground">{message}</p>
+      )}
       <div className="space-y-2">
         <Label htmlFor="guest_name">Nome</Label>
         <Input
@@ -381,11 +392,14 @@ function StoryTimeline({ milestones = STORY }: { milestones?: StoryMilestone[] }
         const Icon = m.icon;
         const left = i % 2 === 0;
         return (
-          <li key={m.title} className="relative pb-12 pl-14 last:pb-0 md:w-1/2 md:pl-0"
+          <li
+            key={m.title}
+            className="relative pb-12 pl-14 last:pb-0 md:w-1/2 md:pl-0"
             style={{ marginLeft: left ? undefined : "auto" }}
           >
             {/* Nó na linha */}
-            <span className="absolute top-6 left-4 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-gold/60 bg-background md:left-auto md:right-0 md:translate-x-1/2"
+            <span
+              className="absolute top-6 left-4 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-gold/60 bg-background md:left-auto md:right-0 md:translate-x-1/2"
               style={left ? undefined : { left: 0, right: "auto", transform: "translateX(-50%)" }}
             >
               <Icon className="h-4 w-4 text-primary" strokeWidth={1.5} />
@@ -459,7 +473,11 @@ function HomePage() {
 
   useEffect(() => {
     if (!content?.media.length) return;
-    Promise.all(content.media.map(async (m) => [m.slot, await signedUrl(GALLERY_BUCKET, m.storage_path)] as const)).then((pairs) => {
+    Promise.all(
+      content.media.map(
+        async (m) => [m.slot, await signedUrl(GALLERY_BUCKET, m.storage_path)] as const,
+      ),
+    ).then((pairs) => {
       const next = Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])));
       setSlotMedia(next);
       if (!event?.cover_image_path && next.cover) setCover(next.cover);
@@ -480,7 +498,9 @@ function HomePage() {
   useEffect(() => {
     if (!content?.gifts.length) return;
     Promise.all(
-      content.gifts.map(async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const),
+      content.gifts.map(
+        async (g) => [g.id, await signedUrl(GALLERY_BUCKET, g.image_path)] as const,
+      ),
     ).then((pairs) =>
       setGiftPhotos(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])))),
     );
@@ -546,13 +566,17 @@ function HomePage() {
   }
 
   return (
-    <main className={`${templateToneClass(event.template)} template-design-${event.template} pb-24`}>
+    <main
+      className={`${templateToneClass(event.template)} template-design-${event.template} pb-24`}
+    >
       <TemplateAtmosphere template={event.template} />
       {slotMedia.background && (
         <div
           aria-hidden="true"
           className="template-background-media pointer-events-none fixed inset-0 -z-20"
-          style={{ backgroundImage: `linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 88%, transparent), color-mix(in oklab, var(--color-background) 96%, transparent)), url(${slotMedia.background})` }}
+          style={{
+            backgroundImage: `linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 88%, transparent), color-mix(in oklab, var(--color-background) 96%, transparent)), url(${slotMedia.background})`,
+          }}
         />
       )}
       {/* Cabeçalho imersivo */}
@@ -599,7 +623,9 @@ function HomePage() {
 
           {badge && (
             <div className="mx-auto mt-10 max-w-sm rounded-sm border border-gold/50 bg-[oklch(0.16_0.02_70/0.35)] px-6 py-5 backdrop-blur-sm">
-              <p className="font-sans text-[0.7rem] tracking-[0.25em] text-gold uppercase">{badge}</p>
+              <p className="font-sans text-[0.7rem] tracking-[0.25em] text-gold uppercase">
+                {badge}
+              </p>
               <p className="mt-2 font-sans text-xs leading-relaxed text-cream/75">
                 {inviteBadgeHint(inviteType)}
               </p>
@@ -638,7 +664,9 @@ function HomePage() {
       {d("welcome_message") && (
         <Section title="Uma mensagem para vocês" eyebrow="Com carinho" vines="b">
           <div className="card-elegant mx-auto max-w-2xl p-8 text-center md:p-10">
-            <p className="text-lg leading-relaxed font-light whitespace-pre-line">{d("welcome_message")}</p>
+            <p className="text-lg leading-relaxed font-light whitespace-pre-line">
+              {d("welcome_message")}
+            </p>
           </div>
         </Section>
       )}
@@ -685,7 +713,9 @@ function HomePage() {
                   parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
                     ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
                     : "",
-                  photo: slotMedia.bride ? { url: slotMedia.bride, caption: null, mediaType: "image" } : galleryUrls[0],
+                  photo: slotMedia.bride
+                    ? { url: slotMedia.bride, caption: null, mediaType: "image" }
+                    : galleryUrls[0],
                 },
                 {
                   role: "O Noivo",
@@ -693,7 +723,9 @@ function HomePage() {
                   parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
                     ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
                     : "",
-                  photo: slotMedia.groom ? { url: slotMedia.groom, caption: null, mediaType: "image" } : galleryUrls[1],
+                  photo: slotMedia.groom
+                    ? { url: slotMedia.groom, caption: null, mediaType: "image" }
+                    : galleryUrls[1],
                 },
               ].map((p, i) => (
                 <Reveal key={p.role} delay={i * 100}>
@@ -720,7 +752,13 @@ function HomePage() {
       {slotMedia.story_video && (
         <Section title="Uma história em movimento" eyebrow="Vídeo" wide dark vines="b">
           <div className="overflow-hidden rounded-2xl border border-gold/30 bg-black shadow-2xl">
-            <video src={slotMedia.story_video} controls playsInline preload="metadata" className="max-h-[70vh] w-full object-contain" />
+            <video
+              src={slotMedia.story_video}
+              controls
+              playsInline
+              preload="metadata"
+              className="max-h-[70vh] w-full object-contain"
+            />
           </div>
         </Section>
       )}
@@ -728,18 +766,16 @@ function HomePage() {
       {(slotMedia.section_1 || slotMedia.section_2) && (
         <Section title="Momentos especiais" eyebrow="Para guardar na memória" wide vines="c">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia.section_1, slotMedia.section_2]
-              .filter(Boolean)
-              .map((url, index) => (
-                <div key={url} className="card-elegant overflow-hidden">
-                  <img
-                    src={url}
-                    alt={`Momento especial ${index + 1} de ${eventTitle(event)}`}
-                    loading="lazy"
-                    className="h-72 w-full object-cover md:h-96"
-                  />
-                </div>
-              ))}
+            {[slotMedia.section_1, slotMedia.section_2].filter(Boolean).map((url, index) => (
+              <div key={url} className="card-elegant overflow-hidden">
+                <img
+                  src={url}
+                  alt={`Momento especial ${index + 1} de ${eventTitle(event)}`}
+                  loading="lazy"
+                  className="h-72 w-full object-cover md:h-96"
+                />
+              </div>
+            ))}
           </div>
         </Section>
       )}
@@ -815,7 +851,9 @@ function HomePage() {
               <span className="min-w-0">
                 <span className="block text-xl font-light">{r.title}</span>
                 {r.sub && (
-                  <span className="mt-1 block font-sans text-sm text-muted-foreground">{r.sub}</span>
+                  <span className="mt-1 block font-sans text-sm text-muted-foreground">
+                    {r.sub}
+                  </span>
                 )}
               </span>
             </li>
@@ -908,7 +946,9 @@ function HomePage() {
               {d("mkesh_number") && <div>mKesh: {d("mkesh_number")}</div>}
             </dl>
             {d("bank_payment_note") && (
-              <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">{d("bank_payment_note")}</p>
+              <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">
+                {d("bank_payment_note")}
+              </p>
             )}
             {d("bank_nib") && (
               <GiftQr
@@ -932,7 +972,9 @@ function HomePage() {
                     <div className="p-7">
                       <p className="text-xl font-light">{g.title}</p>
                       {g.description && (
-                        <p className="mt-2 font-sans text-sm text-muted-foreground">{g.description}</p>
+                        <p className="mt-2 font-sans text-sm text-muted-foreground">
+                          {g.description}
+                        </p>
                       )}
                       {g.link_or_info && (
                         <p className="mt-3 font-sans text-sm break-words text-primary">
@@ -953,7 +995,6 @@ function HomePage() {
       <Section title="Livro de Recados" vines="c">
         <Guestbook eventId={event.id} />
       </Section>
-
 
       <Ornament />
 
@@ -986,7 +1027,9 @@ function HomePage() {
       {d("closing_message") && (
         <section className="mx-auto max-w-2xl px-6 py-12 text-center">
           <Ornament />
-          <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">{d("closing_message")}</p>
+          <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">
+            {d("closing_message")}
+          </p>
         </section>
       )}
 
@@ -1006,7 +1049,6 @@ function HomePage() {
           Voltar à capa
         </Link>
       </footer>
-
 
       {lightbox && (
         <Lightbox src={lightbox.url} caption={lightbox.caption} onClose={() => setLightbox(null)} />

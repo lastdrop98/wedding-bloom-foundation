@@ -40,7 +40,6 @@ function CoverPage() {
   const [leaving, setLeaving] = useState(false);
   const [semanticCover, setSemanticCover] = useState<string | null>(null);
 
-
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
     queryFn: async () => {
@@ -54,10 +53,16 @@ function CoverPage() {
     if (!event) return;
     signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
-    supabase.from("event_media").select("storage_path").eq("event_id", event.id).eq("slot", "cover").maybeSingle().then(({ data }) => {
-      if (!data?.storage_path || event.cover_image_path) return;
-      signedUrl(GALLERY_BUCKET, data.storage_path).then(setSemanticCover);
-    });
+    supabase
+      .from("event_media")
+      .select("storage_path")
+      .eq("event_id", event.id)
+      .eq("slot", "cover")
+      .maybeSingle()
+      .then(({ data }) => {
+        if (!data?.storage_path || event.cover_image_path) return;
+        signedUrl(GALLERY_BUCKET, data.storage_path).then(setSemanticCover);
+      });
   }, [event]);
 
   if (isLoading) {
@@ -129,7 +134,9 @@ function CoverPage() {
           {formatDatePt(event.event_date)}
         </p>
         {event.hashtag && (
-          <p className="mt-3 font-sans text-xs tracking-[0.3em] text-gold uppercase">{event.hashtag}</p>
+          <p className="mt-3 font-sans text-xs tracking-[0.3em] text-gold uppercase">
+            {event.hashtag}
+          </p>
         )}
 
         {badge && (
@@ -170,7 +177,6 @@ function CoverPage() {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <span className="breathe block h-12 w-px bg-linear-to-b from-transparent to-gold/80" />
       </div>
-
 
       {music && <audio ref={audioRef} src={music} loop preload="auto" />}
     </main>

@@ -12,7 +12,10 @@ export function TemplateAtmosphere({
   const tone = getTemplateDefinition(template).tone;
 
   return (
-    <div className={`pointer-events-none absolute inset-0 overflow-hidden template-atmosphere template-atmosphere-${tone}`} aria-hidden="true">
+    <div
+      className={`pointer-events-none absolute inset-0 overflow-hidden template-atmosphere template-atmosphere-${tone}`}
+      aria-hidden="true"
+    >
       {children}
       <span className="template-orb template-orb-a" />
       <span className="template-orb template-orb-b" />

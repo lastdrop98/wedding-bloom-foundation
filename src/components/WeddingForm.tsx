@@ -2,12 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import {
-  AUDIO_BUCKET,
-  GALLERY_BUCKET,
-  details as readDetails,
-  type EventRow,
-} from "@/lib/event";
+import { AUDIO_BUCKET, GALLERY_BUCKET, details as readDetails, type EventRow } from "@/lib/event";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -70,7 +65,12 @@ const GROUPS: { title: string; fields: Field[] }[] = [
       { name: "mpesa_number", label: "M-Pesa", scope: "details" },
       { name: "emola_number", label: "e-Mola", scope: "details" },
       { name: "mkesh_number", label: "mKesh", scope: "details" },
-      { name: "bank_payment_note", label: "Nota sobre pagamentos", kind: "textarea", scope: "details" },
+      {
+        name: "bank_payment_note",
+        label: "Nota sobre pagamentos",
+        kind: "textarea",
+        scope: "details",
+      },
     ],
   },
   {
@@ -95,7 +95,12 @@ const GROUPS: { title: string; fields: Field[] }[] = [
   {
     title: "Conteúdo do convite",
     fields: [
-      { name: "welcome_message", label: "Mensagem de abertura", kind: "textarea", scope: "details" },
+      {
+        name: "welcome_message",
+        label: "Mensagem de abertura",
+        kind: "textarea",
+        scope: "details",
+      },
       { name: "dress_code", label: "Dress code", scope: "details" },
       { name: "rsvp_message", label: "Mensagem do RSVP", kind: "textarea", scope: "details" },
       { name: "closing_message", label: "Mensagem final", kind: "textarea", scope: "details" },
@@ -146,11 +151,27 @@ const GROUPS: { title: string; fields: Field[] }[] = [
   },
 ];
 
-function SelectNative({ value, onChange, options }: { value: string; onChange: (value: string) => void; options: string[][] }) {
+function SelectNative({
+  value,
+  onChange,
+  options,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  options: string[][];
+}) {
   return (
-    <select value={value} onChange={(e) => onChange(e.target.value)} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+    >
       <option value="">Escolher…</option>
-      {options.map(([optionValue, label]) => <option key={optionValue} value={optionValue}>{label}</option>)}
+      {options.map(([optionValue, label]) => (
+        <option key={optionValue} value={optionValue}>
+          {label}
+        </option>
+      ))}
     </select>
   );
 }
@@ -219,7 +240,10 @@ export function WeddingForm({
     payload["details"] = detailPayload;
 
     const { error } = event
-      ? await supabase.from("events").update(payload as never).eq("id", event.id)
+      ? await supabase
+          .from("events")
+          .update(payload as never)
+          .eq("id", event.id)
       : await supabase.from("events").insert(payload as never);
     setBusy(false);
     if (error) {
@@ -268,7 +292,10 @@ export function WeddingForm({
             {group.fields.map((f) => {
               const id = f.name;
               return (
-                <div key={id} className={f.kind === "textarea" ? "space-y-2 sm:col-span-2" : "space-y-2"}>
+                <div
+                  key={id}
+                  className={f.kind === "textarea" ? "space-y-2 sm:col-span-2" : "space-y-2"}
+                >
                   <Label htmlFor={id}>{f.label}</Label>
                   {f.kind === "textarea" ? (
                     <Textarea
@@ -279,12 +306,21 @@ export function WeddingForm({
                     />
                   ) : f.name === "template" ? (
                     <div className="sm:col-span-2">
-                      <TemplatePicker value={values.template || "golden-classic"} onChange={(value) => set("template", value)} />
+                      <TemplatePicker
+                        value={values.template || "golden-classic"}
+                        onChange={(value) => set("template", value)}
+                      />
                     </div>
                   ) : (
                     <Input
                       id={id}
-                      type={f.kind === "date" ? "date" : f.kind === "datetime" ? "datetime-local" : "text"}
+                      type={
+                        f.kind === "date"
+                          ? "date"
+                          : f.kind === "datetime"
+                            ? "datetime-local"
+                            : "text"
+                      }
                       value={values[id] ?? ""}
                       onChange={(e) => set(id, e.target.value)}
                     />
@@ -301,26 +337,69 @@ export function WeddingForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="seal-enabled">Ativar selos</Label>
-            <SelectNative value={values.seal_enabled ?? ""} onChange={(v) => set("seal_enabled", v)} options={[
-              ["true", "Sim"],
-              ["false", "Não"],
-            ]} />
+            <SelectNative
+              value={values.seal_enabled ?? ""}
+              onChange={(v) => set("seal_enabled", v)}
+              options={[
+                ["true", "Sim"],
+                ["false", "Não"],
+              ]}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="seal-mode">Quantidade</Label>
-            <SelectNative value={values.seal_mode ?? ""} onChange={(v) => set("seal_mode", v)} options={[
-              ["one", "1 selo"],
-              ["two", "2 selos"],
-            ]} />
+            <SelectNative
+              value={values.seal_mode ?? ""}
+              onChange={(v) => set("seal_mode", v)}
+              options={[
+                ["one", "1 selo"],
+                ["two", "2 selos"],
+              ]}
+            />
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2"><Label htmlFor="seal-one-text">Selo 1</Label><Input id="seal-one-text" value={values.seal_one_text ?? ""} onChange={(e) => set("seal_one_text", e.target.value)} placeholder="Ex.: 1" /></div>
-          <div className="space-y-2"><Label htmlFor="seal-two-text">Selo 2</Label><Input id="seal-two-text" value={values.seal_two_text ?? ""} onChange={(e) => set("seal_two_text", e.target.value)} placeholder="Ex.: 2" /></div>
-          <div className="space-y-2"><Label htmlFor="seal-one-label">Etiqueta 1</Label><Input id="seal-one-label" value={values.seal_one_label ?? ""} onChange={(e) => set("seal_one_label", e.target.value)} placeholder="Convite válido" /></div>
-          <div className="space-y-2"><Label htmlFor="seal-two-label">Etiqueta 2</Label><Input id="seal-two-label" value={values.seal_two_label ?? ""} onChange={(e) => set("seal_two_label", e.target.value)} placeholder="Convite válido" /></div>
+          <div className="space-y-2">
+            <Label htmlFor="seal-one-text">Selo 1</Label>
+            <Input
+              id="seal-one-text"
+              value={values.seal_one_text ?? ""}
+              onChange={(e) => set("seal_one_text", e.target.value)}
+              placeholder="Ex.: 1"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="seal-two-text">Selo 2</Label>
+            <Input
+              id="seal-two-text"
+              value={values.seal_two_text ?? ""}
+              onChange={(e) => set("seal_two_text", e.target.value)}
+              placeholder="Ex.: 2"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="seal-one-label">Etiqueta 1</Label>
+            <Input
+              id="seal-one-label"
+              value={values.seal_one_label ?? ""}
+              onChange={(e) => set("seal_one_label", e.target.value)}
+              placeholder="Convite válido"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="seal-two-label">Etiqueta 2</Label>
+            <Input
+              id="seal-two-label"
+              value={values.seal_two_label ?? ""}
+              onChange={(e) => set("seal_two_label", e.target.value)}
+              placeholder="Convite válido"
+            />
+          </div>
         </div>
-        <p className="text-xs leading-relaxed text-muted-foreground">Os selos podem ser usados para convites individuais, de casal ou para a versão tradicional/Xiguiane.</p>
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          Os selos podem ser usados para convites individuais, de casal ou para a versão
+          tradicional/Xiguiane.
+        </p>
       </fieldset>
 
       <fieldset className="space-y-4">

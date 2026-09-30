@@ -63,7 +63,9 @@ export function TemplatePicker({
                   </div>
                   <div className="p-3">
                     <p className="font-medium">{item.label}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.description}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
                   </div>
                 </button>
               );

@@ -194,8 +194,8 @@ function Index() {
             </h1>
             <Ornament className="mt-9" />
             <p className="mx-auto mt-8 max-w-lg font-sans text-base leading-relaxed text-cream/85">
-              Convites digitais e páginas web, feitos à medida por nós. Cada projeto é desenhado à mão
-              para reflectir a história que quer partilhar.
+              Convites digitais e páginas web, feitos à medida por nós. Cada projeto é desenhado à
+              mão para reflectir a história que quer partilhar.
             </p>
           </Reveal>
 
@@ -347,7 +347,8 @@ function Index() {
               </h2>
               <Ornament className="mx-auto mt-7" />
               <p className="mx-auto mt-6 max-w-md font-sans text-sm leading-relaxed text-muted-foreground">
-                Cada template é personalizado com os seus conteúdos, cores e fotografias. Nós tratamos de tudo.
+                Cada template é personalizado com os seus conteúdos, cores e fotografias. Nós
+                tratamos de tudo.
               </p>
             </div>
           </Reveal>
@@ -383,7 +384,9 @@ function Index() {
                         </span>
                       ) : null}
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                        <span className={cn("eyebrow", isAquarela ? "text-rose/70" : "text-gold/70")}>
+                        <span
+                          className={cn("eyebrow", isAquarela ? "text-rose/70" : "text-gold/70")}
+                        >
                           Template
                         </span>
                         <h3
@@ -419,18 +422,27 @@ function Index() {
                     </div>
 
                     <div className="flex flex-1 flex-col p-7">
-                      <p className="font-sans text-sm leading-relaxed text-muted-foreground">{template.description}</p>
+                      <p className="font-sans text-sm leading-relaxed text-muted-foreground">
+                        {template.description}
+                      </p>
                       <ul className="mt-5 space-y-2">
                         {template.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 font-sans text-xs text-ink/80">
-                            <Sparkles className={cn("size-3.5", isAquarela ? "text-rose" : "text-gold")} />
+                          <li
+                            key={feature}
+                            className="flex items-center gap-2 font-sans text-xs text-ink/80"
+                          >
+                            <Sparkles
+                              className={cn("size-3.5", isAquarela ? "text-rose" : "text-gold")}
+                            />
                             {feature}
                           </li>
                         ))}
                       </ul>
                       <div className="mt-auto pt-7">
                         <a
-                          href={whatsappUrl(`Olá! Gostaria de um convite no estilo ${template.name}.`)}
+                          href={whatsappUrl(
+                            `Olá! Gostaria de um convite no estilo ${template.name}.`,
+                          )}
                           target="_blank"
                           rel="noreferrer"
                           className={cn(
@@ -531,8 +543,8 @@ function Index() {
               </h2>
               <Ornament className="mx-auto mt-7" />
               <p className="mx-auto mt-6 max-w-lg font-sans text-base leading-relaxed text-muted-foreground">
-                Sites à medida para negócios, eventos e portfólios. Desde a ideia ao lançamento, desenhamos
-                uma presença online que se destaca. Consulte-nos para um orçamento.
+                Sites à medida para negócios, eventos e portfólios. Desde a ideia ao lançamento,
+                desenhamos uma presença online que se destaca. Consulte-nos para um orçamento.
               </p>
             </div>
           </Reveal>
@@ -643,7 +655,9 @@ function Index() {
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <Ornament className="mx-auto" />
-          <p className="mt-6 font-serif text-lg font-light tracking-wide text-cream">Solar Eclipse</p>
+          <p className="mt-6 font-serif text-lg font-light tracking-wide text-cream">
+            Solar Eclipse
+          </p>
           <p className="mt-2 font-sans text-xs text-cream/60">
             Convite criado com <span className="text-warm">♡</span> por Solar Eclipse
           </p>

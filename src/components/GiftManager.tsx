@@ -192,7 +192,11 @@ export function GiftManager({ eventId }: { eventId: string }) {
           />
         </div>
         <div className="flex items-end">
-          <Button type="button" disabled={!title.trim() || add.isPending} onClick={() => add.mutate()}>
+          <Button
+            type="button"
+            disabled={!title.trim() || add.isPending}
+            onClick={() => add.mutate()}
+          >
             {add.isPending ? "A guardar…" : "Adicionar presente"}
           </Button>
         </div>
@@ -212,19 +216,45 @@ export function GiftManager({ eventId }: { eventId: string }) {
               <GiftThumb path={item.image_path} />
               {editingId === item.id ? (
                 <div className="min-w-60 flex-1 space-y-3">
-                  <Input value={editValues.title} onChange={(e) => setEditValues((v) => ({ ...v, title: e.target.value }))} placeholder="Título" />
-                  <Textarea rows={2} value={editValues.description} onChange={(e) => setEditValues((v) => ({ ...v, description: e.target.value }))} placeholder="Descrição" />
-                  <Input value={editValues.link} onChange={(e) => setEditValues((v) => ({ ...v, link: e.target.value }))} placeholder="Link ou informação" />
+                  <Input
+                    value={editValues.title}
+                    onChange={(e) => setEditValues((v) => ({ ...v, title: e.target.value }))}
+                    placeholder="Título"
+                  />
+                  <Textarea
+                    rows={2}
+                    value={editValues.description}
+                    onChange={(e) => setEditValues((v) => ({ ...v, description: e.target.value }))}
+                    placeholder="Descrição"
+                  />
+                  <Input
+                    value={editValues.link}
+                    onChange={(e) => setEditValues((v) => ({ ...v, link: e.target.value }))}
+                    placeholder="Link ou informação"
+                  />
                   <div className="flex gap-2">
-                    <Button type="button" size="sm" onClick={saveEdit} disabled={update.isPending}>Guardar</Button>
-                    <Button type="button" size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancelar</Button>
+                    <Button type="button" size="sm" onClick={saveEdit} disabled={update.isPending}>
+                      Guardar
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setEditingId(null)}
+                    >
+                      Cancelar
+                    </Button>
                   </div>
                 </div>
               ) : (
                 <div className="min-w-40 flex-1">
                   <p>{item.title}</p>
-                  {item.description && <p className="text-sm text-muted-foreground">{item.description}</p>}
-                  {item.link_or_info && <p className="text-xs break-words text-muted-foreground">{item.link_or_info}</p>}
+                  {item.description && (
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                  )}
+                  {item.link_or_info && (
+                    <p className="text-xs break-words text-muted-foreground">{item.link_or_info}</p>
+                  )}
                 </div>
               )}
               <div className="flex flex-wrap items-center gap-2">

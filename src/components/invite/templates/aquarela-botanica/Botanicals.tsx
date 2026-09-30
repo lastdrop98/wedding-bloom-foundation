@@ -61,7 +61,13 @@ export function WatercolorRose({ className = "", size = 180 }: Props) {
       <g className="text-sage" opacity="0.35">
         <ellipse cx="30" cy="78" rx="20" ry="9" transform="rotate(-28 30 78)" fill="currentColor" />
         <ellipse cx="92" cy="80" rx="17" ry="8" transform="rotate(26 92 80)" fill="currentColor" />
-        <path d="M60 92C52 100 40 104 28 104" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+        <path
+          d="M60 92C52 100 40 104 28 104"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          fill="none"
+          strokeLinecap="round"
+        />
       </g>
       {/* pétalas exteriores */}
       <g className="text-rose">
@@ -111,7 +117,15 @@ export function BerrySprig({ className = "", size = 120 }: Props) {
       {dots.map(([x, y]) => (
         <circle key={`${x}-${y}`} cx={x} cy={y} r="4.2" fill="currentColor" opacity="0.3" />
       ))}
-      <ellipse cx="62" cy="62" rx="12" ry="5" transform="rotate(30 62 62)" fill="currentColor" opacity="0.2" />
+      <ellipse
+        cx="62"
+        cy="62"
+        rx="12"
+        ry="5"
+        transform="rotate(30 62 62)"
+        fill="currentColor"
+        opacity="0.2"
+      />
     </svg>
   );
 }
@@ -119,9 +133,15 @@ export function BerrySprig({ className = "", size = 120 }: Props) {
 /** Moldura floral: rosas e eucalipto nos cantos opostos de uma secção. */
 export function BotanicalFrame({ className = "" }: { className?: string }) {
   return (
-    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
+    <div
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
+      aria-hidden="true"
+    >
       <WatercolorRose className="absolute -top-6 -left-8 opacity-70" size={190} />
-      <EucalyptusSpray className="text-sage absolute top-4 right-2 -scale-x-100 opacity-60" size={150} />
+      <EucalyptusSpray
+        className="text-sage absolute top-4 right-2 -scale-x-100 opacity-60"
+        size={150}
+      />
       <BerrySprig className="text-rose absolute bottom-2 left-3 opacity-60" size={120} />
       <WatercolorRose className="absolute -right-10 -bottom-10 rotate-180 opacity-60" size={170} />
     </div>
@@ -134,8 +154,24 @@ export function FloralDivider({ className = "" }: { className?: string }) {
     <div className={`flex items-center justify-center gap-3 ${className}`} aria-hidden="true">
       <span className="h-px w-16 bg-linear-to-r from-transparent to-sage/50 sm:w-24" />
       <svg width="54" height="26" viewBox="0 0 54 26" fill="none">
-        <ellipse cx="16" cy="13" rx="9" ry="4.5" transform="rotate(-24 16 13)" className="fill-sage" opacity="0.5" />
-        <ellipse cx="38" cy="13" rx="9" ry="4.5" transform="rotate(24 38 13)" className="fill-sage" opacity="0.5" />
+        <ellipse
+          cx="16"
+          cy="13"
+          rx="9"
+          ry="4.5"
+          transform="rotate(-24 16 13)"
+          className="fill-sage"
+          opacity="0.5"
+        />
+        <ellipse
+          cx="38"
+          cy="13"
+          rx="9"
+          ry="4.5"
+          transform="rotate(24 38 13)"
+          className="fill-sage"
+          opacity="0.5"
+        />
         <circle cx="27" cy="13" r="6" className="fill-rose" opacity="0.45" />
         <circle cx="27" cy="13" r="2.4" className="fill-gold-light" opacity="0.9" />
       </svg>
