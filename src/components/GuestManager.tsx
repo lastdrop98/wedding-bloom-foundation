@@ -1,5 +1,4 @@
-import { useMemo, useState } from "react";
-import { Download, MessageCircle, Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -32,7 +31,6 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
   const [phone, setPhone] = useState("");
   const [inviteType, setInviteType] = useState("individual");
   const [tableLabel, setTableLabel] = useState("");
-  const [editingId, setEditingId] = useState<string | null>(null);
 
   const { data: guests, isLoading } = useQuery({
     queryKey: ["guests", eventId],
@@ -47,59 +45,33 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
     },
   });
 
-  const totals = useMemo(() => {
-    const rows = guests ?? [];
-    return {
-      guests: rows.length,
-      invited: rows.reduce((sum, g) => sum + (g.invited_count || 0), 0),
-      confirmed: rows.filter((g) => g.rsvp_status === "sim").length,
-      pending: rows.filter((g) => g.rsvp_status === "pending").length,
-    };
-  }, [guests]);
-
-  const resetForm = () => {
-    setName("");
-    setCount("1");
-    setPhone("");
-    setInviteType("individual");
-    setTableLabel("");
-    setEditingId(null);
-  };
-
-  const save = useMutation({
+  const add = useMutation({
     mutationFn: async () => {
-      if (!name.trim()) throw new Error("O nome é obrigatório.");
-      const payload = {
+      const { error } = await supabase.from("guests").insert({
+        event_id: eventId,
         name: name.trim(),
         invited_count: Math.max(1, Number(count) || 1),
         phone: phone.trim() || null,
         invite_type: inviteType,
         table_label: tableLabel.trim() || null,
-      };
-      if (editingId) {
-        const { error } = await supabase
-          .from("guests")
-          .update(payload)
-          .eq("id", editingId)
-          .eq("event_id", eventId);
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.from("guests").insert({ ...payload, event_id: eventId });
-        if (error) throw error;
-      }
+      });
+      if (error) throw error;
     },
     onSuccess: () => {
-      resetForm();
-      toast.success(editingId ? "Convidado atualizado." : "Convidado adicionado.");
+      setName("");
+      setCount("1");
+      setPhone("");
+      setInviteType("individual");
+      setTableLabel("");
+      toast.success("Convidado adicionado.");
       void queryClient.invalidateQueries({ queryKey: ["guests", eventId] });
     },
-    onError: (error) =>
-      toast.error(error instanceof Error ? error.message : "Não foi possível guardar o convidado."),
+    onError: () => toast.error("Não foi possível adicionar o convidado."),
   });
 
   const remove = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("guests").delete().eq("id", id).eq("event_id", eventId);
+      const { error } = await supabase.from("guests").delete().eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -108,16 +80,6 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
     },
     onError: () => toast.error("Não foi possível remover o convidado."),
   });
-
-  function editGuest(g: NonNullable<typeof guests>[number]) {
-    setEditingId(g.id);
-    setName(g.name);
-    setCount(String(g.invited_count || 1));
-    setPhone(g.phone ?? "");
-    setInviteType(g.invite_type || "individual");
-    setTableLabel(g.table_label ?? "");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
 
   async function copyLink(token: string) {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
@@ -130,68 +92,9 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
     }
   }
 
-  function exportCsv() {
-    const rows = guests ?? [];
-    if (!rows.length) {
-      toast.error("Ainda não há convidados para exportar.");
-      return;
-    }
-    const header = ["Nome", "Telefone", "Convidados", "Tipo", "Mesa", "Estado", "Link"];
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
-    const csvRows = rows.map((g) => [
-      g.name,
-      g.phone ?? "",
-      String(g.invited_count ?? 1),
-      g.invite_type === "casal" ? "Casal" : "Individual",
-      g.table_label ?? "",
-      STATUS[g.rsvp_status]?.label ?? g.rsvp_status,
-      `${origin}/${slug}?g=${g.token}`,
-    ]);
-    const escape = (value: string) => `"${value.replace(/"/g, '""')}"`;
-    const csv = [header, ...csvRows].map((row) => row.map(escape).join(";")).join("\r\n");
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `convidados-${slug}.csv`;
-    anchor.click();
-    URL.revokeObjectURL(url);
-    toast.success("Lista de convidados exportada.");
-  }
-
   return (
-    <section className="space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="eyebrow">Convidados</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Links personalizados, WhatsApp, mesas e estado de confirmação num só lugar.
-          </p>
-        </div>
-        <Button type="button" variant="outline" size="sm" onClick={exportCsv}>
-          <Download className="mr-2 size-4" />
-          Exportar CSV
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {[
-          ["Convidados", totals.guests],
-          ["Lugares", totals.invited],
-          ["Confirmados", totals.confirmed],
-          ["Pendentes", totals.pending],
-        ].map(([label, value]) => (
-          <div
-            key={String(label)}
-            className="rounded-xl border border-border bg-background/40 px-4 py-4"
-          >
-            <p className="text-2xl font-light text-primary">{value}</p>
-            <p className="mt-1 font-sans text-[0.6rem] tracking-[0.16em] text-muted-foreground uppercase">
-              {label}
-            </p>
-          </div>
-        ))}
-      </div>
+    <section className="space-y-4">
+      <p className="eyebrow">Convidados</p>
 
       <div className="grid gap-3 rounded-xl border border-border bg-background/40 p-5 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-2">
@@ -243,23 +146,14 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
             placeholder="Mesa 4 / Família Silva"
           />
         </div>
-        <div className="flex items-end gap-2 sm:col-span-2">
+        <div className="flex items-end sm:col-span-2">
           <Button
             type="button"
-            disabled={!name.trim() || save.isPending}
-            onClick={() => save.mutate()}
+            disabled={!name.trim() || add.isPending}
+            onClick={() => add.mutate()}
           >
-            {save.isPending
-              ? "A guardar…"
-              : editingId
-                ? "Guardar alterações"
-                : "Adicionar convidado"}
+            {add.isPending ? "A adicionar…" : "Adicionar convidado"}
           </Button>
-          {editingId && (
-            <Button type="button" variant="outline" onClick={resetForm}>
-              Cancelar edição
-            </Button>
-          )}
         </div>
       </div>
 
@@ -270,35 +164,23 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
       ) : (
         <ul className="space-y-2">
           {guests.map((g) => {
-            const status = STATUS[g.rsvp_status] ?? STATUS.pending;
-            const origin = typeof window !== "undefined" ? window.location.origin : "";
-            const link = `${origin}/${slug}?g=${g.token}`;
+            const status = STATUS[g.rsvp_status] ?? STATUS["pending"]!;
             return (
               <li
                 key={g.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-background/30 px-4 py-4"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-border px-4 py-3"
               >
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-base">{g.name}</p>
-                    <span
-                      className={`rounded-full border border-border px-2 py-0.5 font-sans text-[0.55rem] tracking-[0.12em] uppercase ${status.className}`}
-                    >
-                      {status.label}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                <div>
+                  <p>{g.name}</p>
+                  <p className="text-sm text-muted-foreground">
                     {g.invited_count} convidado(s) ·{" "}
                     {g.invite_type === "casal" ? "casal" : "individual"} ·{" "}
-                    {g.table_label || "sem mesa"}
+                    {g.table_label || "sem mesa"} ·{" "}
+                    <span className={status.className}>{status.label}</span>
                   </p>
-                  {g.phone && <p className="mt-1 text-xs text-muted-foreground">{g.phone}</p>}
+                  {g.phone && <p className="text-xs text-muted-foreground">{g.phone}</p>}
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Button type="button" variant="outline" size="sm" onClick={() => editGuest(g)}>
-                    <Pencil className="mr-2 size-3.5" />
-                    Editar
-                  </Button>
                   <Button
                     type="button"
                     variant="outline"
@@ -310,11 +192,14 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                   {g.phone && (
                     <Button type="button" variant="outline" size="sm" asChild>
                       <a
-                        href={guestWhatsAppUrl(g.phone, link, g.name)}
+                        href={guestWhatsAppUrl(
+                          g.phone,
+                          `${typeof window !== "undefined" ? window.location.origin : ""}/${slug}?g=${g.token}`,
+                          g.name,
+                        )}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <MessageCircle className="mr-2 size-3.5" />
                         WhatsApp
                       </a>
                     </Button>
@@ -325,9 +210,8 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                     size="sm"
                     onClick={() => remove.mutate(g.id)}
                     disabled={remove.isPending}
-                    aria-label={`Remover ${g.name}`}
                   >
-                    <Trash2 className="size-4" />
+                    Remover
                   </Button>
                 </div>
               </li>
