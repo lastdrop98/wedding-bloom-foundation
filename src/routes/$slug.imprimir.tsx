@@ -301,6 +301,9 @@ function PrintPage() {
   }
 
   const program = buildProgram(event, content?.schedule ?? []);
+  const versionHref = inviteType
+    ? `?tipo=${inviteType === "individual" ? "casal" : "individual"}&formato=${formato}`
+    : `?formato=${formato}`;
   const groom = detail(event, "groom_name");
   const bride = detail(event, "bride_name");
   const gp = parentsLine(event, "groom");
@@ -323,7 +326,7 @@ function PrintPage() {
     <main className={`${templateToneClass(event.template)} template-design-${event.template} print-page min-h-screen bg-[oklch(0.12_0.01_70)] px-4 py-10 font-serif text-[rgb(222,196,145)]">
       <div className="print-actions mx-auto mb-8 flex max-w-md flex-wrap justify-center gap-3">
         <a
-          href={inviteType ? `?tipo=${inviteType === "individual" ? "casal" : "individual"}&formato=${formato}` : `?formato=${formato}`}
+          href={versionHref}
           className="rounded-sm border border-[rgb(201,168,76)] px-6 py-3 font-sans text-[0.7rem] tracking-[0.3em] text-[rgb(201,168,76)] uppercase transition-colors hover:bg-[rgb(201,168,76)]/10"
         >
           {inviteType === "individual" ? "Ver versão casal" : inviteType === "casal" ? "Ver versão individual" : "Escolher versão"}
