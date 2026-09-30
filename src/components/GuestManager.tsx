@@ -155,7 +155,10 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
           ["Confirmados", totals.confirmed],
           ["Pendentes", totals.pending],
         ].map(([label, value]) => (
-          <div key={String(label)} className="rounded-xl border border-border bg-background/40 px-4 py-4">
+          <div
+            key={String(label)}
+            className="rounded-xl border border-border bg-background/40 px-4 py-4"
+          >
             <p className="text-2xl font-light text-primary">{value}</p>
             <p className="mt-1 font-sans text-[0.6rem] tracking-[0.16em] text-muted-foreground uppercase">
               {label}
