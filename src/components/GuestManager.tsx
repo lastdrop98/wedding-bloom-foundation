@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Download } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -69,6 +70,46 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
     onError: () => toast.error("Não foi possível adicionar o convidado."),
   });
 
+  const totals = useMemo(() => {
+    const rows = guests ?? [];
+    return {
+      total: rows.length,
+      invited: rows.reduce((sum, guest) => sum + (guest.invited_count || 0), 0),
+      confirmed: rows.filter((guest) => guest.rsvp_status === "sim").length,
+      pending: rows.filter((guest) => guest.rsvp_status === "pending").length,
+    };
+  }, [guests]);
+
+  function exportCsv() {
+    if (!guests?.length) {
+      toast.error("Ainda não há convidados para exportar.");
+      return;
+    }
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const rows = [
+      ["Nome", "Telefone", "Convidados", "Tipo", "Mesa", "Estado", "Link"],
+      ...guests.map((g) => [
+        g.name,
+        g.phone ?? "",
+        String(g.invited_count ?? 1),
+        g.invite_type === "casal" ? "Casal" : "Individual",
+        g.table_label ?? "",
+        STATUS[g.rsvp_status]?.label ?? g.rsvp_status,
+        `${origin}/${slug}?g=${g.token}`,
+      ]),
+    ];
+    const quote = (value: string) => `"${value.replace(/"/g, '""')}"`;
+    const csv = rows.map((row) => row.map(quote).join(";")).join("\r\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `convidados-${slug}.csv`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+    toast.success("Lista de convidados exportada.");
+  }
+
   const remove = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase.from("guests").delete().eq("id", id);
@@ -93,8 +134,35 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
   }
 
   return (
-    <section className="space-y-4">
-      <p className="eyebrow">Convidados</p>
+    <section className="space-y-5">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="eyebrow">Convidados</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Links personalizados, WhatsApp, mesas e estado de confirmação.
+          </p>
+        </div>
+        <Button type="button" variant="outline" size="sm" onClick={exportCsv}>
+          <Download className="mr-2 size-4" />
+          Exportar CSV
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[
+          ["Convidados", totals.total],
+          ["Lugares", totals.invited],
+          ["Confirmados", totals.confirmed],
+          ["Pendentes", totals.pending],
+        ].map(([label, value]) => (
+          <div key={String(label)} className="rounded-xl border border-border bg-background/40 px-4 py-4">
+            <p className="text-2xl font-light text-primary">{value}</p>
+            <p className="mt-1 font-sans text-[0.6rem] tracking-[0.16em] text-muted-foreground uppercase">
+              {label}
+            </p>
+          </div>
+        ))}
+      </div>
 
       <div className="grid gap-3 rounded-xl border border-border bg-background/40 p-5 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-2">
