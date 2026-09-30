@@ -117,7 +117,7 @@ function HomePage() {
               <br />
               o primeiro
               <br />
-              momento.
+              a vossa história.
             </h1>
             <p className="mt-8 max-w-xl text-base leading-7 text-white/72 sm:text-lg">
               Criamos uma experiência digital à altura do vosso dia — elegante para o casal,
@@ -129,7 +129,7 @@ function HomePage() {
                 onClick={() => catalogRef.current?.scrollIntoView({ behavior: "smooth" })}
                 className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-[1.02]"
               >
-                Explorar a experiência
+                Ver os modelos
                 <ArrowRight className="size-4" />
               </button>
               <a
@@ -151,7 +151,7 @@ function HomePage() {
           <div className="max-w-2xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/40">Uma plataforma, não apenas um convite</p>
             <h2 className="mt-5 text-[clamp(2.6rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.055em]">
-              Tudo o que acontece antes do grande dia.
+              Tudo o que acontece antes, durante e depois do grande dia.
             </h2>
             <p className="mt-7 max-w-xl text-lg leading-8 text-black/55">
               Conteúdo, design e gestão vivem no mesmo lugar. O casal recebe uma experiência
