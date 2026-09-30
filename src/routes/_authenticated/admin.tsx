@@ -1,6 +1,25 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import {
+  BarChart3,
+  CalendarDays,
+  ChevronRight,
+  ExternalLink,
+  FileImage,
+  Gift,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  PackageCheck,
+  Palette,
+  Plus,
+  Printer,
+  Settings2,
+  Sparkles,
+  Users,
+  X,
+} from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { EVENT_TYPES, eventTitle, eventTypeLabel, formatDatePt, type EventRow } from "@/lib/event";
@@ -16,10 +35,8 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
     meta: [
-      { title: "Painel — Solar Eclipse" },
-      { name: "description", content: "Gestão de convites de eventos Solar Eclipse." },
-      { property: "og:title", content: "Painel — Solar Eclipse" },
-      { property: "og:description", content: "Gestão de convites de eventos Solar Eclipse." },
+      { title: "Admin — Solar Eclipse" },
+      { name: "description", content: "Workspace de gestão Solar Eclipse." },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -27,15 +44,26 @@ export const Route = createFileRoute("/_authenticated/admin")({
 });
 
 type Mode =
-  | { kind: "list" }
+  | { kind: "dashboard" }
   | { kind: "choose-type" }
   | { kind: "form"; event: EventRow | null; eventType: string };
+
+const NAV = [
+  ["dashboard", "Visão geral", LayoutDashboard],
+  ["dados", "Dados & Design", Palette],
+  ["media", "Media", FileImage],
+  ["programa", "Programa", CalendarDays],
+  ["presentes", "Presentes", Gift],
+  ["convidados", "Convidados", Users],
+  ["entrega", "Entrega", PackageCheck],
+] as const;
 
 function AdminPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const [mode, setMode] = useState<Mode>({ kind: "list" });
+  const [mode, setMode] = useState<Mode>({ kind: "dashboard" });
   const [activeSection, setActiveSection] = useState("dados");
+  const [mobileNav, setMobileNav] = useState(false);
 
   const { data: events, isLoading } = useQuery({
     queryKey: ["admin-events"],
@@ -49,6 +77,15 @@ function AdminPage() {
     },
   });
 
+  const stats = useMemo(() => {
+    const rows = events ?? [];
+    return {
+      total: rows.length,
+      weddings: rows.filter((e) => e.event_type === "casamento").length,
+      latest: rows[0],
+    };
+  }, [events]);
+
   async function signOut() {
     await queryClient.cancelQueries();
     queryClient.clear();
@@ -56,177 +93,348 @@ function AdminPage() {
     navigate({ to: "/auth", replace: true });
   }
 
+  function openEvent(event: EventRow, section = "dados") {
+    setActiveSection(section);
+    setMode({ kind: "form", event, eventType: event.event_type });
+  }
+
   function closeForm() {
-    setMode({ kind: "list" });
+    setMode({ kind: "dashboard" });
     void queryClient.invalidateQueries({ queryKey: ["admin-events"] });
   }
 
+  const currentEvent = mode.kind === "form" ? mode.event : null;
+
   return (
-    <main className="mx-auto max-w-4xl px-6 py-14">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <p className="eyebrow">Solar Eclipse</p>
-          <h1 className="mt-2 text-3xl font-light">Painel de eventos</h1>
-        </div>
-        <div className="flex gap-2">
-          {mode.kind === "list" && (
-            <Button onClick={() => setMode({ kind: "choose-type" })}>Novo Evento</Button>
-          )}
-          <Button variant="outline" onClick={signOut}>
-            Sair
-          </Button>
-        </div>
-      </div>
-
-      <span className="gold-rule mt-8" />
-
-      {mode.kind === "choose-type" ? (
-        <div className="mt-10 rounded-md border border-border bg-card p-6">
-          <h2 className="text-xl font-light">Que tipo de evento?</h2>
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            {EVENT_TYPES.map((t) => (
-              <button
-                key={t.value}
-                type="button"
-                disabled={!t.available}
-                onClick={() => {
-                  setActiveSection("dados");
-                  setMode({ kind: "form", event: null, eventType: t.value });
-                }}
-                className="rounded-md border border-border px-5 py-6 text-center transition-colors enabled:hover:border-primary enabled:hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <span className="block text-lg">{t.label}</span>
-                {!t.available && <span className="eyebrow mt-2 block">Brevemente</span>}
-              </button>
-            ))}
+    <main className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f]">
+      <div className="flex min-h-screen">
+        <aside className="fixed inset-y-0 left-0 z-50 hidden w-[248px] border-r border-black/[0.06] bg-white lg:flex lg:flex-col">
+          <div className="flex h-16 items-center border-b border-black/[0.06] px-6">
+            <Link to="/" className="flex items-center gap-2.5">
+              <span className="flex size-7 items-center justify-center rounded-full bg-black text-[9px] font-semibold tracking-[0.08em] text-white">SE</span>
+              <span className="text-sm font-semibold tracking-[-0.02em]">Solar Eclipse</span>
+            </Link>
           </div>
-          <Button variant="outline" className="mt-6" onClick={() => setMode({ kind: "list" })}>
-            Cancelar
-          </Button>
-        </div>
-      ) : mode.kind === "form" ? (
-        <div className="mt-10 rounded-md border border-border bg-card p-6">
-          <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p className="eyebrow">Editor</p>
-              <h2 className="mt-2 text-xl font-light">
-                {mode.event
-                  ? `Editar — ${eventTitle(mode.event)}`
-                  : `Novo evento — ${eventTypeLabel(mode.eventType)}`}
-              </h2>
-            </div>
-            {mode.event && (
-              <div className="flex flex-wrap gap-2">
-                <Button asChild variant="outline" size="sm">
-                  <a href={`/${mode.event.slug}`} target="_blank" rel="noreferrer">
-                    Abrir convite
-                  </a>
-                </Button>
-                <Button asChild variant="outline" size="sm">
-                  <a
-                    href={`/${mode.event.slug}/imprimir?formato=a5`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Ver impressão
-                  </a>
+          <div className="px-4 py-6">
+            <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/35">Workspace</p>
+            <nav className="mt-3 space-y-1">
+              <button
+                type="button"
+                onClick={() => setMode({ kind: "dashboard" })}
+                className={navClass(mode.kind === "dashboard")}
+              >
+                <LayoutDashboard className="size-4" />
+                Visão geral
+              </button>
+              {currentEvent && (
+                <>
+                  <p className="px-3 pt-6 pb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/30">
+                    {eventTitle(currentEvent)}
+                  </p>
+                  {NAV.filter(([value]) => value !== "dashboard").map(([value, label, Icon]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setActiveSection(value)}
+                      className={navClass(activeSection === value)}
+                    >
+                      <Icon className="size-4" />
+                      {label}
+                    </button>
+                  ))}
+                </>
+              )}
+            </nav>
+          </div>
+          <div className="mt-auto border-t border-black/[0.06] p-4">
+            <button type="button" onClick={signOut} className={navClass(false)}>
+              <LogOut className="size-4" />
+              Terminar sessão
+            </button>
+          </div>
+        </aside>
+
+        {mobileNav && (
+          <div className="fixed inset-0 z-[60] lg:hidden">
+            <button aria-label="Fechar menu" className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setMobileNav(false)} />
+            <aside className="relative flex h-full w-[290px] flex-col bg-white p-5 shadow-2xl">
+              <div className="flex items-center justify-between">
+                <Link to="/" className="flex items-center gap-2.5" onClick={() => setMobileNav(false)}>
+                  <span className="flex size-7 items-center justify-center rounded-full bg-black text-[9px] font-semibold text-white">SE</span>
+                  <span className="text-sm font-semibold">Solar Eclipse</span>
+                </Link>
+                <button type="button" onClick={() => setMobileNav(false)}><X className="size-5 text-black/50" /></button>
+              </div>
+              <nav className="mt-8 space-y-1">
+                <button type="button" onClick={() => { setMode({ kind: "dashboard" }); setMobileNav(false); }} className={navClass(mode.kind === "dashboard")}>
+                  <LayoutDashboard className="size-4" /> Visão geral
+                </button>
+                {currentEvent && NAV.filter(([value]) => value !== "dashboard").map(([value, label, Icon]) => (
+                  <button key={value} type="button" onClick={() => { setActiveSection(value); setMobileNav(false); }} className={navClass(activeSection === value)}>
+                    <Icon className="size-4" /> {label}
+                  </button>
+                ))}
+              </nav>
+            </aside>
+          </div>
+        )}
+
+        <div className="w-full lg:pl-[248px]">
+          <header className="sticky top-0 z-40 border-b border-black/[0.06] bg-white/80 backdrop-blur-2xl">
+            <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-5 sm:px-8">
+              <div className="flex items-center gap-3">
+                <button type="button" className="lg:hidden" onClick={() => setMobileNav(true)} aria-label="Abrir menu">
+                  <Menu className="size-5" />
+                </button>
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/35">
+                    {mode.kind === "dashboard" ? "Workspace" : "Editor"}
+                  </p>
+                  <p className="text-sm font-medium">
+                    {currentEvent ? eventTitle(currentEvent) : "Eventos"}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <a href="/" target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
+                  Ver site
+                </a>
+                <Button
+                  size="sm"
+                  className="rounded-full bg-black px-4 text-white hover:bg-black/85"
+                  onClick={() => setMode({ kind: "choose-type" })}
+                >
+                  <Plus className="mr-1.5 size-4" /> Novo evento
                 </Button>
               </div>
+            </div>
+          </header>
+
+          <div className="mx-auto max-w-[1440px] px-5 py-8 sm:px-8 sm:py-10">
+            {mode.kind === "choose-type" ? (
+              <ChooseEvent onCancel={() => setMode({ kind: "dashboard" })} onChoose={(eventType) => {
+                setActiveSection("dados");
+                setMode({ kind: "form", event: null, eventType });
+              }} />
+            ) : mode.kind === "dashboard" ? (
+              <Dashboard
+                events={events ?? []}
+                isLoading={isLoading}
+                stats={stats}
+                onNew={() => setMode({ kind: "choose-type" })}
+                onOpen={openEvent}
+              />
+            ) : (
+              <EditorShell
+                event={currentEvent}
+                eventType={mode.eventType}
+                activeSection={activeSection}
+                onSectionChange={setActiveSection}
+                onClose={closeForm}
+                onSaved={closeForm}
+              />
             )}
           </div>
-          <div className="mb-8 flex gap-1 overflow-x-auto border-b border-border pb-1">
-            {[
-              ["dados", "Dados & Design"],
-              ["media", "Fotos & Vídeos"],
-              ["programa", "Programa"],
-              ["presentes", "Presentes"],
-              ["convidados", "Convidados"],
-              ["entrega", "Entrega"],
-            ].map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setActiveSection(value)}
-                className={`whitespace-nowrap rounded-t-md px-4 py-3 font-sans text-xs tracking-[0.12em] uppercase transition-colors ${activeSection === value ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"}`}
-              >
-                {label}
-              </button>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function navClass(active: boolean) {
+  return `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] transition-colors ${active ? "bg-black text-white" : "text-black/55 hover:bg-black/[0.045] hover:text-black"}`;
+}
+
+function ChooseEvent({ onCancel, onChoose }: { onCancel: () => void; onChoose: (value: string) => void }) {
+  return (
+    <div className="mx-auto max-w-4xl py-8">
+      <button type="button" onClick={onCancel} className="text-xs text-black/45 hover:text-black">← Voltar</button>
+      <div className="mt-8 max-w-2xl">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">Novo projeto</p>
+        <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] sm:text-6xl">Comece com a ocasião.</h1>
+        <p className="mt-5 text-base leading-7 text-black/50">Escolha a estrutura do evento. O conteúdo e o design podem ser refinados depois.</p>
+      </div>
+      <div className="mt-12 grid gap-3 sm:grid-cols-3">
+        {EVENT_TYPES.map((type) => (
+          <button
+            key={type.value}
+            type="button"
+            disabled={!type.available}
+            onClick={() => onChoose(type.value)}
+            className="group rounded-[28px] border border-black/[0.08] bg-white p-6 text-left transition-all enabled:hover:-translate-y-1 enabled:hover:border-black/20 enabled:hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <span className="flex size-10 items-center justify-center rounded-full bg-[#f5f5f7]">
+              <Sparkles className="size-4" />
+            </span>
+            <h2 className="mt-10 text-xl font-semibold tracking-[-0.025em]">{type.label}</h2>
+            <p className="mt-2 text-sm text-black/45">{type.available ? "Criar novo evento" : "Disponível em breve"}</p>
+            <ChevronRight className="mt-8 size-5 text-black/30 transition-transform group-hover:translate-x-1" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Dashboard({
+  events,
+  isLoading,
+  stats,
+  onNew,
+  onOpen,
+}: {
+  events: EventRow[];
+  isLoading: boolean;
+  stats: { total: number; weddings: number; latest?: EventRow };
+  onNew: () => void;
+  onOpen: (event: EventRow, section?: string) => void;
+}) {
+  return (
+    <div className="space-y-10">
+      <section className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">Workspace</p>
+          <h1 className="mt-4 text-[clamp(2.7rem,6vw,5rem)] font-semibold leading-[.94] tracking-[-0.06em]">Bom trabalho.</h1>
+          <p className="mt-5 max-w-xl text-base leading-7 text-black/50">
+            Todos os seus eventos, conteúdos e entregas num espaço simples de gerir.
+          </p>
+        </div>
+        <Button onClick={onNew} className="h-11 rounded-full bg-black px-5 text-white hover:bg-black/85">
+          <Plus className="mr-2 size-4" /> Criar evento
+        </Button>
+      </section>
+
+      <section className="grid gap-3 sm:grid-cols-3">
+        <StatCard icon={LayoutDashboard} label="Projetos" value={stats.total} />
+        <StatCard icon={Sparkles} label="Casamentos" value={stats.weddings} />
+        <StatCard icon={BarChart3} label="Último projeto" value={stats.latest ? eventTitle(stats.latest) : "—"} compact />
+      </section>
+
+      <section className="rounded-[30px] border border-black/[0.07] bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,.03)] sm:p-7">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/35">Projetos</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em]">Os seus eventos</h2>
+          </div>
+          <span className="text-xs text-black/35">{events.length} total</span>
+        </div>
+
+        {isLoading ? (
+          <div className="mt-8 h-24 animate-pulse rounded-2xl bg-[#f5f5f7]" />
+        ) : !events.length ? (
+          <div className="mt-8 rounded-2xl bg-[#f5f5f7] px-6 py-12 text-center">
+            <Sparkles className="mx-auto size-7 text-black/25" />
+            <p className="mt-4 font-medium">O seu primeiro projeto começa aqui.</p>
+            <p className="mt-1 text-sm text-black/45">Crie um evento para abrir o editor completo.</p>
+            <Button onClick={onNew} className="mt-5 rounded-full bg-black text-white hover:bg-black/85">Criar evento</Button>
+          </div>
+        ) : (
+          <div className="mt-6 space-y-2">
+            {events.map((event) => (
+              <article key={event.id} className="group flex flex-col gap-4 rounded-2xl border border-transparent px-3 py-4 transition-colors hover:border-black/[0.07] hover:bg-[#f5f5f7] sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex min-w-0 items-center gap-4">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-black text-white">
+                    <Sparkles className="size-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="truncate font-medium">{eventTitle(event)}</p>
+                    <p className="mt-1 truncate text-xs text-black/40">{eventTypeLabel(event.event_type)} · {formatDatePt(event.event_date)} · /{event.slug}</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 sm:justify-end">
+                  <Button asChild size="sm" variant="outline" className="rounded-full">
+                    <Link to="/$slug" params={{ slug: event.slug }} search={{ tipo: undefined }} target="_blank">
+                      <ExternalLink className="mr-1.5 size-3.5" /> Abrir
+                    </Link>
+                  </Button>
+                  <Button size="sm" className="rounded-full bg-black text-white hover:bg-black/85" onClick={() => onOpen(event)}>
+                    Editar <ChevronRight className="ml-1 size-3.5" />
+                  </Button>
+                </div>
+              </article>
             ))}
           </div>
+        )}
+      </section>
+    </div>
+  );
+}
 
-          {activeSection === "dados" && (
-            <WeddingForm
-              event={mode.event}
-              eventType={mode.eventType}
-              onSaved={closeForm}
-              onCancel={() => setMode({ kind: "list" })}
-            />
-          )}
+function StatCard({ icon: Icon, label, value, compact }: { icon: typeof LayoutDashboard; label: string; value: string | number; compact?: boolean }) {
+  return (
+    <div className="rounded-[26px] border border-black/[0.07] bg-white p-6">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-black/35">{label}</span>
+        <Icon className="size-4 text-black/25" />
+      </div>
+      <p className={`mt-8 font-semibold tracking-[-0.04em] ${compact ? "truncate text-lg" : "text-4xl"}`}>{value}</p>
+    </div>
+  );
+}
 
-          {mode.event && activeSection === "media" && (
-            <div className="space-y-12">
-              <MediaManager event={mode.event} />
-              <div className="border-t border-border pt-10">
-                <GalleryManager eventId={mode.event.id} />
-              </div>
-            </div>
-          )}
+function EditorShell({
+  event,
+  eventType,
+  activeSection,
+  onSectionChange,
+  onClose,
+  onSaved,
+}: {
+  event: EventRow | null;
+  eventType: string;
+  activeSection: string;
+  onSectionChange: (section: string) => void;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const title = event ? eventTitle(event) : `Novo — ${eventTypeLabel(eventType)}`;
 
-          {mode.event && activeSection === "programa" && (
-            <ScheduleManager eventId={mode.event.id} />
-          )}
-
-          {mode.event && activeSection === "presentes" && <GiftManager eventId={mode.event.id} />}
-
-          {mode.event && activeSection === "convidados" && (
-            <GuestManager eventId={mode.event.id} slug={mode.event.slug} />
-          )}
-
-          {mode.event && activeSection === "entrega" && <DeliveryPackage slug={mode.event.slug} />}
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+        <div>
+          <button type="button" onClick={onClose} className="text-xs text-black/40 hover:text-black">← Todos os eventos</button>
+          <h1 className="mt-4 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">{title}</h1>
+          <p className="mt-2 text-sm text-black/45">{event ? `/${event.slug}` : "O conteúdo será guardado no evento."}</p>
         </div>
-      ) : isLoading ? (
-        <p className="mt-10 text-muted-foreground">A carregar…</p>
-      ) : !events?.length ? (
-        <p className="mt-10 text-muted-foreground">Ainda não existem eventos.</p>
-      ) : (
-        <ul className="mt-10 space-y-3">
-          {events.map((e) => (
-            <li
-              key={e.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-border bg-card px-5 py-4"
-            >
-              <div>
-                <p className="text-lg">{eventTitle(e)}</p>
-                <p className="text-sm text-muted-foreground">
-                  {eventTypeLabel(e.event_type)} · {formatDatePt(e.event_date)} · /{e.slug}
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Button asChild variant="ghost" size="sm">
-                  <Link to="/$slug" params={{ slug: e.slug }} search={{ tipo: undefined }}>
-                    Abrir convite
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="sm">
-                  <a href={`/${e.slug}/imprimir?formato=a5`} target="_blank" rel="noreferrer">
-                    Impressão
-                  </a>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setActiveSection("dados");
-                    setMode({ kind: "form", event: e, eventType: e.event_type });
-                  }}
-                >
-                  Editar
-                </Button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
+        {event && (
+          <div className="flex flex-wrap gap-2">
+            <Button asChild size="sm" variant="outline" className="rounded-full">
+              <a href={`/${event.slug}`} target="_blank" rel="noreferrer"><ExternalLink className="mr-1.5 size-3.5" /> Abrir convite</a>
+            </Button>
+            <Button asChild size="sm" variant="outline" className="rounded-full">
+              <a href={`/${event.slug}/imprimir?formato=a5`} target="_blank" rel="noreferrer"><Printer className="mr-1.5 size-3.5" /> Impressão</a>
+            </Button>
+          </div>
+        )}
+      </div>
+
+      <div className="flex gap-1 overflow-x-auto rounded-2xl border border-black/[0.07] bg-white p-1.5 lg:hidden">
+        {NAV.filter(([value]) => value !== "dashboard").map(([value, label, Icon]) => (
+          <button key={value} type="button" onClick={() => onSectionChange(value)} className={`flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-xs ${activeSection === value ? "bg-black text-white" : "text-black/45"}`}>
+            <Icon className="size-3.5" /> {label}
+          </button>
+        ))}
+      </div>
+
+      <section className="min-h-[600px] rounded-[30px] border border-black/[0.07] bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,.03)] sm:p-8">
+        {activeSection === "dados" && <WeddingForm event={event} eventType={eventType} onSaved={onSaved} onCancel={onClose} />}
+        {event && activeSection === "media" && (
+          <div className="space-y-12">
+            <MediaManager event={event} />
+            <div className="border-t border-black/[0.07] pt-10"><GalleryManager eventId={event.id} /></div>
+          </div>
+        )}
+        {event && activeSection === "programa" && <ScheduleManager eventId={event.id} />}
+        {event && activeSection === "presentes" && <GiftManager eventId={event.id} />}
+        {event && activeSection === "convidados" && <GuestManager eventId={event.id} slug={event.slug} />}
+        {event && activeSection === "entrega" && <DeliveryPackage slug={event.slug} />}
+        {!event && activeSection !== "dados" && (
+          <div className="flex min-h-[500px] items-center justify-center text-center">
+            <div><Settings2 className="mx-auto size-8 text-black/20" /><p className="mt-4 font-medium">Primeiro guarde o evento.</p><p className="mt-1 text-sm text-black/40">Depois poderá configurar esta área.</p></div>
+          </div>
+        )}
+      </section>
+    </div>
   );
 }
