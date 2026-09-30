@@ -133,7 +133,9 @@ export function TemplatePicker({
               ].join(" ")}
               aria-pressed={selected}
             >
-              <div className={`relative h-36 overflow-hidden bg-gradient-to-br ${SWATCHES[item.tone]}`}>
+              <div
+                className={`relative h-36 overflow-hidden bg-gradient-to-br ${SWATCHES[item.tone]}`}
+              >
                 <div className="absolute inset-3 rounded-xl border border-white/30" />
                 <div className="absolute inset-x-0 top-5 text-center">
                   <p className="font-sans text-[0.55rem] tracking-[0.35em] text-white/65 uppercase">

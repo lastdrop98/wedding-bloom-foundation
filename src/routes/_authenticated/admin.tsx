@@ -208,11 +208,7 @@ function AdminPage() {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="sm">
-                  <a
-                    href={`/${e.slug}/imprimir?formato=a5`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a href={`/${e.slug}/imprimir?formato=a5`} target="_blank" rel="noreferrer">
                     Impressão
                   </a>
                 </Button>

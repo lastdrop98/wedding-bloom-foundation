@@ -181,7 +181,10 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
           ["Confirmados", totals.confirmed],
           ["Pendentes", totals.pending],
         ].map(([label, value]) => (
-          <div key={String(label)} className="rounded-xl border border-border bg-background/40 px-4 py-4">
+          <div
+            key={String(label)}
+            className="rounded-xl border border-border bg-background/40 px-4 py-4"
+          >
             <p className="text-2xl font-light text-primary">{value}</p>
             <p className="mt-1 font-sans text-[0.6rem] tracking-[0.16em] text-muted-foreground uppercase">
               {label}
@@ -246,7 +249,11 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
             disabled={!name.trim() || save.isPending}
             onClick={() => save.mutate()}
           >
-            {save.isPending ? "A guardar…" : editingId ? "Guardar alterações" : "Adicionar convidado"}
+            {save.isPending
+              ? "A guardar…"
+              : editingId
+                ? "Guardar alterações"
+                : "Adicionar convidado"}
           </Button>
           {editingId && (
             <Button type="button" variant="outline" onClick={resetForm}>
@@ -274,12 +281,15 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-base">{g.name}</p>
-                    <span className={`rounded-full border border-border px-2 py-0.5 font-sans text-[0.55rem] tracking-[0.12em] uppercase ${status.className}`}>
+                    <span
+                      className={`rounded-full border border-border px-2 py-0.5 font-sans text-[0.55rem] tracking-[0.12em] uppercase ${status.className}`}
+                    >
                       {status.label}
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {g.invited_count} convidado(s) · {g.invite_type === "casal" ? "casal" : "individual"} ·{" "}
+                    {g.invited_count} convidado(s) ·{" "}
+                    {g.invite_type === "casal" ? "casal" : "individual"} ·{" "}
                     {g.table_label || "sem mesa"}
                   </p>
                   {g.phone && <p className="mt-1 text-xs text-muted-foreground">{g.phone}</p>}
@@ -289,12 +299,21 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                     <Pencil className="mr-2 size-3.5" />
                     Editar
                   </Button>
-                  <Button type="button" variant="outline" size="sm" onClick={() => copyLink(g.token)}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => copyLink(g.token)}
+                  >
                     Copiar link
                   </Button>
                   {g.phone && (
                     <Button type="button" variant="outline" size="sm" asChild>
-                      <a href={guestWhatsAppUrl(g.phone, link, g.name)} target="_blank" rel="noreferrer">
+                      <a
+                        href={guestWhatsAppUrl(g.phone, link, g.name)}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         <MessageCircle className="mr-2 size-3.5" />
                         WhatsApp
                       </a>

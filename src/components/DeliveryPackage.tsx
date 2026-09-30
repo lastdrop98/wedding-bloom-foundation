@@ -56,9 +56,7 @@ export function DeliveryPackage({ slug }: { slug: string }) {
     }
   }
 
-  const whatsappText = encodeURIComponent(
-    `Olá! Este é o convite digital: ${inviteLink}`,
-  );
+  const whatsappText = encodeURIComponent(`Olá! Este é o convite digital: ${inviteLink}`);
   const whatsappUrl = `https://wa.me/?text=${whatsappText}`;
 
   return (
@@ -67,8 +65,8 @@ export function DeliveryPackage({ slug }: { slug: string }) {
         <p className="eyebrow">Pacote de Entrega</p>
         <h3 className="mt-2 text-2xl font-light">Tudo pronto para entregar ao casal</h3>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Convite digital, QR Code, versões para impressão e acesso privado às confirmações.
-          O conteúdo permanece ligado ao evento mesmo quando o template é trocado.
+          Convite digital, QR Code, versões para impressão e acesso privado às confirmações. O
+          conteúdo permanece ligado ao evento mesmo quando o template é trocado.
         </p>
       </div>
 
@@ -95,12 +93,7 @@ export function DeliveryPackage({ slug }: { slug: string }) {
         {qrSrc ? (
           <div className="space-y-2 text-center">
             <div className="rounded-xl border border-border bg-white p-3">
-              <img
-                src={qrSrc}
-                alt={`QR code do convite ${slug}`}
-                width={220}
-                height={220}
-              />
+              <img src={qrSrc} alt={`QR code do convite ${slug}`} width={220} height={220} />
             </div>
             <a
               href={qrSrc}
@@ -149,7 +142,12 @@ export function DeliveryPackage({ slug }: { slug: string }) {
                   Partilhar no WhatsApp
                 </a>
               </Button>
-              <Button type="button" variant="outline" size="sm" onClick={() => copy(couplePanelLink, "Link privado copiado.")}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => copy(couplePanelLink, "Link privado copiado.")}
+              >
                 Copiar painel do casal
               </Button>
             </div>
@@ -189,7 +187,12 @@ export function DeliveryPackage({ slug }: { slug: string }) {
                   Abrir painel do casal
                 </a>
               </Button>
-              <Button type="button" variant="outline" size="sm" onClick={() => copy(couplePanelLink, "Link privado do casal copiado.")}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => copy(couplePanelLink, "Link privado do casal copiado.")}
+              >
                 Copiar link privado
               </Button>
             </div>
