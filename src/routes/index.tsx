@@ -8,7 +8,6 @@ import {
   Image as ImageIcon,
   MapPin,
   MessageCircle,
-  Play,
   ShieldCheck,
   Sparkles,
   Users,
