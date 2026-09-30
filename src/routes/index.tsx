@@ -1,686 +1,297 @@
 import { useRef } from "react";
-
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { cn } from "@/lib/utils";
 import {
-  ArrowDown,
-  BadgeCheck,
-  CalendarClock,
-  Clock3,
+  ArrowRight,
+  Check,
+  ChevronDown,
   Gift,
-  Globe,
-  Images,
+  Image as ImageIcon,
   MapPin,
   MessageCircle,
-  Scroll,
+  Play,
   ShieldCheck,
-  Smartphone,
   Sparkles,
   Users,
 } from "lucide-react";
 
-import { FlourishFrame } from "@/components/invite/Flourish";
-import { CountUp } from "@/components/invite/CountUp";
-import { Ornament } from "@/components/invite/Ornament";
-import { Reveal } from "@/components/invite/Reveal";
-import { SectionVines, VineDivider } from "@/components/invite/Vines";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1529788295308-1eace6f67388?fm=jpg&q=80&w=2400&auto=format&fit=crop";
-const STEPS_IMAGE =
-  "https://images.unsplash.com/photo-1525441273400-056e9c7517b3?fm=jpg&q=80&w=2400&auto=format&fit=crop";
+  "https://images.unsplash.com/photo-1529788295308-1eace6f67388?fm=jpg&q=85&w=2400&auto=format&fit=crop";
+const DETAIL_IMAGE =
+  "https://images.unsplash.com/photo-1525441273400-056e9c7517b3?fm=jpg&q=85&w=2200&auto=format&fit=crop";
+const COUPLE_IMAGE =
+  "https://images.unsplash.com/photo-1519741497674-611481863552?fm=jpg&q=85&w=1800&auto=format&fit=crop";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Solar Eclipse — Convites Digitais e Páginas Web à Medida" },
+      { title: "Solar Eclipse — Convites Digitais Premium" },
       {
         name: "description",
         content:
-          "Convites digitais elegantes e páginas web personalizadas, feitos à medida em Moçambique. Escolha um template e nós tratamos de tudo.",
+          "Convites digitais premium, páginas de casamento e experiências para convidados, desenhados à medida pela Solar Eclipse.",
       },
-      {
-        property: "og:title",
-        content: "Solar Eclipse — Convites Digitais e Páginas Web à Medida",
-      },
+      { property: "og:title", content: "Solar Eclipse — Convites Digitais Premium" },
       {
         property: "og:description",
-        content: "Convites digitais elegantes e páginas web feitas à medida por nós.",
+        content: "Uma experiência elegante para o casal e para cada convidado.",
       },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/og-image.png" },
+      { name: "robots", content: "index,follow" },
     ],
   }),
-  component: Index,
+  component: HomePage,
 });
 
 const WHATSAPP_NUMBER = "258847404160";
 
-const TEMPLATES = [
-  {
-    id: "golden-classic",
-    name: "Noir & Ouro",
-    badge: "Popular",
-    description:
-      "Elegância dramática com fotografia a ecrã inteiro, tipografia serif e acentos dourados sobre preto.",
-    features: ["Fotografia em ecrã inteiro", "Animações suaves", "Paleta preto & dourado"],
-  },
-  {
-    id: "aquarela-botanica",
-    name: "Aguarela Botânica",
-    badge: "Novo",
-    description:
-      "Romance e delicadeza com flores em aguarela, tipografia script fluida e tons suaves de rosa e verde-sálvia.",
-    features: ["Flores em aguarela", "Tons suaves e românticos", "Tipografia script elegante"],
-  },
-];
-
 const FEATURES = [
-  {
-    icon: Smartphone,
-    title: "Otimizado para Telemóvel",
-    description: "Abre perfeito em qualquer ecrã, onde os convidados realmente leem.",
-  },
-  {
-    icon: Sparkles,
-    title: "Templates Bonitos",
-    description: "Desenhos cuidados ao detalhe, personalizados com as suas cores.",
-  },
-  {
-    icon: MapPin,
-    title: "Localização com Mapa",
-    description: "Cerimónia e recepção com direcções a um toque de distância.",
-  },
-  {
-    icon: Images,
-    title: "Galeria de Fotos",
-    description: "As vossas fotografias num grid elegante com visualização ampliada.",
-  },
-  {
-    icon: Users,
-    title: "Confirmação de Presença",
-    description: "Os convidados respondem no convite e você vê tudo organizado.",
-  },
-  {
-    icon: Gift,
-    title: "Presentes por Conta Bancária",
-    description: "Dados bancários apresentados com discrição e bom gosto.",
-  },
-];
+  ["Design", "Templates editoriais que se adaptam à história do casal.", Sparkles],
+  ["Convidados", "Links pessoais, RSVP e organização sem folhas de cálculo.", Users],
+  ["Memórias", "Galeria, vídeos e música numa experiência contínua.", ImageIcon],
+  ["Localização", "Cerimónia, recepção e mapas sempre à mão.", MapPin],
+  ["Presentes", "Lista de presentes e pagamentos apresentados com discrição.", Gift],
+  ["Entrega", "Convite, QR, impressão e painel do casal num só pacote.", ShieldCheck],
+] as const;
 
 const STEPS = [
-  {
-    n: "1",
-    title: "Escolha o Template",
-    description: "Veja o catálogo e diga-nos qual o estilo de que gosta.",
-  },
-  {
-    n: "2",
-    title: "Envie-nos os Detalhes",
-    description: "Nomes, fotos, data e local — por WhatsApp ou formulário.",
-  },
-  {
-    n: "3",
-    title: "Recebe o Link",
-    description: "Criamos tudo e entregamos pronto a partilhar com os convidados.",
-  },
+  ["01", "Escolha", "Escolha uma direção visual e começamos a partir daí."],
+  ["02", "Personalize", "Nomes, história, fotografias, programa e convidados."],
+  ["03", "Publique", "Receba um link elegante, pronto para partilhar."],
 ];
 
 const FAQ = [
-  {
-    q: "Quanto custa?",
-    a: "O preço é combinado consoante o template escolhido e a complexidade do projeto. Fale connosco e enviamos uma proposta clara, sem valores escondidos.",
-  },
-  {
-    q: "Como os convidados recebem o convite?",
-    a: "Recebe um link único do seu convite, que pode partilhar por WhatsApp, e-mail ou redes sociais quantas vezes quiser.",
-  },
-  {
-    q: "Preciso de saber design?",
-    a: "Não. Tratamos de tudo — desde o desenho ao texto e às fotografias. Só precisa de nos enviar os detalhes do evento.",
-  },
-  {
-    q: "Posso editar depois de publicado?",
-    a: "Sim, sempre que precisar. Basta dizer-nos o que mudar e atualizamos o convite no mesmo link.",
-  },
-  {
-    q: "Há limite de convidados?",
-    a: "Não. O convite pode ser partilhado com quantas pessoas quiser, sem custo adicional por convidado.",
-  },
+  ["Posso trocar o template depois?", "Sim. O conteúdo do evento é independente do design. Trocar o template não apaga nomes, datas, fotografias, convidados ou confirmações."],
+  ["Os convidados precisam de instalar alguma coisa?", "Não. O convite abre diretamente no navegador do telemóvel, tablet ou computador."],
+  ["Existe RSVP?", "Sim. O casal pode acompanhar as confirmações e os estados dos convidados através do painel privado."],
+  ["Posso ter versão para impressão?", "Sim. A plataforma prepara versões individuais, de casal e formatos A5/A6."],
 ];
 
 function whatsappUrl(message: string) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-function Index() {
+function HomePage() {
   const catalogRef = useRef<HTMLElement | null>(null);
 
-  const scrollToCatalog = () => {
-    catalogRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   return (
-    <>
-      {/* ——— HERO ——— */}
-      <section className="section-dark relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-24">
-        <div className="absolute inset-0">
-          <img
-            src={HERO_IMAGE}
-            alt="Eclipse solar"
-            className="ken-burns size-full object-cover object-center"
-            fetchPriority="high"
-          />
-          <div className="veil-hero absolute inset-0 opacity-70" />
+    <main className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] selection:bg-black selection:text-white">
+      <header className="fixed top-0 z-50 w-full border-b border-black/[0.06] bg-white/75 backdrop-blur-2xl">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
+          <Link to="/" className="flex items-center gap-2.5">
+            <span className="flex size-7 items-center justify-center rounded-full bg-black text-[9px] font-semibold tracking-[0.08em] text-white">
+              SE
+            </span>
+            <span className="text-sm font-semibold tracking-[-0.02em]">Solar Eclipse</span>
+          </Link>
+          <nav className="hidden items-center gap-8 text-[13px] text-black/55 md:flex">
+            <a href="#experiencia" className="transition-colors hover:text-black">Experiência</a>
+            <a href="#processo" className="transition-colors hover:text-black">Como funciona</a>
+            <a href="#faq" className="transition-colors hover:text-black">FAQ</a>
+          </nav>
+          <a
+            href={whatsappUrl("Olá! Gostaria de criar um convite com a Solar Eclipse.")}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full bg-black px-4 py-2 text-[12px] font-medium text-white transition-transform hover:scale-[1.02]"
+          >
+            Começar
+          </a>
         </div>
+      </header>
 
-        <SectionVines variant="a" className="opacity-80" />
-        <SectionVines variant="c" className="opacity-50 rotate-180" />
-        <FlourishFrame size={120} />
-
-        <div className="relative z-10 mx-auto max-w-3xl text-center">
-          <Reveal>
-            <p className="eyebrow text-gold/90">Convites digitais & páginas web</p>
-            <h1 className="mt-6 text-[clamp(2.75rem,10vw,5rem)] leading-[1.05] font-light tracking-wide text-cream">
-              Solar Eclipse
-            </h1>
-            <Ornament className="mt-9" />
-            <p className="mx-auto mt-8 max-w-lg font-sans text-base leading-relaxed text-cream/85">
-              Convites digitais e páginas web, feitos à medida por nós. Cada projeto é desenhado à
-              mão para reflectir a história que quer partilhar.
+      <section className="relative flex min-h-[92vh] items-end overflow-hidden bg-black pt-16">
+        <img
+          src={HERO_IMAGE}
+          alt="Experiência de casamento Solar Eclipse"
+          className="absolute inset-0 size-full object-cover opacity-75"
+          fetchPriority="high"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/20" />
+        <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 sm:px-8 sm:pb-24">
+          <div className="max-w-3xl text-white">
+            <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.24em] text-white/65">
+              Convites digitais premium
             </p>
-          </Reveal>
-
-          <Reveal delay={150}>
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <h1 className="text-[clamp(3.4rem,8vw,7.4rem)] font-semibold leading-[0.92] tracking-[-0.065em]">
+              O convite é
+              <br />
+              o primeiro
+              <br />
+              momento.
+            </h1>
+            <p className="mt-8 max-w-xl text-base leading-7 text-white/72 sm:text-lg">
+              Criamos uma experiência digital à altura do vosso dia — elegante para o casal,
+              simples para cada convidado e pensada até ao último detalhe.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={scrollToCatalog}
-                className="group inline-flex items-center gap-2 rounded-sm bg-gold px-8 py-4 font-sans text-[0.7rem] font-medium tracking-[0.25em] text-ink uppercase transition-all duration-500 hover:bg-cream hover:shadow-[0_0_40px_-12px_var(--color-gold)]"
+                onClick={() => catalogRef.current?.scrollIntoView({ behavior: "smooth" })}
+                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-[1.02]"
               >
-                <Scroll className="size-4" />
-                Ver Templates
+                Explorar a experiência
+                <ArrowRight className="size-4" />
               </button>
               <a
-                href={whatsappUrl("Olá! Gostaria de saber mais sobre os vossos convites digitais.")}
+                href={whatsappUrl("Olá! Quero falar sobre um convite digital premium.")}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-sm border border-gold/70 px-8 py-4 font-sans text-[0.7rem] tracking-[0.25em] text-gold uppercase transition-all duration-500 hover:border-warm hover:bg-gold hover:text-ink"
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-medium text-white backdrop-blur transition-colors hover:bg-white/15"
               >
                 <MessageCircle className="size-4" />
-                Falar Connosco
+                Falar connosco
               </a>
             </div>
-          </Reveal>
-
-          {/* barra de confiança */}
-          <Reveal delay={260}>
-            <ul className="mt-12 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 font-sans text-[0.7rem] tracking-wide text-cream/70">
-              <li className="inline-flex items-center gap-2">
-                <Clock3 className="size-3.5 text-amber" />
-                Resposta em poucas horas
-              </li>
-              <span className="text-gold/50">·</span>
-              <li className="inline-flex items-center gap-2">
-                <BadgeCheck className="size-3.5 text-amber" />
-                Convites entregues em Moçambique
-              </li>
-              <span className="text-gold/50">·</span>
-              <li className="inline-flex items-center gap-2">
-                <ShieldCheck className="size-3.5 text-amber" />
-                Sem letras miúdas
-              </li>
-            </ul>
-          </Reveal>
+          </div>
         </div>
-
-        <button
-          type="button"
-          onClick={scrollToCatalog}
-          aria-label="Ver templates"
-          className="breathe absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-gold/80 transition-colors hover:text-gold"
-        >
-          <ArrowDown className="size-5" />
-        </button>
       </section>
 
-      {/* ——— TUDO O QUE PRECISA ——— */}
-      <section className="relative overflow-hidden bg-background px-6 py-28">
-        <SectionVines variant="b" className="opacity-60" />
-        <SectionVines variant="a" className="opacity-35 rotate-180" />
+      <section ref={catalogRef} id="experiencia" className="px-5 py-24 sm:px-8 sm:py-32">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/40">Uma plataforma, não apenas um convite</p>
+            <h2 className="mt-5 text-[clamp(2.6rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.055em]">
+              Tudo o que acontece antes do grande dia.
+            </h2>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-black/55">
+              Conteúdo, design e gestão vivem no mesmo lugar. O casal recebe uma experiência
+              completa e a equipa recebe ferramentas para entregar tudo sem complicação.
+            </p>
+          </div>
 
-        <div className="relative z-10 mx-auto max-w-5xl">
-          <Reveal>
-            <div className="text-center">
-              <p className="eyebrow text-warm">Funcionalidades</p>
-              <h2 className="mt-5 text-[clamp(2rem,6vw,3.5rem)] leading-tight font-light text-ink">
-                Tudo o que Precisa
-              </h2>
-              <Ornament className="mx-auto mt-7" />
-            </div>
-          </Reveal>
-
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURES.map((feature, i) => (
-              <Reveal key={feature.title} delay={i * 100}>
-                <article className="card-warm flex h-full flex-col p-7">
-                  <span className="inline-flex size-11 items-center justify-center rounded-full border border-warm/40 bg-accent/60">
-                    <feature.icon className="size-5 text-warm" />
-                  </span>
-                  <h3 className="mt-5 text-xl font-light text-ink">{feature.title}</h3>
-                  <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </article>
-              </Reveal>
+          <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {FEATURES.map(([title, description, Icon]) => (
+              <article key={title} className="group min-h-56 rounded-[28px] bg-white p-7 shadow-[0_1px_2px_rgba(0,0,0,.04)] transition-transform hover:-translate-y-1">
+                <div className="flex size-10 items-center justify-center rounded-full bg-[#f5f5f7]">
+                  <Icon className="size-[18px] text-black/70" />
+                </div>
+                <h3 className="mt-8 text-xl font-semibold tracking-[-0.025em]">{title}</h3>
+                <p className="mt-3 max-w-xs text-sm leading-6 text-black/50">{description}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <VineDivider />
-
-      {/* ——— COMO FUNCIONA ——— */}
-      <section className="section-dark relative overflow-hidden px-6 py-28">
-        <div className="absolute inset-0">
-          <img
-            src={STEPS_IMAGE}
-            alt="Mesa posta com luz quente"
-            loading="lazy"
-            className="size-full object-cover object-[50%_60%] blur-[2px]"
-          />
-          <div className="veil-soft absolute inset-0" />
-        </div>
-
-        <SectionVines variant="c" className="opacity-70" />
-        <SectionVines variant="b" className="opacity-40 rotate-180" />
-
-        <div className="relative z-10 mx-auto max-w-5xl">
-          <Reveal>
-            <div className="text-center">
-              <p className="eyebrow text-amber">Simples e sem esforço</p>
-              <h2 className="mt-5 text-[clamp(2rem,6vw,3.5rem)] leading-tight font-light text-cream">
-                Como Funciona
-              </h2>
-              <Ornament className="mx-auto mt-7" />
-            </div>
-          </Reveal>
-
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
-            {STEPS.map((step, i) => (
-              <Reveal key={step.n} delay={i * 140}>
-                <div className="relative h-full border border-gold/25 bg-ink/40 p-8 backdrop-blur-sm">
-                  <span className="absolute -top-6 right-5 font-serif text-[5rem] leading-none text-warm/30 select-none">
-                    {step.n}
-                  </span>
-                  <h3 className="relative text-2xl font-light text-cream">{step.title}</h3>
-                  <span className="mt-4 block h-px w-12 bg-linear-to-r from-amber to-transparent" />
-                  <p className="mt-4 font-sans text-sm leading-relaxed text-cream/75">
-                    {step.description}
-                  </p>
+      <section className="bg-black px-5 py-24 text-white sm:px-8 sm:py-32">
+        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/40">Design system</p>
+            <h2 className="mt-5 text-[clamp(2.6rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.055em]">
+              O vosso conteúdo.
+              <br />
+              O vosso estilo.
+            </h2>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-white/55">
+              Comece com um dos nossos universos visuais. Depois personalize tudo o que importa.
+              Se mudarem de ideia, o conteúdo continua intacto.
+            </p>
+            <div className="mt-9 space-y-3 text-sm text-white/70">
+              {["40+ direções visuais", "Conteúdo separado do template", "Fotografia, vídeo e música", "Desktop e mobile"].map((item) => (
+                <div key={item} className="flex items-center gap-3">
+                  <span className="flex size-5 items-center justify-center rounded-full bg-white/10"><Check className="size-3" /></span>
+                  {item}
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ——— CATÁLOGO DE TEMPLATES ——— */}
-      <section ref={catalogRef} className="relative overflow-hidden bg-background px-6 py-28">
-        <SectionVines variant="b" className="opacity-60" />
-        <SectionVines variant="c" className="opacity-35 rotate-180" />
-
-        <div className="relative z-10 mx-auto max-w-5xl">
-          <Reveal>
-            <div className="text-center">
-              <p className="eyebrow text-warm">Catálogo de templates</p>
-              <h2 className="mt-5 text-[clamp(2rem,6vw,3.5rem)] leading-tight font-light text-ink">
-                Escolha o seu estilo
-              </h2>
-              <Ornament className="mx-auto mt-7" />
-              <p className="mx-auto mt-6 max-w-md font-sans text-sm leading-relaxed text-muted-foreground">
-                Cada template é personalizado com os seus conteúdos, cores e fotografias. Nós
-                tratamos de tudo.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {TEMPLATES.map((template, i) => {
-              const isAquarela = template.id === "aquarela-botanica";
-              return (
-                <Reveal key={template.id} delay={i * 120}>
-                  <article className="card-elegant flex h-full flex-col overflow-hidden">
-                    <div
-                      className={cn(
-                        "relative aspect-[4/5] overflow-hidden",
-                        isAquarela ? "bg-rose/10" : "bg-ink",
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          "absolute inset-0",
-                          isAquarela
-                            ? "bg-linear-to-b from-rose/20 via-cream/95 to-sage/20"
-                            : "bg-linear-to-b from-ink via-ink/95 to-gold/20",
-                        )}
-                      />
-                      {template.badge ? (
-                        <span
-                          className={cn(
-                            "absolute top-4 left-4 z-10 rounded-full px-3 py-1 font-sans text-[0.6rem] tracking-[0.2em] uppercase",
-                            isAquarela ? "bg-sage text-cream" : "bg-warm text-cream",
-                          )}
-                        >
-                          {template.badge}
-                        </span>
-                      ) : null}
-                      <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                        <span
-                          className={cn("eyebrow", isAquarela ? "text-rose/70" : "text-gold/70")}
-                        >
-                          Template
-                        </span>
-                        <h3
-                          className={cn(
-                            "mt-4 text-3xl font-light tracking-wide",
-                            isAquarela ? "text-ink" : "text-cream",
-                          )}
-                        >
-                          {template.name}
-                        </h3>
-                        <Ornament className="mt-6" />
-                      </div>
-                      <div className="absolute right-4 bottom-4 left-4 flex gap-2">
-                        <span
-                          className={cn(
-                            "h-1.5 flex-1 rounded-full",
-                            isAquarela ? "bg-rose/30" : "bg-gold/30",
-                          )}
-                        />
-                        <span
-                          className={cn(
-                            "h-1.5 flex-1 rounded-full",
-                            isAquarela ? "bg-sage/30" : "bg-warm/30",
-                          )}
-                        />
-                        <span
-                          className={cn(
-                            "h-1.5 flex-1 rounded-full",
-                            isAquarela ? "bg-gold-light/30" : "bg-gold/10",
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-1 flex-col p-7">
-                      <p className="font-sans text-sm leading-relaxed text-muted-foreground">
-                        {template.description}
-                      </p>
-                      <ul className="mt-5 space-y-2">
-                        {template.features.map((feature) => (
-                          <li
-                            key={feature}
-                            className="flex items-center gap-2 font-sans text-xs text-ink/80"
-                          >
-                            <Sparkles
-                              className={cn("size-3.5", isAquarela ? "text-rose" : "text-gold")}
-                            />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-auto pt-7">
-                        <a
-                          href={whatsappUrl(
-                            `Olá! Gostaria de um convite no estilo ${template.name}.`,
-                          )}
-                          target="_blank"
-                          rel="noreferrer"
-                          className={cn(
-                            "inline-flex w-full items-center justify-center gap-2 rounded-sm border px-6 py-3.5 font-sans text-[0.65rem] tracking-[0.25em] uppercase transition-all duration-500",
-                            isAquarela
-                              ? "border-rose/70 text-rose hover:bg-rose hover:text-cream"
-                              : "border-gold/70 text-gold hover:bg-gold hover:text-ink",
-                          )}
-                        >
-                          <MessageCircle className="size-3.5" />
-                          Quero Este Estilo
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ——— GESTÃO DE CONVIDADOS (mockup) ——— */}
-      <section className="section-dark relative overflow-hidden px-6 py-28">
-        <SectionVines variant="a" className="opacity-70" />
-        <SectionVines variant="b" className="opacity-40 rotate-180" />
-
-        <div className="relative z-10 mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <div>
-              <p className="eyebrow text-amber">Gestão de convidados</p>
-              <h2 className="mt-5 text-[clamp(1.9rem,5vw,3rem)] leading-tight font-light text-cream">
-                Saiba quem vem, em tempo real
-              </h2>
-              <span className="mt-6 block h-px w-16 bg-linear-to-r from-gold to-transparent" />
-              <p className="mt-6 max-w-md font-sans text-sm leading-relaxed text-cream/75">
-                Cada confirmação de presença fica registada e organizada. Nós enviamos-lhe o resumo
-                actualizado sempre que precisar — sem folhas de cálculo nem mensagens perdidas.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={150}>
-            <div className="card-elegant bg-ink/60 p-8 backdrop-blur-sm">
-              <div className="flex items-baseline justify-between">
-                <span className="eyebrow text-gold/80">Confirmações</span>
-                <CalendarClock className="size-4 text-amber" />
-              </div>
-              <p className="mt-4 font-serif text-6xl font-light text-cream">
-                <CountUp value={58} />
-              </p>
-              <p className="mt-1 font-sans text-xs text-cream/60">respostas recebidas</p>
-
-              <div className="mt-7">
-                <div className="flex items-center justify-between font-sans text-xs text-cream/70">
-                  <span>Taxa de resposta</span>
-                  <span className="text-gold">
-                    <CountUp value={84} suffix="%" />
-                  </span>
-                </div>
-                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-cream/10">
-                  <div className="h-full w-[84%] rounded-full bg-linear-to-r from-warm to-gold" />
-                </div>
-              </div>
-
-              <div className="mt-8 grid grid-cols-3 gap-3 text-center">
-                {[
-                  { label: "Vão", value: 24, tone: "text-gold" },
-                  { label: "Não vão", value: 3, tone: "text-warm" },
-                  { label: "Pendentes", value: 5, tone: "text-cream/70" },
-                ].map((stat) => (
-                  <div key={stat.label} className="border border-gold/20 p-4">
-                    <p className={`font-serif text-3xl font-light ${stat.tone}`}>
-                      <CountUp value={stat.value} />
-                    </p>
-                    <p className="mt-1 font-sans text-[0.65rem] tracking-wide text-cream/55 uppercase">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ——— PÁGINAS WEB PERSONALIZADAS ——— */}
-      <section className="relative overflow-hidden bg-background px-6 py-28">
-        <SectionVines variant="c" className="opacity-55" />
-        <SectionVines variant="a" className="opacity-30 rotate-180" />
-
-        <div className="relative z-10 mx-auto max-w-4xl">
-          <Reveal>
-            <div className="text-center">
-              <p className="eyebrow text-warm">Além dos convites</p>
-              <h2 className="mt-5 text-[clamp(2rem,6vw,3.5rem)] leading-tight font-light text-ink">
-                Páginas Web Personalizadas
-              </h2>
-              <Ornament className="mx-auto mt-7" />
-              <p className="mx-auto mt-6 max-w-lg font-sans text-base leading-relaxed text-muted-foreground">
-                Sites à medida para negócios, eventos e portfólios. Desde a ideia ao lançamento,
-                desenhamos uma presença online que se destaca. Consulte-nos para um orçamento.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={150}>
-            <div className="mt-12 flex justify-center">
-              <a
-                href={whatsappUrl("Olá! Gostaria de saber mais sobre páginas web personalizadas.")}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-sm border border-warm/70 px-10 py-4 font-sans text-[0.7rem] tracking-[0.25em] text-warm uppercase transition-all duration-500 hover:bg-warm hover:text-cream"
-              >
-                <Globe className="size-4" />
-                Pedir Orçamento
-              </a>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <VineDivider />
-
-      {/* ——— FAQ ——— */}
-      <section className="section-dark relative overflow-hidden px-6 py-28">
-        <SectionVines variant="b" className="opacity-70" />
-        <SectionVines variant="c" className="opacity-40 rotate-180" />
-        <FlourishFrame size={100} />
-
-        <div className="relative z-10 mx-auto max-w-3xl">
-          <Reveal>
-            <div className="text-center">
-              <p className="eyebrow text-amber">Perguntas frequentes</p>
-              <h2 className="mt-5 text-[clamp(2rem,6vw,3.5rem)] leading-tight font-light text-cream">
-                Antes de Começar
-              </h2>
-              <Ornament className="mx-auto mt-7" />
-            </div>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <Accordion type="single" collapsible className="mt-14 w-full">
-              {FAQ.map((item) => (
-                <AccordionItem key={item.q} value={item.q} className="border-gold/25">
-                  <AccordionTrigger className="text-left font-serif text-lg font-light text-cream hover:text-gold hover:no-underline">
-                    {item.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="font-sans text-sm leading-relaxed text-cream/75">
-                    {item.a}
-                  </AccordionContent>
-                </AccordionItem>
               ))}
-            </Accordion>
-          </Reveal>
+            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-[36px] bg-[#161616] p-3 shadow-2xl">
+            <img src={DETAIL_IMAGE} alt="Detalhes de um casamento" className="aspect-[4/3] w-full rounded-[28px] object-cover opacity-90" loading="lazy" />
+            <div className="absolute right-8 bottom-8 rounded-2xl border border-white/10 bg-black/60 px-5 py-4 backdrop-blur-xl">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/45">Preview</p>
+              <p className="mt-1 text-sm font-medium">Uma experiência feita à medida.</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ——— PORTFÓLIO ——— */}
-      <section className="relative overflow-hidden bg-background px-6 py-28">
-        <SectionVines variant="a" className="opacity-50" />
-        <SectionVines variant="b" className="opacity-30 rotate-180" />
-
-        <div className="relative z-10 mx-auto max-w-5xl">
-          <Reveal>
-            <div className="text-center">
-              <p className="eyebrow text-warm">Portfólio</p>
-              <h2 className="mt-5 text-[clamp(2rem,6vw,3.5rem)] leading-tight font-light text-ink">
-                Já Criámos
+      <section id="processo" className="px-5 py-24 sm:px-8 sm:py-32">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-16 lg:grid-cols-[.8fr_1.2fr]">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/40">Processo</p>
+              <h2 className="mt-5 text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.055em]">
+                Simples por fora.
+                <br />
+                Poderoso por dentro.
               </h2>
-              <Ornament className="mx-auto mt-7" />
-              <p className="mx-auto mt-6 max-w-md font-serif text-lg font-light text-ink/70 italic">
-                Inspirados pelos melhores do mundo, feitos à nossa maneira.
-              </p>
             </div>
-          </Reveal>
-
-          <div className="mt-16 grid gap-6 sm:grid-cols-2">
-            {[
-              "Os nossos trabalhos mais recentes estarão aqui em breve.",
-              "Fale connosco para ver exemplos personalizados do seu projeto.",
-            ].map((text, i) => (
-              <Reveal key={text} delay={100 + i * 100}>
-                <div className="card-warm flex aspect-[4/3] flex-col items-center justify-center p-8 text-center">
-                  <Sparkles className="size-8 text-warm/70" />
-                  <p className="mt-5 text-xl font-light text-ink">Em breve</p>
-                  <p className="mt-2 max-w-xs font-sans text-sm text-muted-foreground">{text}</p>
+            <div className="divide-y divide-black/10">
+              {STEPS.map(([number, title, description]) => (
+                <div key={number} className="grid gap-4 py-7 sm:grid-cols-[72px_180px_1fr] sm:items-start">
+                  <span className="text-xs font-medium text-black/35">{number}</span>
+                  <h3 className="text-lg font-semibold tracking-[-0.02em]">{title}</h3>
+                  <p className="text-sm leading-6 text-black/50">{description}</p>
                 </div>
-              </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#e8e8ed] px-5 py-24 sm:px-8 sm:py-32">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2">
+          <div className="overflow-hidden rounded-[32px] bg-white p-3">
+            <img src={COUPLE_IMAGE} alt="Casal" className="aspect-[4/3] w-full rounded-[24px] object-cover" loading="lazy" />
+          </div>
+          <div className="flex flex-col justify-center">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/40">Depois de publicar</p>
+            <h2 className="mt-5 text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[0.98] tracking-[-0.055em]">
+              O dia continua a acontecer aqui.
+            </h2>
+            <p className="mt-7 max-w-lg text-lg leading-8 text-black/55">
+              Confirmações, convidados, presentes, mensagens e versões para impressão ficam
+              organizados no painel. O casal acompanha tudo sem depender de folhas de cálculo.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <span className="rounded-full bg-white px-4 py-2 text-xs text-black/60">RSVP</span>
+              <span className="rounded-full bg-white px-4 py-2 text-xs text-black/60">Convidados</span>
+              <span className="rounded-full bg-white px-4 py-2 text-xs text-black/60">Presentes</span>
+              <span className="rounded-full bg-white px-4 py-2 text-xs text-black/60">QR Code</span>
+              <span className="rounded-full bg-white px-4 py-2 text-xs text-black/60">PDF</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="bg-white px-5 py-24 sm:px-8 sm:py-32">
+        <div className="mx-auto max-w-3xl">
+          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-black/40">Perguntas</p>
+          <h2 className="mt-5 text-center text-[clamp(2.5rem,5vw,4rem)] font-semibold leading-none tracking-[-0.055em]">Antes de começar.</h2>
+          <div className="mt-12 divide-y divide-black/10">
+            {FAQ.map(([question, answer]) => (
+              <details key={question} className="group py-6">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-medium tracking-[-0.02em]">
+                  {question}
+                  <ChevronDown className="size-5 shrink-0 text-black/35 transition-transform group-open:rotate-180" />
+                </summary>
+                <p className="max-w-2xl pt-4 text-sm leading-7 text-black/50">{answer}</p>
+              </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ——— RODAPÉ ——— */}
-      <footer className="section-dark relative overflow-hidden px-6 py-20">
-        <div className="absolute inset-0">
-          <img
-            src={HERO_IMAGE}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            className="size-full scale-x-[-1] object-cover object-center"
-          />
-          <div className="veil-soft absolute inset-0" />
-        </div>
-
-        <SectionVines variant="b" className="opacity-45" />
-        <SectionVines variant="c" className="opacity-30 rotate-180" />
-
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <Ornament className="mx-auto" />
-          <p className="mt-6 font-serif text-lg font-light tracking-wide text-cream">
-            Solar Eclipse
-          </p>
-          <p className="mt-2 font-sans text-xs text-cream/60">
-            Convite criado com <span className="text-warm">♡</span> por Solar Eclipse
-          </p>
-
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
-            <a
-              href={whatsappUrl("Olá! Gostaria de saber mais sobre os vossos serviços.")}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 font-sans text-xs tracking-wide text-gold/80 transition-colors hover:text-gold"
-            >
-              <MessageCircle className="size-3.5" />
-              Falar Connosco
-            </a>
-            <Link
-              to="/admin"
-              className="font-sans text-xs text-cream/40 transition-colors hover:text-cream/70"
-            >
-              Acesso Interno
-            </Link>
-          </div>
-        </div>
-      </footer>
-    </>
+      <section className="bg-black px-5 py-28 text-center text-white sm:px-8 sm:py-36">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/40">Solar Eclipse</p>
+        <h2 className="mx-auto mt-6 max-w-4xl text-[clamp(3rem,8vw,7rem)] font-semibold leading-[0.9] tracking-[-0.065em]">
+          Vamos criar o vosso primeiro momento.
+        </h2>
+        <a
+          href={whatsappUrl("Olá! Quero criar o meu convite digital com a Solar Eclipse.")}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black transition-transform hover:scale-[1.02]"
+        >
+          Começar agora
+          <ArrowRight className="size-4" />
+        </a>
+        <footer className="mx-auto mt-24 flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-white/10 pt-7 text-xs text-white/35 sm:flex-row">
+          <span>Solar Eclipse · Convites Digitais</span>
+          <Link to="/auth" className="hover:text-white/60">Acesso interno</Link>
+        </footer>
+      </section>
+    </main>
   );
 }
