@@ -326,7 +326,7 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
 ];
 
 export function getTemplateDefinition(value?: string | null) {
-  return TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0];
+  return TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!;
 }
 
 export function templateToneClass(value?: string | null) {

@@ -352,7 +352,7 @@ const STORY: StoryMilestone[] = [
 ];
 
 /** Timeline vertical com linha dourada que se desenha com o scroll. */
-function StoryTimeline({ milestones = STORY }: { milestones?: StoryMilestone[] }) {
+function StoryTimeline({ milestones = STORY }: { milestones?: StoryMilestone[] | undefined }) {
   const ref = useRef<HTMLOListElement | null>(null);
   const [progress, setProgress] = useState(0);
 

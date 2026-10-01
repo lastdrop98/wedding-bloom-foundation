@@ -3,7 +3,7 @@ import type { InviteType } from "@/lib/event";
 type SealProps = {
   text?: string | null;
   label?: string | null;
-  color?: string | null;
+  color?: string | null | undefined;
   small?: boolean;
 };
 

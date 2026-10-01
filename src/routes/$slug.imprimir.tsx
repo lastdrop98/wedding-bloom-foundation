@@ -22,7 +22,7 @@ export const Route = createFileRoute("/$slug/imprimir")({
   ssr: false,
   validateSearch: (search: Record<string, unknown>) => ({
     tipo: parseInviteType(search["tipo"]) ?? undefined,
-    formato: search["formato"] === "a6" ? "a6" : "a5",
+    formato: search["formato"] === "a6" ? ("a6" as const) : ("a5" as const),
   }),
   head: ({ params }) => ({
     meta: [
