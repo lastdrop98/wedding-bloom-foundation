@@ -153,7 +153,7 @@ export async function fetchEventContent(eventId: string) {
     gallery: gallery.data ?? [],
     schedule: schedule.data ?? [],
     gifts: gifts.data ?? [],
-    media: media.data ?? [],
+    media: (media.data ?? []) as EventMediaItem[],
   };
 }
 
