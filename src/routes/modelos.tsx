@@ -1,16 +1,155 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, MessageCircle, Sparkles } from "lucide-react";
-import { TEMPLATE_OPTIONS } from "@/lib/templates";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 
-export const Route = createFileRoute("/modelos/")({ component: TemplatesPage });
-const images = ["https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1460978812857-470ed1c77af0?auto=format&fit=crop&w=1200&q=85"];
-function TemplatesPage(){ const [filter,setFilter]=useState("Todos"); const filters=["Todos","Luxury","Minimalista","Romântico","Garden","Royal","Tradicional"]; const visible=useMemo(()=>filter==="Todos"?TEMPLATE_OPTIONS:TEMPLATE_OPTIONS.filter(t=>t.family.toLowerCase().includes(filter.toLowerCase())),[filter]); return <main className="min-h-screen bg-[#f6f5f2] text-[#171717]">
-<header className="sticky top-0 z-40 border-b border-black/[.06] bg-[#f6f5f2]/90 backdrop-blur-xl"><div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8"><Link to="/" className="text-sm font-semibold">Solar Eclipse</Link><Link to="/" className="inline-flex items-center gap-2 text-xs text-black/55"><ArrowLeft className="size-4"/> Voltar</Link></div></header>
-<section className="px-5 pb-16 pt-20 sm:px-8 sm:pt-28"><div className="mx-auto max-w-7xl"><p className="text-[10px] font-semibold uppercase tracking-[.24em] text-black/40">Colecção Solar Eclipse</p><h1 className="mt-5 max-w-5xl text-[clamp(3rem,7vw,6.5rem)] font-semibold leading-[.9] tracking-[-.065em]">O vosso estilo começa aqui.</h1><p className="mt-7 max-w-2xl text-lg leading-8 text-black/50">Explore modelos criados para diferentes histórias, cerimónias e personalidades. Escolha um ponto de partida; nós cuidamos do resto.</p></div></section>
-<section className="border-y border-black/[.06] px-5 py-8 sm:px-8"><div className="mx-auto flex max-w-7xl flex-wrap gap-2">{filters.map(x=><button type="button" key={x} onClick={()=>setFilter(x)} className={filter===x?"rounded-full bg-black px-4 py-2 text-xs text-white":"rounded-full border border-black/10 bg-white px-4 py-2 text-xs text-black/55"}>{x}</button>)}</div></section>
-<section className="px-5 py-14 sm:px-8 sm:py-20"><div className="mx-auto grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-3">{visible.map((t,i)=><Link key={t.value} to="/modelos/$template" params={{template:t.value}} className="group overflow-hidden rounded-[28px] bg-white shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-2xl"><div className={"relative aspect-[4/5] overflow-hidden bg-gradient-to-br "+tone(t.tone)}><img src={images[i%images.length]} alt={t.label} className="absolute inset-0 size-full object-cover opacity-35 mix-blend-multiply transition duration-700 group-hover:scale-105 group-hover:opacity-50" loading="lazy"/><div className="absolute inset-5 flex flex-col items-center justify-center rounded-[22px] border border-white/50 bg-black/10 p-7 text-center backdrop-blur-[2px]"><span className="text-[9px] uppercase tracking-[.28em] text-white/75">Solar Eclipse</span><span className="mt-5 text-3xl font-light text-white">{t.label}</span><span className="mt-3 max-w-[220px] text-xs leading-5 text-white/75">{t.description}</span><span className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[11px] font-medium text-black opacity-0 transition group-hover:opacity-100">Ver modelo <ArrowRight className="size-3.5"/></span></div></div><div className="flex items-center justify-between px-5 py-4"><div><p className="text-sm font-medium">{t.label}</p><p className="mt-1 text-[11px] text-black/40">{t.family}</p></div><ArrowRight className="size-4 text-black/25"/></div></Link>)}</div></section>
-<section className="bg-[#111] px-5 py-24 text-center text-white sm:px-8 sm:py-32"><Sparkles className="mx-auto size-5 text-[#d7b56d]"/><h2 className="mt-6 text-[clamp(2.7rem,6vw,5rem)] font-semibold leading-[.95] tracking-[-.06em]">Encontrou o estilo?</h2><p className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/50">Envie-nos o modelo que gostou. A nossa equipa entra em contacto para transformar esse design na história do vosso casamento.</p><a href={wa("Olá! Vi os modelos da Solar Eclipse e gostaria de criar o meu convite.")} target="_blank" rel="noreferrer" className="mt-9 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black"><MessageCircle className="size-4"/> Falar connosco</a></section>
-</main> }
-function wa(m:string){return "https://wa.me/258847404160?text="+encodeURIComponent(m)}
-function tone(t:string){const m:Record<string,string>={gold:"from-[#191612] via-[#76582a] to-[#ded0ad]",emerald:"from-[#062f26] via-[#17604d] to-[#b6c7b0]",midnight:"from-[#07111f] via-[#1c3556] to-[#8da1bd]",rose:"from-[#6b303e] via-[#b97984] to-[#ead7d3]",sand:"from-[#a88e70] via-[#d8c5aa] to-[#f2eadc]",burgundy:"from-[#3a0c18] via-[#762c3e] to-[#d6a8a9]",sapphire:"from-[#081a3b] via-[#174b8b] to-[#b6c5d9]",xiguiane:"from-[#392617] via-[#8b5a2b] to-[#d9c19b]"};return m[t]||m.gold}
+export const Route = createFileRoute("/modelos")({
+  component: ModelsPage,
+  head: () => ({
+    meta: [
+      {
+        title: "Modelos de Convites | Solar Eclipse",
+      },
+      {
+        name: "description",
+        content:
+          "Escolha um modelo premium de convite digital de casamento Solar Eclipse.",
+      },
+    ],
+  }),
+});
+
+const templates = [
+  {
+    name: "Noir & Ouro",
+    category: "Luxury",
+    description:
+      "Uma experiência sofisticada em tons escuros com detalhes dourados e atmosfera elegante.",
+    image:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    features: [
+      "Design premium escuro",
+      "Detalhes dourados",
+      "Ideal para casamentos elegantes",
+    ],
+  },
+  {
+    name: "Aguarela Botânica",
+    category: "Romântico",
+    description:
+      "Um convite delicado inspirado na natureza, flores e tons suaves.",
+    image:
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
+    features: [
+      "Flores e elementos naturais",
+      "Estilo romântico",
+      "Cores suaves",
+    ],
+  },
+  {
+    name: "Emerald Clássico",
+    category: "Tradicional",
+    description:
+      "Elegância clássica com fundo claro, dourado e acabamento luxuoso.",
+    image:
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    features: [
+      "Fundo claro premium",
+      "Tipografia clássica",
+      "Cerimónias formais",
+    ],
+  },
+  {
+    name: "Xiguiane Moçambicano",
+    category: "Cultura",
+    description:
+      "Um modelo inspirado nas tradições moçambicanas, capulana e celebração familiar.",
+    image:
+      "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
+    features: [
+      "Identidade africana",
+      "Selos familiares",
+      "Ideal para cerimónias tradicionais",
+    ],
+  },
+];
+
+function ModelsPage() {
+  return (
+    <main className="min-h-screen bg-[#faf8f3] text-neutral-900">
+      <section className="px-6 py-24 text-center">
+        <p className="mb-4 text-sm tracking-[0.3em] uppercase text-[#C9A84C]">
+          Solar Eclipse
+        </p>
+
+        <h1 className="mx-auto max-w-4xl text-5xl font-light tracking-tight md:text-7xl">
+          Escolha o estilo do seu convite
+        </h1>
+
+        <p className="mx-auto mt-8 max-w-2xl text-lg text-neutral-600">
+          Modelos criados para transformar o casamento numa experiência
+          inesquecível para o casal e convidados.
+        </p>
+      </section>
+
+
+      <section className="mx-auto grid max-w-7xl gap-10 px-6 pb-24 md:grid-cols-2">
+        {templates.map((template) => (
+          <article
+            key={template.name}
+            className="overflow-hidden rounded-3xl bg-white shadow-xl"
+          >
+            <img
+              src={template.image}
+              alt={template.name}
+              className="h-[420px] w-full object-cover"
+            />
+
+            <div className="p-8">
+              <div className="mb-4 flex items-center justify-between">
+                <span className="text-xs uppercase tracking-widest text-[#C9A84C]">
+                  {template.category}
+                </span>
+
+                <Sparkles size={20} className="text-[#C9A84C]" />
+              </div>
+
+
+              <h2 className="text-3xl font-light">
+                {template.name}
+              </h2>
+
+              <p className="mt-4 text-neutral-600">
+                {template.description}
+              </p>
+
+
+              <ul className="mt-6 space-y-3">
+                {template.features.map((feature) => (
+                  <li
+                    key={feature}
+                    className="flex items-center gap-3 text-sm"
+                  >
+                    <Check
+                      size={18}
+                      className="text-[#C9A84C]"
+                    />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+
+              <Link
+                to="/"
+                className="mt-8 flex items-center justify-center gap-3 rounded-full bg-black px-6 py-4 text-white transition hover:bg-neutral-800"
+              >
+                Escolher este modelo
+                <ArrowRight size={18}/>
+              </Link>
+
+            </div>
+          </article>
+        ))}
+      </section>
+    </main>
+  );
+}
