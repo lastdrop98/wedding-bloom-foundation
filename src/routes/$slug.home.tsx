@@ -579,8 +579,8 @@ function HomePage() {
           }}
         />
       )}
-      {/* Cabeçalho imersivo */}
-      <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
+      {/* Cabeçalho imersivo — a estrutura mantém os mesmos dados, mas cada família ganha uma direção de arte própria. */}
+      <header className="template-hero relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           {slotMedia["cover_video"] ? (
             <video
@@ -601,12 +601,12 @@ function HomePage() {
               className="ken-burns h-full w-full object-cover will-change-transform"
             />
           ) : (
-            <div className="h-full w-full bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.32_0.05_150)_0%,oklch(0.22_0.03_140)_45%,oklch(0.16_0.02_90)_100%)]" />
+            <div className="template-hero-fallback h-full w-full" />
           )}
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,oklch(0.16_0.02_70/0.35)_0%,oklch(0.16_0.02_70/0.6)_50%,oklch(0.14_0.02_70/0.92)_100%)]" />
+          <div className="template-hero-veil absolute inset-0" />
         </div>
 
-        <div className="relative mx-auto max-w-3xl animate-fade-in">
+        <div className="template-hero-content relative mx-auto max-w-3xl animate-fade-in">
           <p className="eyebrow text-cream/70">Convite</p>
           <h1 className="mt-7 text-[clamp(2.5rem,9vw,5rem)] leading-[1.05] font-light tracking-wide text-cream">
             {eventTitle(event)}
