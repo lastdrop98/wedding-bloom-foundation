@@ -54,12 +54,8 @@ function ModelsPage() {
     <main className="min-h-screen bg-[#faf8f3] text-neutral-900">
       <header className="sticky top-0 z-40 border-b border-black/5 bg-[#faf8f3]/90 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
-          <Link to="/" className="text-sm font-semibold tracking-tight">
-            Solar Eclipse
-          </a>
-          <Link to="/" className="text-xs text-black/50 hover:text-black">
-            Voltar ao início
-          </a>
+          <a href="/" className="text-sm font-semibold tracking-tight">Solar Eclipse</a>
+          <a href="/" className="text-xs text-black/50 hover:text-black">Voltar ao início</a>
         </div>
       </header>
 
