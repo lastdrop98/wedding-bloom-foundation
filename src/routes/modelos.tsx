@@ -159,11 +159,7 @@ function ModelsPage() {
                 ))}
               </ul>
 
-              <Link
-                to="/modelos/$template"
-                params={{ template: template.value }}
-                className="mt-7 flex items-center justify-center gap-3 rounded-full bg-black px-6 py-4 text-sm font-medium text-white transition hover:bg-neutral-800"
-              >
+              <a href={`/modelos/${template.value}`} className="mt-7 flex items-center justify-center gap-3 rounded-full bg-black px-6 py-4 text-sm font-medium text-white transition hover:bg-neutral-800">
                 Escolher este modelo
                 <ArrowRight className="size-4" />
               </a>
@@ -199,11 +195,7 @@ function ModelsPage() {
         <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/45">
           Escolha um modelo, envie os dados básicos e fale connosco diretamente para começar.
         </p>
-        <Link
-          to="/modelos/$template"
-          params={{ template: "golden-classic" }}
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black"
-        >
+        <a href="/modelos/golden-classic" className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black">
           Começar com um modelo
           <ArrowRight className="size-4" />
         </a>
