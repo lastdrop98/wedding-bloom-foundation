@@ -1719,15 +1719,15 @@ div[id*="lovable-badge"] {
 }
 
 /* Template-specific ornaments. */
-.template-design-minimalist-white .template-hero-content > div:has(> span),
-.template-design-minimalist-black .template-hero-content > div:has(> span) {
+.template-design-minimalist-white .template-hero-content > [aria-hidden="true"],
+.template-design-minimalist-black .template-hero-content > [aria-hidden="true"] {
   opacity: .45;
 }
-.template-design-cinematic-charcoal .template-hero-content > div:has(> span) {
+.template-design-cinematic-charcoal .template-hero-content > [aria-hidden="true"] {
   transform: scaleX(.55);
   transform-origin: left;
 }
-.template-design-xiguiane-tradicional .template-hero-content > div:has(> span),
-.template-design-african-heritage .template-hero-content > div:has(> span) {
+.template-design-xiguiane-tradicional .template-hero-content > [aria-hidden="true"],
+.template-design-african-heritage .template-hero-content > [aria-hidden="true"] {
   transform: scaleX(1.3);
 }
