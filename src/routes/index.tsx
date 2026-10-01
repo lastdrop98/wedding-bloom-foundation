@@ -59,7 +59,7 @@ function HomePage() {
             ))}
           </div>
           <div className="mt-12 text-center">
-            <Link to="/modelos" className="inline-flex items-center gap-2 rounded-full bg-[#C9A84C] px-8 py-4 text-white">Explorar todos os modelos <ArrowRight size={18} /></a>
+            <a href="/modelos" className="inline-flex items-center gap-2 rounded-full bg-[#C9A84C] px-8 py-4 text-white">Explorar todos os modelos <ArrowRight size={18} /></a>
           </div>
         </div>
       </section>
@@ -92,7 +92,7 @@ function HomePage() {
         <Sparkles className="mx-auto text-[#C9A84C]" />
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl text-neutral-300">Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.</p>
-        <Link to="/modelos" className="mt-10 inline-flex rounded-full bg-[#C9A84C] px-10 py-4 text-white">Escolher modelo</a>
+        <a href="/modelos" className="mt-10 inline-flex rounded-full bg-[#C9A84C] px-10 py-4 text-white">Escolher modelo</a>
       </section>
     </main>
   );
