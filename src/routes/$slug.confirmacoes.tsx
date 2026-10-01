@@ -1,3 +1,4 @@
+import { looseDb } from "@/lib/event";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -52,7 +53,7 @@ function ConfirmationsPage() {
     queryKey: ["rsvps", eventId, acesso],
     enabled: !!eventId && !!acesso,
     queryFn: async () => {
-      const { data, error } = await supabase.rpc("get_couple_rsvps", { _token: acesso! });
+      const { data, error } = await looseDb.rpc("get_couple_rsvps", { _token: acesso! });
       if (error) throw error;
       return (data ?? []) as Rsvp[];
     },

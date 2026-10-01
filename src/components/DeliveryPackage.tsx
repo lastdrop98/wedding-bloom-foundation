@@ -1,3 +1,4 @@
+import { looseDb } from "@/lib/event";
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 import { toast } from "sonner";
@@ -18,7 +19,7 @@ export function DeliveryPackage({ slug }: { slug: string }) {
       .maybeSingle()
       .then(async ({ data }) => {
         if (!data?.id) return;
-        const { data: token } = await supabase
+        const { data: token } = await looseDb
           .from("couple_access_tokens")
           .select("token")
           .eq("event_id", data.id)

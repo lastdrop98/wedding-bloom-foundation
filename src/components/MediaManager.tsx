@@ -1,3 +1,4 @@
+import { looseDb } from "@/lib/event";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -101,7 +102,7 @@ export function MediaManager({ event }: { event: EventRow }) {
   const { data: media, isLoading } = useQuery({
     queryKey: key,
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await looseDb
         .from("event_media")
         .select("*")
         .eq("event_id", event.id)
@@ -129,7 +130,7 @@ export function MediaManager({ event }: { event: EventRow }) {
 
       const existing = media?.find((item) => item.slot === slot);
       const order = Number(orderBySlot[slot] ?? existing?.sort_order ?? (media?.length ?? 0) + 1);
-      const { error: upsertError } = await supabase.from("event_media").upsert(
+      const { error: upsertError } = await looseDb.from("event_media").upsert(
         {
           event_id: event.id,
           slot,
@@ -175,7 +176,7 @@ export function MediaManager({ event }: { event: EventRow }) {
       caption: string;
       sortOrder: number;
     }) => {
-      const { error } = await supabase
+      const { error } = await looseDb
         .from("event_media")
         .update({ caption: caption.trim() || null, sort_order: sortOrder })
         .eq("id", item.id)
@@ -191,7 +192,7 @@ export function MediaManager({ event }: { event: EventRow }) {
 
   const removeSlot = useMutation({
     mutationFn: async (item: MediaItem) => {
-      const { error } = await supabase
+      const { error } = await looseDb
         .from("event_media")
         .delete()
         .eq("id", item.id)

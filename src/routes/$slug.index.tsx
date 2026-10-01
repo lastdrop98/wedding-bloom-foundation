@@ -11,6 +11,7 @@ import { templateToneClass } from "@/lib/templates";
 import { supabase } from "@/integrations/supabase/client";
 import {
   AUDIO_BUCKET,
+  looseDb,
   detail,
   GALLERY_BUCKET,
   eventTitle,
@@ -54,13 +55,13 @@ function CoverPage() {
     if (!event) return;
     signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
-    supabase
+    looseDb
       .from("event_media")
       .select("storage_path")
       .eq("event_id", event.id)
       .eq("slot", "cover")
       .maybeSingle()
-      .then(({ data }) => {
+      .then(({ data }: { data: { storage_path?: string } | null }) => {
         if (!data?.storage_path || event.cover_image_path) return;
         signedUrl(GALLERY_BUCKET, data.storage_path).then(setSemanticCover);
       });
