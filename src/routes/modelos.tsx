@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Check, Search, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS } from "@/lib/templates";
@@ -56,10 +56,10 @@ function ModelsPage() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
           <Link to="/" className="text-sm font-semibold tracking-tight">
             Solar Eclipse
-          </Link>
+          </a>
           <Link to="/" className="text-xs text-black/50 hover:text-black">
             Voltar ao início
-          </Link>
+          </a>
         </div>
       </header>
 
@@ -137,7 +137,7 @@ function ModelsPage() {
                   </span>
                 </div>
               </div>
-            </Link>
+            </a>
 
             <div className="p-7 sm:p-8">
               <div className="mb-4 flex items-center justify-between gap-4">
@@ -175,7 +175,7 @@ function ModelsPage() {
               >
                 Escolher este modelo
                 <ArrowRight className="size-4" />
-              </Link>
+              </a>
             </div>
           </article>
         ))}
@@ -215,7 +215,7 @@ function ModelsPage() {
         >
           Começar com um modelo
           <ArrowRight className="size-4" />
-        </Link>
+        </a>
       </section>
     </main>
   );
