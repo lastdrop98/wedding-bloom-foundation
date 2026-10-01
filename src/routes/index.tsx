@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Heart, Image, Music, QrCode, Sparkles, Users } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -34,8 +34,8 @@ function HomePage() {
           <h1 className="text-5xl font-light leading-tight md:text-7xl">O convite de casamento<br />que conta a vossa história</h1>
           <p className="mx-auto mt-8 max-w-2xl text-lg text-neutral-600">Convites digitais premium com fotografia, música, confirmação de convidados, presentes e versão para impressão.</p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link to="/modelos" className="rounded-full bg-black px-8 py-4 text-white transition hover:bg-neutral-800">Ver modelos</Link>
-            <Link to="/modelos" className="rounded-full border border-[#C9A84C] px-8 py-4 transition hover:bg-[#C9A84C]/10">Criar meu convite</Link>
+            <a href="/modelos" className="rounded-full bg-black px-8 py-4 text-white transition hover:bg-neutral-800">Ver modelos</a>
+            <a href="/modelos" className="rounded-full border border-[#C9A84C] px-8 py-4 transition hover:bg-[#C9A84C]/10">Criar meu convite</a>
           </div>
         </div>
       </section>
@@ -48,18 +48,18 @@ function HomePage() {
           </div>
           <div className="grid gap-8 md:grid-cols-3">
             {templates.map((item) => (
-              <Link key={item.id} to="/modelos/$template" params={{ template: item.id }} className="group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1">
+              <a key={item.id} href={`/modelos/${item.id}`} className="group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1">
                 <img src={item.image} alt={item.name} loading="lazy" className="h-80 w-full object-cover transition duration-700 group-hover:scale-105" />
                 <div className="p-6">
                   <h3 className="text-2xl">{item.name}</h3>
                   <p className="mt-2 text-neutral-500">{item.style}</p>
                   <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium">Ver modelo <ArrowRight size={15} /></span>
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
           <div className="mt-12 text-center">
-            <Link to="/modelos" className="inline-flex items-center gap-2 rounded-full bg-[#C9A84C] px-8 py-4 text-white">Explorar todos os modelos <ArrowRight size={18} /></Link>
+            <Link to="/modelos" className="inline-flex items-center gap-2 rounded-full bg-[#C9A84C] px-8 py-4 text-white">Explorar todos os modelos <ArrowRight size={18} /></a>
           </div>
         </div>
       </section>
@@ -92,7 +92,7 @@ function HomePage() {
         <Sparkles className="mx-auto text-[#C9A84C]" />
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl text-neutral-300">Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.</p>
-        <Link to="/modelos" className="mt-10 inline-flex rounded-full bg-[#C9A84C] px-10 py-4 text-white">Escolher modelo</Link>
+        <Link to="/modelos" className="mt-10 inline-flex rounded-full bg-[#C9A84C] px-10 py-4 text-white">Escolher modelo</a>
       </section>
     </main>
   );
