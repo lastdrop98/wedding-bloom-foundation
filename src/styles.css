@@ -1168,3 +1168,384 @@ div[id*="lovable-badge"] {
     background-attachment: scroll;
   }
 }
+
+
+/* ——— Art direction v2: templates are compositions, not colour swaps ——— */
+
+/* Shared hero primitives. */
+.template-hero {
+  isolation: isolate;
+}
+.template-hero-fallback {
+  background:
+    radial-gradient(120% 100% at 50% 0%, color-mix(in oklab, var(--color-primary) 32%, var(--color-background)) 0%, var(--color-background) 58%, var(--color-foreground) 160%);
+}
+.template-hero-veil {
+  background:
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-foreground) 20%, transparent), color-mix(in oklab, var(--color-foreground) 42%, transparent) 52%, color-mix(in oklab, var(--color-foreground) 90%, transparent));
+  transition: background 500ms ease;
+}
+.template-hero-content {
+  z-index: 2;
+}
+.template-hero-content > h1 {
+  text-wrap: balance;
+}
+
+/* Minimal — Swiss/editorial invitation: quiet cover, asymmetric text, no ornament overload. */
+.template-design-minimalist-white .template-hero,
+.template-design-minimalist-black .template-hero,
+.template-design-minimalist-brown .template-hero,
+.template-design-minimalist-burgundy .template-hero,
+.template-design-minimalist-lavender .template-hero {
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 88svh;
+  padding: clamp(2rem, 8vw, 7rem);
+  text-align: left;
+}
+.template-design-minimalist-white .template-hero-veil,
+.template-design-minimalist-brown .template-hero-veil,
+.template-design-minimalist-lavender .template-hero-veil {
+  background: linear-gradient(to right, color-mix(in oklab, var(--color-background) 96%, transparent) 0%, color-mix(in oklab, var(--color-background) 70%, transparent) 48%, transparent 100%);
+}
+.template-design-minimalist-white .template-hero-content,
+.template-design-minimalist-brown .template-hero-content,
+.template-design-minimalist-lavender .template-hero-content {
+  max-width: 34rem;
+  margin-inline: 0;
+  color: var(--color-foreground);
+}
+.template-design-minimalist-white .template-hero-content .text-cream,
+.template-design-minimalist-brown .template-hero-content .text-cream,
+.template-design-minimalist-lavender .template-hero-content .text-cream {
+  color: var(--color-foreground) !important;
+}
+.template-design-minimalist-black .template-hero {
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+}
+.template-design-minimalist-black .template-hero-veil {
+  background: linear-gradient(to right, color-mix(in oklab, var(--color-background) 94%, transparent), color-mix(in oklab, var(--color-background) 38%, transparent) 68%, transparent);
+}
+
+/* Cinematic / midnight — oversized typography over an image, like a film title card. */
+.template-design-editorial-dark .template-hero,
+.template-design-cinematic-charcoal .template-hero,
+.template-design-midnight-blue .template-hero,
+.template-design-midnight-blue .template-hero {
+  align-items: flex-start;
+  justify-content: flex-end;
+  text-align: left;
+  padding: clamp(2rem, 7vw, 6rem);
+}
+.template-design-editorial-dark .template-hero-content,
+.template-design-cinematic-charcoal .template-hero-content,
+.template-design-midnight-blue .template-hero-content {
+  max-width: 52rem;
+  margin-inline: 0;
+}
+.template-design-cinematic-charcoal .template-hero-content > h1,
+.template-design-editorial-dark .template-hero-content > h1 {
+  max-width: 9ch;
+  font-size: clamp(3.8rem, 11vw, 8.5rem);
+  line-height: .86;
+  letter-spacing: -.06em;
+  text-transform: uppercase;
+}
+.template-design-midnight-blue .template-hero-content > h1 {
+  max-width: 10ch;
+  font-size: clamp(3.4rem, 10vw, 7rem);
+  line-height: .9;
+}
+.template-design-editorial-dark .template-hero-veil,
+.template-design-cinematic-charcoal .template-hero-veil,
+.template-design-midnight-blue .template-hero-veil {
+  background: linear-gradient(to right, color-mix(in oklab, var(--color-foreground) 88%, transparent), color-mix(in oklab, var(--color-foreground) 38%, transparent) 58%, color-mix(in oklab, var(--color-foreground) 18%, transparent));
+}
+
+/* Luxury / Royal — framed cover with deliberate ceremonial geometry. */
+.template-design-golden-classic .template-hero,
+.template-design-royal-emerald .template-hero,
+.template-design-royal-burgundy .template-hero,
+.template-design-royal-sapphire .template-hero,
+.template-design-royal-black-gold .template-hero,
+.template-design-baroque-gold .template-hero {
+  margin: 1rem;
+  min-height: calc(100svh - 2rem);
+  border: 1px solid color-mix(in oklab, var(--color-gold) 68%, transparent);
+  outline: 1px solid color-mix(in oklab, var(--color-gold) 22%, transparent);
+  outline-offset: 9px;
+}
+.template-design-golden-classic .template-hero::before,
+.template-design-royal-emerald .template-hero::before,
+.template-design-royal-burgundy .template-hero::before,
+.template-design-royal-sapphire .template-hero::before,
+.template-design-royal-black-gold .template-hero::before,
+.template-design-baroque-gold .template-hero::before {
+  content: "✦";
+  position: absolute;
+  top: 1.15rem;
+  left: 1.35rem;
+  z-index: 3;
+  color: var(--color-gold);
+  font-size: 1.1rem;
+}
+.template-design-golden-classic .template-hero::after,
+.template-design-royal-emerald .template-hero::after,
+.template-design-royal-burgundy .template-hero::after,
+.template-design-royal-sapphire .template-hero::after,
+.template-design-royal-black-gold .template-hero::after,
+.template-design-baroque-gold .template-hero::after {
+  content: "✦";
+  position: absolute;
+  right: 1.35rem;
+  bottom: 1.15rem;
+  z-index: 3;
+  color: var(--color-gold);
+  font-size: 1.1rem;
+}
+.template-design-baroque-gold .template-hero {
+  border-width: 2px;
+  outline-width: 2px;
+}
+.template-design-baroque-gold .template-hero-content > h1 {
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  letter-spacing: .015em;
+}
+
+/* Garden / romantic — soft light cover with organic image framing and script-like names. */
+.template-design-romantic-rose .template-hero,
+.template-design-romantic-champagne .template-hero,
+.template-design-garden-green .template-hero,
+.template-design-garden-blue .template-hero,
+.template-design-garden-ivory .template-hero,
+.template-design-floral-pearl .template-hero,
+.template-design-tropical-green .template-hero,
+.template-design-tropical-sunset .template-hero {
+  min-height: 92svh;
+  color: var(--color-foreground);
+}
+.template-design-romantic-rose .template-hero-veil,
+.template-design-romantic-champagne .template-hero-veil,
+.template-design-garden-green .template-hero-veil,
+.template-design-garden-blue .template-hero-veil,
+.template-design-garden-ivory .template-hero-veil,
+.template-design-floral-pearl .template-hero-veil {
+  background: linear-gradient(to bottom, color-mix(in oklab, white 42%, transparent), color-mix(in oklab, white 55%, transparent) 52%, color-mix(in oklab, white 90%, transparent));
+}
+.template-design-romantic-rose .template-hero-content,
+.template-design-romantic-champagne .template-hero-content,
+.template-design-garden-green .template-hero-content,
+.template-design-garden-blue .template-hero-content,
+.template-design-garden-ivory .template-hero-content,
+.template-design-floral-pearl .template-hero-content {
+  color: var(--color-foreground);
+  background: color-mix(in oklab, white 78%, transparent);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border-radius: 2rem .65rem 2rem .65rem;
+  border: 1px solid color-mix(in oklab, var(--color-primary) 18%, transparent);
+  backdrop-filter: blur(8px);
+}
+.template-design-romantic-rose .template-hero-content .text-cream,
+.template-design-romantic-champagne .template-hero-content .text-cream,
+.template-design-garden-green .template-hero-content .text-cream,
+.template-design-garden-blue .template-hero-content .text-cream,
+.template-design-garden-ivory .template-hero-content .text-cream,
+.template-design-floral-pearl .template-hero-content .text-cream {
+  color: var(--color-foreground) !important;
+}
+.template-design-romantic-rose .template-hero-content > h1,
+.template-design-romantic-champagne .template-hero-content > h1,
+.template-design-floral-pearl .template-hero-content > h1 {
+  font-family: var(--font-script);
+  font-weight: 400;
+  letter-spacing: .01em;
+  line-height: 1.05;
+}
+
+/* Boho / Mediterranean — warm editorial paper direction. */
+.template-design-boho-sand .template-hero,
+.template-design-boho-rose .template-hero,
+.template-design-mediterranean-blue .template-hero,
+.template-design-sicilian-terracotta .template-hero,
+.template-design-european-ivory .template-hero {
+  align-items: flex-end;
+  justify-content: flex-end;
+  text-align: left;
+  padding: clamp(1.5rem, 7vw, 6rem);
+}
+.template-design-boho-sand .template-hero-content,
+.template-design-boho-rose .template-hero-content,
+.template-design-mediterranean-blue .template-hero-content,
+.template-design-sicilian-terracotta .template-hero-content,
+.template-design-european-ivory .template-hero-content {
+  margin-inline: 0;
+  max-width: 42rem;
+  padding: 1.5rem 1.75rem;
+  color: var(--color-foreground);
+  background: color-mix(in oklab, var(--color-background) 86%, transparent);
+  border-left: 4px solid var(--color-primary);
+  backdrop-filter: blur(7px);
+}
+.template-design-boho-sand .template-hero-content .text-cream,
+.template-design-boho-rose .template-hero-content .text-cream,
+.template-design-mediterranean-blue .template-hero-content .text-cream,
+.template-design-sicilian-terracotta .template-hero-content .text-cream,
+.template-design-european-ivory .template-hero-content .text-cream {
+  color: var(--color-foreground) !important;
+}
+.template-design-sicilian-terracotta .template-hero-content {
+  border-left: 0;
+  border-top: 4px solid var(--color-primary);
+}
+
+/* Oriental / ceremonial — geometry becomes the main motif. */
+.template-design-oriental-red .template-hero,
+.template-design-oriental-green .template-hero,
+.template-design-oriental-blue .template-hero,
+.template-design-nikah-emerald .template-hero {
+  border-block: 8px double color-mix(in oklab, var(--color-gold) 48%, transparent);
+  background-image:
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 8%, transparent) 0 10px, transparent 10px 20px),
+    repeating-linear-gradient(-45deg, color-mix(in oklab, var(--color-primary) 6%, transparent) 0 10px, transparent 10px 20px);
+}
+.template-design-oriental-red .template-hero-content,
+.template-design-oriental-green .template-hero-content,
+.template-design-oriental-blue .template-hero-content,
+.template-design-nikah-emerald .template-hero-content {
+  padding: 2rem;
+  border: 1px solid color-mix(in oklab, var(--color-gold) 38%, transparent);
+  background: color-mix(in oklab, var(--color-background) 72%, transparent);
+  backdrop-filter: blur(6px);
+}
+.template-design-oriental-red .template-hero-content .text-cream,
+.template-design-oriental-green .template-hero-content .text-cream,
+.template-design-oriental-blue .template-hero-content .text-cream,
+.template-design-nikah-emerald .template-hero-content .text-cream {
+  color: var(--color-foreground) !important;
+}
+.template-design-oriental-red .template-hero-content > h1,
+.template-design-oriental-green .template-hero-content > h1,
+.template-design-oriental-blue .template-hero-content > h1,
+.template-design-nikah-emerald .template-hero-content > h1 {
+  letter-spacing: .04em;
+}
+
+/* African / Xiguiane — earthy ceremonial cover, capulana-inspired pattern and strong seals. */
+.template-design-african-heritage .template-hero,
+.template-design-xiguiane-tradicional .template-hero {
+  min-height: 94svh;
+  border-block: 12px solid var(--color-primary);
+  box-shadow: inset 0 12px 0 var(--color-gold), inset 0 -12px 0 var(--color-gold);
+  background:
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 9%, transparent) 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(-45deg, color-mix(in oklab, var(--color-primary) 7%, transparent) 0 12px, transparent 12px 24px);
+}
+.template-design-african-heritage .template-hero-content,
+.template-design-xiguiane-tradicional .template-hero-content {
+  max-width: 48rem;
+  padding: 2rem clamp(1.5rem, 5vw, 3rem);
+  border: 2px solid color-mix(in oklab, var(--color-gold) 65%, transparent);
+  background: color-mix(in oklab, var(--color-background) 82%, transparent);
+  box-shadow: 12px 12px 0 color-mix(in oklab, var(--color-primary) 18%, transparent);
+  backdrop-filter: blur(6px);
+  color: var(--color-foreground);
+}
+.template-design-african-heritage .template-hero-content .text-cream,
+.template-design-xiguiane-tradicional .template-hero-content .text-cream {
+  color: var(--color-foreground) !important;
+}
+.template-design-xiguiane-tradicional .template-hero-content > h1 {
+  font-size: clamp(3rem, 10vw, 6.5rem);
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+.template-design-african-heritage .template-hero-content > h1 {
+  font-size: clamp(2.8rem, 9vw, 5.8rem);
+  font-weight: 500;
+}
+
+/* Heritage bronze / vintage — printed invitation feeling. */
+.template-design-traditional-bronze .template-hero {
+  margin: 1rem;
+  min-height: calc(100svh - 2rem);
+  border: 8px double color-mix(in oklab, var(--color-gold) 55%, transparent);
+  background: linear-gradient(135deg, color-mix(in oklab, var(--color-gold) 9%, transparent), transparent 55%);
+}
+.template-design-traditional-bronze .template-hero-content {
+  padding: 2.5rem;
+  border: 1px solid color-mix(in oklab, var(--color-gold) 50%, transparent);
+  background: color-mix(in oklab, var(--color-background) 88%, transparent);
+}
+
+/* Shared section rhythm: families get different surfaces, not only different ink. */
+.template-design-minimalist-white > section:nth-of-type(even),
+.template-design-minimalist-brown > section:nth-of-type(even),
+.template-design-minimalist-lavender > section:nth-of-type(even) {
+  background: color-mix(in oklab, var(--color-primary) 4%, var(--color-background));
+}
+.template-design-editorial-dark > section:nth-of-type(even),
+.template-design-cinematic-charcoal > section:nth-of-type(even),
+.template-design-midnight-blue > section:nth-of-type(even),
+.template-design-minimalist-black > section:nth-of-type(even) {
+  background: color-mix(in oklab, var(--color-foreground) 5%, var(--color-background));
+}
+.template-design-royal-emerald > section:nth-of-type(even),
+.template-design-royal-burgundy > section:nth-of-type(even),
+.template-design-royal-sapphire > section:nth-of-type(even),
+.template-design-royal-black-gold > section:nth-of-type(even),
+.template-design-baroque-gold > section:nth-of-type(even) {
+  background:
+    linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-gold) 4%, transparent), transparent);
+}
+.template-design-garden-green > section:nth-of-type(even),
+.template-design-garden-blue > section:nth-of-type(even),
+.template-design-romantic-rose > section:nth-of-type(even),
+.template-design-romantic-champagne > section:nth-of-type(even),
+.template-design-floral-pearl > section:nth-of-type(even) {
+  background: color-mix(in oklab, var(--color-primary) 3%, var(--color-background));
+}
+.template-design-african-heritage > section:nth-of-type(even),
+.template-design-xiguiane-tradicional > section:nth-of-type(even) {
+  background:
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 3%, transparent) 0 12px, transparent 12px 24px),
+    color-mix(in oklab, var(--color-primary) 4%, var(--color-background));
+}
+.template-design-oriental-red > section:nth-of-type(even),
+.template-design-oriental-green > section:nth-of-type(even),
+.template-design-oriental-blue > section:nth-of-type(even),
+.template-design-nikah-emerald > section:nth-of-type(even) {
+  background:
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 2%, transparent) 0 8px, transparent 8px 16px),
+    var(--color-background);
+}
+
+@media (max-width: 640px) {
+  .template-design-golden-classic .template-hero,
+  .template-design-royal-emerald .template-hero,
+  .template-design-royal-burgundy .template-hero,
+  .template-design-royal-sapphire .template-hero,
+  .template-design-royal-black-gold .template-hero,
+  .template-design-baroque-gold .template-hero,
+  .template-design-traditional-bronze .template-hero {
+    margin: .65rem;
+    min-height: calc(100svh - 1.3rem);
+  }
+  .template-design-minimalist-white .template-hero,
+  .template-design-minimalist-black .template-hero,
+  .template-design-minimalist-brown .template-hero,
+  .template-design-minimalist-burgundy .template-hero,
+  .template-design-minimalist-lavender .template-hero {
+    padding: 1.5rem;
+  }
+  .template-design-african-heritage .template-hero,
+  .template-design-xiguiane-tradicional .template-hero {
+    border-width: 8px;
+  }
+  .template-design-african-heritage .template-hero-content,
+  .template-design-xiguiane-tradicional .template-hero-content {
+    padding: 1.4rem 1.1rem;
+  }
+}
