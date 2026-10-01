@@ -111,12 +111,7 @@ function ModelsPage() {
             key={template.value}
             className="group overflow-hidden rounded-[30px] bg-white shadow-[0_18px_60px_rgba(0,0,0,.07)] transition duration-500 hover:-translate-y-1"
           >
-            <Link
-              to="/modelos/$template"
-              params={{ template: template.value }}
-              className="block"
-              aria-label={"Ver modelo " + template.label}
-            >
+            <a href={`/modelos/${template.value}`} className="block" aria-label={"Ver modelo " + template.label}>
               <div className="relative overflow-hidden">
                 <img
                   src={images[index % images.length]}
