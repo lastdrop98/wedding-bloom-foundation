@@ -43,7 +43,7 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
         .eq("event_id", eventId)
         .order("created_at", { ascending: true });
       if (error) throw error;
-      return data;
+      return data as Array<(typeof data)[number] & { phone?: string | null; invite_type?: string | null; table_label?: string | null }>;
     },
   });
 
