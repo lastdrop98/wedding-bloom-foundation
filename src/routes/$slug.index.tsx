@@ -8,6 +8,7 @@ import { AquarelaCover } from "@/components/invite/templates/aquarela-botanica/C
 import { EventSeals } from "@/components/invite/InvitationSeal";
 import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
 import { templateToneClass } from "@/lib/templates";
+import { supabase } from "@/integrations/supabase/client";
 import {
   AUDIO_BUCKET,
   detail,
@@ -109,7 +110,7 @@ function CoverPage() {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         {cover || semanticCover ? (
           <img
-            src={cover ?? semanticCover}
+            src={cover ?? semanticCover ?? undefined}
             alt={`Fotografia de ${eventTitle(event)}`}
             className="ken-burns h-full w-full object-cover will-change-transform"
           />

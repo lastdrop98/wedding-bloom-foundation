@@ -285,7 +285,7 @@ function Dashboard({
 }: {
   events: EventRow[];
   isLoading: boolean;
-  stats: { total: number; weddings: number; latest?: EventRow };
+  stats: { total: number; weddings: number; latest?: EventRow | undefined };
   onNew: () => void;
   onOpen: (event: EventRow, section?: string) => void;
 }) {

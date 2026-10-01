@@ -322,7 +322,8 @@ async function generatePdf(
 
 function PrintPage() {
   const { slug } = Route.useParams();
-  const { tipo: inviteType, formato } = Route.useSearch();
+  const { tipo: rawTipo, formato } = Route.useSearch();
+  const inviteType = parseInviteType(rawTipo);
   const [cover, setCover] = useState<string | null>(null);
   const [coverVideo, setCoverVideo] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
