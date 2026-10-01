@@ -75,7 +75,7 @@ function TemplatePreviewPage() {
   }
 
   return (
-    <main className={`min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
+    <main className={`template-preview template-preview-${template.value} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
           <a
@@ -135,18 +135,19 @@ function TemplatePreviewPage() {
 
           <div className="relative mx-auto w-full max-w-[420px]">
             <div className="rounded-[44px] bg-[#151515] p-3 shadow-[0_30px_90px_rgba(0,0,0,.25)]">
-              <div className="relative aspect-[9/18] overflow-hidden rounded-[34px] bg-black">
+              <div className="template-preview-screen relative aspect-[9/18] overflow-hidden rounded-[34px] bg-black">
                 <img
                   src={previewImage}
                   alt={`Demonstração do modelo ${template.label}`}
                   className="absolute inset-0 size-full object-cover opacity-70"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/85" />
+                <div className="template-preview-veil absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/85" />
+                <span className="template-preview-pattern pointer-events-none absolute inset-0" aria-hidden="true" />
                 <div className="absolute inset-x-8 bottom-12 text-center text-white">
                   <p className="text-[9px] uppercase tracking-[.35em] text-white/60">
                     O nosso casamento
                   </p>
-                  <h2 className="mt-5 text-4xl font-light">Ana & Miguel</h2>
+                  <h2 className="template-preview-names mt-5 text-4xl font-light">Ana & Miguel</h2>
                   <p className="mt-5 text-xs tracking-[.25em] text-white/70">
                     24 · 10 · 2027
                   </p>
