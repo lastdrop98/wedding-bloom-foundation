@@ -1549,3 +1549,185 @@ div[id*="lovable-badge"] {
     padding: 1.4rem 1.1rem;
   }
 }
+
+
+/* ——— Art direction v2: body morphology ——— */
+
+/* Minimalist bodies: typography and whitespace do the work. */
+.template-design-minimalist-white section,
+.template-design-minimalist-black section,
+.template-design-minimalist-brown section,
+.template-design-minimalist-burgundy section,
+.template-design-minimalist-lavender section {
+  padding-block: clamp(4rem, 9vw, 7rem);
+}
+.template-design-minimalist-white .card-elegant,
+.template-design-minimalist-black .card-elegant,
+.template-design-minimalist-brown .card-elegant,
+.template-design-minimalist-burgundy .card-elegant,
+.template-design-minimalist-lavender .card-elegant {
+  border: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-primary) 24%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.template-design-minimalist-white .template-hero-content > div:has(+ .text-cream) .eyebrow,
+.template-design-minimalist-black .template-hero-content .eyebrow {
+  letter-spacing: .4em;
+}
+
+/* Editorial: hard edges, numbered-looking rhythm and image-led cards. */
+.template-design-editorial-dark section h2,
+.template-design-sapphire-editorial section h2,
+.template-design-cinematic-charcoal section h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.template-design-editorial-dark .card-elegant,
+.template-design-sapphire-editorial .card-elegant,
+.template-design-cinematic-charcoal .card-elegant {
+  border-radius: 0;
+  border-width: 0;
+  border-left: 3px solid var(--color-primary);
+  background: color-mix(in oklab, var(--color-card) 72%, transparent);
+  box-shadow: none;
+}
+.template-design-editorial-dark section:nth-of-type(odd),
+.template-design-sapphire-editorial section:nth-of-type(odd) {
+  border-left: 1px solid color-mix(in oklab, var(--color-gold) 18%, transparent);
+}
+
+/* Royal: layered frames and ceremony-first typography. */
+.template-design-royal-emerald section h2,
+.template-design-royal-burgundy section h2,
+.template-design-royal-sapphire section h2,
+.template-design-royal-black-gold section h2,
+.template-design-baroque-gold section h2 {
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.template-design-royal-emerald .card-elegant,
+.template-design-royal-burgundy .card-elegant,
+.template-design-royal-sapphire .card-elegant,
+.template-design-royal-black-gold .card-elegant,
+.template-design-baroque-gold .card-elegant {
+  border: 1px solid color-mix(in oklab, var(--color-gold) 55%, transparent);
+  box-shadow: inset 0 0 0 4px color-mix(in oklab, var(--color-gold) 5%, transparent), 0 16px 36px -26px color-mix(in oklab, var(--color-gold) 60%, transparent);
+}
+.template-design-royal-black-gold .template-hero-content > h1 {
+  font-weight: 400;
+  letter-spacing: .025em;
+}
+
+/* Garden / romantic: photographs become soft framed objects. */
+.template-design-garden-green .card-elegant,
+.template-design-garden-blue .card-elegant,
+.template-design-garden-ivory .card-elegant,
+.template-design-romantic-rose .card-elegant,
+.template-design-romantic-champagne .card-elegant,
+.template-design-floral-pearl .card-elegant {
+  border-radius: 2rem .65rem 2rem .65rem;
+  border-color: color-mix(in oklab, var(--color-primary) 22%, transparent);
+  box-shadow: 0 24px 50px -34px color-mix(in oklab, var(--color-primary) 55%, transparent);
+}
+.template-design-garden-green .card-elegant img,
+.template-design-garden-blue .card-elegant img,
+.template-design-garden-ivory .card-elegant img,
+.template-design-romantic-rose .card-elegant img,
+.template-design-romantic-champagne .card-elegant img,
+.template-design-floral-pearl .card-elegant img {
+  border-radius: 1.65rem .4rem 1.65rem .4rem;
+}
+.template-design-romantic-champagne .template-hero-content > h1 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  letter-spacing: .06em;
+}
+
+/* Boho / Mediterranean: tactile paper cards and asymmetry. */
+.template-design-boho-sand .card-elegant,
+.template-design-boho-rose .card-elegant,
+.template-design-mediterranean-blue .card-elegant,
+.template-design-sicilian-terracotta .card-elegant,
+.template-design-european-ivory .card-elegant {
+  border: 0;
+  border-top: 1px solid color-mix(in oklab, var(--color-primary) 28%, transparent);
+  border-radius: .25rem 1.2rem .25rem 1.2rem;
+  background: color-mix(in oklab, var(--color-card) 84%, var(--color-primary));
+  box-shadow: 0 18px 42px -32px color-mix(in oklab, var(--color-primary) 70%, transparent);
+}
+.template-design-sicilian-terracotta .card-elegant {
+  border-radius: 0;
+  border-top: 3px solid var(--color-primary);
+}
+.template-design-mediterranean-blue .template-hero-content {
+  border-left-color: var(--color-primary);
+}
+
+/* Oriental / Nikah: ceremonial geometry and centered compact cards. */
+.template-design-oriental-red .card-elegant,
+.template-design-oriental-green .card-elegant,
+.template-design-oriental-blue .card-elegant,
+.template-design-nikah-emerald .card-elegant {
+  border-radius: .15rem;
+  border-width: 1px;
+  box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-gold) 4%, transparent);
+}
+.template-design-oriental-red section h2,
+.template-design-oriental-green section h2,
+.template-design-oriental-blue section h2,
+.template-design-nikah-emerald section h2 {
+  letter-spacing: .1em;
+}
+
+/* African / Xiguiane: the visual language is textile-inspired, earthy and ceremonial. */
+.template-design-african-heritage .card-elegant,
+.template-design-xiguiane-tradicional .card-elegant {
+  border: 2px solid color-mix(in oklab, var(--color-gold) 48%, transparent);
+  border-radius: .15rem;
+  box-shadow: 9px 9px 0 color-mix(in oklab, var(--color-primary) 15%, transparent);
+  background:
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 3%, transparent) 0 9px, transparent 9px 18px),
+    color-mix(in oklab, var(--color-card) 92%, transparent);
+}
+.template-design-african-heritage section h2,
+.template-design-xiguiane-tradicional section h2 {
+  font-weight: 500;
+  letter-spacing: .08em;
+}
+.template-design-xiguiane-tradicional .invite-seal,
+.template-design-african-heritage .invite-seal {
+  border-width: 2px;
+  box-shadow: inset 0 0 0 6px color-mix(in oklab, var(--color-gold) 8%, transparent), 8px 8px 0 color-mix(in oklab, var(--color-primary) 12%, transparent);
+}
+
+/* Vintage / bronze: printed card, double rules, no floating-app look. */
+.template-design-traditional-bronze .card-elegant,
+.template-design-vintage-cream .card-elegant {
+  border: 3px double color-mix(in oklab, var(--color-gold) 48%, transparent);
+  border-radius: .1rem;
+  box-shadow: none;
+  background: color-mix(in oklab, var(--color-card) 94%, var(--color-gold));
+}
+.template-design-traditional-bronze section h2,
+.template-design-vintage-cream section h2 {
+  letter-spacing: .08em;
+}
+
+/* Template-specific ornaments. */
+.template-design-minimalist-white .template-hero-content > div:has(> span),
+.template-design-minimalist-black .template-hero-content > div:has(> span) {
+  opacity: .45;
+}
+.template-design-cinematic-charcoal .template-hero-content > div:has(> span) {
+  transform: scaleX(.55);
+  transform-origin: left;
+}
+.template-design-xiguiane-tradicional .template-hero-content > div:has(> span),
+.template-design-african-heritage .template-hero-content > div:has(> span) {
+  transform: scaleX(1.3);
+}
