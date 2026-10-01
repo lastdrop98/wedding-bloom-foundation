@@ -3,7 +3,19 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type EventRow = Tables<"events">;
 export type GalleryItem = Tables<"gallery">;
-export type EventMediaItem = Tables<"event_media">;
+export type EventMediaItem = {
+  id: string;
+  event_id: string;
+  slot: string;
+  storage_path: string;
+  media_type: string;
+  sort_order: number;
+  created_at?: string;
+};
+
+/** Cliente sem tipos para tabelas/funções opcionais que podem não existir em todas as bases de dados. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const looseDb = supabase as any;
 export type ScheduleItem = Tables<"schedule">;
 export type GiftItem = Tables<"gifts">;
 
@@ -131,7 +143,7 @@ export async function fetchEventContent(eventId: string) {
       .select("*")
       .eq("event_id", eventId)
       .order("sort_order", { ascending: true }),
-    supabase
+    looseDb
       .from("event_media")
       .select("*")
       .eq("event_id", eventId)
@@ -141,7 +153,7 @@ export async function fetchEventContent(eventId: string) {
     gallery: gallery.data ?? [],
     schedule: schedule.data ?? [],
     gifts: gifts.data ?? [],
-    media: media.data ?? [],
+    media: (media.data ?? []) as EventMediaItem[],
   };
 }
 

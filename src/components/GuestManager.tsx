@@ -1,3 +1,4 @@
+import { looseDb } from "@/lib/event";
 import { useMemo, useState } from "react";
 import { Download } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -42,13 +43,13 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
         .eq("event_id", eventId)
         .order("created_at", { ascending: true });
       if (error) throw error;
-      return data;
+      return data as Array<(typeof data)[number] & { phone?: string | null; invite_type?: string | null; table_label?: string | null }>;
     },
   });
 
   const add = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("guests").insert({
+      const { error } = await looseDb.from("guests").insert({
         event_id: eventId,
         name: name.trim(),
         invited_count: Math.max(1, Number(count) || 1),

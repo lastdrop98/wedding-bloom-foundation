@@ -2,7 +2,7 @@
 // Keep the Lovable sandbox target for previews, but use Nitro's Vercel preset in CI.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-const isVercel = Boolean(process.env.VERCEL) || Boolean(process.env.VERCEL_URL);
+const isVercel = Boolean(process.env['VERCEL']) || Boolean(process.env['VERCEL_URL']);
 
 export default defineConfig({
   tanstackStart: {

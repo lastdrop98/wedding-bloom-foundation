@@ -22,7 +22,7 @@ export const Route = createFileRoute("/$slug/imprimir")({
   ssr: false,
   validateSearch: (search: Record<string, unknown>) => ({
     tipo: parseInviteType(search["tipo"]) ?? undefined,
-    formato: search["formato"] === "a6" ? "a6" : "a5",
+    formato: search["formato"] === "a6" ? ("a6" as const) : ("a5" as const),
   }),
   head: ({ params }) => ({
     meta: [
@@ -322,7 +322,8 @@ async function generatePdf(
 
 function PrintPage() {
   const { slug } = Route.useParams();
-  const { tipo: inviteType, formato } = Route.useSearch();
+  const { tipo: rawTipo, formato } = Route.useSearch();
+  const inviteType = parseInviteType(rawTipo);
   const [cover, setCover] = useState<string | null>(null);
   const [coverVideo, setCoverVideo] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);

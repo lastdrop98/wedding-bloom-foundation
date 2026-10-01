@@ -8,8 +8,10 @@ import { AquarelaCover } from "@/components/invite/templates/aquarela-botanica/C
 import { EventSeals } from "@/components/invite/InvitationSeal";
 import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
 import { templateToneClass } from "@/lib/templates";
+import { supabase } from "@/integrations/supabase/client";
 import {
   AUDIO_BUCKET,
+  looseDb,
   detail,
   GALLERY_BUCKET,
   eventTitle,
@@ -53,13 +55,13 @@ function CoverPage() {
     if (!event) return;
     signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
-    supabase
+    looseDb
       .from("event_media")
       .select("storage_path")
       .eq("event_id", event.id)
       .eq("slot", "cover")
       .maybeSingle()
-      .then(({ data }) => {
+      .then(({ data }: { data: { storage_path?: string } | null }) => {
         if (!data?.storage_path || event.cover_image_path) return;
         signedUrl(GALLERY_BUCKET, data.storage_path).then(setSemanticCover);
       });
@@ -109,7 +111,7 @@ function CoverPage() {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         {cover || semanticCover ? (
           <img
-            src={cover ?? semanticCover}
+            src={cover ?? semanticCover ?? undefined}
             alt={`Fotografia de ${eventTitle(event)}`}
             className="ken-burns h-full w-full object-cover will-change-transform"
           />

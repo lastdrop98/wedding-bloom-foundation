@@ -352,7 +352,7 @@ const STORY: StoryMilestone[] = [
 ];
 
 /** Timeline vertical com linha dourada que se desenha com o scroll. */
-function StoryTimeline({ milestones = STORY }: { milestones?: StoryMilestone[] }) {
+function StoryTimeline({ milestones = STORY }: { milestones?: StoryMilestone[] | undefined }) {
   const ref = useRef<HTMLOListElement | null>(null);
   const [progress, setProgress] = useState(0);
 
@@ -480,7 +480,7 @@ function HomePage() {
     ).then((pairs) => {
       const next = Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])));
       setSlotMedia(next);
-      if (!event?.cover_image_path && next.cover) setCover(next.cover);
+      if (!event?.cover_image_path && next["cover"]) setCover(next["cover"]);
     });
   }, [content, event?.cover_image_path]);
 
@@ -570,21 +570,21 @@ function HomePage() {
       className={`${templateToneClass(event.template)} template-design-${event.template} pb-24`}
     >
       <TemplateAtmosphere template={event.template} />
-      {slotMedia.background && (
+      {slotMedia["background"] && (
         <div
           aria-hidden="true"
           className="template-background-media pointer-events-none fixed inset-0 -z-20"
           style={{
-            backgroundImage: `linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 88%, transparent), color-mix(in oklab, var(--color-background) 96%, transparent)), url(${slotMedia.background})`,
+            backgroundImage: `linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 88%, transparent), color-mix(in oklab, var(--color-background) 96%, transparent)), url(${slotMedia["background"]})`,
           }}
         />
       )}
       {/* Cabeçalho imersivo */}
       <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          {slotMedia.cover_video ? (
+          {slotMedia["cover_video"] ? (
             <video
-              src={slotMedia.cover_video}
+              src={slotMedia["cover_video"]}
               autoPlay
               muted
               loop
@@ -713,8 +713,8 @@ function HomePage() {
                   parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
                     ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
                     : "",
-                  photo: slotMedia.bride
-                    ? { url: slotMedia.bride, caption: null, mediaType: "image" }
+                  photo: slotMedia["bride"]
+                    ? { url: slotMedia["bride"], caption: null, mediaType: "image" }
                     : galleryUrls[0],
                 },
                 {
@@ -723,8 +723,8 @@ function HomePage() {
                   parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
                     ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
                     : "",
-                  photo: slotMedia.groom
-                    ? { url: slotMedia.groom, caption: null, mediaType: "image" }
+                  photo: slotMedia["groom"]
+                    ? { url: slotMedia["groom"], caption: null, mediaType: "image" }
                     : galleryUrls[1],
                 },
               ].map((p, i) => (
@@ -749,11 +749,11 @@ function HomePage() {
         </Section>
       )}
 
-      {slotMedia.story_video && (
+      {slotMedia["story_video"] && (
         <Section title="Uma história em movimento" eyebrow="Vídeo" wide dark vines="b">
           <div className="overflow-hidden rounded-2xl border border-gold/30 bg-black shadow-2xl">
             <video
-              src={slotMedia.story_video}
+              src={slotMedia["story_video"]}
               controls
               playsInline
               preload="metadata"
@@ -763,10 +763,10 @@ function HomePage() {
         </Section>
       )}
 
-      {(slotMedia.section_1 || slotMedia.section_2) && (
+      {(slotMedia["section_1"] || slotMedia["section_2"]) && (
         <Section title="Momentos especiais" eyebrow="Para guardar na memória" wide vines="c">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia.section_1, slotMedia.section_2].filter(Boolean).map((url, index) => (
+            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((url, index) => (
               <div key={url} className="card-elegant overflow-hidden">
                 <img
                   src={url}
