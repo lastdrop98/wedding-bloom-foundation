@@ -1731,3 +1731,59 @@ div[id*="lovable-badge"] {
 .template-design-african-heritage .template-hero-content > [aria-hidden="true"] {
   transform: scaleX(1.3);
 }
+
+
+/* ——— Final two catalogue identities ——— */
+
+/* Classic Ivory — formal paper invitation with centered typographic hierarchy. */
+.template-design-classic-ivory .template-hero {
+  min-height: 94svh;
+  color: var(--color-foreground);
+  background:
+    radial-gradient(circle at 50% 20%, color-mix(in oklab, var(--color-gold) 10%, transparent), transparent 40%),
+    color-mix(in oklab, var(--color-background) 96%, var(--color-gold));
+}
+.template-design-classic-ivory .template-hero-veil {
+  background: linear-gradient(to bottom, color-mix(in oklab, white 55%, transparent), color-mix(in oklab, white 72%, transparent));
+}
+.template-design-classic-ivory .template-hero-content {
+  color: var(--color-foreground);
+  padding: 2.25rem clamp(1.5rem, 5vw, 3rem);
+  border-block: 1px solid color-mix(in oklab, var(--color-gold) 45%, transparent);
+}
+.template-design-classic-ivory .template-hero-content .text-cream {
+  color: var(--color-foreground) !important;
+}
+.template-design-classic-ivory .template-hero-content > h1 {
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  font-weight: 300;
+}
+
+/* Emerald Elegante — botanical luxury with a deep-green stage and gold editorial panel. */
+.template-design-emerald-elegante .template-hero {
+  align-items: flex-end;
+  justify-content: center;
+  padding: clamp(2rem, 7vw, 6rem);
+}
+.template-design-emerald-elegante .template-hero-veil {
+  background:
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-foreground) 8%, transparent), color-mix(in oklab, var(--color-foreground) 78%, transparent)),
+    radial-gradient(circle at 20% 20%, color-mix(in oklab, var(--color-primary) 35%, transparent), transparent 32%);
+}
+.template-design-emerald-elegante .template-hero-content {
+  max-width: 46rem;
+  padding: 2rem clamp(1.5rem, 5vw, 3.5rem);
+  border: 1px solid color-mix(in oklab, var(--color-gold) 60%, transparent);
+  border-radius: .2rem;
+  background: color-mix(in oklab, var(--color-background) 22%, transparent);
+  backdrop-filter: blur(10px);
+}
+.template-design-emerald-elegante .template-hero-content > h1 {
+  font-size: clamp(3.2rem, 10vw, 7rem);
+  font-weight: 300;
+  letter-spacing: .015em;
+}
+.template-design-emerald-elegante .card-elegant {
+  border-left: 2px solid var(--color-primary);
+  border-radius: .2rem;
+}
