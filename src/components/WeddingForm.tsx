@@ -307,7 +307,7 @@ export function WeddingForm({
                   ) : f.name === "template" ? (
                     <div className="sm:col-span-2">
                       <TemplatePicker
-                        value={values.template || "golden-classic"}
+                        value={values["template"] || "golden-classic"}
                         onChange={(value) => set("template", value)}
                       />
                     </div>
@@ -338,7 +338,7 @@ export function WeddingForm({
           <div className="space-y-2">
             <Label htmlFor="seal-enabled">Ativar selos</Label>
             <SelectNative
-              value={values.seal_enabled ?? ""}
+              value={values["seal_enabled"] ?? ""}
               onChange={(v) => set("seal_enabled", v)}
               options={[
                 ["true", "Sim"],
@@ -349,7 +349,7 @@ export function WeddingForm({
           <div className="space-y-2">
             <Label htmlFor="seal-mode">Quantidade</Label>
             <SelectNative
-              value={values.seal_mode ?? ""}
+              value={values["seal_mode"] ?? ""}
               onChange={(v) => set("seal_mode", v)}
               options={[
                 ["one", "1 selo"],
@@ -363,7 +363,7 @@ export function WeddingForm({
             <Label htmlFor="seal-one-text">Selo 1</Label>
             <Input
               id="seal-one-text"
-              value={values.seal_one_text ?? ""}
+              value={values["seal_one_text"] ?? ""}
               onChange={(e) => set("seal_one_text", e.target.value)}
               placeholder="Ex.: 1"
             />
@@ -372,7 +372,7 @@ export function WeddingForm({
             <Label htmlFor="seal-two-text">Selo 2</Label>
             <Input
               id="seal-two-text"
-              value={values.seal_two_text ?? ""}
+              value={values["seal_two_text"] ?? ""}
               onChange={(e) => set("seal_two_text", e.target.value)}
               placeholder="Ex.: 2"
             />
@@ -381,7 +381,7 @@ export function WeddingForm({
             <Label htmlFor="seal-one-label">Etiqueta 1</Label>
             <Input
               id="seal-one-label"
-              value={values.seal_one_label ?? ""}
+              value={values["seal_one_label"] ?? ""}
               onChange={(e) => set("seal_one_label", e.target.value)}
               placeholder="Convite válido"
             />
@@ -390,7 +390,7 @@ export function WeddingForm({
             <Label htmlFor="seal-two-label">Etiqueta 2</Label>
             <Input
               id="seal-two-label"
-              value={values.seal_two_label ?? ""}
+              value={values["seal_two_label"] ?? ""}
               onChange={(e) => set("seal_two_label", e.target.value)}
               placeholder="Convite válido"
             />

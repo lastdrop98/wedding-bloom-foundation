@@ -369,9 +369,9 @@ export function AquarelaHome({
     <main className="aquarela pb-24">
       <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          {slotMedia.cover_video ? (
+          {slotMedia["cover_video"] ? (
             <video
-              src={slotMedia.cover_video}
+              src={slotMedia["cover_video"]}
               autoPlay
               muted
               loop
@@ -598,10 +598,10 @@ export function AquarelaHome({
         </div>
       </Section>
 
-      {(slotMedia.section_1 || slotMedia.section_2) && (
+      {(slotMedia["section_1"] || slotMedia["section_2"]) && (
         <Section title="Momentos especiais" eyebrow="Para guardar na memória" wide flora="bagas">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia.section_1, slotMedia.section_2].filter(Boolean).map((url, index) => (
+            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((url, index) => (
               <div key={url} className="card-aquarela overflow-hidden">
                 <img
                   src={url}
