@@ -324,32 +324,7 @@ function PersonCard({
 
 type StoryMilestone = { icon: LucideIcon; date: string; title: string; text: string };
 
-const STORY: StoryMilestone[] = [
-  {
-    icon: Coffee,
-    date: "Primavera de 2019",
-    title: "Como nos conhecemos",
-    text: "Um café entre amigos que se transformou numa conversa sem fim.",
-  },
-  {
-    icon: Heart,
-    date: "Verão de 2020",
-    title: "O primeiro encontro",
-    text: "Um pôr-do-sol à beira-mar e a certeza de que algo começava.",
-  },
-  {
-    icon: Gem,
-    date: "Inverno de 2024",
-    title: "O pedido",
-    text: "De joelhos, sob as luzes da cidade, a pergunta mais importante.",
-  },
-  {
-    icon: Sparkles,
-    date: "Em breve",
-    title: "O grande dia",
-    text: "O início da nossa maior aventura — convosco a testemunhar.",
-  },
-];
+const STORY: StoryMilestone[] = [];
 
 /** Timeline vertical com linha dourada que se desenha com o scroll. */
 function StoryTimeline({ milestones = STORY }: { milestones?: StoryMilestone[] | undefined }) {
@@ -424,12 +399,7 @@ function StoryTimeline({ milestones = STORY }: { milestones?: StoryMilestone[] |
 
 type PartyMember = { name: string; role: string };
 
-const PARTY: PartyMember[] = [
-  { name: "Miguel Ferreira", role: "Padrinho" },
-  { name: "Inês Rodrigues", role: "Madrinha" },
-  { name: "Tiago Almeida", role: "Padrinho" },
-  { name: "Beatriz Santos", role: "Dama de Honor" },
-];
+const PARTY: PartyMember[] = [];
 
 function TemplateHeroAccent({ template }: { template?: string | null }) {
   const family = getTemplateDefinition(template).family;
@@ -609,16 +579,11 @@ function HomePage() {
     .filter((item) => item.date || item.title || item.text);
 
   const partyMembers = [1, 2, 3, 4]
-    .map((n, index) => ({
+    .map((n) => ({
       name: d(`party_${n}_name` as Parameters<typeof detail>[1]) ?? "",
       role: d(`party_${n}_role` as Parameters<typeof detail>[1]) ?? "",
-      fallback: PARTY[index],
     }))
-    .map((m) => ({
-      name: m.name || m.fallback?.name || "",
-      role: m.role || m.fallback?.role || "",
-    }))
-    .filter((m) => m.name);
+    .filter((m) => m.name || m.role);
 
   function toggleMusic() {
     const el = audioRef.current;
@@ -815,7 +780,15 @@ function HomePage() {
           dark
           vines="b"
         >
-          <StoryTimeline milestones={storyMilestones.length ? storyMilestones : undefined} />
+          {storyMilestones.length > 0 ? (
+            <StoryTimeline milestones={storyMilestones} />
+          ) : (
+            <div className="card-elegant mx-auto max-w-2xl p-8 text-center md:p-10">
+              <p className="font-sans text-sm leading-7 text-muted-foreground">
+                A história do casal será apresentada aqui quando os momentos forem adicionados no editor.
+              </p>
+            </div>
+          )}
         </Section>
       )}
 
@@ -850,30 +823,32 @@ function HomePage() {
         </Section>
       )}
 
-      {event.event_type === "casamento" && (
+      {event.event_type === "casamento" && partyMembers.length > 0 && (
         <Section title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {partyMembers.map((m, i) => {
               const photo = galleryUrls[2 + i];
               return (
-                <Reveal key={m.name} delay={i * 100}>
+                <Reveal key={m.name || m.role} delay={i * 100}>
                   <div className="card-elegant p-6 text-center">
                     {photo ? (
                       <img
                         src={photo.url}
-                        alt={m.name}
+                        alt={m.name || m.role}
                         loading="lazy"
                         className="mx-auto h-24 w-24 rounded-full border border-gold/50 object-cover"
                       />
                     ) : (
                       <span className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-gold/60 bg-gold/10 text-2xl font-light text-primary">
-                        {initials(m.name)}
+                        {m.name ? initials(m.name) : "♡"}
                       </span>
                     )}
-                    <p className="mt-4 text-lg font-light">{m.name}</p>
-                    <p className="mt-1 font-sans text-[0.65rem] tracking-[0.3em] text-primary uppercase">
-                      {m.role}
-                    </p>
+                    {m.name && <p className="mt-4 text-lg font-light">{m.name}</p>}
+                    {m.role && (
+                      <p className="mt-1 font-sans text-[0.65rem] tracking-[0.3em] text-primary uppercase">
+                        {m.role}
+                      </p>
+                    )}
                   </div>
                 </Reveal>
               );
