@@ -41,7 +41,7 @@ function gradient(tone: string) {
     xiguiane: "from-[#eadcc9] via-[#f6f1e8] to-white",
   };
 
-  return gradients[tone] ?? gradients.gold;
+  return gradients[tone] ?? gradients["gold"];
 }
 
 function TemplatePreviewPage() {
