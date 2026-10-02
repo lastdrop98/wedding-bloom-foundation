@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Check, MessageCircle } from "lucide-react";
 import { getTemplateDefinition } from "@/lib/templates";
@@ -78,15 +78,15 @@ function TemplatePreviewPage() {
     <main className={`template-preview template-preview-${template.value} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
-          <Link
-            to="/modelos"
+          <a
+            href="/modelos"
             className="inline-flex items-center gap-2 text-xs text-black/55 hover:text-black"
           >
             <ArrowLeft className="size-4" /> Modelos
-          </Link>
-          <Link to="/" className="text-sm font-semibold">
+          </a>
+          <a href="/" className="text-sm font-semibold">
             Solar Eclipse
-          </Link>
+          </a>
           <a
             href="#pedido"
             className="rounded-full bg-black px-4 py-2 text-[11px] text-white"
