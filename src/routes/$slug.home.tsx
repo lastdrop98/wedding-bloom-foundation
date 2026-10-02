@@ -431,6 +431,75 @@ const PARTY: PartyMember[] = [
   { name: "Beatriz Santos", role: "Dama de Honor" },
 ];
 
+function TemplateHeroAccent({ template }: { template?: string | null }) {
+  const family = getTemplateDefinition(template).family;
+  const isHeritage = template === "xiguiane-tradicional" || template === "african-heritage";
+  const isEditorial =
+    template?.includes("minimalist") ||
+    template === "editorial-dark" ||
+    template === "cinematic-charcoal" ||
+    template === "sapphire-editorial";
+  const isGarden =
+    template?.startsWith("garden-") ||
+    template?.startsWith("romantic-") ||
+    template === "floral-pearl" ||
+    template === "aquarela-botanica";
+  const isCeremonial =
+    template?.startsWith("royal-") ||
+    template === "baroque-gold" ||
+    template?.startsWith("oriental-") ||
+    template === "nikah-emerald" ||
+    template === "traditional-bronze";
+
+  if (isHeritage) {
+    return (
+      <div className="template-hero-accent template-hero-accent-heritage" aria-hidden="true">
+        <span className="template-textile-band" />
+        <span className="template-heritage-word">União · Família · Tradição</span>
+        <span className="template-textile-band" />
+      </div>
+    );
+  }
+
+  if (isEditorial) {
+    return (
+      <div className="template-hero-accent template-hero-accent-editorial" aria-hidden="true">
+        <span>01</span>
+        <i />
+        <span>WEDDING INVITATION</span>
+      </div>
+    );
+  }
+
+  if (isGarden) {
+    return (
+      <div className="template-hero-accent template-hero-accent-garden" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
+    );
+  }
+
+  if (isCeremonial) {
+    return (
+      <div className="template-hero-accent template-hero-accent-ceremonial" aria-hidden="true">
+        <span>✦</span>
+        <i />
+        <span>{family}</span>
+        <i />
+        <span>✦</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="template-hero-accent template-hero-accent-classic" aria-hidden="true">
+      <span />
+    </div>
+  );
+}
+
 function initials(name: string) {
   return name
     .split(" ")
@@ -607,6 +676,7 @@ function HomePage() {
         </div>
 
         <div className="template-hero-content relative mx-auto max-w-3xl animate-fade-in">
+          <TemplateHeroAccent template={event.template} />
           <p className="eyebrow text-cream/70">Convite</p>
           <h1 className="mt-7 text-[clamp(2.5rem,9vw,5rem)] leading-[1.05] font-light tracking-wide text-cream">
             {eventTitle(event)}
