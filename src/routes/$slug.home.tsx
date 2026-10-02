@@ -30,7 +30,7 @@ import { SectionVines, VineDivider } from "@/components/invite/Vines";
 import { Reveal } from "@/components/invite/Reveal";
 import { EventSeals } from "@/components/invite/InvitationSeal";
 import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
-import { templateToneClass } from "@/lib/templates";
+import { getTemplateDefinition, templateToneClass } from "@/lib/templates";
 import { AquarelaHome } from "@/components/invite/templates/aquarela-botanica/Home";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
