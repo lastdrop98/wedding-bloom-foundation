@@ -174,7 +174,7 @@ function ModelsPage() {
               <a href={`/modelos/${template.value}#pedido`} className="mt-7 flex items-center justify-center gap-3 rounded-full bg-black px-6 py-4 text-sm font-medium text-white transition hover:bg-neutral-800">
                 Escolher este modelo
                 <ArrowRight className="size-4" />
-              </Link>
+              </a>
             </div>
           </article>
         ))}
