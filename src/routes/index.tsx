@@ -87,45 +87,7 @@ function whatsapp(message: string) {
   return `${WHATSAPP}?text=${encodeURIComponent(message)}`;
 }
 
-function EclipseMark({ className = "size-6" }: { className?: string }) {
-  return (
-    <span
-      className={`inline-flex shrink-0 items-center justify-center ${className}`}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 40 40" className="size-full" fill="none">
-        <defs>
-          <radialGradient id="eclipse-core" cx="35%" cy="35%" r="70%">
-            <stop offset="0" stopColor="#2A2419" />
-            <stop offset="0.72" stopColor="#0F0E0C" />
-            <stop offset="1" stopColor="#050505" />
-          </radialGradient>
-          <linearGradient id="eclipse-corona" x1="8" y1="8" x2="32" y2="32">
-            <stop offset="0" stopColor="#F4E3B2" />
-            <stop offset="0.45" stopColor="#C9A84C" />
-            <stop offset="1" stopColor="#8F6E22" />
-          </linearGradient>
-        </defs>
-        <circle cx="20" cy="20" r="15.5" stroke="url(#eclipse-corona)" strokeWidth="1.35" opacity=".9" />
-        <circle cx="20" cy="20" r="10.5" fill="url(#eclipse-core)" />
-        <path
-          d="M27.7 9.8a12.2 12.2 0 0 1 2.5 16.8"
-          stroke="#F4E3B2"
-          strokeWidth="1.15"
-          strokeLinecap="round"
-          opacity=".95"
-        />
-        <path
-          d="M29.9 13.1a14.5 14.5 0 0 1 1.1 4.4"
-          stroke="#C9A84C"
-          strokeWidth="1"
-          strokeLinecap="round"
-          opacity=".7"
-        />
-      </svg>
-    </span>
-  );
-}
+import { EclipseMark } from "@/components/EclipseMark";
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
