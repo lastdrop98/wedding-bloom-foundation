@@ -190,7 +190,7 @@ export function WeddingForm({
 }: {
   event: EventRow | null;
   eventType?: string;
-  onSaved: () => void;
+  onSaved: (event?: EventRow) => void;
   onCancel: () => void;
 }) {
   const [values, setValues] = useState<Record<string, string>>(() => {
@@ -239,19 +239,21 @@ export function WeddingForm({
     payload["event_type"] = event?.event_type ?? eventType;
     payload["details"] = detailPayload;
 
-    const { error } = event
+    const result = event
       ? await supabase
           .from("events")
           .update(payload as never)
           .eq("id", event.id)
-      : await supabase.from("events").insert(payload as never);
+          .select("*")
+          .single()
+      : await supabase.from("events").insert(payload as never).select("*").single();
     setBusy(false);
-    if (error) {
-      toast.error(error.message);
+    if (result.error) {
+      toast.error(result.error.message);
       return;
     }
-    toast.success("Evento guardado.");
-    onSaved();
+    toast.success(event ? "Alterações guardadas." : "Evento criado.");
+    onSaved(result.data as EventRow);
   }
 
   async function upload(kind: "cover" | "music", file: File) {
@@ -280,7 +282,7 @@ export function WeddingForm({
       return;
     }
     toast.success(kind === "cover" ? "Foto de capa atualizada." : "Música atualizada.");
-    onSaved();
+    onSaved(event);
   }
 
   return (
