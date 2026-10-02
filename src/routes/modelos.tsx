@@ -119,6 +119,18 @@ function ModelsPage() {
                   loading="lazy"
                   className="h-[360px] w-full object-cover transition duration-700 group-hover:scale-105 md:h-[420px]"
                 />
+                <div
+                  className={`template-catalog-art template-catalog-art-${template.value} pointer-events-none absolute inset-0 flex items-center justify-center`}
+                  aria-hidden="true"
+                >
+                  <div className="template-catalog-paper">
+                    <span className="template-catalog-kicker">Solar Eclipse</span>
+                    <span className="template-catalog-rule" />
+                    <strong className="template-catalog-names">Ana <em>&</em> Miguel</strong>
+                    <span className="template-catalog-date">24 · 10 · 2027</span>
+                    <span className="template-catalog-seal">✦</span>
+                  </div>
+                </div>
                 <div className="absolute inset-x-6 bottom-6 flex items-center justify-between">
                   <span className="rounded-full bg-black/75 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white backdrop-blur">
                     Ver demonstração
