@@ -2,29 +2,51 @@ import type { SVGProps } from "react";
 
 export function EclipseMark({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 48 48" className={className} fill="none" role="img" aria-label="Solar Eclipse" {...props}>
+    <svg
+      viewBox="0 0 48 48"
+      className={className}
+      fill="none"
+      role="img"
+      aria-label="Eclipse solar"
+      {...props}
+    >
       <defs>
-        <linearGradient id="solar-eclipse-gold" x1="10" y1="8" x2="39" y2="39" gradientUnits="userSpaceOnUse">
+        <radialGradient id="eclipse-sun" cx="30%" cy="30%" r="72%">
+          <stop offset="0" stopColor="#FFF4CF" />
+          <stop offset=".42" stopColor="#E1C36A" />
+          <stop offset="1" stopColor="#A77C24" />
+        </radialGradient>
+        <linearGradient id="eclipse-corona" x1="8" y1="9" x2="40" y2="38" gradientUnits="userSpaceOnUse">
           <stop stopColor="#F4E3B2" />
-          <stop offset=".42" stopColor="#C9A84C" />
-          <stop offset="1" stopColor="#8D6B20" />
+          <stop offset=".48" stopColor="#C9A84C" />
+          <stop offset="1" stopColor="#8C681F" />
         </linearGradient>
       </defs>
-      <g stroke="url(#solar-eclipse-gold)" strokeLinecap="round">
-        <path d="M24 2.8v4.2" strokeWidth="1.25" opacity=".55" />
-        <path d="M24 41v4.2" strokeWidth="1.25" opacity=".55" />
-        <path d="m8.8 8.8 3 3" strokeWidth="1.1" opacity=".38" />
-        <path d="m36.2 36.2 3 3" strokeWidth="1.1" opacity=".38" />
-        <path d="M3 24h4.2" strokeWidth="1.1" opacity=".32" />
-        <path d="M40.8 24H45" strokeWidth="1.1" opacity=".5" />
-        <path d="m39.2 8.8-3 3" strokeWidth="1.1" opacity=".75" />
-        <path d="m8.8 39.2 3-3" strokeWidth="1.1" opacity=".2" />
-      </g>
-      <circle cx="24" cy="24" r="15.2" stroke="url(#solar-eclipse-gold)" strokeWidth="1.15" opacity=".48" />
-      <circle cx="24" cy="24" r="11.4" fill="url(#solar-eclipse-gold)" />
-      <circle cx="28.8" cy="19.2" r="10.9" fill="#11100E" />
-      <path d="M31.5 9.9c4.1 2.1 6.9 6.3 6.9 11.2" stroke="#F4E3B2" strokeWidth="1.25" strokeLinecap="round" opacity=".9" />
-      <path d="M35.4 16.4c.8 1.5 1.2 3.1 1.2 4.8" stroke="#C9A84C" strokeWidth="1" strokeLinecap="round" opacity=".8" />
+
+      {/* Fine solar corona */}
+      <circle cx="24" cy="24" r="18.1" stroke="url(#eclipse-corona)" strokeWidth=".72" opacity=".52" />
+      <circle cx="24" cy="24" r="15.6" stroke="url(#eclipse-corona)" strokeWidth="1.05" opacity=".82" />
+
+      {/* Partially eclipsed sun */}
+      <circle cx="20.2" cy="20.3" r="10.8" fill="url(#eclipse-sun)" />
+      {/* Moon disc leaves a controlled crescent of sunlight */}
+      <circle cx="26.2" cy="22.4" r="11.1" fill="#14120F" />
+
+      {/* Thin corona highlight */}
+      <path
+        d="M28.2 11.8c4.1 2.1 6.8 6.2 6.8 10.9"
+        stroke="#F4E3B2"
+        strokeWidth="1.05"
+        strokeLinecap="round"
+        opacity=".95"
+      />
+      <path
+        d="M31.5 14.9c1.45 1.7 2.35 3.75 2.55 5.95"
+        stroke="#C9A84C"
+        strokeWidth=".8"
+        strokeLinecap="round"
+        opacity=".78"
+      />
     </svg>
   );
 }
