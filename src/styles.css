@@ -1969,3 +1969,115 @@ div[id*="lovable-badge"] {
   font-weight: 500;
   letter-spacing: -.025em;
 }
+
+
+/* ——— Hero identity motifs ——— */
+
+.template-hero-accent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.25rem;
+  margin-bottom: 1.15rem;
+  font-family: var(--font-sans);
+  font-size: .55rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--color-gold) 86%, white);
+}
+.template-hero-accent i {
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: .7;
+}
+.template-hero-accent-classic span {
+  display: block;
+  width: 5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+.template-hero-accent-editorial {
+  justify-content: flex-start;
+  gap: .65rem;
+  color: currentColor;
+  opacity: .72;
+}
+.template-hero-accent-editorial span:first-child {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .08em;
+}
+.template-hero-accent-editorial i {
+  width: 1.5rem;
+}
+.template-hero-accent-garden {
+  gap: .25rem;
+  height: 2.5rem;
+}
+.template-hero-accent-garden span {
+  width: 1.15rem;
+  height: 1.8rem;
+  border: 1px solid currentColor;
+  border-radius: 100% 0 100% 0;
+  transform: rotate(35deg);
+  opacity: .75;
+}
+.template-hero-accent-garden span:nth-child(2) {
+  transform: rotate(80deg) scale(.75);
+  margin-inline: -.25rem;
+}
+.template-hero-accent-ceremonial {
+  gap: .7rem;
+}
+.template-hero-accent-ceremonial i {
+  width: 2.8rem;
+}
+.template-hero-accent-ceremonial > span:first-child,
+.template-hero-accent-ceremonial > span:last-child {
+  font-size: .85rem;
+}
+.template-hero-accent-heritage {
+  width: min(100%, 28rem);
+  gap: .65rem;
+  color: var(--color-gold);
+}
+.template-textile-band {
+  flex: 1;
+  min-width: 2rem;
+  height: .55rem;
+  border: 1px solid currentColor;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 5px, currentColor 5px 6px, transparent 6px 11px);
+  opacity: .82;
+}
+.template-heritage-word {
+  white-space: nowrap;
+  font-size: .5rem;
+  letter-spacing: .18em;
+}
+.template-design-xiguiane-tradicional .template-hero-accent-heritage,
+.template-design-african-heritage .template-hero-accent-heritage {
+  margin-bottom: 1.75rem;
+}
+.template-design-minimalist-white .template-hero-accent,
+.template-design-minimalist-brown .template-hero-accent,
+.template-design-minimalist-lavender .template-hero-accent {
+  color: var(--color-foreground);
+}
+.template-design-classic-ivory .template-hero-accent,
+.template-design-romantic-rose .template-hero-accent,
+.template-design-romantic-champagne .template-hero-accent,
+.template-design-garden-ivory .template-hero-accent,
+.template-design-floral-pearl .template-hero-accent {
+  color: var(--color-primary);
+}
+@media (max-width: 640px) {
+  .template-heritage-word {
+    font-size: .42rem;
+    letter-spacing: .12em;
+  }
+  .template-textile-band {
+    min-width: 1rem;
+  }
+}
