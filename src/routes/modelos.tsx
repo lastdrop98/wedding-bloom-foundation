@@ -299,7 +299,7 @@ function ModelsPage() {
         <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/45">
           Escolha um modelo, envie os dados básicos e fale connosco diretamente para começar.
         </p>
-        <Button type="button" onClick={() => openRequest(TEMPLATE_OPTIONS[0])} className="mt-8 inline-flex h-auto items-center gap-2 rounded-full bg-cream px-7 py-3.5 text-sm font-medium text-ink hover:bg-cream/90">
+        <Button type="button" onClick={() => { const first = TEMPLATE_OPTIONS[0]; if (first) openRequest(first); }} className="mt-8 inline-flex h-auto items-center gap-2 rounded-full bg-cream px-7 py-3.5 text-sm font-medium text-ink hover:bg-cream/90">
           Começar com um modelo
           <ArrowRight className="size-4" />
         </Button>

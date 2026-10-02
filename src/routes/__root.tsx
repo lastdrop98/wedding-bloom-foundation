@@ -83,13 +83,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "theme-color", content: "#111111" },
       { property: "og:title", content: "Solar Eclipse — Convites de Casamento Digitais" },
       {
         property: "og:description",
         content: "Convites de casamento digitais elegantes, criados à medida de cada casal.",
       },
-      { property: "og:image", content: "/og-image.png" },
-      { name: "twitter:image", content: "/og-image.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -103,7 +102,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "mask-icon", href: "/favicon.svg", color: "#D7B56D" },
       { rel: "manifest", href: "/manifest.webmanifest" },
-      { name: "theme-color", content: "#111111" },
     ],
   }),
   shellComponent: RootShell,
