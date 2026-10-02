@@ -1971,6 +1971,213 @@ div[id*="lovable-badge"] {
 }
 
 
+/* ——— Catalogue cards: each model reads as a different invitation, not only a different image ——— */
+.template-catalog-art {
+  padding: 2.25rem;
+  background: linear-gradient(to bottom, transparent 15%, rgb(0 0 0 / 8%));
+}
+.template-catalog-paper {
+  position: relative;
+  display: flex;
+  width: min(78%, 22rem);
+  min-height: 16rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+  color: #fff;
+  background: rgb(18 18 18 / 74%);
+  border: 1px solid rgb(255 255 255 / 38%);
+  box-shadow: 0 22px 70px rgb(0 0 0 / 28%);
+  backdrop-filter: blur(8px);
+  transform: translateY(8px);
+  transition: transform 500ms ease, box-shadow 500ms ease, border-radius 500ms ease;
+}
+.group:hover .template-catalog-paper {
+  transform: translateY(0) scale(1.015);
+  box-shadow: 0 28px 85px rgb(0 0 0 / 34%);
+}
+.template-catalog-kicker,
+.template-catalog-date {
+  font-family: var(--font-sans);
+  font-size: .48rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  opacity: .72;
+}
+.template-catalog-rule {
+  width: 3.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: .55;
+}
+.template-catalog-names {
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: .95;
+  letter-spacing: -.035em;
+}
+.template-catalog-names em {
+  font-style: normal;
+  opacity: .65;
+}
+.template-catalog-seal {
+  margin-top: .4rem;
+  font-size: .7rem;
+  opacity: .7;
+}
+
+/* Luxury / ceremonial: framed, formal, symmetrical. */
+.template-catalog-art-golden-classic .template-catalog-paper,
+.template-catalog-art-baroque-gold .template-catalog-paper,
+.template-catalog-art-royal-black-gold .template-catalog-paper {
+  border: 1px solid rgb(225 194 111 / 82%);
+  box-shadow: inset 0 0 0 7px rgb(225 194 111 / 12%), 0 24px 70px rgb(0 0 0 / 30%);
+}
+.template-catalog-art-baroque-gold .template-catalog-paper {
+  border-radius: 4px;
+}
+.template-catalog-art-royal-emerald .template-catalog-paper,
+.template-catalog-art-royal-burgundy .template-catalog-paper,
+.template-catalog-art-royal-sapphire .template-catalog-paper,
+.template-catalog-art-nikah-emerald .template-catalog-paper {
+  border: 2px double rgb(255 255 255 / 62%);
+}
+
+/* Editorial / minimalist: flatter, asymmetric, typography-led. */
+.template-catalog-art-minimalist-white .template-catalog-paper,
+.template-catalog-art-minimalist-brown .template-catalog-paper,
+.template-catalog-art-minimalist-lavender .template-catalog-paper {
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 14rem;
+  text-align: left;
+  color: #241f1a;
+  background: rgb(246 242 233 / 94%);
+  border: 0;
+  border-bottom: 5px solid currentColor;
+  border-radius: 0;
+}
+.template-catalog-art-minimalist-white .template-catalog-names,
+.template-catalog-art-minimalist-brown .template-catalog-names,
+.template-catalog-art-minimalist-lavender .template-catalog-names {
+  font-family: var(--font-sans);
+  font-size: 2.2rem;
+  font-weight: 500;
+  letter-spacing: -.065em;
+}
+.template-catalog-art-editorial-dark .template-catalog-paper,
+.template-catalog-art-cinematic-charcoal .template-catalog-paper {
+  align-items: flex-start;
+  justify-content: flex-end;
+  text-align: left;
+  background: rgb(10 10 10 / 80%);
+  border-color: rgb(255 255 255 / 22%);
+}
+.template-catalog-art-editorial-dark .template-catalog-names,
+.template-catalog-art-cinematic-charcoal .template-catalog-names {
+  max-width: 6ch;
+  font-family: var(--font-sans);
+  font-size: 2.7rem;
+  font-weight: 600;
+  line-height: .88;
+  text-transform: uppercase;
+}
+
+/* Garden / romantic: softer silhouette and organic framing. */
+.template-catalog-art-romantic-rose .template-catalog-paper,
+.template-catalog-art-romantic-champagne .template-catalog-paper,
+.template-catalog-art-garden-green .template-catalog-paper,
+.template-catalog-art-garden-blue .template-catalog-paper,
+.template-catalog-art-garden-ivory .template-catalog-paper,
+.template-catalog-art-floral-pearl .template-catalog-paper,
+.template-catalog-art-aquarela-botanica .template-catalog-paper {
+  border-radius: 38px 18px 38px 18px;
+  background: rgb(35 28 29 / 46%);
+}
+.template-catalog-art-romantic-rose .template-catalog-names,
+.template-catalog-art-floral-pearl .template-catalog-names,
+.template-catalog-art-aquarela-botanica .template-catalog-names {
+  font-family: var(--font-script);
+}
+
+/* African / Xiguiane: textile language, earth tones and a ceremonial seal. */
+.template-catalog-art-african-heritage .template-catalog-paper,
+.template-catalog-art-xiguiane-tradicional .template-catalog-paper {
+  min-height: 17rem;
+  background:
+    repeating-linear-gradient(45deg, rgb(201 168 76 / 10%) 0 8px, transparent 8px 16px),
+    rgb(45 31 21 / 92%);
+  border: 2px solid rgb(201 168 76 / 78%);
+  box-shadow: inset 0 0 0 8px rgb(201 168 76 / 10%), 0 25px 75px rgb(0 0 0 / 32%);
+}
+.template-catalog-art-xiguiane-tradicional .template-catalog-names {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+.template-catalog-art-xiguiane-tradicional .template-catalog-seal {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(201 168 76 / 75%);
+  border-radius: 999px;
+}
+
+/* Boho / Mediterranean / tropical: relaxed paper and slight asymmetry. */
+.template-catalog-art-boho-sand .template-catalog-paper,
+.template-catalog-art-boho-rose .template-catalog-paper,
+.template-catalog-art-mediterranean-blue .template-catalog-paper,
+.template-catalog-art-sicilian-terracotta .template-catalog-paper,
+.template-catalog-art-tropical-green .template-catalog-paper,
+.template-catalog-art-tropical-sunset .template-catalog-paper {
+  color: #fffaf0;
+  border: 0;
+  border-radius: 28px 8px 28px 8px;
+  transform: rotate(-1deg) translateY(8px);
+}
+.group:hover .template-catalog-art-boho-sand .template-catalog-paper,
+.group:hover .template-catalog-art-boho-rose .template-catalog-paper,
+.group:hover .template-catalog-art-mediterranean-blue .template-catalog-paper,
+.group:hover .template-catalog-art-sicilian-terracotta .template-catalog-paper,
+.group:hover .template-catalog-art-tropical-green .template-catalog-paper,
+.group:hover .template-catalog-art-tropical-sunset .template-catalog-paper {
+  transform: rotate(0) translateY(0) scale(1.015);
+}
+
+/* Traditional print / heritage: double-line invitation stock. */
+.template-catalog-art-classic-ivory .template-catalog-paper,
+.template-catalog-art-traditional-bronze .template-catalog-paper,
+.template-catalog-art-vintage-cream .template-catalog-paper,
+.template-catalog-art-european-ivory .template-catalog-paper {
+  color: #352a1e;
+  background: rgb(244 238 224 / 94%);
+  border: 3px double rgb(112 82 39 / 62%);
+  border-radius: 2px;
+}
+.template-catalog-art-classic-ivory .template-catalog-names,
+.template-catalog-art-traditional-bronze .template-catalog-names,
+.template-catalog-art-vintage-cream .template-catalog-names,
+.template-catalog-art-european-ivory .template-catalog-names {
+  color: #352a1e;
+}
+
+/* Emerald / sapphire / midnight: gallery/editorial mood. */
+.template-catalog-art-emerald-elegante .template-catalog-paper {
+  background: rgb(10 55 35 / 84%);
+  border-color: rgb(215 185 92 / 72%);
+}
+.template-catalog-art-sapphire-editorial .template-catalog-paper,
+.template-catalog-art-midnight-blue .template-catalog-paper {
+  background: rgb(12 28 48 / 84%);
+  border-color: rgb(205 215 225 / 35%);
+}
+
 /* ——— Hero identity motifs ——— */
 
 .template-hero-accent {
