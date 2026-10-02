@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { EclipseMark } from "@/components/EclipseMark";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -86,8 +87,6 @@ const templates = [
 function whatsapp(message: string) {
   return `${WHATSAPP}?text=${encodeURIComponent(message)}`;
 }
-
-import { EclipseMark } from "@/components/EclipseMark";
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
