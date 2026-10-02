@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Search, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS } from "@/lib/templates";
@@ -111,7 +111,7 @@ function ModelsPage() {
             key={template.value}
             className="group overflow-hidden rounded-[30px] bg-white shadow-[0_18px_60px_rgba(0,0,0,.07)] transition duration-500 hover:-translate-y-1"
           >
-            <a href={`/modelos/${template.value}`} className="block" aria-label={"Ver modelo " + template.label}>
+            <Link to="/modelos/$template" params={{ template: template.value }} className="block" aria-label={"Ver modelo " + template.label}>
               <div className="relative overflow-hidden">
                 <img
                   src={images[index % images.length]}
@@ -159,10 +159,10 @@ function ModelsPage() {
                 ))}
               </ul>
 
-              <a href={`/modelos/${template.value}`} className="mt-7 flex items-center justify-center gap-3 rounded-full bg-black px-6 py-4 text-sm font-medium text-white transition hover:bg-neutral-800">
+              <Link to="/modelos/$template" params={{ template: template.value }} className="mt-7 flex items-center justify-center gap-3 rounded-full bg-black px-6 py-4 text-sm font-medium text-white transition hover:bg-neutral-800">
                 Escolher este modelo
                 <ArrowRight className="size-4" />
-              </a>
+              </Link>
             </div>
           </article>
         ))}
