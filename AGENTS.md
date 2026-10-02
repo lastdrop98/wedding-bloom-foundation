@@ -10,3 +10,5 @@
 > the editor, so keep the branch in a working state.
 
 <!-- LOVABLE:END -->
+
+- Keep catalogue demonstrations and commercial requests as local React dialogs rather than route-dependent actions, so visitors can act without navigating away.
