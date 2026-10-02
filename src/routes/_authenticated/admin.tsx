@@ -103,6 +103,17 @@ function AdminPage() {
     void queryClient.invalidateQueries({ queryKey: ["admin-events"] });
   }
 
+  function handleSaved(savedEvent?: EventRow) {
+    void queryClient.invalidateQueries({ queryKey: ["admin-events"] });
+    if (savedEvent) {
+      setMode((current) =>
+        current.kind === "form"
+          ? { ...current, event: savedEvent, eventType: savedEvent.event_type }
+          : current,
+      );
+    }
+  }
+
   const currentEvent = mode.kind === "form" ? mode.event : null;
 
   return (
@@ -111,7 +122,13 @@ function AdminPage() {
         <aside className="fixed inset-y-0 left-0 z-50 hidden w-[248px] border-r border-black/[0.06] bg-white lg:flex lg:flex-col">
           <div className="flex h-16 items-center border-b border-black/[0.06] px-6">
             <Link to="/" className="flex items-center gap-2.5">
-              <span className="flex size-7 items-center justify-center rounded-full bg-black text-[9px] font-semibold tracking-[0.08em] text-white">SE</span>
+              <span className="flex size-7 items-center justify-center rounded-full bg-black text-white" aria-hidden="true">
+                <svg viewBox="0 0 32 32" className="size-5" fill="none">
+                  <circle cx="16" cy="16" r="9.5" stroke="currentColor" strokeWidth="1.3" opacity=".3" />
+                  <path d="M8.7 20.7a9.5 9.5 0 0 0 14.6-9.4A9.5 9.5 0 1 1 8.7 20.7Z" fill="currentColor" opacity=".9" />
+                  <path d="M10.2 8.8A9.5 9.5 0 0 1 23.8 23" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </span>
               <span className="text-sm font-semibold tracking-[-0.02em]">Solar Eclipse</span>
             </Link>
           </div>
@@ -160,7 +177,13 @@ function AdminPage() {
             <aside className="relative flex h-full w-[290px] flex-col bg-white p-5 shadow-2xl">
               <div className="flex items-center justify-between">
                 <Link to="/" className="flex items-center gap-2.5" onClick={() => setMobileNav(false)}>
-                  <span className="flex size-7 items-center justify-center rounded-full bg-black text-[9px] font-semibold text-white">SE</span>
+                  <span className="flex size-7 items-center justify-center rounded-full bg-black text-white" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" className="size-5" fill="none">
+                      <circle cx="16" cy="16" r="9.5" stroke="currentColor" strokeWidth="1.3" opacity=".3" />
+                      <path d="M8.7 20.7a9.5 9.5 0 0 0 14.6-9.4A9.5 9.5 0 1 1 8.7 20.7Z" fill="currentColor" opacity=".9" />
+                      <path d="M10.2 8.8A9.5 9.5 0 0 1 23.8 23" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  </span>
                   <span className="text-sm font-semibold">Solar Eclipse</span>
                 </Link>
                 <button type="button" onClick={() => setMobileNav(false)}><X className="size-5 text-black/50" /></button>
@@ -231,7 +254,7 @@ function AdminPage() {
                 activeSection={activeSection}
                 onSectionChange={setActiveSection}
                 onClose={closeForm}
-                onSaved={closeForm}
+                onSaved={handleSaved}
               />
             )}
           </div>
