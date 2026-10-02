@@ -74,10 +74,29 @@ const templates = [
     image:
       "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
   },
+  {
+    id: "xiguiane-tradicional",
+    name: "Xiguiane Tradicional",
+    style: "Herança moçambicana",
+    image:
+      "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=800&q=80",
+  },
 ];
 
 function whatsapp(message: string) {
   return `${WHATSAPP}?text=${encodeURIComponent(message)}`;
+}
+
+function EclipseMark({ className = "size-6" }: { className?: string }) {
+  return (
+    <span className={`inline-flex shrink-0 items-center justify-center ${className}`} aria-hidden="true">
+      <svg viewBox="0 0 32 32" className="size-full" fill="none">
+        <circle cx="16" cy="16" r="9.5" stroke="currentColor" strokeWidth="1.4" opacity=".28" />
+        <path d="M8.7 20.7a9.5 9.5 0 0 0 14.6-9.4A9.5 9.5 0 1 1 8.7 20.7Z" fill="currentColor" opacity=".92" />
+        <path d="M10.2 8.8A9.5 9.5 0 0 1 23.8 23" stroke="#C9A84C" strokeWidth="1.6" strokeLinecap="round" />
+      </svg>
+    </span>
+  );
 }
 
 function HomePage() {
@@ -87,8 +106,9 @@ function HomePage() {
     <main className="min-h-screen bg-[#faf8f3] text-neutral-900">
       <header className="sticky top-0 z-50 border-b border-black/5 bg-[#faf8f3]/90 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
-          <a href="/" className="text-sm font-semibold tracking-tight">
-            Solar Eclipse
+          <a href="/" className="inline-flex items-center gap-2.5 text-sm font-semibold tracking-tight" aria-label="Solar Eclipse — início">
+            <EclipseMark className="size-7 text-black" />
+            <span>Solar Eclipse</span>
           </a>
 
           <nav className="hidden items-center gap-7 text-xs text-black/55 md:flex">
@@ -292,7 +312,10 @@ function HomePage() {
       </section>
 
       <footer className="bg-[#111] px-6 py-10 text-center text-xs text-white/40">
-        Solar Eclipse · Convites digitais de casamento
+        <div className="inline-flex items-center gap-2.5">
+          <EclipseMark className="size-5 text-white" />
+          <span>Solar Eclipse · Convites digitais de casamento</span>
+        </div>
       </footer>
     </main>
   );
