@@ -2,32 +2,29 @@ import type { SVGProps } from "react";
 
 export function EclipseMark({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      viewBox="0 0 40 40"
-      className={className}
-      fill="none"
-      role="img"
-      aria-label="Eclipse solar"
-      {...props}
-    >
-      <circle cx="20" cy="20" r="15.2" fill="#F7F2E8" stroke="#D8C68F" strokeWidth="0.7" />
-      <circle cx="20" cy="20" r="12.6" stroke="#C9A84C" strokeWidth="0.8" opacity=".8" />
-      <circle cx="20" cy="20" r="9.6" fill="#0A0A0A" />
-      <circle cx="17.6" cy="16.9" r="8.5" fill="#171717" />
-      <path
-        d="M9.4 13.2a13.2 13.2 0 0 1 22.1 2.9"
-        stroke="#E8D9A8"
-        strokeWidth="1.05"
-        strokeLinecap="round"
-        opacity=".95"
-      />
-      <path
-        d="M9.5 27.1a13.2 13.2 0 0 0 21.9-3.2"
-        stroke="#C9A84C"
-        strokeWidth=".75"
-        strokeLinecap="round"
-        opacity=".6"
-      />
+    <svg viewBox="0 0 48 48" className={className} fill="none" role="img" aria-label="Solar Eclipse" {...props}>
+      <defs>
+        <linearGradient id="solar-eclipse-gold" x1="10" y1="8" x2="39" y2="39" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F4E3B2" />
+          <stop offset=".42" stopColor="#C9A84C" />
+          <stop offset="1" stopColor="#8D6B20" />
+        </linearGradient>
+      </defs>
+      <g stroke="url(#solar-eclipse-gold)" strokeLinecap="round">
+        <path d="M24 2.8v4.2" strokeWidth="1.25" opacity=".55" />
+        <path d="M24 41v4.2" strokeWidth="1.25" opacity=".55" />
+        <path d="m8.8 8.8 3 3" strokeWidth="1.1" opacity=".38" />
+        <path d="m36.2 36.2 3 3" strokeWidth="1.1" opacity=".38" />
+        <path d="M3 24h4.2" strokeWidth="1.1" opacity=".32" />
+        <path d="M40.8 24H45" strokeWidth="1.1" opacity=".5" />
+        <path d="m39.2 8.8-3 3" strokeWidth="1.1" opacity=".75" />
+        <path d="m8.8 39.2 3-3" strokeWidth="1.1" opacity=".2" />
+      </g>
+      <circle cx="24" cy="24" r="15.2" stroke="url(#solar-eclipse-gold)" strokeWidth="1.15" opacity=".48" />
+      <circle cx="24" cy="24" r="11.4" fill="url(#solar-eclipse-gold)" />
+      <circle cx="28.8" cy="19.2" r="10.9" fill="#11100E" />
+      <path d="M31.5 9.9c4.1 2.1 6.9 6.3 6.9 11.2" stroke="#F4E3B2" strokeWidth="1.25" strokeLinecap="round" opacity=".9" />
+      <path d="M35.4 16.4c.8 1.5 1.2 3.1 1.2 4.8" stroke="#C9A84C" strokeWidth="1" strokeLinecap="round" opacity=".8" />
     </svg>
   );
 }
