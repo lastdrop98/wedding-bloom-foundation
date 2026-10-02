@@ -1,0 +1,3 @@
+- [x] Abrir demonstrações longas no catálogo, com variantes visuais e fecho acessível.
+- [x] Preparar pedidos do modelo selecionado e abrir WhatsApp comercial.
+- [x] Validar botões, telemóvel, tipos e compilação.
