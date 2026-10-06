@@ -36,6 +36,7 @@ import { ScheduleManager } from "@/components/ScheduleManager";
 import { Button } from "@/components/ui/button";
 import { EclipseMark } from "@/components/EclipseMark";
 import { fetchTemplateRequests, updateTemplateRequestStatus, type TemplateRequest } from "@/lib/templateRequests";
+import { whatsappUrl } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -510,19 +511,33 @@ function Dashboard({
           <span className="rounded-full bg-[#C9A84C]/15 px-3 py-1.5 text-xs font-semibold text-[#7b5d16]">{templateRequests.filter((r) => r.status === "new").length} novos</span>
         </div>
         <div className="mt-5 space-y-2">
-          {templateRequests.length ? templateRequests.slice(0, 6).map((request) => (
-            <button key={request.id} type="button" onClick={() => onOpenTemplateRequest(request)} className="group flex w-full flex-col gap-3 rounded-2xl border border-black/[0.06] bg-white px-4 py-4 text-left transition hover:-translate-y-0.5 hover:border-[#C9A84C]/50 hover:shadow-md sm:flex-row sm:items-center sm:justify-between">
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-medium">{request.couple_name}</span>
-                  <span className="rounded-full bg-black/[0.04] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]">{request.template_label}</span>
-                  {request.status === "new" && <span className="rounded-full bg-[#C9A84C] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">Novo</span>}
+          {templateRequests.length ? templateRequests.slice(0, 6).map((request) => {
+            const message = [
+              `Olá! Estou a acompanhar o vosso pedido do modelo ${request.template_label} na Solar Eclipse.`,
+              `Casal: ${request.couple_name}`,
+              `Data: ${request.wedding_date || "Por definir"}`,
+            ].join("\n");
+            return (
+              <article key={request.id} className="group flex w-full flex-col gap-3 rounded-2xl border border-black/[0.06] bg-white px-4 py-4 text-left transition hover:-translate-y-0.5 hover:border-[#C9A84C]/50 hover:shadow-md sm:flex-row sm:items-center sm:justify-between">
+                <button type="button" onClick={() => onOpenTemplateRequest(request)} className="min-w-0 flex-1 text-left">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-medium">{request.couple_name}</span>
+                    <span className="rounded-full bg-black/[0.04] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]">{request.template_label}</span>
+                    {request.status === "new" && <span className="rounded-full bg-[#C9A84C] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">Novo</span>}
+                  </div>
+                  <p className="mt-1 text-xs text-black/45">{request.phone} · {request.wedding_date || "Data por definir"} · {formatAdminDateTime(request.created_at)}</p>
+                </button>
+                <div className="flex shrink-0 items-center gap-2">
+                  <a href={whatsappUrl(message, request.phone)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-[#25D366]/30 bg-[#25D366]/10 px-3.5 py-2 text-xs font-medium text-[#168a44] transition hover:bg-[#25D366]/15">
+                    <MessageCircle className="size-3.5" /> WhatsApp
+                  </a>
+                  <button type="button" onClick={() => onOpenTemplateRequest(request)} className="inline-flex items-center gap-1 rounded-full bg-black px-4 py-2 text-xs font-medium text-white">
+                    Abrir <ChevronRight className="size-3.5" />
+                  </button>
                 </div>
-                <p className="mt-1 text-xs text-black/45">{request.phone} · {request.wedding_date || "Data por definir"} · {formatAdminDateTime(request.created_at)}</p>
-              </div>
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-black px-4 py-2 text-xs font-medium text-white">Abrir convite <ChevronRight className="size-3.5" /></span>
-            </button>
-          )) : (
+              </article>
+            );
+          }) : (
             <div className="rounded-2xl border border-dashed border-black/10 px-5 py-8 text-center text-sm text-black/40">Ainda não há pedidos de modelos.</div>
           )}
         </div>
