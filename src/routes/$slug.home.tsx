@@ -594,7 +594,9 @@ function HomePage() {
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
   const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
-  const [slotMedia, setSlotMedia] = useState<Record<string, string>>({});
+  const [slotMedia, setSlotMedia] = useState<
+    Record<string, { url: string; mediaType: string }>
+  >({});
 
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", slug],
@@ -616,13 +618,16 @@ function HomePage() {
   useEffect(() => {
     if (!content?.media.length) return;
     Promise.all(
-      content.media.map(
-        async (m) => [m.slot, await signedUrl(GALLERY_BUCKET, m.storage_path)] as const,
-      ),
+      content.media.map(async (m) => {
+        const url = await signedUrl(GALLERY_BUCKET, m.storage_path);
+        return url ? ([m.slot, { url, mediaType: m.media_type }] as const) : null;
+      }),
     ).then((pairs) => {
-      const next = Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1])));
+      const next = Object.fromEntries(
+        pairs.filter((p): p is [string, { url: string; mediaType: string }] => Boolean(p)),
+      );
       setSlotMedia(next);
-      if (!event?.cover_image_path && next["cover"]) setCover(next["cover"]);
+      if (!event?.cover_image_path && next["cover"]) setCover(next["cover"].url);
     });
   }, [content, event?.cover_image_path]);
 
@@ -712,21 +717,21 @@ function HomePage() {
       className={`${templateToneClass(event.template)} ${templateVisualClass(event.template)} template-design-${event.template} pb-24`}
     >
       <TemplateAtmosphere template={event.template} />
-      {slotMedia["background"] && (
+      {slotMedia["background"]?.url && (
         <div
           aria-hidden="true"
           className="template-background-media pointer-events-none fixed inset-0 -z-20"
           style={{
-            backgroundImage: `linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 88%, transparent), color-mix(in oklab, var(--color-background) 96%, transparent)), url(${slotMedia["background"]})`,
+            backgroundImage: `linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 88%, transparent), color-mix(in oklab, var(--color-background) 96%, transparent)), url(${slotMedia["background"]?.url})`,
           }}
         />
       )}
       {/* Cabeçalho imersivo — a estrutura mantém os mesmos dados, mas cada família ganha uma direção de arte própria. */}
       <header className="template-hero relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          {slotMedia["cover_video"] ? (
+          {slotMedia["cover_video"]?.url ? (
             <video
-              src={slotMedia["cover_video"]}
+              src={slotMedia["cover_video"]?.url}
               autoPlay
               muted
               loop
@@ -892,8 +897,8 @@ function HomePage() {
                   parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
                     ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
                     : "",
-                  photo: slotMedia["bride"]
-                    ? { url: slotMedia["bride"], caption: null, mediaType: "image" }
+                  photo: slotMedia["bride"]?.url
+                    ? { url: slotMedia["bride"]?.url, caption: null, mediaType: "image" }
                     : galleryUrls[0],
                 },
                 {
@@ -902,8 +907,8 @@ function HomePage() {
                   parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
                     ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
                     : "",
-                  photo: slotMedia["groom"]
-                    ? { url: slotMedia["groom"], caption: null, mediaType: "image" }
+                  photo: slotMedia["groom"]?.url
+                    ? { url: slotMedia["groom"]?.url, caption: null, mediaType: "image" }
                     : galleryUrls[1],
                 },
               ].map((p, i) => (
@@ -925,10 +930,10 @@ function HomePage() {
           dark
           vines="b"
         >
-          {slotMedia["story"] && (
+          {slotMedia["story"]?.url && (
             <div className="mb-8 overflow-hidden rounded-2xl border border-gold/25">
               <img
-                src={slotMedia["story"]}
+                src={slotMedia["story"]?.url}
                 alt={`História de ${eventTitle(event)}`}
                 loading="lazy"
                 className="max-h-[32rem] w-full object-cover"
@@ -1101,8 +1106,8 @@ function HomePage() {
             <GalleryCarousel
               items={[
                 ...galleryUrls,
-                ...(slotMedia["gallery"]
-                  ? [{ url: slotMedia["gallery"], caption: "Momento especial", mediaType: "image" }]
+                ...(slotMedia["gallery"]?.url
+                  ? [{ url: slotMedia["gallery"]?.url, caption: "Momento especial", mediaType: "image" }]
                   : []),
               ].filter((item, index, list) => list.findIndex((candidate) => candidate.url === item.url) === index)}
               eventName={eventTitle(event)}
@@ -1206,13 +1211,13 @@ function HomePage() {
         </Section>
       )}
 
-      {(d("closing_message") || slotMedia["closing"]) && (
+      {(d("closing_message") || slotMedia["closing"]?.url) && (
         <section data-template-section="closing" className="mx-auto max-w-3xl px-6 py-12 text-center">
           <Ornament />
-          {slotMedia["closing"] && (
+          {slotMedia["closing"]?.url && (
             <div className="mt-8 overflow-hidden rounded-2xl border border-gold/25">
               <img
-                src={slotMedia["closing"]}
+                src={slotMedia["closing"]?.url}
                 alt={`Mensagem final de ${eventTitle(event)}`}
                 loading="lazy"
                 className="max-h-[28rem] w-full object-cover"
