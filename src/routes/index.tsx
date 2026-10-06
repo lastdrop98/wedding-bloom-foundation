@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { EclipseMark } from "@/components/EclipseMark";
-import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";\nimport { TEMPLATE_OPTIONS } from "@/lib/templates";
+import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";\nimport { TEMPLATE_OPTIONS, templateVisualClass } from "@/lib/templates";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -343,7 +343,7 @@ function HomePage() {
                 params={{ template: item.value }}
                 className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1"
               >
-                <div className={`solar-home-template-preview template-visual-${item.value} relative h-80 overflow-hidden`}>
+                <div className={`solar-home-template-preview ${templateVisualClass(item.value)} relative h-80 overflow-hidden`}>
                   <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6 text-white">
