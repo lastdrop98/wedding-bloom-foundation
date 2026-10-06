@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, CheckCircle2, MessageCircle, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
-import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
+import { whatsappUrl } from "@/lib/whatsapp";
 import { EclipseMark } from "@/components/EclipseMark";
 
 export const Route = createFileRoute("/_authenticated/whatsapp")({
   head: () => ({
     meta: [
-      { title: "WhatsApp API — Solar Eclipse" },
+      { title: "WhatsApp — Solar Eclipse" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -54,7 +54,7 @@ function WhatsAppPage() {
               <h1 className="mt-1 text-3xl font-semibold tracking-tight">WhatsApp</h1>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-black/55">
                 Central para testar e gerir o contacto WhatsApp usado pelos pedidos de modelos.
-                O envio usa o endereço oficial do WhatsApp, sem guardar tokens ou segredos no navegador.
+                O contacto abre pelo endereço oficial do WhatsApp. Esta central não expõe tokens nem credenciais de API no navegador.
               </p>
             </div>
           </div>
@@ -82,13 +82,14 @@ function WhatsAppPage() {
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => openWhatsApp(message, phone)}
+            <a
+              href={url}
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-xl bg-[#128C7E] px-5 py-3 text-sm font-semibold text-white hover:opacity-90"
             >
               <MessageCircle className="size-4" /> Abrir WhatsApp
-            </button>
+            </a>
             <a
               href={url}
               target="_blank"
@@ -113,10 +114,18 @@ function WhatsAppPage() {
           )}
         </section>
 
-        <p className="mt-5 text-xs leading-5 text-black/40">
-          Nota: esta página não coloca credenciais de uma API de terceiros no frontend. Quando a
-          integração oficial de API for ligada, o token deverá ficar no ambiente seguro do backend.
-        </p>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-2xl border border-black/[.06] bg-white p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-black/35">Ligação atual</p>
+            <p className="mt-2 text-sm font-medium">WhatsApp Web / App</p>
+            <p className="mt-1 text-xs leading-5 text-black/45">Pronta para abrir conversas e partilhar links de convites.</p>
+          </div>
+          <div className="rounded-2xl border border-black/[.06] bg-white p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-black/35">API oficial</p>
+            <p className="mt-2 text-sm font-medium">Backend seguro necessário</p>
+            <p className="mt-1 text-xs leading-5 text-black/45">Tokens da Meta devem ficar no backend/Edge Function, nunca no frontend.</p>
+          </div>
+        </div>
       </div>
     </main>
   );
