@@ -356,18 +356,31 @@ function ModelsPage() {
     setFeedback("");
   }
 
-  function submitRequest(event: React.FormEvent<HTMLFormElement>) {
+  async function submitRequest(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!selected) return;
-    const text = [
+
+    const coupleName = name.trim();
+    const contact = phone.trim();
+    const requestText = [
       `Olá! Quero o modelo ${selected.label} para o meu casamento.`,
-      `Casal: ${name.trim()}`,
-      `Contacto: ${phone.trim()}`,
+      `Casal: ${coupleName}`,
+      `Contacto: ${contact}`,
       `Data prevista: ${date || "Por definir"}`,
       `Mensagem: ${message.trim() || "Sem mensagem adicional"}`,
     ].join("\n");
-    setFeedback("A abrir o WhatsApp…");
-    openWhatsApp(text);
+
+    setFeedback("A registar o pedido…");
+    await createTemplateRequest({
+      template_value: selected.value,
+      template_label: selected.label,
+      couple_name: coupleName,
+      phone: contact,
+      wedding_date: date || null,
+      message: message.trim() || null,
+    });
+    setFeedback("Pedido registado. A abrir o WhatsApp…");
+    openWhatsApp(requestText);
   }
 
   const visible = useMemo(() => {
