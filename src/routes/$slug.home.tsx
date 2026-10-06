@@ -925,6 +925,16 @@ function HomePage() {
           dark
           vines="b"
         >
+          {slotMedia["story"] && (
+            <div className="mb-8 overflow-hidden rounded-2xl border border-gold/25">
+              <img
+                src={slotMedia["story"]}
+                alt={`História de ${eventTitle(event)}`}
+                loading="lazy"
+                className="max-h-[32rem] w-full object-cover"
+              />
+            </div>
+          )}
           {storyMilestones.length > 0 ? (
             <StoryTimeline milestones={storyMilestones} />
           ) : (
@@ -1089,7 +1099,12 @@ function HomePage() {
           <VineDivider className="my-6" />
           <Section sectionKey="gallery" title="Galeria" wide dark vines="c">
             <GalleryCarousel
-              items={galleryUrls}
+              items={[
+                ...galleryUrls,
+                ...(slotMedia["gallery"]
+                  ? [{ url: slotMedia["gallery"], caption: "Momento especial", mediaType: "image" }]
+                  : []),
+              ].filter((item, index, list) => list.findIndex((candidate) => candidate.url === item.url) === index)}
               eventName={eventTitle(event)}
               onOpen={setLightbox}
             />
@@ -1191,12 +1206,24 @@ function HomePage() {
         </Section>
       )}
 
-      {d("closing_message") && (
-        <section className="mx-auto max-w-2xl px-6 py-12 text-center">
+      {(d("closing_message") || slotMedia["closing"]) && (
+        <section data-template-section="closing" className="mx-auto max-w-3xl px-6 py-12 text-center">
           <Ornament />
-          <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">
-            {d("closing_message")}
-          </p>
+          {slotMedia["closing"] && (
+            <div className="mt-8 overflow-hidden rounded-2xl border border-gold/25">
+              <img
+                src={slotMedia["closing"]}
+                alt={`Mensagem final de ${eventTitle(event)}`}
+                loading="lazy"
+                className="max-h-[28rem] w-full object-cover"
+              />
+            </div>
+          )}
+          {d("closing_message") && (
+            <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">
+              {d("closing_message")}
+            </p>
+          )}
         </section>
       )}
 
