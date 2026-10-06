@@ -70,9 +70,11 @@ function formatAdminDateTime(value: string | Date | null | undefined) {
   }).format(date);
 }
 
+type Mode =
   | { kind: "dashboard" }
   | { kind: "choose-type" }
   | { kind: "form"; event: EventRow | null; eventType: string };
+
 
 const NAV = [
   ["dashboard", "Visão geral", LayoutDashboard],
