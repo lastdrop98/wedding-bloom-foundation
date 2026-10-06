@@ -196,9 +196,14 @@ function TemplatePreviewPage() {
           </p>
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {[
-              ["01", "Capa", "Uma primeira impressão inesquecível."],
-              ["02", "História", "Fotografias, momentos e detalhes do casal."],
-              ["03", "Confirmação", "RSVP, convidados, localização e presentes."],
+              ["01", "Capa", "A abertura do convite com a identidade visual do modelo."],
+              ["02", "História", "A história do casal, momentos e fotografias."],
+              ["03", "Programa", "Cerimónia, receção, horários e localização."],
+              ["04", "Galeria", "Fotos e vídeos com apresentação própria para cada tema."],
+              ["05", "RSVP", "Confirmação de presença com link personalizado."],
+              ["06", "Presentes", "Lista de presentes, dados bancários e QR Code."],
+              ["07", "Mensagens", "Livro de recados para família e convidados."],
+              ["08", "Entrega", "Link, QR, impressão e painel privado do casal."],
             ].map(([number, title, description]) => (
               <div
                 key={number}
