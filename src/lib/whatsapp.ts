@@ -6,10 +6,10 @@ const WHATSAPP_PHONE = "258847404160";
  */
 export function whatsappUrl(message: string) {
   const encoded = encodeURIComponent(message);
-  if (typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    return `https://wa.me/${WHATSAPP_PHONE}?text=${encoded}`;
-  }
-  return `https://web.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
+  // Use wa.me for every device. It safely hands off to the WhatsApp app when
+  // available and falls back to the browser without depending on
+  // web.whatsapp.com, which can be blocked by some browsers/networks.
+  return `https://wa.me/${WHATSAPP_PHONE}?text=${encoded}`;
 }
 
 export function openWhatsApp(message: string) {
