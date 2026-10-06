@@ -355,6 +355,13 @@ export function AquarelaHome({
   const schedule = content?.schedule ?? [];
   const gifts = content?.gifts ?? [];
   const d = (field: Parameters<typeof detail>[1]) => detail(event, field);
+  const storyMilestones = [1, 2, 3, 4]
+    .map((n) => ({
+      date: d(`story_${n}_date` as Parameters<typeof detail>[1]) ?? "",
+      title: d(`story_${n}_title` as Parameters<typeof detail>[1]) ?? "",
+      text: d(`story_${n}_text` as Parameters<typeof detail>[1]) ?? "",
+    }))
+    .filter((item) => item.date || item.title || item.text);
 
   function toggleMusic() {
     const el = audioRef.current;
@@ -525,6 +532,21 @@ export function AquarelaHome({
         </Section>
       )}
 
+      {storyMilestones.length > 0 && (
+        <Section sectionKey="story" title="A Nossa História" eyebrow={d("story_intro") || "O caminho até aqui"} wide flora="rose">
+          <div className="grid gap-5 md:grid-cols-2">
+            {storyMilestones.map((item, index) => (
+              <Reveal key={item.title || item.date || index} delay={index * 100}>
+                <article className="card-aquarela h-full p-7">
+                  {item.date && <p className="font-sans text-[0.65rem] tracking-[0.25em] text-primary uppercase">{item.date}</p>}
+                  {item.title && <h3 className="mt-3 text-2xl font-light">{item.title}</h3>}
+                  {item.text && <p className="mt-3 font-sans text-sm leading-7 text-muted-foreground">{item.text}</p>}
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </Section>
+      )}
       <Section sectionKey="schedule" title="Programa do Dia" flora="bagas">
         <ol className="space-y-4">
           {(schedule.length > 0
