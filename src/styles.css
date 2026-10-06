@@ -3792,3 +3792,20 @@ div[id*="lovable-badge"] {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+.template-celestial-stars {
+  position:absolute; inset:0; opacity:.55;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(164,123,49,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 24% 42%,rgba(164,123,49,.7) 0 1px,transparent 2px),
+    radial-gradient(circle at 72% 22%,rgba(164,123,49,.8) 0 1px,transparent 2px),
+    radial-gradient(circle at 84% 62%,rgba(164,123,49,.7) 0 1px,transparent 2px),
+    radial-gradient(circle at 54% 78%,rgba(164,123,49,.8) 0 1px,transparent 2px);
+}
+.template-coastal-wave {
+  position:absolute; left:-10%; right:-10%; bottom:-8%; height:30%;
+  border-top:1px solid rgba(45,114,128,.25);
+  border-radius:50% 50% 0 0;
+  transform:rotate(-2deg);
+  background:linear-gradient(to top,rgba(45,114,128,.09),transparent);
+}
