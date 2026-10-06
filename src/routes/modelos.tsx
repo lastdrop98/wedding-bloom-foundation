@@ -3,6 +3,7 @@ import { ArrowRight, Check, Search, Sparkles, X, MessageCircle } from "lucide-re
 import { useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
+import { openWhatsApp } from "@/lib/whatsapp";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 
@@ -39,8 +40,6 @@ function matchesFilter(family: string, filter: string) {
   if (filter === "Africano") return value.includes("africano") || value.includes("xiguiane");
   return value.includes(filter.toLowerCase());
 }
-
-const WHATSAPP = "https://wa.me/258847404160";
 
 function previewFamily(template: TemplateDefinition) {
   if (template.value === "xiguiane-tradicional" || /tradicional|africano|xiguiane/i.test(template.family)) return "heritage";
@@ -126,11 +125,8 @@ function ModelsPage() {
       `Data prevista: ${date || "Por definir"}`,
       `Mensagem: ${message.trim() || "Sem mensagem adicional"}`,
     ].join("\n");
-    const whatsappUrl = `${WHATSAPP}?text=${encodeURIComponent(text)}`;
     setFeedback("A abrir o WhatsApp…");
-    // Não dependemos de popup: alguns navegadores bloqueiam window.open
-    // quando o pedido é iniciado dentro de um Dialog.
-    window.location.assign(whatsappUrl);
+    openWhatsApp(text);
   }
 
   const visible = useMemo(() => {
