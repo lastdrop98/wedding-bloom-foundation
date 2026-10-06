@@ -379,6 +379,7 @@ export function AquarelaHome({
 
   return (
     <main className="aquarela template-visual-botanical template-design-aquarela-botanica pb-24">
+      <InviteQuickActions event={event} />
       <header data-template-section="hero" className="template-hero relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           {slotMedia["cover_video"]?.url ? (
