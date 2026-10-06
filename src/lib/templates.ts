@@ -397,6 +397,38 @@ export function getTemplateLayout(value?: string | null): TemplateLayout {
   return "classic";
 }
 
+export type TemplateVisualFamily =
+  | "classic"
+  | "editorial"
+  | "cinematic"
+  | "botanical"
+  | "pearl"
+  | "royal"
+  | "heritage"
+  | "celestial"
+  | "coastal";
+
+export function getTemplateVisualFamily(value?: string | null): TemplateVisualFamily {
+  const template = getTemplateDefinition(value);
+  const source = `${template.value} ${template.label} ${template.family}`.toLowerCase();
+
+  if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue/.test(source)) return "cinematic";
+  if (/editorial|minimalist|sapphire-editorial/.test(source)) return "editorial";
+  if (/aquarela|garden|botanical|floral|romantic|boho|tropical/.test(source)) {
+    if (/pearl|floral-pearl|pearl-garden/.test(source)) return "pearl";
+    return "botanical";
+  }
+  if (/royal|baroque|oriental|nikah|traditional-bronze/.test(source)) return "royal";
+  if (/xiguiane|african|capulana/.test(source)) return "heritage";
+  if (/celestial/.test(source)) return "celestial";
+  if (/coastal|destination|mediterranean|sicilian/.test(source)) return "coastal";
+  return "classic";
+}
+
+export function templateVisualClass(value?: string | null) {
+  return `template-visual-${getTemplateVisualFamily(value)}`;
+}
+
 export function templateToneClass(value?: string | null) {
   return `invite-tone-${getTemplateDefinition(value).tone} template-layout-${getTemplateLayout(value)}`;
 }
