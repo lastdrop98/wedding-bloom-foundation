@@ -3022,3 +3022,298 @@ main[class*="template-layout-"] > footer {
     transition: none !important;
   }
 }
+
+
+/* ═══════════ Admin workspace — acabamento premium inspirado em workspaces modernos ═══════════ */
+main:has(.admin-clock) {
+  background:
+    radial-gradient(circle at 92% 4%, rgba(201,168,76,.07), transparent 26rem),
+    radial-gradient(circle at 6% 88%, rgba(0,0,0,.025), transparent 24rem),
+    #f5f5f7;
+}
+.admin-clock {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  min-width: 248px;
+  padding: .55rem .85rem .55rem .65rem;
+  border: 1px solid rgba(17,17,17,.08);
+  border-radius: 18px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 10px 28px -20px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.9);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  backdrop-filter: blur(18px);
+}
+.admin-clock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 13px;
+  color: #171717;
+  background: linear-gradient(145deg, #111, #292929);
+  box-shadow: 0 8px 18px -12px rgba(0,0,0,.6);
+}
+.admin-clock-icon svg {
+  color: #e6c86d;
+}
+.admin-clock-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1;
+}
+.admin-clock-time {
+  display: block;
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-weight: 650;
+  letter-spacing: -.045em;
+  color: #161616;
+}
+.admin-clock-date {
+  display: block;
+  margin-top: .38rem;
+  overflow: hidden;
+  color: rgba(0,0,0,.48);
+  font-size: .68rem;
+  font-weight: 550;
+  letter-spacing: .015em;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+}
+.admin-clock::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  margin-left: auto;
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: #c9a84c;
+  box-shadow: 0 0 0 4px rgba(201,168,76,.10);
+}
+@media (max-width: 900px) {
+  .admin-clock {
+    min-width: 220px;
+  }
+}
+@media (max-width: 639px) {
+  .admin-clock {
+    display: flex;
+    min-width: 0;
+    padding: .45rem .65rem;
+  }
+  .admin-clock-icon {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+  .admin-clock-time {
+    font-size: 1.08rem;
+  }
+  .admin-clock-date {
+    font-size: .61rem;
+  }
+}
+
+/* Cartões e superfícies do workspace: mais profundidade, sem mudar a lógica. */
+main:has(.admin-clock) .rounded-[30px],
+main:has(.admin-clock) .rounded-[28px] {
+  box-shadow: 0 18px 50px -38px rgba(0,0,0,.34), 0 1px 2px rgba(0,0,0,.03);
+}
+main:has(.admin-clock) .sticky {
+  box-shadow: 0 12px 30px -28px rgba(0,0,0,.4);
+}
+
+/* ═══════════ Movimento específico por direção de arte ═══════════ */
+.template-design-xiguiane-tradicional .template-hero::before,
+.template-design-african-heritage .template-hero::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+  opacity: .22;
+  background:
+    repeating-linear-gradient(135deg, rgba(201,168,76,.22) 0 2px, transparent 2px 18px),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.08) 0 1px, transparent 1px 22px);
+  mix-blend-mode: soft-light;
+  animation: heritage-fabric-drift 18s ease-in-out infinite alternate;
+}
+.template-design-xiguiane-tradicional .template-hero::after,
+.template-design-african-heritage .template-hero::after {
+  content: "";
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  right: -8rem;
+  bottom: -9rem;
+  border: 1px solid rgba(201,168,76,.28);
+  border-radius: 46% 54% 62% 38%;
+  transform: rotate(-18deg);
+  pointer-events: none;
+  animation: heritage-seal-drift 12s ease-in-out infinite alternate;
+}
+@keyframes heritage-fabric-drift {
+  from { transform: translate3d(-2%,0,0) rotate(-1deg); }
+  to { transform: translate3d(3%,1%,0) rotate(1deg); }
+}
+@keyframes heritage-seal-drift {
+  from { transform: rotate(-18deg) translate3d(0,0,0); opacity: .42; }
+  to { transform: rotate(-10deg) translate3d(-18px,-12px,0); opacity: .78; }
+}
+
+.template-design-garden-green .template-hero::before,
+.template-design-romantic-rose .template-hero::before,
+.template-design-floral-pearl .template-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .34;
+  background:
+    radial-gradient(circle at 15% 24%, rgba(255,255,255,.45) 0 2px, transparent 3px),
+    radial-gradient(circle at 72% 18%, rgba(255,255,255,.35) 0 2px, transparent 3px),
+    radial-gradient(circle at 45% 78%, rgba(255,255,255,.3) 0 2px, transparent 3px);
+  background-size: 170px 190px, 220px 230px, 260px 250px;
+  animation: garden-petals 20s linear infinite;
+}
+@keyframes garden-petals {
+  from { background-position: 0 0, 40px 20px, -20px 60px; transform: rotate(0deg); }
+  to { background-position: 90px 120px, -60px 150px, 70px 110px; transform: rotate(.4deg); }
+}
+
+.template-design-royal-black-gold .template-hero::before,
+.template-design-royal-gold .template-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 26%, rgba(201,168,76,.35) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 72%, rgba(244,227,178,.22) 0 1px, transparent 2px);
+  background-size: 120px 140px, 170px 190px;
+  opacity: .55;
+  animation: royal-dust 14s ease-in-out infinite alternate;
+}
+.template-design-royal-black-gold .template-hero::after,
+.template-design-royal-gold .template-hero::after {
+  content: "";
+  position: absolute;
+  inset: -30% -10%;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, rgba(255,235,166,.12) 50%, transparent 62%);
+  transform: translateX(-45%);
+  animation: royal-sweep 9s ease-in-out infinite;
+}
+@keyframes royal-dust {
+  from { transform: translate3d(0,0,0); opacity: .34; }
+  to { transform: translate3d(12px,-8px,0); opacity: .72; }
+}
+@keyframes royal-sweep {
+  0%, 35% { transform: translateX(-45%); opacity: 0; }
+  50% { opacity: 1; }
+  70%, 100% { transform: translateX(45%); opacity: 0; }
+}
+
+.template-design-cinematic-charcoal .template-hero::before,
+.template-design-editorial-dark .template-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.12) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 75% 60%, rgba(255,255,255,.08) 0 1px, transparent 1.5px);
+  background-size: 145px 145px, 210px 210px;
+  opacity: .3;
+  animation: cinematic-stars 22s linear infinite;
+}
+.template-design-cinematic-charcoal .template-hero::after,
+.template-design-editorial-dark .template-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.055), transparent);
+  transform: translateX(-100%);
+  animation: cinematic-light 11s ease-in-out infinite;
+}
+@keyframes cinematic-stars {
+  from { background-position: 0 0, 40px 30px; }
+  to { background-position: 120px 80px, -80px 100px; }
+}
+@keyframes cinematic-light {
+  0%, 45% { transform: translateX(-100%); opacity: 0; }
+  55% { opacity: 1; }
+  70%, 100% { transform: translateX(100%); opacity: 0; }
+}
+
+.template-design-minimalist-white .template-hero-content,
+.template-design-classic-ivory .template-hero-content {
+  animation: editorial-arrive 1.15s cubic-bezier(.22,1,.36,1) both;
+}
+.template-design-minimalist-white .template-hero::before,
+.template-design-classic-ivory .template-hero::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  top: 18%;
+  width: 32%;
+  height: 1px;
+  background: currentColor;
+  opacity: .16;
+  transform-origin: left;
+  animation: editorial-line 2.4s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes editorial-arrive {
+  from { opacity: 0; transform: translate3d(0,24px,0); letter-spacing: .02em; }
+  to { opacity: 1; transform: none; letter-spacing: normal; }
+}
+@keyframes editorial-line {
+  from { transform: scaleX(0); opacity: 0; }
+  to { transform: scaleX(1); opacity: .16; }
+}
+
+.template-design-aquarela-botanica .template-hero::before {
+  content: "";
+  position: absolute;
+  width: 30rem;
+  height: 30rem;
+  left: -12rem;
+  bottom: -12rem;
+  border-radius: 58% 42% 65% 35%;
+  border: 1px solid rgba(194,125,135,.22);
+  pointer-events: none;
+  animation: watercolor-breathe 14s ease-in-out infinite alternate;
+}
+@keyframes watercolor-breathe {
+  from { transform: rotate(-12deg) scale(.94); }
+  to { transform: rotate(-2deg) scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .template-design-xiguiane-tradicional .template-hero::before,
+  .template-design-xiguiane-tradicional .template-hero::after,
+  .template-design-african-heritage .template-hero::before,
+  .template-design-african-heritage .template-hero::after,
+  .template-design-garden-green .template-hero::before,
+  .template-design-romantic-rose .template-hero::before,
+  .template-design-floral-pearl .template-hero::before,
+  .template-design-royal-black-gold .template-hero::before,
+  .template-design-royal-gold .template-hero::before,
+  .template-design-royal-black-gold .template-hero::after,
+  .template-design-royal-gold .template-hero::after,
+  .template-design-cinematic-charcoal .template-hero::before,
+  .template-design-editorial-dark .template-hero::before,
+  .template-design-cinematic-charcoal .template-hero::after,
+  .template-design-editorial-dark .template-hero::after,
+  .template-design-minimalist-white .template-hero-content,
+  .template-design-classic-ivory .template-hero-content,
+  .template-design-minimalist-white .template-hero::before,
+  .template-design-classic-ivory .template-hero::before,
+  .template-design-aquarela-botanica .template-hero::before {
+    animation: none !important;
+  }
+}
