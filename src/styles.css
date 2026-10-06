@@ -3336,3 +3336,35 @@ div[id*="lovable-badge"] {
 }
 
 /* Solar Eclipse sync marker — keep Lovable and GitHub visual state aligned. */
+
+
+/* Fine-grain atmosphere for the video-inspired families. */
+.template-film-grain {
+  position: absolute;
+  inset: 0;
+  opacity: .18;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+  mix-blend-mode: screen;
+}
+.template-magazine-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(0,0,0,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.035) 1px, transparent 1px);
+  background-size: 36px 36px;
+  opacity: .65;
+}
+.template-pearl-bloom {
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  right: -120px;
+  top: 12%;
+  border-radius: 50%;
+  border: 1px solid rgba(184,149,152,.25);
+  box-shadow: 0 0 0 28px rgba(184,149,152,.06), 0 0 0 56px rgba(184,149,152,.035);
+}
+.template-capulana-pattern {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(197,138,75,.08) 0 12px, transparent 12px 24px), repeating-linear-gradient(-45deg, rgba(91,59,40,.07) 0 12px, transparent 12px 24px);
+}
