@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, CalendarDays, Check, Clock, Gift, Heart, Images, MessageCircle, Search, Sparkles, X } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, getTemplateVisualFamily, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
 import { openWhatsApp } from "@/lib/whatsapp";
@@ -351,6 +351,15 @@ function ModelsPage() {
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
   const [feedback, setFeedback] = useState("");
+
+  useEffect(() => {
+    if (!demo) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [demo]);
 
   function openRequest(template: TemplateDefinition) {
     setDemo(null);
