@@ -50,18 +50,21 @@ export function Guestbook({ eventId }: { eventId: string }) {
     <div className="mx-auto max-w-2xl">
       <form onSubmit={submit} className="grid gap-4">
         <input
+          maxLength={80}
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="O seu nome"
           className="w-full rounded-md border border-primary/30 bg-transparent px-4 py-3 font-sans text-sm outline-none focus:border-primary"
         />
         <textarea
+          maxLength={600}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={4}
           placeholder="Deixe uma mensagem carinhosa…"
           className="w-full rounded-md border border-primary/30 bg-transparent px-4 py-3 font-sans text-sm outline-none focus:border-primary"
         />
+        <p className="text-right text-[11px] text-muted-foreground">{message.length}/600</p>
         <button
           type="submit"
           disabled={busy}
