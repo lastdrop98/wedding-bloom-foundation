@@ -199,9 +199,14 @@ function AdminPage() {
     void queryClient.invalidateQueries({ queryKey: ["admin-events"] });
   }
 
-  function handleSaved(savedEvent?: EventRow) {
+  async function handleSaved(savedEvent?: EventRow) {
     void queryClient.invalidateQueries({ queryKey: ["admin-events"] });
     if (savedEvent) {
+      if (selectedTemplateRequest) {
+        await updateTemplateRequestStatus(selectedTemplateRequest.id, "completed");
+        setSelectedTemplateRequest(null);
+        void queryClient.invalidateQueries({ queryKey: ["admin-template-requests"] });
+      }
       setMode((current) =>
         current.kind === "form"
           ? { ...current, event: savedEvent, eventType: savedEvent.event_type }
