@@ -151,8 +151,8 @@ function HomePage() {
               Cada modelo tem uma direção visual própria. Escolha um ponto de partida e personalize o conteúdo depois.
             </p>
           </div>
-          <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {TEMPLATE_OPTIONS.map((item, index) => (
+          <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            {TEMPLATE_OPTIONS.slice(0, 6).map((item, index) => (
               <a key={item.value} href={`/modelos/${item.value}`} className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1">
                 <div className={`solar-home-template-preview ${templateVisualClass(item.value)} relative h-80 overflow-hidden`}>
                   <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-105" />
@@ -167,9 +167,10 @@ function HomePage() {
               </a>
             ))}
           </div>
-          <div className="mt-12 text-center">
+          <div className="mt-12 flex flex-col items-center gap-3 text-center">
+            <p className="text-xs text-black/40">Uma seleção dos nossos estilos. A coleção completa está na página de modelos.</p>
             <a href="/modelos" className="inline-flex items-center gap-2 rounded-full bg-[#C9A84C] px-8 py-4 text-white transition hover:opacity-90">
-              Explorar todos os modelos <ArrowRight className="size-4" />
+              Ver coleção completa <ArrowRight className="size-4" />
             </a>
           </div>
         </div>
