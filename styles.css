@@ -2740,3 +2740,212 @@ main[class*="template-layout-"] > [aria-hidden="true"]:not(.template-atmosphere)
 main[class*="template-layout-"] > footer {
   order: 130;
 }
+
+
+/* ═══════════ Movimento premium / experiência imersiva ═══════════ */
+
+.solar-eclipse-brand {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-bottom: 1.25rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid color-mix(in oklab, var(--color-gold) 30%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-background) 30%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 40px -24px color-mix(in oklab, var(--color-gold) 80%, transparent);
+  animation: brand-float 5s ease-in-out infinite;
+}
+
+.solar-eclipse-brand img {
+  position: relative;
+  z-index: 2;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  filter: drop-shadow(0 0 10px color-mix(in oklab, var(--color-gold) 55%, transparent));
+  animation: eclipse-orbit 7s linear infinite;
+}
+
+.solar-eclipse-brand-orbit {
+  position: absolute;
+  inset: 0.22rem;
+  border: 1px solid color-mix(in oklab, var(--color-gold) 22%, transparent);
+  border-radius: inherit;
+  animation: orbit-pulse 3.5s ease-in-out infinite;
+}
+
+.solar-eclipse-brand-name {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+@keyframes brand-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-0.5deg); }
+}
+
+@keyframes eclipse-orbit {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.045); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes orbit-pulse {
+  0%, 100% { transform: scale(0.94); opacity: 0.35; }
+  50% { transform: scale(1.04); opacity: 0.9; }
+}
+
+.template-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 18rem;
+  pointer-events: none;
+  background: linear-gradient(to top, color-mix(in oklab, var(--color-background) 72%, transparent), transparent);
+  opacity: 0.72;
+}
+
+.template-hero-content {
+  animation: hero-rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(28px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Profundidade viva nos fundos: os elementos já existentes movem-se lentamente. */
+.template-orb-a { animation: orb-drift-a 16s ease-in-out infinite alternate; }
+.template-orb-b { animation: orb-drift-b 19s ease-in-out infinite alternate; }
+
+@keyframes orb-drift-a {
+  from { transform: translate3d(-2%, -1%, 0) scale(0.96); }
+  to { transform: translate3d(8%, 5%, 0) scale(1.08); }
+}
+
+@keyframes orb-drift-b {
+  from { transform: translate3d(3%, 4%, 0) scale(1); }
+  to { transform: translate3d(-7%, -5%, 0) scale(1.1); }
+}
+
+/* Galeria/carrossel automático com sensação de editorial. */
+.invite-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 0.5rem 0 2.25rem;
+}
+
+.invite-carousel-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 1rem;
+  min-height: 22rem;
+}
+
+.invite-carousel-card {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid color-mix(in oklab, var(--color-gold) 24%, transparent);
+  border-radius: 1.15rem 0.35rem 1.15rem 0.35rem;
+  background: var(--color-card);
+  opacity: 0.5;
+  transform: scale(0.88) rotate(-1deg);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.invite-carousel-card:nth-child(3) { transform: scale(0.88) rotate(1deg); }
+.invite-carousel-card.is-active {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+  z-index: 2;
+  box-shadow: 0 28px 70px -35px color-mix(in oklab, var(--color-gold) 65%, transparent);
+}
+
+.invite-carousel-card img,
+.invite-carousel-card video {
+  display: block;
+  width: 100%;
+  height: 25rem;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.invite-carousel-card:hover img,
+.invite-carousel-card:hover video { transform: scale(1.055); }
+
+.invite-carousel-card span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2.5rem 1rem 0.9rem;
+  color: white;
+  font: 0.68rem/1.4 var(--font-sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: linear-gradient(to top, rgb(0 0 0 / 72%), transparent);
+}
+
+.invite-carousel-dots {
+  position: absolute;
+  right: 0;
+  bottom: 0.25rem;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.invite-carousel-dots button {
+  width: 0.45rem;
+  height: 0.45rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-gold) 30%, transparent);
+  transition: width 0.35s ease, background 0.35s ease, transform 0.35s ease;
+}
+
+.invite-carousel-dots button[aria-current="true"] {
+  width: 1.6rem;
+  background: var(--color-gold);
+}
+
+.invite-carousel-dots button:hover { transform: scale(1.2); }
+
+@media (max-width: 767px) {
+  .invite-carousel-track {
+    grid-template-columns: 1fr;
+    min-height: 24rem;
+  }
+
+  .invite-carousel-card:not(.is-active) { display: none; }
+
+  .invite-carousel-card.is-active img,
+  .invite-carousel-card.is-active video { height: 24rem; }
+
+  .solar-eclipse-brand-name { font-size: 0.56rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solar-eclipse-brand,
+  .solar-eclipse-brand img,
+  .solar-eclipse-brand-orbit,
+  .template-orb-a,
+  .template-orb-b {
+    animation: none;
+  }
+
+  .template-hero-content { animation: none; }
+}
