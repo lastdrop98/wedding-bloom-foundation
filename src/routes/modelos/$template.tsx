@@ -50,26 +50,67 @@ function TemplatePreviewPage() {
   const [error, setError] = useState("");
   const previewVariant = [...template.value].reduce((sum, char) => sum + char.charCodeAt(0), 0) % 8;
 
-  function request() {
-    if (!name.trim() || !phone.trim()) {
-      setError("Preencha o nome do casal e o WhatsApp/telefone para continuar.");
-      return;
-    }
-
-    setError("");
-
-    const text = [
-      `Olá! Quero o modelo ${template.label} para o meu casamento.`,
-      `Casal: ${name.trim()}`,
-      `Contacto: ${phone.trim()}`,
-      date && `Data prevista: ${date}`,
-      message.trim() && `Mensagem: ${message.trim()}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    openWhatsApp(text);
-  }
+  const previewCover = [
+    <div key="classic" className="preview-cover preview-cover-classic absolute inset-0 flex flex-col items-center justify-center px-8 text-center text-white">
+      <p className="text-[8px] uppercase tracking-[.35em] text-white/60">O nosso casamento</p>
+      <h2 className="template-preview-names mt-5 text-4xl font-light">Ana & Miguel</h2>
+      <p className="mt-5 text-xs tracking-[.25em] text-white/70">24 · 10 · 2027</p>
+      <span className="mt-8 h-px w-12 bg-white/50" />
+    </div>,
+    <div key="editorial" className="preview-cover preview-cover-editorial absolute inset-0 flex flex-col justify-end p-7 text-left text-white">
+      <p className="text-[8px] uppercase tracking-[.28em] text-white/55">01 / Wedding</p>
+      <h2 className="template-preview-names mt-5 max-w-[6ch] text-5xl font-medium leading-[.82]">Ana<br />&<br />Miguel</h2>
+      <p className="mt-6 text-[9px] uppercase tracking-[.24em] text-white/55">Maputo · 24.10.2027</p>
+    </div>,
+    <div key="portrait" className="preview-cover preview-cover-portrait absolute inset-0 flex flex-col items-center justify-between px-7 py-12 text-center text-white">
+      <p className="text-[8px] uppercase tracking-[.35em] text-white/60">Uma nova história</p>
+      <div className="flex flex-col items-center">
+        <div className="size-44 overflow-hidden rounded-full border-4 border-white/70 p-1">
+          <img src={previewImage} alt="" className="size-full rounded-full object-cover" />
+        </div>
+        <h2 className="template-preview-names mt-6 text-4xl">Ana & Miguel</h2>
+      </div>
+      <p className="text-[9px] uppercase tracking-[.25em] text-white/55">24 de Outubro · 2027</p>
+    </div>,
+    <div key="split" className="preview-cover preview-cover-split absolute inset-0 text-white">
+      <div className="absolute inset-y-0 left-0 w-[43%] bg-[#f2eee5] p-5 text-black">
+        <p className="text-[7px] uppercase tracking-[.25em] text-black/45">Solar Eclipse</p>
+        <h2 className="mt-28 font-serif text-4xl leading-[.82]">Ana<br /><i>&</i><br />Miguel</h2>
+        <p className="mt-7 text-[7px] uppercase tracking-[.22em] text-black/45">24 · 10 · 2027</p>
+      </div>
+      <img src={previewImage} alt="" className="absolute inset-y-0 right-0 h-full w-[64%] object-cover" />
+    </div>,
+    <div key="framed" className="preview-cover preview-cover-framed absolute inset-0 flex items-center justify-center p-7 text-center text-white">
+      <div className="absolute inset-7 border border-white/55" />
+      <div className="absolute inset-10 border border-white/20" />
+      <div className="relative">
+        <p className="text-[8px] uppercase tracking-[.3em] text-white/55">The wedding of</p>
+        <h2 className="template-preview-names mt-6 text-4xl">Ana & Miguel</h2>
+        <p className="mt-6 text-[9px] uppercase tracking-[.25em] text-white/60">24 · 10 · 2027</p>
+      </div>
+    </div>,
+    <div key="organic" className="preview-cover preview-cover-organic absolute inset-0 flex flex-col items-center justify-center px-7 text-center text-white">
+      <div className="size-48 overflow-hidden rounded-[52%_48%_58%_42%] border-8 border-white/70 shadow-2xl">
+        <img src={previewImage} alt="" className="size-full object-cover" />
+      </div>
+      <p className="mt-8 text-[8px] uppercase tracking-[.3em] text-white/60">Floresce uma nova história</p>
+      <h2 className="template-preview-names mt-4 text-4xl">Ana & Miguel</h2>
+    </div>,
+    <div key="heritage" className="preview-cover preview-cover-heritage absolute inset-0 flex flex-col items-center justify-between px-7 py-12 text-center text-white">
+      <div className="h-5 w-full border-y border-[#d0a85a]/70 bg-[repeating-linear-gradient(45deg,transparent_0_7px,#d0a85a_7px_8px,transparent_8px_14px)]" />
+      <div>
+        <p className="text-[8px] uppercase tracking-[.3em] text-[#e0bf7a]">União · Família · Tradição</p>
+        <div className="mx-auto mt-7 size-14 rounded-full border border-[#d0a85a] p-3">✳</div>
+        <h2 className="template-preview-names mt-7 text-4xl">Ana & Miguel</h2>
+      </div>
+      <p className="text-[9px] uppercase tracking-[.24em] text-white/55">Maputo · Moçambique</p>
+    </div>,
+    <div key="cinematic" className="preview-cover preview-cover-cinematic absolute inset-0 flex flex-col justify-end p-7 text-white">
+      <p className="text-[8px] uppercase tracking-[.25em] text-white/45">A celebration in motion</p>
+      <h2 className="template-preview-names mt-4 text-6xl font-semibold uppercase leading-[.78]">Ana<br />Miguel</h2>
+      <div className="mt-7 flex items-center gap-3 text-[8px] uppercase tracking-[.22em] text-white/55"><span className="h-px w-8 bg-white/40" />24.10.27</div>
+    </div>,
+  ][previewVariant];
 
   return (
     <main className={`template-preview template-preview-${template.value} template-preview-variant-${previewVariant} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
@@ -135,24 +176,13 @@ function TemplatePreviewPage() {
               <div className="template-preview-screen relative aspect-[9/18] overflow-hidden rounded-[34px] bg-black">
                 <img
                   src={previewImage}
-                  alt={`Demonstração do modelo ${template.label}`}
-                  className="absolute inset-0 size-full object-cover opacity-70"
+                  alt=""
+                  className="absolute inset-0 size-full object-cover"
                 />
                 <div className="template-preview-veil absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/85" />
                 <span className="template-preview-pattern pointer-events-none absolute inset-0" aria-hidden="true" />
-                <div className="absolute inset-x-8 bottom-12 text-center text-white">
-                  <p className="text-[9px] uppercase tracking-[.35em] text-white/60">
-                    O nosso casamento
-                  </p>
-                  <h2 className="template-preview-names mt-5 text-4xl font-light">Ana & Miguel</h2>
-                  <p className="mt-5 text-xs tracking-[.25em] text-white/70">
-                    24 · 10 · 2027
-                  </p>
-                  <div className="mx-auto mt-8 h-px w-12 bg-white/50" />
-                  <p className="mt-7 text-[10px] uppercase tracking-[.22em] text-white/60">
-                    Demonstração
-                  </p>
-                </div>
+                                {previewCover}
+                <span className="pointer-events-none absolute bottom-3 left-1/2 z-20 h-1 w-16 -translate-x-1/2 rounded-full bg-white/40" />
               </div>
             </div>
           </div>
