@@ -1272,6 +1272,12 @@ function HomePage() {
                 text={`Banco: ${d("bank_name") ?? ""}\nNIB: ${d("bank_nib")}\nTitular: ${d("bank_holder") ?? ""}`}
               />
             )}
+            {d("mpesa_number") && (
+              <GiftQr text={`M-Pesa: ${d("mpesa_number")}`} label="QR M-Pesa · Ler com o telemóvel" />
+            )}
+            {d("emola_number") && (
+              <GiftQr text={`e-Mola: ${d("emola_number")}`} label="QR e-Mola · Ler com o telemóvel" />
+            )}
           </div>
           {gifts.length > 0 && (
             <div className="grid gap-6 sm:grid-cols-2">
