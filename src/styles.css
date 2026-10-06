@@ -4129,3 +4129,135 @@ div[id*="lovable-badge"] {
 .solar-home-template-preview.template-visual-coastal img {
   filter: saturate(.82) brightness(1.05);
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLAR ECLIPSE — TEMPLATE CHOREOGRAPHY / SECTION ORDER
+   ═══════════════════════════════════════════════════════════════ */
+.template-visual-editorial,
+.template-visual-cinematic,
+.template-visual-botanical,
+.template-visual-pearl,
+.template-visual-royal,
+.template-visual-heritage,
+.template-visual-celestial,
+.template-visual-coastal {
+  display: flex;
+  flex-direction: column;
+}
+.template-visual-editorial > *,
+.template-visual-cinematic > *,
+.template-visual-botanical > *,
+.template-visual-pearl > *,
+.template-visual-royal > *,
+.template-visual-heritage > *,
+.template-visual-celestial > *,
+.template-visual-coastal > * {
+  order: 100;
+}
+.template-visual-editorial > .template-hero,
+.template-visual-cinematic > .template-hero,
+.template-visual-botanical > .template-hero,
+.template-visual-pearl > .template-hero,
+.template-visual-royal > .template-hero,
+.template-visual-heritage > .template-hero,
+.template-visual-celestial > .template-hero,
+.template-visual-coastal > .template-hero {
+  order: 0;
+}
+
+/* Editorial: magazine-like story first, then logistics. */
+.template-visual-editorial > [data-template-section="welcome"] { order: 10; }
+.template-visual-editorial > [data-template-section="couple"] { order: 20; }
+.template-visual-editorial > [data-template-section="story"] { order: 30; }
+.template-visual-editorial > [data-template-section="gallery"] { order: 40; }
+.template-visual-editorial > [data-template-section="schedule"] { order: 50; }
+.template-visual-editorial > [data-template-section="location"] { order: 60; }
+.template-visual-editorial > [data-template-section="gifts"] { order: 70; }
+.template-visual-editorial > [data-template-section="rsvp"] { order: 80; }
+.template-visual-editorial > [data-template-section="guestbook"] { order: 90; }
+
+/* Cinematic: countdown and story create a film-like opening before details. */
+.template-visual-cinematic > [data-template-section="countdown"] { order: 10; }
+.template-visual-cinematic > [data-template-section="story-video"] { order: 20; }
+.template-visual-cinematic > [data-template-section="story"] { order: 30; }
+.template-visual-cinematic > [data-template-section="couple"] { order: 40; }
+.template-visual-cinematic > [data-template-section="gallery"] { order: 50; }
+.template-visual-cinematic > [data-template-section="schedule"] { order: 60; }
+.template-visual-cinematic > [data-template-section="location"] { order: 70; }
+.template-visual-cinematic > [data-template-section="rsvp"] { order: 80; }
+.template-visual-cinematic > [data-template-section="guestbook"] { order: 90; }
+.template-visual-cinematic > [data-template-section="gifts"] { order: 95; }
+
+/* Botanical / pearl: romantic visual narrative and memories come before logistics. */
+.template-visual-botanical > [data-template-section="welcome"] { order: 10; }
+.template-visual-botanical > [data-template-section="couple"] { order: 20; }
+.template-visual-botanical > [data-template-section="gallery"] { order: 30; }
+.template-visual-botanical > [data-template-section="story"] { order: 40; }
+.template-visual-botanical > [data-template-section="countdown"] { order: 50; }
+.template-visual-botanical > [data-template-section="schedule"] { order: 60; }
+.template-visual-botanical > [data-template-section="gifts"] { order: 70; }
+.template-visual-botanical > [data-template-section="rsvp"] { order: 80; }
+.template-visual-botanical > [data-template-section="guestbook"] { order: 90; }
+
+.template-visual-pearl > [data-template-section="welcome"] { order: 10; }
+.template-visual-pearl > [data-template-section="couple"] { order: 20; }
+.template-visual-pearl > [data-template-section="story"] { order: 30; }
+.template-visual-pearl > [data-template-section="gallery"] { order: 40; }
+.template-visual-pearl > [data-template-section="countdown"] { order: 50; }
+.template-visual-pearl > [data-template-section="schedule"] { order: 60; }
+.template-visual-pearl > [data-template-section="location"] { order: 70; }
+.template-visual-pearl > [data-template-section="gifts"] { order: 80; }
+.template-visual-pearl > [data-template-section="rsvp"] { order: 90; }
+
+/* Royal: ceremony-first, framed and formal. */
+.template-visual-royal > [data-template-section="word"] { order: 10; }
+.template-visual-royal > [data-template-section="couple"] { order: 20; }
+.template-visual-royal > [data-template-section="schedule"] { order: 30; }
+.template-visual-royal > [data-template-section="location"] { order: 40; }
+.template-visual-royal > [data-template-section="story"] { order: 50; }
+.template-visual-royal > [data-template-section="gallery"] { order: 60; }
+.template-visual-royal > [data-template-section="gifts"] { order: 70; }
+.template-visual-royal > [data-template-section="guestbook"] { order: 80; }
+.template-visual-royal > [data-template-section="rsvp"] { order: 90; }
+
+/* Heritage: family, ceremony and tradition lead the experience. */
+.template-visual-heritage > [data-template-section="word"] { order: 10; }
+.template-visual-heritage > [data-template-section="couple"] { order: 20; }
+.template-visual-heritage > [data-template-section="story"] { order: 30; }
+.template-visual-heritage > [data-template-section="party"] { order: 40; }
+.template-visual-heritage > [data-template-section="schedule"] { order: 50; }
+.template-visual-heritage > [data-template-section="location"] { order: 60; }
+.template-visual-heritage > [data-template-section="gallery"] { order: 70; }
+.template-visual-heritage > [data-template-section="gifts"] { order: 80; }
+.template-visual-heritage > [data-template-section="rsvp"] { order: 90; }
+
+/* Celestial: verse, countdown and story create a ceremonial sequence. */
+.template-visual-celestial > [data-template-section="word"] { order: 10; }
+.template-visual-celestial > [data-template-section="countdown"] { order: 20; }
+.template-visual-celestial > [data-template-section="couple"] { order: 30; }
+.template-visual-celestial > [data-template-section="story"] { order: 40; }
+.template-visual-celestial > [data-template-section="schedule"] { order: 50; }
+.template-visual-celestial > [data-template-section="gallery"] { order: 60; }
+.template-visual-celestial > [data-template-section="location"] { order: 70; }
+.template-visual-celestial > [data-template-section="gifts"] { order: 80; }
+.template-visual-celestial > [data-template-section="rsvp"] { order: 90; }
+
+/* Coastal: destination story, map and schedule are the hero of the journey. */
+.template-visual-coastal > [data-template-section="welcome"] { order: 10; }
+.template-visual-coastal > [data-template-section="couple"] { order: 20; }
+.template-visual-coastal > [data-template-section="gallery"] { order: 30; }
+.template-visual-coastal > [data-template-section="story"] { order: 40; }
+.template-visual-coastal > [data-template-section="location"] { order: 50; }
+.template-visual-coastal > [data-template-section="schedule"] { order: 60; }
+.template-visual-coastal > [data-template-section="dress-code"] { order: 70; }
+.template-visual-coastal > [data-template-section="gifts"] { order: 80; }
+.template-visual-coastal > [data-template-section="rsvp"] { order: 90; }
+
+@media (max-width: 760px) {
+  .template-visual-editorial .template-hero-content,
+  .template-visual-cinematic .template-hero-content,
+  .template-visual-coastal .template-hero-content {
+    width: 100%;
+  }
+}
