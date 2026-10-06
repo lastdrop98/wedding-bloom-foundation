@@ -61,66 +61,265 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
   const family = previewFamily(template);
   const style = previewStyles[family];
   const direction = getTemplateDirection(template);
+
+  const hash = [...template.value].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const variant = hash % 6;
+  const photoA = images[hash % images.length];
+  const photoB = images[(hash + 1) % images.length];
+
   const scrollTo = (section: string) => {
-    document.querySelector(`[data-demo-section="${section}"]`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document
+      .querySelector(`[data-demo-section="${section}"]`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  const sectionClass =
+    family === "editorial"
+      ? "border-b border-black/10 bg-white px-7 py-14 text-left"
+      : family === "botanical"
+        ? "border-b border-rose/10 bg-[#fffaf8] px-7 py-14 text-center"
+        : family === "heritage"
+          ? "border-b border-gold-soft/15 bg-[#4a3022] px-7 py-14 text-center"
+          : family === "regal"
+            ? "border-b border-black/10 bg-[#21372f] px-7 py-14 text-center text-cream"
+            : "border-b border-gold/10 bg-ink px-7 py-14 text-center text-cream";
+
+  const miniCard =
+    family === "editorial"
+      ? "border border-black/10 bg-[#fafafa]"
+      : family === "botanical"
+        ? "rounded-[28px] border border-rose/15 bg-white shadow-sm"
+        : family === "heritage"
+          ? "border border-gold-soft/20 bg-[#3c271d]"
+          : family === "regal"
+            ? "border border-cream/15 bg-[#1b3029]"
+            : "border border-gold/20 bg-[#17130f]";
+
+  const demoLabel = "DEMONSTRAÇÃO · CONTEÚDO FICTÍCIO";
+
+  const cover =
+    family === "editorial" ? (
+      <section data-demo-section="capa" className="relative min-h-[660px] overflow-hidden bg-[#f1eee8] text-black">
+        <div className="grid min-h-[660px] grid-cols-[42%_58%]">
+          <div className="flex flex-col justify-between p-7">
+            <div className="text-[9px] uppercase tracking-[0.28em]">Solar Eclipse</div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-black/45">Wedding invitation</p>
+              <h3 className="mt-5 font-serif text-6xl leading-[.86] tracking-[-0.06em]">
+                Ana
+                <br />
+                <span className="italic">&</span>
+                <br />
+                Miguel
+              </h3>
+            </div>
+            <div className="text-[9px] uppercase tracking-[0.2em] text-black/45">24 · 10 · 2027</div>
+          </div>
+          <div className="relative">
+            <img src={photoA} alt="" className="h-full w-full object-cover grayscale-[20%]" />
+            <div className="absolute inset-x-5 bottom-5 border border-white/60 bg-black/20 p-4 text-white backdrop-blur-sm">
+              <p className="text-[9px] uppercase tracking-[0.22em]">{demoLabel}</p>
+              <p className="mt-2 text-sm">Uma história para celebrar.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    ) : family === "botanical" ? (
+      <section data-demo-section="capa" className="relative min-h-[660px] overflow-hidden bg-[#f8efe9] text-[#473c39]">
+        <div className="absolute -left-20 top-10 size-56 rounded-full border border-rose/25" />
+        <div className="absolute -right-24 bottom-12 size-72 rounded-full border border-rose/20" />
+        <div className="relative flex min-h-[660px] flex-col items-center justify-between px-7 py-9 text-center">
+          <div className="font-sans text-[9px] uppercase tracking-[0.3em]">Solar Eclipse · coleção garden</div>
+          <div className="w-full">
+            <p className="font-script text-5xl text-rose">Uma nova história</p>
+            <h3 className="mt-4 font-serif text-6xl leading-[.9]">Ana <span className="text-rose">&</span> Miguel</h3>
+            <div className="mx-auto mt-7 h-64 w-44 overflow-hidden rounded-[100px] border-8 border-[#f8efe9] shadow-xl">
+              <img src={photoA} alt="" className="h-full w-full object-cover" />
+            </div>
+          </div>
+          <div className="w-full border-t border-rose/20 pt-5 text-[9px] uppercase tracking-[0.25em]">24 de Outubro de 2027</div>
+        </div>
+      </section>
+    ) : family === "heritage" ? (
+      <section data-demo-section="capa" className="relative min-h-[660px] overflow-hidden bg-[#3b281f] text-cream">
+        <div className="absolute inset-x-0 top-0 h-20 bg-[repeating-linear-gradient(45deg,#b8864c_0_12px,#5b3b28_12px_24px,#d4ad72_24px_36px)] opacity-70" />
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-[repeating-linear-gradient(-45deg,#8a5b39_0_14px,#3b281f_14px_28px,#c49a62_28px_42px)] opacity-80" />
+        <div className="relative flex min-h-[660px] flex-col justify-between px-7 py-28">
+          <div className="text-center">
+            <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft">União · Família · Tradição</p>
+            <p className="mt-5 text-3xl text-gold-soft">✳</p>
+          </div>
+          <div className="relative mx-auto w-full max-w-[300px]">
+            <img src={photoA} alt="" className="h-64 w-full rounded-t-[90px] object-cover" />
+            <div className="relative -mt-7 mx-7 rounded-[26px] border border-gold-soft/40 bg-[#3b281f] p-5 text-center">
+              <p className="text-[9px] uppercase tracking-[0.25em] text-gold-soft">Convite de demonstração</p>
+              <h3 className="mt-3 font-serif text-5xl">Ana & Miguel</h3>
+              <p className="mt-3 text-xs text-cream/65">24 · 10 · 2027</p>
+            </div>
+          </div>
+          <div className="text-center text-[9px] uppercase tracking-[0.22em] text-cream/55">Uma celebração com raízes</div>
+        </div>
+      </section>
+    ) : family === "regal" ? (
+      <section data-demo-section="capa" className="relative min-h-[660px] overflow-hidden bg-[#1d342d] text-cream">
+        <div className="absolute inset-5 border border-gold/50" />
+        <div className="absolute inset-8 border border-cream/15" />
+        <div className="relative flex min-h-[660px] flex-col items-center justify-between px-10 py-14 text-center">
+          <div>
+            <p className="text-3xl text-gold">◇</p>
+            <p className="mt-3 text-[9px] uppercase tracking-[0.32em] text-cream/55">A royal celebration</p>
+          </div>
+          <div>
+            <div className="mx-auto size-36 overflow-hidden rounded-full border-4 border-gold/60 p-1">
+              <img src={photoA} alt="" className="h-full w-full rounded-full object-cover" />
+            </div>
+            <h3 className="mt-7 font-serif text-6xl leading-[.9]">Ana <span className="text-gold">&</span> Miguel</h3>
+            <p className="mt-6 text-[10px] uppercase tracking-[0.28em] text-cream/65">24 de Outubro · 2027</p>
+          </div>
+          <div className="text-[9px] uppercase tracking-[0.22em] text-gold">Convite premium · demonstração</div>
+        </div>
+      </section>
+    ) : (
+      <section data-demo-section="capa" className="relative min-h-[660px] overflow-hidden bg-black text-cream">
+        <img src={photoA} alt="" className="absolute inset-0 h-full w-full object-cover brightness-[.55]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black" />
+        <div className="relative flex min-h-[660px] flex-col items-center justify-between px-7 py-9 text-center">
+          <div className="w-full border-t border-gold/50 pt-5 text-[9px] uppercase tracking-[0.3em]">Solar Eclipse · demonstração</div>
+          <div>
+            <p className="text-sm italic text-gold">Uma celebração inesquecível</p>
+            <h3 className="mt-5 font-serif text-6xl leading-[.9]">Ana <span className="text-gold">&</span> Miguel</h3>
+            <p className="mt-7 text-[10px] uppercase tracking-[0.3em] text-cream/75">24 de Outubro de 2027</p>
+          </div>
+          <div className="w-full border-b border-gold/40 pb-5 text-[9px] uppercase tracking-[0.25em] text-cream/55">Scroll para abrir</div>
+        </div>
+      </section>
+    );
+
+  const story = (
+    <section data-demo-section="historia" className={sectionClass}>
+      <p className={`text-[9px] uppercase tracking-[0.24em] ${style.accent}`}>A nossa história</p>
+      <h4 className="mt-4 font-serif text-4xl">Momentos que nos trouxeram aqui</h4>
+      <div className={`mt-8 ${family === "editorial" ? "grid grid-cols-2 gap-3" : "grid gap-3 sm:grid-cols-2"}`}>
+        <img src={photoA} alt="" className={`h-44 w-full object-cover ${family === "botanical" ? "rounded-[34px]" : family === "editorial" ? "rounded-none" : "rounded-2xl"}`} />
+        <div className={`p-5 ${miniCard}`}>
+          <p className={`text-[10px] uppercase tracking-[0.2em] ${style.accent}`}>2022 · O encontro</p>
+          <p className="mt-3 text-sm leading-6 opacity-75">Uma história fictícia criada apenas para mostrar como este modelo pode receber a história real do casal.</p>
+        </div>
+      </div>
+    </section>
+  );
+
+  const gallery = (
+    <section data-demo-section="galeria" className={sectionClass}>
+      <p className={`text-[9px] uppercase tracking-[0.24em] ${style.accent}`}>Memórias</p>
+      <h4 className="mt-3 font-serif text-4xl">Galeria</h4>
+      <div className={`mt-8 ${variant % 2 === 0 ? "grid grid-cols-2 gap-3" : "columns-2 gap-3 space-y-3"}`}>
+        <img src={photoA} alt="" className={`w-full object-cover ${variant % 2 === 0 ? "h-52" : "h-64"} ${family === "botanical" ? "rounded-[28px]" : "rounded-2xl"}`} />
+        <img src={photoB} alt="" className={`w-full object-cover ${variant % 2 === 0 ? "h-40" : "h-52"} ${family === "heritage" ? "rounded-none" : "rounded-2xl"}`} />
+        <div className={`flex h-32 items-center justify-center ${miniCard}`}>
+          <Images className={`size-6 ${style.accent}`} />
+          <span className="ml-2 text-xs">+ 12 memórias</span>
+        </div>
+      </div>
+    </section>
+  );
+
+  const program = (
+    <section data-demo-section="agenda" className={sectionClass}>
+      <p className={`text-[9px] uppercase tracking-[0.24em] ${style.accent}`}>Agenda</p>
+      <h4 className="mt-3 font-serif text-4xl">O grande dia</h4>
+      <div className="mt-8 space-y-3 text-left">
+        {[
+          ["12:00", "Cerimónia", "Igreja / Local da cerimónia"],
+          ["14:00", "Receção", "Espaço da celebração"],
+          ["17:00", "Festa", "Jantar, dança e memórias"],
+        ].map(([time, title, place]) => (
+          <div key={time} className={`flex items-center gap-4 p-4 ${miniCard}`}>
+            <span className={`w-14 shrink-0 text-center text-xs ${style.accent}`}>{time}</span>
+            <span><strong className="block font-serif text-lg">{title}</strong><small className="opacity-60">{place}</small></span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+
+  const gifts = (
+    <section data-demo-section="presentes" className={sectionClass}>
+      <p className={`text-[9px] uppercase tracking-[0.24em] ${style.accent}`}>Presentes</p>
+      <h4 className="mt-3 font-serif text-4xl">Um gesto de carinho</h4>
+      <div className={`mt-8 p-6 ${miniCard}`}>
+        <Gift className={`mx-auto size-7 ${style.accent}`} />
+        <p className="mt-4 text-sm leading-6 opacity-75">Lista de presentes, dados bancários ou QR Code podem ser integrados ao convite.</p>
+      </div>
+    </section>
+  );
+
+  const rsvp = (
+    <section data-demo-section="rsvp" className={sectionClass}>
+      <p className={`text-[9px] uppercase tracking-[0.24em] ${style.accent}`}>RSVP</p>
+      <h4 className="mt-3 font-serif text-4xl">Confirmem a vossa presença</h4>
+      <div className={`mt-8 p-6 ${miniCard}`}>
+        <p className="text-sm opacity-75">O convidado pode confirmar diretamente no convite, inclusive através de link personalizado.</p>
+        <button type="button" className={`mt-5 rounded-full border px-6 py-3 text-xs uppercase tracking-[0.18em] ${style.line} ${style.accent}`}>Confirmar presença</button>
+      </div>
+    </section>
+  );
+
+  const guestbook = (
+    <section data-demo-section="mensagens" className={sectionClass}>
+      <p className={`text-[9px] uppercase tracking-[0.24em] ${style.accent}`}>Livro de mensagens</p>
+      <blockquote className={`mt-7 p-6 ${miniCard}`}>
+        <p className="font-serif text-2xl italic leading-relaxed">“Que esta nova etapa seja tão bonita quanto a história que vos trouxe até aqui.”</p>
+        <footer className="mt-5 text-[9px] uppercase tracking-[0.2em] opacity-55">Mensagem de demonstração</footer>
+      </blockquote>
+    </section>
+  );
+
+  const content = variant % 3 === 0
+    ? [story, program, gallery, gifts, rsvp, guestbook]
+    : variant % 3 === 1
+      ? [story, gallery, program, guestbook, gifts, rsvp]
+      : [gallery, story, program, rsvp, gifts, guestbook];
+
   return (
-    <div className={`relative mx-auto w-full max-w-[420px] overflow-clip shadow-xl ${style.page}`}>
-      <section data-demo-section="capa" className={`relative flex min-h-[620px] scroll-mt-2 flex-col items-center justify-between border-[10px] border-current/10 p-8 text-center ${family === "editorial" ? "items-start text-left" : ""}`}>
-        <div className={`w-full border-t pt-6 ${style.line}`}>
-          <p className="font-sans text-[10px] uppercase tracking-wider">SOLAR ECLIPSE · DEMONSTRAÇÃO</p>
-          <p className={`mt-10 text-4xl ${style.accent}`} aria-hidden="true">{style.ornament}</p>
-        </div>
-        <div>
-          <p className={`text-sm italic ${style.accent}`}>{style.label}</p>
-          <h3 className={`mt-6 leading-none ${family === "botanical" ? "font-script text-6xl" : family === "editorial" ? "font-sans text-5xl uppercase" : "font-serif text-6xl"}`}>Ana <span className={style.accent}>&</span> Miguel</h3>
-          <p className="mt-8 font-sans text-xs uppercase tracking-wider">24 de Outubro de 2027</p>
-        </div>
-        <p className={`w-full border-b pb-6 font-sans text-[10px] uppercase tracking-wider ${style.line}`}>Convite de demonstração</p>
-        <div className="grid w-full grid-cols-3 gap-2 font-sans text-[9px] uppercase tracking-wider opacity-75">
-          <span><strong className="block text-lg font-light">383</strong>Dias</span><span><strong className="block text-lg font-light">08</strong>Horas</span><span><strong className="block text-lg font-light">24</strong>Min</span>
+    <div className={`relative mx-auto w-full max-w-[420px] overflow-hidden shadow-2xl ${style.page}`}>
+      {cover}
+      <section data-demo-section="direcao" className={`px-7 py-8 ${family === "editorial" ? "bg-white text-black" : family === "botanical" ? "bg-[#fffaf8] text-[#473c39]" : family === "regal" ? "bg-[#21372f] text-cream" : family === "heritage" ? "bg-[#3b281f] text-cream" : "bg-ink text-cream"}`}>
+        <div className="grid grid-cols-2 gap-3 text-left">
+          {[
+            ["Estrutura", direction.structure],
+            ["Design", direction.design],
+            ["Aparência", direction.appearance],
+            ["Tipografia", direction.typography],
+          ].map(([label, value]) => (
+            <div key={label} className={`rounded-2xl p-4 ${miniCard}`}>
+              <p className={`text-[8px] uppercase tracking-[0.18em] ${style.accent}`}>{label}</p>
+              <p className="mt-2 text-[10px] leading-4 opacity-70">{value}</p>
+            </div>
+          ))}
         </div>
       </section>
-      <section data-demo-section="historia" className="relative scroll-mt-2">
-      <div className="relative h-80 overflow-hidden">
-        <img src={images[0]} alt="Fotografia ilustrativa de celebração" className={`h-full w-full object-cover ${style.photo}`} />
-        <span className="absolute bottom-4 left-4 bg-background/90 px-3 py-1 font-sans text-[10px] text-foreground">DEMONSTRAÇÃO</span>
+      {content}
+      <section data-demo-section="rodape" className={`px-7 py-12 text-center ${family === "editorial" ? "bg-[#111] text-white" : family === "botanical" ? "bg-[#f0dfd8] text-[#473c39]" : family === "regal" ? "bg-[#15251f] text-cream" : family === "heritage" ? "bg-[#2a1b15] text-cream" : "bg-black text-cream"}`}>
+        <p className={`text-2xl ${style.accent}`}>{style.ornament}</p>
+        <p className="mt-5 font-serif text-3xl">Ana & Miguel</p>
+        <p className="mt-3 text-[9px] uppercase tracking-[0.25em] opacity-55">Solar Eclipse · demonstração</p>
+      </section>
+      <div className="sticky bottom-3 z-10 mx-auto mt-[-1px] flex w-fit gap-1 rounded-full border border-black/10 bg-white/90 p-1 shadow-xl backdrop-blur">
+        {[
+          ["capa", "Capa"],
+          ["historia", "História"],
+          ["galeria", "Galeria"],
+          ["agenda", "Agenda"],
+          ["rsvp", "RSVP"],
+          ["presentes", "Presentes"],
+          ["mensagens", "Mensagens"],
+        ].map(([id, label]) => (
+          <button key={id} type="button" onClick={() => scrollTo(id)} className="rounded-full px-2.5 py-2 text-[8px] font-medium text-black/60 hover:bg-black/5">
+            {label}
+          </button>
+        ))}
       </div>
-      <div className={`px-8 py-14 text-center ${family === "editorial" ? "text-left" : ""}`}>
-        <p className="font-sans text-[10px] uppercase tracking-wider">A nossa história · DEMONSTRAÇÃO</p>
-        <h4 className="mt-4 font-serif text-4xl">Momentos que nos trouxeram aqui</h4>
-        <div className={`mt-8 border-l pl-5 text-left ${style.line}`}><p className={`font-sans text-[10px] uppercase ${style.accent}`}>2022 · O encontro</p><p className="mt-2 text-sm leading-6 opacity-75">Um encontro fictício que deu início a esta história de demonstração.</p></div>
-        <div className={`mt-6 border-l pl-5 text-left ${style.line}`}><p className={`font-sans text-[10px] uppercase ${style.accent}`}>2026 · O pedido</p><p className="mt-2 text-sm leading-6 opacity-75">Um sim, uma promessa e uma data para celebrar.</p></div>
-      </div>
-      </section>
-      <section data-demo-section="agenda" className={`scroll-mt-2 px-8 py-16 text-center ${family === "editorial" ? "text-left" : ""}`}>
-        <p className={`text-3xl ${style.accent}`} aria-hidden="true">{style.ornament}</p>
-        <p className="mt-5 font-sans text-[10px] uppercase tracking-wider">Demonstração · Programa do dia</p>
-        <h4 className="mt-4 font-serif text-4xl">Um dia para recordar</h4>
-        <p className="mx-auto mt-5 max-w-xs text-sm leading-7 opacity-75">Esta é uma amostra ilustrativa. Os detalhes do vosso convite serão personalizados pela nossa equipa.</p>
-        <div className={`mt-12 border-y py-7 ${style.line}`}>
-          <p className="font-sans text-xs uppercase tracking-wider">16:00 · Cerimónia</p>
-          <p className="mt-2 text-sm opacity-75">Jardim de demonstração · Local fictício</p>
-        </div>
-        <div className={`border-b py-7 ${style.line}`}>
-          <p className="font-sans text-xs uppercase tracking-wider">19:00 · Celebração</p>
-          <p className="mt-2 text-sm opacity-75">Salão de demonstração · Local fictício</p>
-        </div>
-      </section>
-      <section data-demo-section="galeria" className="scroll-mt-2 px-5 py-14">
-        <div className="px-3 text-center"><Images className={`mx-auto size-5 ${style.accent}`} /><p className="mt-4 font-sans text-[10px] uppercase tracking-wider">Galeria · DEMONSTRAÇÃO</p><h4 className="mt-3 font-serif text-4xl">Memórias</h4></div>
-        <div className="mt-8 grid grid-cols-2 gap-2"><img src={images[1]} alt="Momento fictício do casal" className="h-44 w-full object-cover" /><img src={images[2]} alt="Celebração fictícia" className="h-56 w-full object-cover" /><img src={images[3]} alt="Local fictício" className="-mt-12 h-56 w-full object-cover" /><img src={images[0]} alt="Detalhe fictício" className="h-44 w-full object-cover" /></div>
-      </section>
-      <section data-demo-section="rsvp" className={`scroll-mt-2 border-y px-8 py-16 text-center ${style.line}`}>
-        <Heart className={`mx-auto size-5 ${style.accent}`} /><p className="mt-4 font-sans text-[10px] uppercase tracking-wider">RSVP · DEMONSTRAÇÃO</p><h4 className="mt-3 font-serif text-4xl">Celebram connosco?</h4><p className="mt-4 text-sm leading-6 opacity-75">A confirmação real permite indicar presença, acompanhantes e deixar uma mensagem.</p><span className="mt-7 inline-flex border border-current px-6 py-3 font-sans text-xs uppercase tracking-wider">Confirmar presença</span>
-      </section>
-      <section data-demo-section="presentes" className="scroll-mt-2 px-8 py-16 text-center">
-        <Gift className={`mx-auto size-5 ${style.accent}`} /><p className="mt-4 font-sans text-[10px] uppercase tracking-wider">Presentes · DEMONSTRAÇÃO</p><h4 className="mt-3 font-serif text-4xl">O vosso carinho é o maior presente</h4><div className={`mt-8 border py-6 ${style.line}`}><p className="font-sans text-[10px] uppercase tracking-wider">Lista personalizada</p><p className="mt-2 text-sm opacity-70">Informações ilustrativas e configuradas de forma privada.</p></div><p className={`mt-10 text-3xl ${style.accent}`}>{style.ornament}</p><p className="mt-5 font-sans text-[10px] uppercase tracking-wider">{template.label} · DEMONSTRAÇÃO</p>
-      </section>
-      <nav aria-label="Navegação da demonstração" className="sticky bottom-0 z-10 grid grid-cols-5 border-t border-current/15 bg-inherit px-2 py-2 shadow-xl backdrop-blur-xl">
-        {[{ id: "capa", label: "Capa", icon: Heart }, { id: "agenda", label: "Agenda", icon: Clock }, { id: "galeria", label: "Galeria", icon: Images }, { id: "rsvp", label: "RSVP", icon: CalendarDays }, { id: "presentes", label: "Presentes", icon: Gift }].map((item) => { const Icon = item.icon; return <button key={item.id} type="button" onClick={() => scrollTo(item.id)} className="flex flex-col items-center gap-1 py-1 font-sans text-[8px] uppercase opacity-70 transition hover:opacity-100" aria-label={`Ir para ${item.label}`}><Icon className="size-3.5" />{item.label}</button>; })}
-      </nav>
-      <div className="border-t border-current/10 px-6 py-8 text-center"><p className="font-sans text-[9px] uppercase tracking-wider opacity-60">Direção: {direction.appearance}</p></div>
     </div>
   );
 }
