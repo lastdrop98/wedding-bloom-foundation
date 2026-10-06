@@ -35,7 +35,8 @@ export async function createTemplateRequest(input: {
   wedding_date?: string | null;
   message?: string | null;
 }) {
-  const payload = {
+  const local: TemplateRequest = {
+    id: crypto.randomUUID(),
     template_value: input.template_value,
     template_label: input.template_label,
     couple_name: input.couple_name,
@@ -43,22 +44,18 @@ export async function createTemplateRequest(input: {
     wedding_date: input.wedding_date || null,
     message: input.message || null,
     status: "new",
-  };
-
-  const { data, error } = await looseDb
-    .from("template_requests")
-    .insert(payload)
-    .select("*")
-    .single();
-
-  if (!error && data) return data as TemplateRequest;
-
-  const local: TemplateRequest = {
-    id: crypto.randomUUID(),
-    ...payload,
-    status: "new",
     created_at: new Date().toISOString(),
   };
+
+  // Public visitors only have INSERT permission. Do not call .select() here:
+  // PostgREST would require a SELECT policy and the request would incorrectly
+  // fall back to localStorage even though the database insert succeeded.
+  const { error } = await looseDb
+    .from("template_requests")
+    .insert(local);
+
+  if (!error) return local;
+
   localWrite([local, ...localRead()]);
   return local;
 }
