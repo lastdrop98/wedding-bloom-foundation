@@ -42,15 +42,17 @@ function Section({
   children,
   wide,
   flora = "none",
+  sectionKey,
 }: {
   title: string;
   eyebrow?: string;
   children: React.ReactNode;
   wide?: boolean;
   flora?: "none" | "rose" | "eucalipto" | "bagas";
+  sectionKey?: string;
 }) {
   return (
-    <section className="relative overflow-hidden px-6 py-20 md:py-24">
+    <section data-template-section={sectionKey} className="relative overflow-hidden px-6 py-20 md:py-24">
       {flora === "rose" && (
         <WatercolorRose
           className="pointer-events-none absolute -top-10 -left-12 opacity-50"
@@ -301,7 +303,7 @@ export function AquarelaHome({
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
   const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
-  const [slotMedia, setSlotMedia] = useState<Record<string, string>>({});
+  const [slotMedia, setSlotMedia] = useState<Record<string, { url: string; mediaType: string }>>({});
 
   const { data: content } = useQuery({
     queryKey: ["event-content", event.id],
@@ -317,10 +319,13 @@ export function AquarelaHome({
     if (!content?.media.length) return;
     Promise.all(
       content.media.map(
-        async (m) => [m.slot, await signedUrl(GALLERY_BUCKET, m.storage_path)] as const,
+        async (m) => {
+          const url = await signedUrl(GALLERY_BUCKET, m.storage_path);
+          return url ? [m.slot, { url, mediaType: m.media_type }] as const : null;
+        },
       ),
     ).then((pairs) => {
-      setSlotMedia(Object.fromEntries(pairs.filter((p): p is [string, string] => Boolean(p[1]))));
+      setSlotMedia(Object.fromEntries(pairs.filter((p): p is [string, { url: string; mediaType: string }] => Boolean(p))));
     });
   }, [content]);
 
@@ -369,9 +374,9 @@ export function AquarelaHome({
     <main className="aquarela pb-24">
       <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          {slotMedia["cover_video"] ? (
+          {slotMedia["cover_video"]?.url ? (
             <video
-              src={slotMedia["cover_video"]}
+              src={slotMedia["cover_video"]?.url}
               autoPlay
               muted
               loop
@@ -434,7 +439,7 @@ export function AquarelaHome({
       </header>
 
       {d("welcome_message") && (
-        <Section title="Uma mensagem para vocês" eyebrow="Com carinho" flora="rose">
+        <Section sectionKey="welcome" title="Uma mensagem para vocês" eyebrow="Com carinho" flora="rose">
           <div className="card-aquarela mx-auto max-w-2xl p-8 text-center">
             <p className="text-lg leading-relaxed font-light whitespace-pre-line">
               {d("welcome_message")}
@@ -443,12 +448,12 @@ export function AquarelaHome({
         </Section>
       )}
 
-      <Section title="Contagem Decrescente" eyebrow="Falta pouco" flora="bagas">
+      <Section sectionKey="countdown" title="Contagem Decrescente" eyebrow="Falta pouco" flora="bagas">
         <Countdown date={event.event_date} />
       </Section>
 
       {(d("verse_text") || d("verse_2_text")) && (
-        <Section title="Palavra" flora="rose">
+        <Section sectionKey="word" title="Palavra" flora="rose">
           <div className="grid gap-6">
             {[
               { text: d("verse_text"), ref: d("verse_reference") },
@@ -472,7 +477,7 @@ export function AquarelaHome({
       )}
 
       {(d("bride_name") || d("groom_name")) && (
-        <Section title="Os Noivos" wide flora="eucalipto">
+        <Section sectionKey="couple" title="Os Noivos" wide flora="eucalipto">
           <div className="grid gap-8 sm:grid-cols-2">
             {[
               {
@@ -520,7 +525,7 @@ export function AquarelaHome({
         </Section>
       )}
 
-      <Section title="Programa do Dia" flora="bagas">
+      <Section sectionKey="schedule" title="Programa do Dia" flora="bagas">
         <ol className="space-y-4">
           {(schedule.length > 0
             ? schedule.map((item) => ({
@@ -568,14 +573,14 @@ export function AquarelaHome({
       </Section>
 
       {d("dress_code") && (
-        <Section title="Dress Code" eyebrow="Para o grande dia" flora="bagas">
+        <Section sectionKey="dress-code" title="Dress Code" eyebrow="Para o grande dia" flora="bagas">
           <div className="card-aquarela mx-auto max-w-xl p-8 text-center">
             <p className="text-lg font-light whitespace-pre-line">{d("dress_code")}</p>
           </div>
         </Section>
       )}
 
-      <Section title="Localização" wide flora="rose">
+      <Section sectionKey="location" title="Localização" wide flora="rose">
         <div className="grid gap-6 md:grid-cols-3">
           <LocationCard
             label="Cerimónia Civil"
@@ -599,7 +604,7 @@ export function AquarelaHome({
       </Section>
 
       {(slotMedia["section_1"] || slotMedia["section_2"]) && (
-        <Section title="Momentos especiais" eyebrow="Para guardar na memória" wide flora="bagas">
+        <Section sectionKey="moments" title="Momentos especiais" eyebrow="Para guardar na memória" wide flora="bagas">
           <div className="grid gap-6 md:grid-cols-2">
             {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((url, index) => (
               <div key={url} className="card-aquarela overflow-hidden">
@@ -616,7 +621,7 @@ export function AquarelaHome({
       )}
 
       {galleryUrls.length > 0 && (
-        <Section title="Galeria" wide flora="eucalipto">
+        <Section sectionKey="gallery" title="Galeria" wide flora="eucalipto">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {galleryUrls.map((g, i) =>
               g.mediaType === "video" ? (
@@ -650,7 +655,7 @@ export function AquarelaHome({
         </Section>
       )}
 
-      <Section title="Presentes" flora="bagas">
+      <Section sectionKey="gifts" title="Presentes" flora="bagas">
         <div className="grid gap-6">
           <div className="card-aquarela p-7">
             <p className="eyebrow">Dados bancários</p>
@@ -708,11 +713,11 @@ export function AquarelaHome({
         </div>
       </Section>
 
-      <Section title="Livro de Recados" flora="eucalipto">
+      <Section sectionKey="guestbook" title="Livro de Recados" flora="eucalipto">
         <Guestbook eventId={event.id} />
       </Section>
 
-      <Section title="Confirmação de Presença" eyebrow="RSVP" flora="rose">
+      <Section sectionKey="rsvp" title="Confirmação de Presença" eyebrow="RSVP" flora="rose">
         <RsvpForm
           event={event}
           defaultCount={inviteType === "casal" ? 2 : 1}
@@ -721,7 +726,7 @@ export function AquarelaHome({
       </Section>
 
       {(event.contact_1_name || event.contact_2_name) && (
-        <Section title="Contactos" flora="eucalipto">
+        <Section sectionKey="contacts" title="Contactos" flora="eucalipto">
           <div className="grid gap-6 text-center sm:grid-cols-2">
             {[
               { n: event.contact_1_name, p: event.contact_1_phone },
