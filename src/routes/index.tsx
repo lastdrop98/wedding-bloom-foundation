@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
   Heart,
@@ -337,10 +337,9 @@ function HomePage() {
 
           <div className="grid gap-8 md:grid-cols-3">
             {TEMPLATE_OPTIONS.slice(0, 12).map((item, index) => (
-              <Link
+              <a
                 key={item.value}
-                to="/modelos/$template"
-                params={{ template: item.value }}
+                href={`/modelos/${item.value}`}
                 className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1"
               >
                 <div className={`solar-home-template-preview ${templateVisualClass(item.value)} relative h-80 overflow-hidden`}>
@@ -353,7 +352,7 @@ function HomePage() {
                     <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium">Ver demonstração <ArrowRight className="size-4" /></span>
                   </div>
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
 
