@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Check, MessageCircle } from "lucide-react";
-import { getTemplateDefinition } from "@/lib/templates";
+import { getTemplateDefinition, templateVisualClass } from "@/lib/templates";
 import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/modelos/$template")({
