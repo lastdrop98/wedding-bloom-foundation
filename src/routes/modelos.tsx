@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, CalendarDays, Check, Clock, Gift, Heart, Images, MessageCircle, Search, Sparkles, X } from "lucide-react";
 import { useMemo, useState } from "react";
-import { TEMPLATE_OPTIONS, type TemplateDefinition } from "@/lib/templates";
+import { TEMPLATE_OPTIONS, getTemplateVisualFamily, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
 import { openWhatsApp } from "@/lib/whatsapp";
 import { createTemplateRequest } from "@/lib/templateRequests";
@@ -468,10 +468,10 @@ function ModelsPage() {
                   className="h-[360px] w-full object-cover transition duration-700 group-hover:scale-105 md:h-[420px]"
                 />
                 <div
-                  className={`template-catalog-art template-catalog-art-${template.value} pointer-events-none absolute inset-0 flex items-center justify-center`}
+                  className={`template-catalog-art template-catalog-art-${template.value} template-catalog-family-${getTemplateVisualFamily(template.value)} pointer-events-none absolute inset-0 flex items-center justify-center`}
                   aria-hidden="true"
                 >
-                  <div className="template-catalog-paper">
+                  <div className={`template-catalog-paper template-catalog-paper-${getTemplateVisualFamily(template.value)}`}>
                     <span className="template-catalog-kicker">Solar Eclipse</span>
                     <span className="template-catalog-rule" />
                     <strong className="template-catalog-names">Ana <em>&</em> Miguel</strong>
