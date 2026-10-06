@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
 import { openWhatsApp } from "@/lib/whatsapp";
+import { createTemplateRequest } from "@/lib/templateRequests";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 
