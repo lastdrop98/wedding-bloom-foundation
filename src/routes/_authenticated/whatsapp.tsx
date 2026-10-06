@@ -30,7 +30,7 @@ function WhatsAppPage() {
     window.setTimeout(() => setSaved(false), 2200);
   }
 
-  const url = whatsappUrl(message).replace("258847404160", phone.replace(/\D/g, ""));
+  const url = whatsappUrl(message, phone);
 
   return (
     <main className="min-h-screen bg-[#f5f5f7] px-5 py-8 text-[#1d1d1f]">
