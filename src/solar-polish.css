@@ -729,3 +729,66 @@ main[class*="template-flow-"] > [data-template-section="closing"] { order: 99; }
     scroll-behavior: auto;
   }
 }
+
+
+/* Final isolation: invitation templates must never inherit the old Solar Eclipse landing atmosphere. */
+body:has(main[class*="template-visual-"])::before,
+body:has(main[class*="template-design-"])::before {
+  display: none !important;
+}
+main[class*="template-visual-"],
+main[class*="template-design-"] {
+  isolation: isolate;
+  position: relative;
+  overflow-x: clip;
+}
+main[class*="template-visual-"] .vine-run [data-draw],
+main[class*="template-design-"] .vine-run [data-draw] {
+  animation: none !important;
+  filter: none !important;
+}
+main[class*="template-visual-"] .solar-landing-hero-v2,
+main[class*="template-design-"] .solar-landing-hero-v2 {
+  background-image: none !important;
+}
+
+/* Admin: one coherent neutral system instead of mixed black/cream legacy surfaces. */
+.solar-admin-shell.admin-theme-light {
+  background: #f5f5f7 !important;
+}
+.solar-admin-shell.admin-theme-light::before {
+  display: none !important;
+}
+.solar-admin-shell.admin-theme-light .admin-hero {
+  background: #ffffff !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.07) !important;
+  box-shadow: 0 18px 55px rgba(0,0,0,.06) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-hero * {
+  color: inherit;
+}
+.solar-admin-shell.admin-theme-light .admin-hero :is(.text-white,.text-white\/90,.text-white\/80,.text-white\/70,.text-white\/60,.text-white\/50) {
+  color: rgba(29,29,31,.62) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-hero-clock,
+.solar-admin-shell.admin-theme-light .admin-workspace > section {
+  background: #fff !important;
+  border-color: rgba(0,0,0,.07) !important;
+}
+.solar-admin-shell.admin-theme-light aside,
+.solar-admin-shell.admin-theme-light header {
+  background: rgba(255,255,255,.96) !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-hero {
+  background: #151515 !important;
+  color: #f5f5f7 !important;
+  border-color: rgba(255,255,255,.09) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-hero-clock {
+  background: #1b1b1b !important;
+}
+.solar-admin-shell.admin-theme-dark::before {
+  display: none !important;
+}
