@@ -19,7 +19,7 @@ import { Route as SlugConfirmacoesRouteImport } from './routes/$slug.confirmacoe
 import { Route as SlugHomeRouteImport } from './routes/$slug.home'
 import { Route as SlugImprimirRouteImport } from './routes/$slug.imprimir'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as ModelosTemplateRouteImport } from './routes/modelos/$template'
+import { Route as ModelosTemplateRouteImport } from './routes/modelos.$template'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -73,14 +73,14 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 const ModelosTemplateRoute = ModelosTemplateRouteImport.update({
   id: '/$template',
   path: '/$template',
-  getParentRoute: () => ModelosRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRouteWithChildren
   '/auth': typeof AuthRoute
-  '/modelos': typeof ModelosRouteWithChildren
+  '/modelos': typeof ModelosRoute
   '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
   '/$slug/imprimir': typeof SlugImprimirRoute
@@ -91,7 +91,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/modelos': typeof ModelosRouteWithChildren
+  '/modelos': typeof ModelosRoute
   '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
   '/$slug/imprimir': typeof SlugImprimirRoute
@@ -105,7 +105,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/$slug': typeof SlugRouteWithChildren
   '/auth': typeof AuthRoute
-  '/modelos': typeof ModelosRouteWithChildren
+  '/modelos': typeof ModelosRoute
   '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
   '/$slug/imprimir': typeof SlugImprimirRoute
@@ -237,7 +237,7 @@ declare module '@tanstack/react-router' {
       path: '/$template'
       fullPath: '/modelos/$template'
       preLoaderRoute: typeof ModelosTemplateRouteImport
-      parentRoute: typeof ModelosRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -269,23 +269,12 @@ const SlugRouteChildren: SlugRouteChildren = {
 
 const SlugRouteWithChildren = SlugRoute._addFileChildren(SlugRouteChildren)
 
-interface ModelosRouteChildren {
-  ModelosTemplateRoute: typeof ModelosTemplateRoute
-}
-
-const ModelosRouteChildren: ModelosRouteChildren = {
-  ModelosTemplateRoute: ModelosTemplateRoute,
-}
-
-const ModelosRouteWithChildren =
-  ModelosRoute._addFileChildren(ModelosRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   SlugRoute: SlugRouteWithChildren,
   AuthRoute: AuthRoute,
-  ModelosRoute: ModelosRouteWithChildren,
+  ModelosRoute: ModelosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
