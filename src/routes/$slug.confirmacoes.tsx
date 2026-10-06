@@ -150,6 +150,29 @@ function ConfirmationsPage() {
     }
   }
 
+  function exportCsv() {
+    const header = ["Nome", "Estado", "Pessoas", "Telefone", "Mensagem", "Data"];
+    const rows = rsvps.map((r) => [
+      r.guest_name,
+      r.attending ? "Vai" : "Não vai",
+      String(r.guest_count || 0),
+      r.guest_phone || "",
+      r.message || "",
+      new Date(r.created_at).toLocaleString("pt-PT"),
+    ]);
+    const csv = [header, ...rows]
+      .map((row) => row.map((value) => '"' + String(value).replace(/"/g, '""') + '"').join(","))
+      .join("\n");
+    const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "confirmacoes-" + slug + ".csv";
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success("Lista exportada em CSV.");
+  }
+
   const shareText = [
     `Convite de ${eventTitle(event)}`,
     inviteLink,
@@ -240,7 +263,12 @@ function ConfirmationsPage() {
         <section id="confirmacoes" className="scroll-mt-6 pt-12">
           <div className="flex items-end justify-between gap-4 border-b border-border pb-4">
             <div><p className="eyebrow">Lista em tempo real</p><h2 className="mt-2 text-2xl font-light">Confirmações</h2></div>
-            <span className="font-sans text-xs text-muted-foreground">{rsvps.length} respostas</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="font-sans text-xs text-muted-foreground">{rsvps.length} respostas · {people} pessoas</span>
+              <button type="button" onClick={exportCsv} className="inline-flex items-center gap-2 border border-border bg-background px-3 py-2 font-sans text-xs hover:border-primary/50">
+                Exportar CSV
+              </button>
+            </div>
           </div>
       {rsvps.length === 0 ? (
         <div className="mt-4 border border-dashed border-border bg-background px-6 py-12 text-center font-sans text-sm text-muted-foreground">Ainda não há confirmações.</div>
