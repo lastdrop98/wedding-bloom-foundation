@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Check, Search, Sparkles, X, MessageCircle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, type TemplateDefinition } from "@/lib/templates";
+import { getTemplateDirection } from "@/lib/templateDirections";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 
@@ -318,7 +319,26 @@ function ModelsPage() {
             <Button type="button" variant="outline" onClick={() => setDemo(null)} aria-label="Fechar demonstração" className="shrink-0"><X /> <span className="hidden sm:inline">Fechar demonstração</span></Button>
           </div>
           <div className="max-h-[75vh] min-h-0 overflow-y-auto overscroll-contain bg-muted p-2 sm:p-6" tabIndex={0} aria-label="Percorrer convite de demonstração">
-            {demo && <InvitationPreview template={demo} />}
+            {demo && (
+              <>
+                <InvitationPreview template={demo} />
+                <div className="mx-auto mt-4 max-w-[420px] rounded-2xl border border-border bg-background p-5 text-left">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Direção do tema</p>
+                  {(() => {
+                    const direction = getTemplateDirection(demo);
+                    return (
+                      <div className="mt-3 grid gap-3 text-xs leading-relaxed text-muted-foreground">
+                        <p><span className="font-medium text-foreground">Estrutura:</span> {direction.structure}</p>
+                        <p><span className="font-medium text-foreground">Design:</span> {direction.design}</p>
+                        <p><span className="font-medium text-foreground">Aparência:</span> {direction.appearance}</p>
+                        <p><span className="font-medium text-foreground">Tipografia:</span> {direction.typography}</p>
+                        <p><span className="font-medium text-foreground">Paleta:</span> {direction.palette}</p>
+                      </div>
+                    );
+                  })()}
+                </div>
+              </>
+            )}
           </div>
           <div className="shrink-0 border-t border-border bg-background p-3 text-center">
             <Button type="button" onClick={() => { if (demo) openRequest(demo); }} className="w-full sm:w-auto">Pedir este modelo <ArrowRight /></Button>
