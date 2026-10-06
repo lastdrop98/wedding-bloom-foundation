@@ -45,7 +45,9 @@ function matchesFilter(family: string, filter: string) {
   return value.includes(filter.toLowerCase());
 }
 
-function previewFamily(template: TemplateDefinition) {
+type PreviewFamily = "noir" | "botanical" | "regal" | "heritage" | "editorial" | "cinematic" | "magazine" | "pearl" | "celestial" | "coastal";
+
+function previewFamily(template: TemplateDefinition): PreviewFamily {
   if (template.value === "film-noir-motion") return "cinematic";
   if (template.value === "editorial-magazine") return "magazine";
   if (template.value === "pearl-garden") return "pearl";
