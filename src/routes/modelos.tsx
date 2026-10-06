@@ -566,42 +566,52 @@ function ModelsPage() {
         </Button>
       </section>
 
-      <Dialog open={demo !== null} onOpenChange={(open) => { if (!open) setDemo(null); }}>
-        <DialogContent className="flex max-h-[95vh] w-[calc(100vw-1rem)] max-w-2xl flex-col gap-0 overflow-hidden border-border bg-background p-0 sm:rounded-sm [&>button]:hidden">
-          <div className="flex shrink-0 items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-6">
-            <div>
-              <DialogTitle className="font-serif text-xl">{demo?.label ?? "Demonstração"}</DialogTitle>
-              <DialogDescription className="text-xs">Convite ilustrativo · DEMONSTRAÇÃO</DialogDescription>
+      {demo && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/65 p-2 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Demonstração de ${demo.label}`}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setDemo(null);
+          }}
+        >
+          <div className="mx-auto flex h-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#f7f4ed] shadow-2xl">
+            <div className="flex shrink-0 items-center justify-between gap-3 border-b border-black/10 bg-white px-4 py-3 sm:px-6">
+              <div className="min-w-0">
+                <p className="truncate font-serif text-xl text-black">{demo.label}</p>
+                <p className="text-xs text-black/45">Convite ilustrativo · DEMONSTRAÇÃO</p>
+              </div>
+              <Button type="button" variant="outline" onClick={() => setDemo(null)} aria-label="Fechar demonstração" className="shrink-0">
+                <X /> <span className="hidden sm:inline">Fechar</span>
+              </Button>
             </div>
-            <Button type="button" variant="outline" onClick={() => setDemo(null)} aria-label="Fechar demonstração" className="shrink-0"><X /> <span className="hidden sm:inline">Fechar demonstração</span></Button>
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#ece8df] p-2 sm:p-6" tabIndex={0} aria-label="Percorrer convite de demonstração">
+              <InvitationPreview template={demo} />
+              <div className="mx-auto mt-4 max-w-[420px] rounded-2xl border border-black/10 bg-white p-5 text-left">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/40">Direção do tema</p>
+                {(() => {
+                  const direction = getTemplateDirection(demo);
+                  return (
+                    <div className="mt-3 grid gap-3 text-xs leading-relaxed text-black/55">
+                      <p><span className="font-medium text-black">Estrutura:</span> {direction.structure}</p>
+                      <p><span className="font-medium text-black">Design:</span> {direction.design}</p>
+                      <p><span className="font-medium text-black">Aparência:</span> {direction.appearance}</p>
+                      <p><span className="font-medium text-black">Tipografia:</span> {direction.typography}</p>
+                      <p><span className="font-medium text-black">Paleta:</span> {direction.palette}</p>
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+            <div className="shrink-0 border-t border-black/10 bg-white p-3 text-center">
+              <Button type="button" onClick={() => openRequest(demo)} className="w-full sm:w-auto">
+                Pedir este modelo <ArrowRight />
+              </Button>
+            </div>
           </div>
-          <div className="max-h-[75vh] min-h-0 overflow-y-auto overscroll-contain bg-muted p-2 sm:p-6" tabIndex={0} aria-label="Percorrer convite de demonstração">
-            {demo && (
-              <>
-                <InvitationPreview template={demo} />
-                <div className="mx-auto mt-4 max-w-[420px] rounded-2xl border border-border bg-background p-5 text-left">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Direção do tema</p>
-                  {(() => {
-                    const direction = getTemplateDirection(demo);
-                    return (
-                      <div className="mt-3 grid gap-3 text-xs leading-relaxed text-muted-foreground">
-                        <p><span className="font-medium text-foreground">Estrutura:</span> {direction.structure}</p>
-                        <p><span className="font-medium text-foreground">Design:</span> {direction.design}</p>
-                        <p><span className="font-medium text-foreground">Aparência:</span> {direction.appearance}</p>
-                        <p><span className="font-medium text-foreground">Tipografia:</span> {direction.typography}</p>
-                        <p><span className="font-medium text-foreground">Paleta:</span> {direction.palette}</p>
-                      </div>
-                    );
-                  })()}
-                </div>
-              </>
-            )}
-          </div>
-          <div className="shrink-0 border-t border-border bg-background p-3 text-center">
-            <Button type="button" onClick={() => { if (demo) openRequest(demo); }} className="w-full sm:w-auto">Pedir este modelo <ArrowRight /></Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
 
       <Dialog open={selected !== null} onOpenChange={(open) => { if (!open) setSelected(null); }}>
         <DialogContent className="max-h-[90vh] w-[calc(100vw-1rem)] max-w-lg overflow-y-auto bg-background p-5 sm:p-8">
