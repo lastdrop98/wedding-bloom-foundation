@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -218,7 +218,7 @@ export function WeddingForm({
     return base;
   });
   const [busy, setBusy] = useState(false);
-  const [uploading, setUploading] = useState<string | null>(null);\n  const [mediaItems, setMediaItems] = useState<Array<{ id: string; slot: string; media_type: string; storage_path: string }>>([]);\n\n  async function loadMedia() {\n    if (!event) return;\n    const { data } = await looseDb.from("event_media").select("id,slot,media_type,storage_path").eq("event_id", event.id).order("sort_order", { ascending: true });\n    setMediaItems(data ?? []);\n  }\n\n  useState(() => { void loadMedia(); });
+  const [uploading, setUploading] = useState<string | null>(null);\n  const [mediaItems, setMediaItems] = useState<Array<{ id: string; slot: string; media_type: string; storage_path: string }>>([]);\n\n  async function loadMedia() {\n    if (!event) return;\n    const { data } = await looseDb.from("event_media").select("id,slot,media_type,storage_path").eq("event_id", event.id).order("sort_order", { ascending: true });\n    setMediaItems(data ?? []);\n  }\n\n  useEffect(() => { void loadMedia(); }, [event?.id]);
 
   function set(name: string, value: string) {
     setValues((v) => ({ ...v, [name]: value }));
