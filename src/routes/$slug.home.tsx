@@ -229,6 +229,7 @@ function RsvpForm({
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [guestId, setGuestId] = useState<string | null>(null);
+  const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const [form, setForm] = useState({
     guest_name: "",
     guest_phone: "",
@@ -240,6 +241,8 @@ function RsvpForm({
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get("g");
     if (!token) return;
+    const submittedKey = `solar-rsvp:${event.id}:${token}`;
+    setAlreadySubmitted(window.localStorage.getItem(submittedKey) === "1");
     supabase
       .from("guests")
       .select("id, name, invited_count")
@@ -260,13 +263,22 @@ function RsvpForm({
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (alreadySubmitted) {
+      toast.info("Esta confirmação já foi enviada neste dispositivo.");
+      return;
+    }
+    const count = Math.max(1, Math.min(20, Number(form.guest_count) || 1));
+    if (!form.guest_name.trim()) {
+      toast.error("Indique o seu nome.");
+      return;
+    }
     setBusy(true);
     const { error } = await supabase.from("rsvps").insert({
       event_id: event.id,
       guest_name: form.guest_name,
       guest_phone: form.guest_phone || null,
       attending: form.attending === "sim",
-      guest_count: Number(form.guest_count) || 1,
+      guest_count: count,
       message: form.message || null,
     });
     if (!error && guestId) {
@@ -280,11 +292,14 @@ function RsvpForm({
       toast.error("Não foi possível enviar a confirmação.");
       return;
     }
+    const token = new URLSearchParams(window.location.search).get("g");
+    if (token) window.localStorage.setItem(`solar-rsvp:${event.id}:${token}`, "1");
+    setAlreadySubmitted(true);
     setDone(true);
     toast.success("Confirmação enviada. Obrigado!");
   }
 
-  if (done) {
+  if (done || alreadySubmitted) {
     return (
       <div className="card-elegant p-10 text-center">
         <Ornament />
