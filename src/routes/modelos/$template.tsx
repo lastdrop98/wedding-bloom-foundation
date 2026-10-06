@@ -49,6 +49,17 @@ function TemplatePreviewPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const previewVariant = [...template.value].reduce((sum, char) => sum + char.charCodeAt(0), 0) % 8;
+  function request() {
+    const text = [
+      `Olá! Quero o modelo ${template.label} para o meu casamento.`,
+      `Casal: ${name.trim() || "Por preencher"}`,
+      `Contacto: ${phone.trim() || "Por preencher"}`,
+      `Data prevista: ${date || "Por definir"}`,
+      `Mensagem: ${message.trim() || "Sem mensagem adicional"}`,
+    ].join("\n");
+    openWhatsApp(text);
+  }
+
 
   const previewCover = [
     <div key="classic" className="preview-cover preview-cover-classic absolute inset-0 flex flex-col items-center justify-center px-8 text-center text-white">
