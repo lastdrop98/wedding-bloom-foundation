@@ -378,8 +378,8 @@ export function AquarelaHome({
   }
 
   return (
-    <main className="aquarela pb-24">
-      <header className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
+    <main className="aquarela template-visual-botanical template-design-aquarela-botanica pb-24">
+      <header data-template-section="hero" className="template-hero relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           {slotMedia["cover_video"]?.url ? (
             <video
@@ -408,7 +408,7 @@ export function AquarelaHome({
         <BotanicalFrame />
         <Petals />
 
-        <div className="relative mx-auto max-w-3xl animate-fade-in">
+        <div className="template-hero-content relative mx-auto max-w-3xl animate-fade-in">
           <p className="eyebrow text-foreground/60">Convite</p>
           <h1 className="script-names mt-5 text-[clamp(2.75rem,12vw,6rem)] text-primary">
             {eventTitle(event)}
