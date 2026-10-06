@@ -30,7 +30,7 @@ import { SectionVines, VineDivider } from "@/components/invite/Vines";
 import { Reveal } from "@/components/invite/Reveal";
 import { EventSeals } from "@/components/invite/InvitationSeal";
 import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
-import { getTemplateDefinition, templateToneClass, templateVisualClass } from "@/lib/templates";
+import { getTemplateDefinition, templateToneClass, templateVisualClass } from "@/lib/templates";\nimport { templateFlowClass } from "@/lib/templateChoreography";
 import { AquarelaHome } from "@/components/invite/templates/aquarela-botanica/Home";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -800,7 +800,7 @@ function HomePage() {
 
   return (
     <main
-      className={`${templateToneClass(event.template)} ${templateVisualClass(event.template)} template-design-${event.template} pb-24`}
+      className={`${templateToneClass(event.template)} ${templateVisualClass(event.template)} ${templateFlowClass(event.template)} template-design-${event.template} pb-24`}
     >
       <TemplateAtmosphere template={event.template} />
       <InviteQuickActions event={event} />
