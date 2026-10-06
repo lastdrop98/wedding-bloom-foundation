@@ -549,3 +549,183 @@ textarea {
   background: rgba(255,255,255,.92) !important;
   border-color: rgba(0,0,0,.06) !important;
 }
+
+
+/* ═══════════ Template choreography engine ═══════════
+   The invitation keeps one content model, but each theme gets a different
+   reading rhythm. This makes the selected template affect structure, not
+   only colour. The order is intentionally defined by direct section keys so
+   missing/optional sections simply disappear without leaving empty space.
+*/
+main[class*="template-flow-"] {
+  display: flex;
+  flex-direction: column;
+}
+
+main[class*="template-flow-"] > [data-template-section] {
+  order: 20;
+}
+
+main[class*="template-flow-"] > [data-template-section="hero"] { order: 1; }
+main[class*="template-flow-"] > [data-template-section="closing"] { order: 99; }
+
+.template-flow-classic > [data-template-section="welcome"] { order: 10; }
+.template-flow-classic > [data-template-section="word"] { order: 11; }
+.template-flow-classic > [data-template-section="countdown"] { order: 12; }
+.template-flow-classic > [data-template-section="couple"] { order: 13; }
+.template-flow-classic > [data-template-section="story"] { order: 14; }
+.template-flow-classic > [data-template-section="story-video"] { order: 15; }
+.template-flow-classic > [data-template-section="moments"] { order: 16; }
+.template-flow-classic > [data-template-section="party"] { order: 17; }
+.template-flow-classic > [data-template-section="schedule"] { order: 18; }
+.template-flow-classic > [data-template-section="dress-code"] { order: 19; }
+.template-flow-classic > [data-template-section="location"] { order: 20; }
+.template-flow-classic > [data-template-section="gallery"] { order: 21; }
+.template-flow-classic > [data-template-section="gifts"] { order: 22; }
+.template-flow-classic > [data-template-section="guestbook"] { order: 23; }
+.template-flow-classic > [data-template-section="rsvp"] { order: 24; }
+.template-flow-classic > [data-template-section="contacts"] { order: 25; }
+
+.template-flow-minimal > [data-template-section="welcome"] { order: 10; }
+.template-flow-minimal > [data-template-section="couple"] { order: 11; }
+.template-flow-minimal > [data-template-section="story"] { order: 12; }
+.template-flow-minimal > [data-template-section="gallery"] { order: 13; }
+.template-flow-minimal > [data-template-section="countdown"] { order: 14; }
+.template-flow-minimal > [data-template-section="schedule"] { order: 15; }
+.template-flow-minimal > [data-template-section="location"] { order: 16; }
+.template-flow-minimal > [data-template-section="gifts"] { order: 17; }
+.template-flow-minimal > [data-template-section="rsvp"] { order: 18; }
+.template-flow-minimal > [data-template-section="guestbook"] { order: 19; }
+.template-flow-minimal > [data-template-section="word"] { order: 20; }
+.template-flow-minimal > [data-template-section="contacts"] { order: 21; }
+
+.template-flow-editorial > [data-template-section="welcome"] { order: 10; }
+.template-flow-editorial > [data-template-section="couple"] { order: 11; }
+.template-flow-editorial > [data-template-section="story"] { order: 12; }
+.template-flow-editorial > [data-template-section="gallery"] { order: 13; }
+.template-flow-editorial > [data-template-section="schedule"] { order: 14; }
+.template-flow-editorial > [data-template-section="location"] { order: 15; }
+.template-flow-editorial > [data-template-section="countdown"] { order: 16; }
+.template-flow-editorial > [data-template-section="gifts"] { order: 17; }
+.template-flow-editorial > [data-template-section="guestbook"] { order: 18; }
+.template-flow-editorial > [data-template-section="rsvp"] { order: 19; }
+.template-flow-editorial > [data-template-section="word"] { order: 20; }
+.template-flow-editorial > [data-template-section="contacts"] { order: 21; }
+
+.template-flow-cinematic > [data-template-section="countdown"] { order: 10; }
+.template-flow-cinematic > [data-template-section="story-video"] { order: 11; }
+.template-flow-cinematic > [data-template-section="story"] { order: 12; }
+.template-flow-cinematic > [data-template-section="couple"] { order: 13; }
+.template-flow-cinematic > [data-template-section="moments"] { order: 14; }
+.template-flow-cinematic > [data-template-section="gallery"] { order: 15; }
+.template-flow-cinematic > [data-template-section="schedule"] { order: 16; }
+.template-flow-cinematic > [data-template-section="location"] { order: 17; }
+.template-flow-cinematic > [data-template-section="rsvp"] { order: 18; }
+.template-flow-cinematic > [data-template-section="gifts"] { order: 19; }
+.template-flow-cinematic > [data-template-section="guestbook"] { order: 20; }
+.template-flow-cinematic > [data-template-section="welcome"] { order: 21; }
+.template-flow-cinematic > [data-template-section="word"] { order: 22; }
+.template-flow-cinematic > [data-template-section="contacts"] { order: 23; }
+
+.template-flow-romantic > [data-template-section="welcome"] { order: 10; }
+.template-flow-romantic > [data-template-section="couple"] { order: 11; }
+.template-flow-romantic > [data-template-section="story"] { order: 12; }
+.template-flow-romantic > [data-template-section="gallery"] { order: 13; }
+.template-flow-romantic > [data-template-section="countdown"] { order: 14; }
+.template-flow-romantic > [data-template-section="schedule"] { order: 15; }
+.template-flow-romantic > [data-template-section="location"] { order: 16; }
+.template-flow-romantic > [data-template-section="gifts"] { order: 17; }
+.template-flow-romantic > [data-template-section="guestbook"] { order: 18; }
+.template-flow-romantic > [data-template-section="rsvp"] { order: 19; }
+.template-flow-romantic > [data-template-section="word"] { order: 20; }
+.template-flow-romantic > [data-template-section="contacts"] { order: 21; }
+
+.template-flow-garden > [data-template-section="welcome"] { order: 10; }
+.template-flow-garden > [data-template-section="couple"] { order: 11; }
+.template-flow-garden > [data-template-section="gallery"] { order: 12; }
+.template-flow-garden > [data-template-section="story"] { order: 13; }
+.template-flow-garden > [data-template-section="moments"] { order: 14; }
+.template-flow-garden > [data-template-section="countdown"] { order: 15; }
+.template-flow-garden > [data-template-section="schedule"] { order: 16; }
+.template-flow-garden > [data-template-section="location"] { order: 17; }
+.template-flow-garden > [data-template-section="gifts"] { order: 18; }
+.template-flow-garden > [data-template-section="rsvp"] { order: 19; }
+.template-flow-garden > [data-template-section="guestbook"] { order: 20; }
+.template-flow-garden > [data-template-section="word"] { order: 21; }
+.template-flow-garden > [data-template-section="contacts"] { order: 22; }
+
+.template-flow-royal > [data-template-section="word"] { order: 10; }
+.template-flow-royal > [data-template-section="couple"] { order: 11; }
+.template-flow-royal > [data-template-section="party"] { order: 12; }
+.template-flow-royal > [data-template-section="schedule"] { order: 13; }
+.template-flow-royal > [data-template-section="location"] { order: 14; }
+.template-flow-royal > [data-template-section="story"] { order: 15; }
+.template-flow-royal > [data-template-section="gallery"] { order: 16; }
+.template-flow-royal > [data-template-section="countdown"] { order: 17; }
+.template-flow-royal > [data-template-section="gifts"] { order: 18; }
+.template-flow-royal > [data-template-section="guestbook"] { order: 19; }
+.template-flow-royal > [data-template-section="rsvp"] { order: 20; }
+.template-flow-royal > [data-template-section="welcome"] { order: 21; }
+.template-flow-royal > [data-template-section="contacts"] { order: 22; }
+
+.template-flow-heritage > [data-template-section="word"] { order: 10; }
+.template-flow-heritage > [data-template-section="couple"] { order: 11; }
+.template-flow-heritage > [data-template-section="party"] { order: 12; }
+.template-flow-heritage > [data-template-section="story"] { order: 13; }
+.template-flow-heritage > [data-template-section="moments"] { order: 14; }
+.template-flow-heritage > [data-template-section="schedule"] { order: 15; }
+.template-flow-heritage > [data-template-section="location"] { order: 16; }
+.template-flow-heritage > [data-template-section="gallery"] { order: 17; }
+.template-flow-heritage > [data-template-section="countdown"] { order: 18; }
+.template-flow-heritage > [data-template-section="gifts"] { order: 19; }
+.template-flow-heritage > [data-template-section="guestbook"] { order: 20; }
+.template-flow-heritage > [data-template-section="rsvp"] { order: 21; }
+.template-flow-heritage > [data-template-section="welcome"] { order: 22; }
+.template-flow-heritage > [data-template-section="contacts"] { order: 23; }
+
+.template-flow-boho > [data-template-section="welcome"] { order: 10; }
+.template-flow-boho > [data-template-section="story"] { order: 11; }
+.template-flow-boho > [data-template-section="couple"] { order: 12; }
+.template-flow-boho > [data-template-section="gallery"] { order: 13; }
+.template-flow-boho > [data-template-section="location"] { order: 14; }
+.template-flow-boho > [data-template-section="schedule"] { order: 15; }
+.template-flow-boho > [data-template-section="dress-code"] { order: 16; }
+.template-flow-boho > [data-template-section="countdown"] { order: 17; }
+.template-flow-boho > [data-template-section="gifts"] { order: 18; }
+.template-flow-boho > [data-template-section="guestbook"] { order: 19; }
+.template-flow-boho > [data-template-section="rsvp"] { order: 20; }
+.template-flow-boho > [data-template-section="word"] { order: 21; }
+.template-flow-boho > [data-template-section="contacts"] { order: 22; }
+
+.template-flow-destination > [data-template-section="welcome"] { order: 10; }
+.template-flow-destination > [data-template-section="location"] { order: 11; }
+.template-flow-destination > [data-template-section="couple"] { order: 12; }
+.template-flow-destination > [data-template-section="gallery"] { order: 13; }
+.template-flow-destination > [data-template-section="story"] { order: 14; }
+.template-flow-destination > [data-template-section="schedule"] { order: 15; }
+.template-flow-destination > [data-template-section="dress-code"] { order: 16; }
+.template-flow-destination > [data-template-section="countdown"] { order: 17; }
+.template-flow-destination > [data-template-section="gifts"] { order: 18; }
+.template-flow-destination > [data-template-section="rsvp"] { order: 19; }
+.template-flow-destination > [data-template-section="guestbook"] { order: 20; }
+.template-flow-destination > [data-template-section="word"] { order: 21; }
+.template-flow-destination > [data-template-section="contacts"] { order: 22; }
+
+.template-flow-celestial > [data-template-section="word"] { order: 10; }
+.template-flow-celestial > [data-template-section="countdown"] { order: 11; }
+.template-flow-celestial > [data-template-section="couple"] { order: 12; }
+.template-flow-celestial > [data-template-section="story"] { order: 13; }
+.template-flow-celestial > [data-template-section="schedule"] { order: 14; }
+.template-flow-celestial > [data-template-section="gallery"] { order: 15; }
+.template-flow-celestial > [data-template-section="location"] { order: 16; }
+.template-flow-celestial > [data-template-section="gifts"] { order: 17; }
+.template-flow-celestial > [data-template-section="guestbook"] { order: 18; }
+.template-flow-celestial > [data-template-section="rsvp"] { order: 19; }
+.template-flow-celestial > [data-template-section="welcome"] { order: 20; }
+.template-flow-celestial > [data-template-section="contacts"] { order: 21; }
+
+@media (prefers-reduced-motion: reduce) {
+  main[class*="template-flow-"] > [data-template-section] {
+    scroll-behavior: auto;
+  }
+}
