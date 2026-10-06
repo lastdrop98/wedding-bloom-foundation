@@ -547,7 +547,7 @@ function formatIcsDate(value: string | null) {
   if (!value) return "";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "";
-  return date.toISOString().replace(/[-:]/g, "").replace(/\\.\\d{3}Z$/, "Z");
+  return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
 }
 
 function calendarHref(event: EventRow) {
@@ -565,11 +565,11 @@ function calendarHref(event: EventRow) {
     `DTSTAMP:${formatIcsDate(new Date().toISOString())}`,
     `DTSTART:${start}`,
     `DTEND:${end}`,
-    `SUMMARY:${eventTitle(event).replace(/[,;\\\\]/g, " ")}`,
-    `LOCATION:${venue.replace(/[,;\\\\]/g, " ")}`,
+    \`SUMMARY:\${eventTitle(event).replace(/[,;\\]/g, " ")}\`,
+    \`LOCATION:\${venue.replace(/[,;\\]/g, " ")}\`,
     "END:VEVENT",
     "END:VCALENDAR",
-  ].join("\\r\\n");
+  ].join("\r\n");
   return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
 }
 
