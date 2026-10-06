@@ -2,6 +2,7 @@ import { looseDb } from "@/lib/event";
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 import { toast } from "sonner";
+import { MessageCircle, Share2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -53,6 +54,22 @@ export function DeliveryPackage({ slug }: { slug: string }) {
       toast.error(value);
     }
   }
+  async function shareInvite() {
+    const title = "Convite digital";
+    const text = "Partilhe o convite digital do casal:";
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url: inviteLink });
+        return;
+      } catch {
+        return;
+      }
+    }
+    await copy(inviteLink, "Link do convite copiado. Pode partilhá-lo agora.");
+  }
+
+  const whatsappShare = `https://wa.me/?text=${encodeURIComponent(`Convite digital: ${inviteLink}`)}`;
+
 
   return (
     <section className="space-y-4">
@@ -98,6 +115,14 @@ export function DeliveryPackage({ slug }: { slug: string }) {
               >
                 Copiar
               </Button>
+              <Button type="button" size="sm" variant="outline" onClick={() => void shareInvite()}>
+                <Share2 className="mr-2 size-3.5" /> Partilhar
+              </Button>
+              <Button asChild type="button" size="sm" variant="outline">
+                <a href={whatsappShare} target="_blank" rel="noreferrer">
+                  <MessageCircle className="mr-2 size-3.5" /> WhatsApp
+                </a>
+              </Button>
             </div>
           </div>
 
@@ -142,12 +167,7 @@ export function DeliveryPackage({ slug }: { slug: string }) {
                 Painel do Casal
               </a>
             </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => copy(couplePanelLink, "Link privado do casal copiado.")}
-            >
+            <Button type="button" variant="outline" size="sm" onClick={() => void copy(couplePanelLink, "Link privado do casal copiado.")}>
               Copiar link privado
             </Button>
           </div>
