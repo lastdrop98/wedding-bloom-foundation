@@ -552,10 +552,19 @@ export function WeddingForm({
         </div>
       </fieldset>
 
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         <Button type="submit" disabled={busy}>
           Guardar
         </Button>
+        {values["slug"] && (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => window.open(`/${values["slug"]}`, "_blank", "noopener,noreferrer")}
+          >
+            Pré-visualizar convite
+          </Button>
+        )}
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancelar
         </Button>
