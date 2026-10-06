@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   Heart,
@@ -13,7 +13,68 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { EclipseMark } from "@/components/EclipseMark";
-import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
+import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";\nimport { TEMPLATE_OPTIONS } from "@/lib/templates";
+
+export const Route = createFileRoute("/")({
+  component: HomePage,
+  head: () => ({
+    meta: [
+      { title: "Solar Eclipse — Convites Digitais de Casamento" },
+      {
+        name: "description",
+        content:
+          "Convites digitais premium de casamento com fotos, vídeo, música, RSVP, convidados, presentes e versão para impressão.",
+      },
+    ],
+  }),
+});
+
+const features = [
+  {
+    icon: Image,
+    title: "Galeria de Memórias",
+    text: "Fotos e vídeos do casal numa experiência elegante.",
+  },
+  {
+    icon: Music,
+    title: "Música Personalizada",
+    text: "Escolha a banda sonora especial do vosso casamento.",
+  },
+  {
+    icon: Users,
+    title: "Gestão de Convidados",
+    text: "Confirmações RSVP e links individuais.",
+  },
+  {
+    icon: QrCode,
+    title: "Presentes Digitais",
+    text: const HOME_TEMPLATE_IMAGES = [
+  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=82",
+  "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=82",
+  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=82",
+  "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1000&q=82",
+  "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=82",
+  "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=82",
+  "https://images.unsplash.com/photo-1534791547706-9b3f7f6c8a4a?auto=format&fit=crop&w=1000&q=82",
+  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=82",
+];
+
+import { TEMPLATE_OPTIONS } from "@/lib/templates";port { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  Heart,
+  Image,
+  Menu,
+  MessageCircle,
+  Music,
+  QrCode,
+  Sparkles,
+  Users,
+  X,
+} from "lucide-react";
+import { useState } from "react";
+import { EclipseMark } from "@/components/EclipseMark";
+import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";\nimport { TEMPLATE_OPTIONS } from "@/lib/templates";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -275,30 +336,24 @@ function HomePage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            {templates.map((item) => (
-              <a
-                key={item.id}
-                href={`/modelos/${item.id}`}
-                onClick={(event) => {
-                  event.preventDefault();
-                  window.location.href = `/modelos/${item.id}`;
-                }}
+            {TEMPLATE_OPTIONS.slice(0, 12).map((item, index) => (
+              <Link
+                key={item.value}
+                to="/modelos/$template"
+                params={{ template: item.value }}
                 className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1"
               >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  loading="lazy"
-                  className="h-80 w-full object-cover transition duration-700 group-hover:scale-105"
-                />
-                <div className="p-6">
-                  <h3 className="text-2xl">{item.name}</h3>
-                  <p className="mt-2 text-neutral-500">{item.style}</p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium">
-                    Ver modelo <ArrowRight className="size-4" />
-                  </span>
+                <div className={`solar-home-template-preview template-visual-${item.value} relative h-80 overflow-hidden`}>
+                  <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                    <p className="text-[10px] uppercase tracking-[.22em] text-white/60">{item.family}</p>
+                    <h3 className="mt-2 text-2xl font-light">{item.label}</h3>
+                    <p className="mt-2 text-sm text-white/70">{item.description}</p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium">Ver demonstração <ArrowRight className="size-4" /></span>
+                  </div>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
 
