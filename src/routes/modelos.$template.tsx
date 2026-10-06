@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Check, MessageCircle } from "lucide-react";
 import { getTemplateDefinition, getTemplateVisualFamily, templateVisualClass } from "@/lib/templates";
+import { createTemplateRequest } from "@/lib/templateRequests";
 import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/modelos/$template")({
@@ -57,19 +58,37 @@ function TemplatePreviewPage() {
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
   const visualFamily = getTemplateVisualFamily(template.value);
   const previewImage = PREVIEW_IMAGES[visualFamily];
   const previewVariantByFamily = { classic: 0, editorial: 3, cinematic: 7, botanical: 5, pearl: 2, royal: 4, heritage: 6, celestial: 1, coastal: 3 } as const;
   const previewVariant = previewVariantByFamily[visualFamily];
-  function request() {
-    const text = [
-      `Olá! Quero o modelo ${template.label} para o meu casamento.`,
-      `Casal: ${name.trim() || "Por preencher"}`,
-      `Contacto: ${phone.trim() || "Por preencher"}`,
-      `Data prevista: ${date || "Por definir"}`,
-      `Mensagem: ${message.trim() || "Sem mensagem adicional"}`,
-    ].join("\n");
-    openWhatsApp(text);
+  async function request() {
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      await createTemplateRequest({
+        template_value: template.value,
+        template_label: template.label,
+        couple_name: name.trim(),
+        phone: phone.trim(),
+        wedding_date: date || null,
+        message: message.trim() || null,
+      });
+      const text = [
+        `Olá! Quero o modelo ${template.label} para o meu casamento.`,
+        `Casal: ${name.trim() || "Por preencher"}`,
+        `Contacto: ${phone.trim() || "Por preencher"}`,
+        `Data prevista: ${date || "Por definir"}`,
+        `Mensagem: ${message.trim() || "Sem mensagem adicional"}`,
+      ].join("\n");
+      openWhatsApp(text);
+    } catch {
+      setError("Não foi possível guardar o pedido. Tente novamente.");
+    } finally {
+      setBusy(false);
+    }
   }
 
 
@@ -311,11 +330,12 @@ function TemplatePreviewPage() {
 
             <button
               type="button"
-              onClick={request}
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-black px-6 py-3.5 text-sm font-medium text-white transition hover:bg-neutral-800"
+              onClick={() => void request()}
+              disabled={busy}
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-black px-6 py-3.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-wait disabled:opacity-60"
             >
               <MessageCircle className="size-4" />
-              Enviar pedido pelo WhatsApp
+              {busy ? "A guardar pedido…" : "Enviar pedido pelo WhatsApp"}
             </button>
 
             <p className="mt-3 text-center text-[10px] text-black/35">
