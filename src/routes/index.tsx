@@ -193,6 +193,59 @@ function HomePage() {
         </div>
       </section>
 
+      <section className="bg-[#f3efe7] px-6 py-24">
+        <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C9A84C]">Pensado para o dia e para depois</p>
+            <h2 className="mt-5 text-4xl font-light tracking-[-0.04em] sm:text-5xl">Um convite que continua a ser vosso.</h2>
+            <p className="mt-6 max-w-lg text-sm leading-7 text-black/55">
+              O convite não termina quando a confirmação é enviada. A experiência acompanha os convidados, as memórias e a entrega final.
+            </p>
+          </div>
+          <div className="grid gap-3">
+            {[
+              ["01", "Uma única experiência", "Link personalizado, galeria, história, programa, localização, presentes e confirmação no mesmo lugar."],
+              ["02", "Feito para convidados reais", "Experiência simples no telemóvel, sem obrigar os convidados a instalar uma aplicação."],
+              ["03", "Pensado para o casal", "Gestão de convidados, conteúdos, media, RSVP e pacote final num workspace organizado."],
+            ].map(([number, title, text]) => (
+              <div key={number} className="grid gap-5 rounded-[26px] border border-black/8 bg-white p-6 sm:grid-cols-[56px_1fr] sm:p-7">
+                <span className="text-sm font-medium text-[#C9A84C]">{number}</span>
+                <div>
+                  <h3 className="text-lg font-medium tracking-tight">{title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-black/50">{text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-24">
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C9A84C]">Perguntas frequentes</p>
+            <h2 className="mt-4 text-4xl font-light tracking-[-0.04em]">Antes de começar</h2>
+          </div>
+          <div className="mx-auto mt-10 max-w-3xl divide-y divide-black/10 border-y border-black/10">
+            {[
+              ["Posso personalizar o modelo?", "Sim. O modelo é o ponto de partida. Nomes, textos, fotografias, vídeos, música, programa, localização, presentes e confirmação podem ser preparados para o casal."],
+              ["Os convidados precisam de uma aplicação?", "Não. O convite é aberto através de um link no telemóvel e pode incluir links personalizados para cada convidado."],
+              ["Posso ter versão para impressão?", "Sim. O fluxo inclui uma versão preparada para impressão e o pacote de entrega do casal."],
+              ["Posso usar o meu próprio conteúdo?", "Sim. A experiência foi pensada para receber as fotografias, vídeos, mensagens e detalhes reais do casamento."],
+              ["Como começo?", "Escolha um modelo na coleção e envie o pedido. A nossa equipa entra em contacto para preparar o convite."],
+            ].map(([question, answer]) => (
+              <details key={question} className="group py-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-base font-medium">
+                  {question}
+                  <span className="text-xl font-light text-black/35 transition group-open:rotate-45">+</span>
+                </summary>
+                <p className="max-w-2xl pt-3 text-sm leading-7 text-black/50">{answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="como-funciona" className="scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-5xl text-center">
           <Heart className="mx-auto text-[#C9A84C]" />
@@ -231,8 +284,20 @@ function HomePage() {
         </div>
       </section>
 
-      <footer className="bg-[#111] px-6 py-10 text-center text-xs text-white/40">
-        <div className="inline-flex items-center gap-2.5"><EclipseMark className="size-5 text-white" /><span>Solar Eclipse · Convites digitais de casamento</span></div>
+      <footer className="bg-[#111] px-6 py-12 text-white">
+        <div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <div className="inline-flex items-center gap-2.5"><EclipseMark className="size-5 text-white" /><span className="text-sm font-medium">Solar Eclipse</span></div>
+            <p className="mt-3 max-w-sm text-xs leading-6 text-white/40">Convites digitais de casamento pensados para serem vistos, partilhados e lembrados.</p>
+          </div>
+          <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs text-white/45">
+            <a href="/modelos" className="transition hover:text-white">Modelos</a>
+            <a href="#experiencia" className="transition hover:text-white">Experiência</a>
+            <a href="#como-funciona" className="transition hover:text-white">Como funciona</a>
+            <a href={whatsappUrl("Olá! Quero saber mais sobre os convites Solar Eclipse.")} onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero saber mais sobre os convites Solar Eclipse."); }} className="transition hover:text-white">Contacto</a>
+          </div>
+        </div>
+        <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-5 text-[10px] text-white/25">© {new Date().getFullYear()} Solar Eclipse. Todos os direitos reservados.</div>
       </footer>
     </main>
   );
