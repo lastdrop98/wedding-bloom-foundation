@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import { AUDIO_BUCKET, GALLERY_BUCKET, details as readDetails, type EventRow } from "@/lib/event";
+import { AUDIO_BUCKET, GALLERY_BUCKET, details as readDetails, looseDb, type EventRow } from "@/lib/event";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -218,7 +218,7 @@ export function WeddingForm({
     return base;
   });
   const [busy, setBusy] = useState(false);
-  const [uploading, setUploading] = useState<string | null>(null);
+  const [uploading, setUploading] = useState<string | null>(null);\n  const [mediaItems, setMediaItems] = useState<Array<{ id: string; slot: string; media_type: string; storage_path: string }>>([]);\n\n  async function loadMedia() {\n    if (!event) return;\n    const { data } = await looseDb.from("event_media").select("id,slot,media_type,storage_path").eq("event_id", event.id).order("sort_order", { ascending: true });\n    setMediaItems(data ?? []);\n  }\n\n  useState(() => { void loadMedia(); });
 
   function set(name: string, value: string) {
     setValues((v) => ({ ...v, [name]: value }));
@@ -261,6 +261,52 @@ export function WeddingForm({
     }
     toast.success(event ? "Alterações guardadas." : "Evento criado.");
     onSaved(result.data as EventRow);
+  }
+
+  async function uploadMedia(slot: string, file: File) {
+    if (!event) {
+      toast.error("Guarde o evento primeiro.");
+      return;
+    }
+    setUploading(`media:${slot}`);
+    const isVideo = file.type.startsWith("video/");
+    const ext = file.name.split(".").pop() ?? (isVideo ? "mp4" : "jpg");
+    const path = `${event.id}/media/${slot}-${Date.now()}.${ext}`;
+    const { error: uploadError } = await supabase.storage.from(GALLERY_BUCKET).upload(path, file, { upsert: true });
+    if (uploadError) {
+      setUploading(null);
+      toast.error(uploadError.message);
+      return;
+    }
+    const { error } = await looseDb.from("event_media").insert({
+      event_id: event.id,
+      slot,
+      storage_path: path,
+      media_type: isVideo ? "video" : "image",
+      sort_order: mediaItems.filter((item) => item.slot === slot).length,
+    });
+    setUploading(null);
+    if (error) {
+      await supabase.storage.from(GALLERY_BUCKET).remove([path]);
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Media adicionada ao convite.");
+    await loadMedia();
+    onSaved(event);
+  }
+
+  async function removeMedia(item: { id: string; storage_path: string }) {
+    if (!event) return;
+    const { error } = await looseDb.from("event_media").delete().eq("id", item.id).eq("event_id", event.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    await supabase.storage.from(GALLERY_BUCKET).remove([item.storage_path]);
+    await loadMedia();
+    toast.success("Media removida.");
+    onSaved(event);
   }
 
   async function upload(kind: "cover" | "music", file: File) {
@@ -453,6 +499,50 @@ export function WeddingForm({
             Guarde o evento primeiro para poder enviar a foto de capa e a música.
           </p>
         )}
+      </fieldset>
+
+      <fieldset className="space-y-4 rounded-xl border border-border bg-background/40 p-5">
+        <legend className="eyebrow">Galeria e media por secção</legend>
+        <p className="text-sm leading-6 text-muted-foreground">
+          Adicione fotos ou vídeos específicos para a capa, história, galeria e outros pontos do convite.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {[
+            ["hero", "Capa / abertura"],
+            ["story", "História do casal"],
+            ["gallery", "Galeria"],
+            ["closing", "Encerramento"],
+          ].map(([slot, label]) => (
+            <div key={slot} className="rounded-xl border border-border p-4 space-y-3">
+              <div>
+                <p className="font-medium">{label}</p>
+                <p className="text-xs text-muted-foreground">
+                  {mediaItems.filter((item) => item.slot === slot).length} ficheiro(s)
+                </p>
+              </div>
+              <Input
+                type="file"
+                accept="image/*,video/*"
+                disabled={!event || uploading !== null}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) void uploadMedia(slot, file);
+                  e.currentTarget.value = "";
+                }}
+              />
+              <div className="space-y-2">
+                {mediaItems.filter((item) => item.slot === slot).map((item) => (
+                  <div key={item.id} className="flex items-center justify-between gap-3 rounded-lg bg-muted/40 px-3 py-2 text-xs">
+                    <span className="truncate">{item.media_type === "video" ? "Vídeo" : "Imagem"} · {item.storage_path.split("/").pop()}</span>
+                    <Button type="button" size="sm" variant="ghost" onClick={() => void removeMedia(item)}>
+                      Remover
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </fieldset>
 
       <div className="flex gap-3">
