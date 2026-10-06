@@ -115,7 +115,7 @@ function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-[#faf8f3] text-neutral-900">
+    <main className="solar-landing min-h-screen bg-[#faf8f3] text-neutral-900">
       <header className="sticky top-0 z-50 border-b border-black/5 bg-[#faf8f3]/90 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
           <a href="/" className="inline-flex items-center gap-2.5 text-sm font-semibold tracking-tight" aria-label="Solar Eclipse — início">
@@ -169,7 +169,7 @@ function HomePage() {
         )}
       </header>
 
-      <section className="relative overflow-hidden px-6 py-28 text-center sm:py-36">
+      <section className="solar-landing-hero relative overflow-hidden px-6 py-28 text-center sm:py-36">
         <div className="absolute inset-0 bg-gradient-to-b from-white to-[#faf8f3]" />
         <div className="relative mx-auto max-w-5xl">
           <p className="mb-6 text-sm uppercase tracking-[0.4em] text-[#C9A84C]">
@@ -203,7 +203,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="modelos" className="scroll-mt-20 px-6 py-24">
+      <section id="modelos" className="solar-models-showcase scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 text-center">
             <p className="text-sm uppercase tracking-widest text-[#C9A84C]">
@@ -221,7 +221,7 @@ function HomePage() {
               <a
                 key={item.id}
                 href={`/modelos/${item.id}`}
-                className="group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1"
+                className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1"
               >
                 <img
                   src={item.image}
@@ -251,7 +251,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="experiencia" className="scroll-mt-20 bg-white px-6 py-24">
+      <section id="experiencia" className="solar-home-features scroll-mt-20 bg-white px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-center text-4xl font-light">
             Tudo incluído no seu convite
