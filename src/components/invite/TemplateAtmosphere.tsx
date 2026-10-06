@@ -15,6 +15,8 @@ export function TemplateAtmosphere({
   const isMagazine = definition.value === "editorial-magazine";
   const isPearl = definition.value === "pearl-garden";
   const isCapulana = definition.value === "capulana-contemporary";
+  const isCelestial = definition.value === "celestial-ivory";
+  const isCoastal = definition.value === "coastal-blue";
 
   return (
     <div
@@ -30,7 +32,7 @@ export function TemplateAtmosphere({
       {isFilm && <span className="template-film-grain" />}
       {isMagazine && <span className="template-magazine-grid" />}
       {isPearl && <span className="template-pearl-bloom" />}
-      {isCapulana && <span className="template-capulana-pattern" />}
+      {isCapulana && <span className="template-capulana-pattern" />}\n      {isCelestial && <span className="template-celestial-stars" />}\n      {isCoastal && <span className="template-coastal-wave" />}
     </div>
   );
 }
