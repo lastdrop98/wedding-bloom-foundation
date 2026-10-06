@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
-import { EVENT_TYPES, eventTitle, eventTypeLabel, formatDatePt, type EventRow } from "@/lib/event";
+import { EVENT_TYPES, eventTitle, eventTypeLabel, type EventRow } from "@/lib/event";
 import { WeddingForm } from "@/components/WeddingForm";
 import { GalleryManager } from "@/components/GalleryManager";
 import { MediaManager } from "@/components/MediaManager";
