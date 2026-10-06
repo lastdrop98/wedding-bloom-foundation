@@ -1,3 +1,6 @@
 - [x] Abrir demonstrações longas no catálogo, com variantes visuais e fecho acessível.
 - [x] Preparar pedidos do modelo selecionado e abrir WhatsApp comercial.
 - [x] Validar botões, telemóvel, tipos e compilação.
+- [x] Evoluir o acesso privado existente para um Painel do Casal com visão geral, atalhos e confirmações em tempo real.
+- [x] Tornar as demonstrações do catálogo convites verticais completos com navegação inferior.
+- [x] Preservar o pedido comercial pela API atual do WhatsApp e validar a compilação.
