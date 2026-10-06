@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { looseDb } from "@/lib/event";
 
 export type TemplateRequest = {
   id: string;
@@ -45,7 +45,7 @@ export async function createTemplateRequest(input: {
     status: "new",
   };
 
-  const { data, error } = await supabase
+  const { data, error } = await looseDb
     .from("template_requests")
     .insert(payload)
     .select("*")
@@ -64,7 +64,7 @@ export async function createTemplateRequest(input: {
 }
 
 export async function fetchTemplateRequests() {
-  const { data, error } = await supabase
+  const { data, error } = await looseDb
     .from("template_requests")
     .select("*")
     .order("created_at", { ascending: false })
@@ -77,7 +77,7 @@ export async function fetchTemplateRequests() {
 }
 
 export async function updateTemplateRequestStatus(id: string, status: TemplateRequest["status"]) {
-  const { data, error } = await supabase
+  const { data, error } = await looseDb
     .from("template_requests")
     .update({ status })
     .eq("id", id)
