@@ -487,3 +487,65 @@ textarea {
     background: rgba(17,17,17,.88) !important;
   }
 }
+
+
+/* Admin theme hardening: neutralize inherited light-mode utility classes inside the workspace. */
+.solar-admin-shell.admin-theme-dark {
+  background: #0b0b0c !important;
+  color: #f5f5f7 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/"],
+.solar-admin-shell.admin-theme-dark aside [class*="text-black/"],
+.solar-admin-shell.admin-theme-dark header [class*="text-black/"] {
+  color: rgba(255,255,255,.72) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/30"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/35"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/40"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/45"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/50"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/55"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/60"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-black/65"] {
+  color: rgba(255,255,255,.64) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="bg-[#fffdf7]"] {
+  background: #171411 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="bg-black/[0.04]"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="bg-black/[.04]"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="bg-black/[0.045]"] {
+  background: rgba(255,255,255,.06) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="border-black/"] {
+  border-color: rgba(255,255,255,.1) !important;
+}
+.solar-admin-shell.admin-theme-dark aside,
+.solar-admin-shell.admin-theme-dark header {
+  box-shadow: none !important;
+}
+.solar-admin-shell.admin-theme-dark aside button:not(.bg-black):hover,
+.solar-admin-shell.admin-theme-dark aside a:not(.bg-black):hover {
+  background: rgba(255,255,255,.06) !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light {
+  background: #f5f5f7 !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace {
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-black/[0.04]"],
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-black/[.04]"],
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-black/[0.045]"] {
+  background: rgba(0,0,0,.035) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-white/"] {
+  color: rgba(29,29,31,.72) !important;
+}
+.solar-admin-shell.admin-theme-light aside,
+.solar-admin-shell.admin-theme-light header {
+  background: rgba(255,255,255,.92) !important;
+  border-color: rgba(0,0,0,.06) !important;
+}
