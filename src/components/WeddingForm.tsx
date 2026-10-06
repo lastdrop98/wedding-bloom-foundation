@@ -207,7 +207,12 @@ export function WeddingForm({
         base[f.name] = toInputValue(raw, f.kind);
       }),
     );
-    if (!event) base["template"] = "golden-classic";
+    if (!event) base["template"] = initialValues?.template || "golden-classic";
+    if (!event && initialValues) {
+      Object.entries(initialValues).forEach(([key, value]) => {
+        if (value != null) base[key] = value;
+      });
+    }
     return base;
   });
   const [busy, setBusy] = useState(false);
