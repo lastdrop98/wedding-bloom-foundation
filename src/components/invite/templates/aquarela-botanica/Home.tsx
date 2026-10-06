@@ -486,7 +486,7 @@ export function AquarelaHome({
                 parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
                   ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
                   : "",
-                photo: galleryUrls[0],
+                photo: slotMedia["bride"]?.url ? { url: slotMedia["bride"].url, caption: null, mediaType: slotMedia["bride"].mediaType } : galleryUrls[0],
               },
               {
                 role: "O Noivo",
@@ -494,7 +494,7 @@ export function AquarelaHome({
                 parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
                   ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
                   : "",
-                photo: galleryUrls[1],
+                photo: slotMedia["groom"]?.url ? { url: slotMedia["groom"].url, caption: null, mediaType: slotMedia["groom"].mediaType } : galleryUrls[1],
               },
             ].map((p, i) => (
               <Reveal key={p.role} delay={i * 100}>
@@ -606,14 +606,13 @@ export function AquarelaHome({
       {(slotMedia["section_1"] || slotMedia["section_2"]) && (
         <Section sectionKey="moments" title="Momentos especiais" eyebrow="Para guardar na memória" wide flora="bagas">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((url, index) => (
-              <div key={url} className="card-aquarela overflow-hidden">
-                <img
-                  src={url}
-                  alt={`Momento especial ${index + 1} de ${eventTitle(event)}`}
-                  loading="lazy"
-                  className="h-72 w-full object-cover md:h-96"
-                />
+            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((media, index) => (
+              <div key={media.url} className="card-aquarela overflow-hidden">
+                {media.mediaType === "video" ? (
+                  <video src={media.url} controls playsInline preload="metadata" className="h-72 w-full object-cover md:h-96" />
+                ) : (
+                  <img src={media.url} alt={"Momento especial " + (index + 1) + " de " + eventTitle(event)} loading="lazy" className="h-72 w-full object-cover md:h-96" />
+                )}
               </div>
             ))}
           </div>
@@ -743,12 +742,19 @@ export function AquarelaHome({
         </Section>
       )}
 
-      {d("closing_message") && (
-        <section className="mx-auto max-w-2xl px-6 py-12 text-center">
+      {(d("closing_message") || slotMedia["closing"]?.url) && (
+        <section data-template-section="closing" className="mx-auto max-w-2xl px-6 py-12 text-center">
           <FloralDivider />
-          <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">
-            {d("closing_message")}
-          </p>
+          {slotMedia["closing"]?.url && (
+            <div className="mt-8 overflow-hidden rounded-2xl border border-sage/40">
+              <img src={slotMedia["closing"].url} alt={"Mensagem final de " + eventTitle(event)} loading="lazy" className="max-h-[28rem] w-full object-cover" />
+            </div>
+          )}
+          {d("closing_message") && (
+            <p className="mt-6 text-xl font-light leading-relaxed whitespace-pre-line">
+              {d("closing_message")}
+            </p>
+          )}
         </section>
       )}
 
