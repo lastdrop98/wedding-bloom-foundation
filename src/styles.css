@@ -2288,3 +2288,72 @@ div[id*="lovable-badge"] {
     min-width: 1rem;
   }
 }
+
+
+/* Solar Eclipse — reusable invitation layout families */
+.template-layout-classic .card-elegant {
+  border-radius: 1.25rem;
+}
+
+.template-layout-editorial .card-elegant {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.template-layout-editorial .card-elegant:nth-child(even) {
+  transform: translateX(0.45rem);
+}
+
+.template-layout-organic .card-elegant {
+  border-radius: 2rem 0.8rem 2rem 0.8rem;
+}
+
+.template-layout-organic .card-elegant:nth-child(odd) {
+  border-radius: 0.8rem 2rem 0.8rem 2rem;
+}
+
+.template-layout-framed .card-elegant {
+  border-radius: 0.55rem;
+  box-shadow: 0 0 0 1px color-mix(in srgb, currentColor 8%, transparent), 0 18px 45px rgba(0,0,0,.08);
+}
+
+.template-layout-heritage .card-elegant {
+  border-radius: 1.75rem 0.45rem 1.75rem 0.45rem;
+  border-style: solid;
+}
+
+.template-layout-heritage .template-hero {
+  clip-path: polygon(0 0, 100% 0, 100% 96%, 50% 100%, 0 96%);
+}
+
+.template-layout-cinematic .card-elegant {
+  border-radius: 0.35rem;
+  box-shadow: 0 24px 70px rgba(0,0,0,.2);
+}
+
+.template-layout-organic .template-hero-content,
+.template-layout-heritage .template-hero-content {
+  transform: translateY(-1vh);
+}
+
+@media (min-width: 768px) {
+  .template-layout-organic .card-elegant:nth-child(3n) {
+    transform: translateY(0.75rem);
+  }
+
+  .template-layout-heritage .card-elegant:nth-child(3n + 1) {
+    transform: translateX(-0.5rem);
+  }
+}
+
+@media print {
+  .template-layout-editorial .card-elegant,
+  .template-layout-organic .card-elegant,
+  .template-layout-framed .card-elegant,
+  .template-layout-heritage .card-elegant,
+  .template-layout-cinematic .card-elegant,
+  .template-layout-classic .card-elegant {
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
