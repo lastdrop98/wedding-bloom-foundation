@@ -1,16 +1,19 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   BarChart3,
   CalendarDays,
+  ChevronLeft,
   ChevronRight,
   ExternalLink,
   FileImage,
+  Clock3,
   Gift,
   LayoutDashboard,
   LogOut,
   Menu,
+  MessageCircle,
   PackageCheck,
   Palette,
   Plus,
@@ -44,7 +47,29 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
 });
 
-type Mode =
+type AdminMessage = {
+  id: string;
+  event_id: string;
+  guest_name: string;
+  message: string | null;
+  attending: boolean | null;
+  guest_count: number | null;
+  created_at: string;
+};
+
+function formatAdminDateTime(value: string | Date | null | undefined) {
+  if (!value) return "—";
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return new Intl.DateTimeFormat("pt-MZ", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+
   | { kind: "dashboard" }
   | { kind: "choose-type" }
   | { kind: "form"; event: EventRow | null; eventType: string };
@@ -65,6 +90,12 @@ function AdminPage() {
   const [mode, setMode] = useState<Mode>({ kind: "dashboard" });
   const [activeSection, setActiveSection] = useState("dados");
   const [mobileNav, setMobileNav] = useState(false);
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const { data: events, isLoading } = useQuery({
     queryKey: ["admin-events"],
@@ -75,6 +106,21 @@ function AdminPage() {
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
+    },
+  });
+
+  const { data: messages = [] } = useQuery({
+    queryKey: ["admin-rsvp-messages"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("rsvps")
+        .select("id,event_id,guest_name,message,attending,guest_count,created_at")
+        .not("message", "is", null)
+        .neq("message", "")
+        .order("created_at", { ascending: false })
+        .limit(30);
+      if (error) throw error;
+      return (data ?? []) as AdminMessage[];
     },
   });
 
@@ -194,20 +240,31 @@ function AdminPage() {
         <div className="w-full lg:pl-[248px]">
           <header className="sticky top-0 z-40 border-b border-black/[0.06] bg-white/80 backdrop-blur-2xl">
             <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-5 sm:px-8">
-              <div className="flex items-center gap-3">
+              <div className="flex min-w-0 items-center gap-3">
                 <button type="button" className="lg:hidden" onClick={() => setMobileNav(true)} aria-label="Abrir menu">
                   <Menu className="size-5" />
                 </button>
-                <div>
+                <Link to="/" className="admin-header-brand group flex shrink-0 items-center gap-2.5" aria-label="Solar Eclipse — página inicial">
+                  <span className="admin-brand-mark flex size-8 items-center justify-center rounded-full bg-[#111] text-white shadow-sm">
+                    <EclipseMark className="size-6" />
+                  </span>
+                  <span className="hidden text-sm font-semibold tracking-[-0.025em] sm:inline">Solar Eclipse</span>
+                </Link>
+                <span className="hidden h-6 w-px bg-black/[0.08] sm:block" />
+                <div className="min-w-0">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/35">
                     {mode.kind === "dashboard" ? "Workspace" : "Editor"}
                   </p>
-                  <p className="text-sm font-medium">
+                  <p className="truncate text-sm font-medium">
                     {currentEvent ? eventTitle(currentEvent) : "Eventos"}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex shrink-0 items-center gap-2">
+                <div className="admin-clock hidden items-center gap-2 rounded-full border border-black/[0.07] bg-[#f8f8f8] px-3 py-2 text-xs text-black/60 sm:flex" title="Data e hora atual">
+                  <Clock3 className="size-3.5 text-black/35" />
+                  <span className="tabular-nums font-medium">{formatAdminDateTime(now)}</span>
+                </div>
                 <a href="/" target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
                   Ver site
                 </a>
@@ -233,6 +290,7 @@ function AdminPage() {
                 events={events ?? []}
                 isLoading={isLoading}
                 stats={stats}
+                messages={messages}
                 onNew={() => setMode({ kind: "choose-type" })}
                 onOpen={openEvent}
               />
@@ -292,15 +350,36 @@ function Dashboard({
   events,
   isLoading,
   stats,
+  messages,
   onNew,
   onOpen,
 }: {
   events: EventRow[];
   isLoading: boolean;
   stats: { total: number; weddings: number; latest?: EventRow | undefined };
+  messages: AdminMessage[];
   onNew: () => void;
   onOpen: (event: EventRow, section?: string) => void;
 }) {
+  const [messageIndex, setMessageIndex] = useState(0);
+
+  useEffect(() => {
+    if (messageIndex >= messages.length && messages.length > 0) {
+      setMessageIndex(0);
+    }
+  }, [messageIndex, messages.length]);
+
+  useEffect(() => {
+    if (messages.length < 2) return;
+    const timer = window.setInterval(() => {
+      setMessageIndex((current) => (current + 1) % messages.length);
+    }, 5200);
+    return () => window.clearInterval(timer);
+  }, [messages.length]);
+
+  const activeMessage = messages[messageIndex];
+  const messageEvent = activeMessage ? events.find((event) => event.id === activeMessage.event_id) : undefined;
+
   return (
     <div className="space-y-10">
       <section className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
@@ -350,7 +429,7 @@ function Dashboard({
                   </div>
                   <div className="min-w-0">
                     <p className="truncate font-medium">{eventTitle(event)}</p>
-                    <p className="mt-1 truncate text-xs text-black/40">{eventTypeLabel(event.event_type)} · {formatDatePt(event.event_date)} · /{event.slug}</p>
+                    <p className="mt-1 truncate text-xs text-black/40">{eventTypeLabel(event.event_type)} · {formatAdminDateTime(event.event_date)} · /{event.slug}</p>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 sm:justify-end">
@@ -367,6 +446,82 @@ function Dashboard({
             ))}
           </div>
         )}
+      </section>
+
+      <section className="admin-message-panel relative overflow-hidden rounded-[30px] border border-black/[0.07] bg-[#111] p-6 text-white shadow-[0_24px_70px_-45px_rgba(0,0,0,.55)] sm:p-8">
+        <div className="absolute -right-20 -top-20 size-56 rounded-full bg-[#d7b56d]/10 blur-3xl" />
+        <div className="absolute -bottom-24 left-1/3 size-64 rounded-full bg-white/[0.04] blur-3xl" />
+        <div className="relative">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.06]">
+                <MessageCircle className="size-4 text-[#d7b56d]" />
+              </span>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">Feedback dos convidados</p>
+                <h2 className="mt-1 text-2xl font-semibold tracking-[-0.035em]">Mensagens recentes</h2>
+              </div>
+            </div>
+            <span className="rounded-full border border-white/10 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-white/45">
+              {messages.length} mensagens
+            </span>
+          </div>
+
+          {activeMessage ? (
+            <div className="mt-7">
+              <div className="admin-message-card min-h-[170px] rounded-[24px] border border-white/10 bg-white/[0.055] p-6 sm:p-7">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <p className="text-lg font-medium">{activeMessage.guest_name || "Convidado"}</p>
+                    <p className="mt-1 text-xs text-white/40">
+                      {messageEvent ? eventTitle(messageEvent) : "Evento"} · {activeMessage.attending ? "Presença confirmada" : "Não vai"}
+                    </p>
+                  </div>
+                  <div className="text-right text-[11px] text-white/40">
+                    <p>{formatAdminDateTime(activeMessage.created_at)}</p>
+                    {activeMessage.guest_count ? <p className="mt-1">{activeMessage.guest_count} convidado(s)</p> : null}
+                  </div>
+                </div>
+                <p className="mt-7 max-w-3xl text-base leading-7 text-white/80">
+                  “{activeMessage.message}”
+                </p>
+              </div>
+
+              <div className="mt-5 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-1.5" aria-label="Mensagens">
+                  {messages.slice(0, 12).map((message, index) => (
+                    <button
+                      key={message.id}
+                      type="button"
+                      aria-label={`Ver mensagem ${index + 1}`}
+                      aria-current={index === messageIndex}
+                      onClick={() => setMessageIndex(index)}
+                      className={`h-1.5 rounded-full transition-all ${index === messageIndex ? "w-7 bg-[#d7b56d]" : "w-1.5 bg-white/20 hover:bg-white/40"}`}
+                    />
+                  ))}
+                </div>
+                {messages.length > 1 && (
+                  <div className="flex items-center gap-1">
+                    <button type="button" aria-label="Mensagem anterior" onClick={() => setMessageIndex((messageIndex - 1 + messages.length) % messages.length)} className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition hover:bg-white/10">
+                      <ChevronLeft className="size-4" />
+                    </button>
+                    <button type="button" aria-label="Próxima mensagem" onClick={() => setMessageIndex((messageIndex + 1) % messages.length)} className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition hover:bg-white/10">
+                      <ChevronRight className="size-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="mt-7 flex min-h-[150px] items-center justify-center rounded-[24px] border border-dashed border-white/10 bg-white/[0.035] text-center">
+              <div>
+                <MessageCircle className="mx-auto size-7 text-white/20" />
+                <p className="mt-3 text-sm text-white/55">Ainda não existem mensagens de convidados.</p>
+                <p className="mt-1 text-xs text-white/30">As mensagens aparecerão aqui automaticamente após os primeiros RSVP.</p>
+              </div>
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );
