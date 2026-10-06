@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Check, Search, Sparkles } from "lucide-react";
 
 import { TEMPLATE_OPTIONS, type TemplateDefinition } from "@/lib/templates";
+import { getTemplateDirection } from "@/lib/templateDirections";
 
 const SWATCHES: Record<TemplateDefinition["tone"], string> = {
   gold: "from-zinc-950 via-zinc-800 to-amber-700",
@@ -165,6 +166,18 @@ export function TemplatePicker({
                 <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                   {item.description}
                 </p>
+                <div className="mt-4 grid gap-2 border-t border-border pt-3 text-[0.65rem] leading-relaxed text-muted-foreground">
+                  {(() => {
+                    const direction = getTemplateDirection(item);
+                    return (
+                      <>
+                        <p><span className="font-medium text-foreground">Estrutura:</span> {direction.structure}</p>
+                        <p><span className="font-medium text-foreground">Design:</span> {direction.design}</p>
+                        <p><span className="font-medium text-foreground">Aparência:</span> {direction.appearance}</p>
+                      </>
+                    );
+                  })()}
+                </div>
               </div>
             </button>
           );
