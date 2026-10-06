@@ -509,8 +509,15 @@ export function WeddingForm({
         <div className="grid gap-4 sm:grid-cols-2">
           {[
             ["hero", "Capa / abertura"],
+            ["cover_video", "Vídeo de abertura"],
+            ["background", "Fundo do convite"],
+            ["bride", "Foto da noiva"],
+            ["groom", "Foto do noivo"],
             ["story", "História do casal"],
-            ["gallery", "Galeria"],
+            ["story_video", "Vídeo da história"],
+            ["section_1", "Momento especial 1"],
+            ["section_2", "Momento especial 2"],
+            ["gallery", "Galeria / destaque"],
             ["closing", "Encerramento"],
           ].map(([slot, label]) => (
             <div key={slot} className="rounded-xl border border-border p-4 space-y-3">
