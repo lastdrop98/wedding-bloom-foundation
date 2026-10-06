@@ -65,6 +65,14 @@ function TemplatePreviewPage() {
   const previewVariant = previewVariantByFamily[visualFamily];
   async function request() {
     if (busy) return;
+    if (!name.trim()) {
+      setError("Indique o nome do casal.");
+      return;
+    }
+    if (!phone.trim()) {
+      setError("Indique o WhatsApp ou telefone.");
+      return;
+    }
     setBusy(true);
     setError("");
     try {
