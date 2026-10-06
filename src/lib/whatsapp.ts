@@ -7,29 +7,22 @@ export function whatsappUrl(message: string) {
 
 /**
  * Opens the WhatsApp app when it is installed, then falls back to the
- * official wa.me universal link. This avoids api.whatsapp.com and avoids
- * forcing desktop users into web.whatsapp.com.
+ * official wa.me universal link.
  */
 export function openWhatsApp(message: string) {
   const encoded = encodeURIComponent(message);
   const webUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encoded}`;
   const appUrl = `whatsapp://send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
 
-  let fallback: number | undefined;
-  const cancelFallback = () => {
-    if (fallback !== undefined) window.clearTimeout(fallback);
-  };
-
-  const onVisibilityChange = () => {
-    if (document.hidden) cancelFallback();
-  };
+  function onVisibilityChange() {
+    if (document.hidden) window.clearTimeout(fallback);
+  }
 
   document.addEventListener("visibilitychange", onVisibilityChange, { once: true });
   window.location.href = appUrl;
 
-  const timeoutId = window.setTimeout(() => {
+  const fallback = window.setTimeout(() => {
     document.removeEventListener("visibilitychange", onVisibilityChange);
     window.location.href = webUrl;
   }, 900);
-  fallback = timeoutId;
 }
