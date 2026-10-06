@@ -459,7 +459,7 @@ function ModelsPage() {
             key={template.value}
             className="solar-model-card group overflow-hidden rounded-[30px] bg-white shadow-[0_18px_60px_rgba(0,0,0,.07)] transition duration-500 hover:-translate-y-1"
           >
-            <a href={`/modelos/${template.value}`} aria-label={`Abrir demonstração de ${template.label}`} className="block h-auto w-full rounded-none p-0 text-left">
+            <button type="button" onClick={() => setDemo(template)} aria-label={`Abrir demonstração de ${template.label}`} className="block w-full cursor-pointer rounded-none p-0 text-left">
               <div className="relative overflow-hidden">
                 <img
                   src={images[index % images.length]}
@@ -488,7 +488,7 @@ function ModelsPage() {
                   </span>
                 </div>
               </div>
-            </a>
+            </button>
 
             <div className="p-7 sm:p-8">
               <div className="mb-4 flex items-center justify-between gap-4">
