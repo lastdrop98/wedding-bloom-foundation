@@ -488,7 +488,7 @@ function ModelsPage() {
                   </span>
                 </div>
               </div>
-            </Button>
+            </a>
 
             <div className="p-7 sm:p-8">
               <div className="mb-4 flex items-center justify-between gap-4">
