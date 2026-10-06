@@ -189,7 +189,7 @@ function AdminPage() {
   const currentEvent = mode.kind === "form" ? mode.event : null;
 
   return (
-    <main className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f]">
+    <main className="solar-admin-shell min-h-screen bg-[#f5f5f7] text-[#1d1d1f]">
       <div className="flex min-h-screen">
         <aside className="fixed inset-y-0 left-0 z-50 hidden w-[248px] border-r border-black/[0.06] bg-white lg:flex lg:flex-col">
           <div className="flex h-16 items-center border-b border-black/[0.06] px-6">
