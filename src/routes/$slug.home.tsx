@@ -956,7 +956,7 @@ function HomePage() {
         <Section sectionKey="story-video" title="Uma história em movimento" eyebrow="Vídeo" wide dark vines="b">
           <div className="overflow-hidden rounded-2xl border border-gold/30 bg-black shadow-2xl">
             <video
-              src={slotMedia["story_video"]}
+              src={slotMedia["story_video"]?.url}
               controls
               playsInline
               preload="metadata"
@@ -969,20 +969,29 @@ function HomePage() {
       {(slotMedia["section_1"] || slotMedia["section_2"]) && (
         <Section sectionKey="moments" title="Momentos especiais" eyebrow="Para guardar na memória" wide vines="c">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((url, index) => (
-              <div key={url} className="card-elegant overflow-hidden">
-                <img
-                  src={url}
-                  alt={`Momento especial ${index + 1} de ${eventTitle(event)}`}
-                  loading="lazy"
-                  className="h-72 w-full object-cover md:h-96"
-                />
+            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((media, index) => (
+              <div key={media.url} className="card-elegant overflow-hidden">
+                {media.mediaType === "video" ? (
+                  <video
+                    src={media.url}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="h-72 w-full object-cover md:h-96"
+                  />
+                ) : (
+                  <img
+                    src={media.url}
+                    alt={`Momento especial ${index + 1} de ${eventTitle(event)}`}
+                    loading="lazy"
+                    className="h-72 w-full object-cover md:h-96"
+                  />
+                )}
               </div>
             ))}
           </div>
         </Section>
       )}
-
       {event.event_type === "casamento" && partyMembers.length > 0 && (
         <Section sectionKey="party" title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
