@@ -2507,3 +2507,388 @@ div[id*="lovable-badge"] {
   .solar-live-dot, .solar-live-badge, .solar-hero-v2-eclipse, .solar-hero-v2-corona,
   .solar-hero-v2-orbit, .solar-hero-v2-star { animation: none !important; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLAR ECLIPSE — V3 CINEMATIC HOME + PREMIUM ADMIN WORKSPACE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* HOME — brand mark sits above the hero message, not hidden in the header. */
+.solar-landing-hero-v2 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden !important;
+  background:
+    linear-gradient(90deg, rgba(8,8,8,.86) 0%, rgba(10,9,7,.70) 43%, rgba(7,7,7,.38) 100%),
+    url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2200&q=88") center/cover no-repeat !important;
+  color: #f7f1e5;
+}
+.solar-landing-hero-v2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 74% 42%, rgba(201,168,76,.25), transparent 20%),
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,.08), transparent 22%),
+    linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.58));
+}
+.solar-landing-hero-v2::after {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .18 !important;
+  background:
+    radial-gradient(circle at 10% 22%, rgba(244,227,178,.9) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 28% 68%, rgba(244,227,178,.8) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 66% 16%, rgba(244,227,178,.85) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 88% 34%, rgba(244,227,178,.7) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 82% 82%, rgba(244,227,178,.8) 0 1px, transparent 1.6px);
+  background-size: 240px 210px, 330px 280px, 290px 250px, 310px 260px, 260px 230px;
+  animation: solar-v3-stars 18s linear infinite;
+}
+.solar-landing-hero-v2 > div:first-of-type {
+  background: transparent !important;
+}
+.solar-hero-v2-copy {
+  color: #f7f1e5;
+}
+.solar-hero-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 30px;
+  animation: solar-v3-rise .9s cubic-bezier(.22,1,.36,1) both;
+}
+.solar-hero-brand-mark {
+  display: inline-flex;
+  width: 76px;
+  height: 76px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(244,227,178,.46);
+  border-radius: 22px;
+  color: #f4e3b2;
+  background: rgba(10,10,10,.42);
+  box-shadow: 0 20px 60px rgba(0,0,0,.28), inset 0 0 30px rgba(201,168,76,.08);
+  backdrop-filter: blur(16px);
+}
+.solar-hero-brand-name {
+  color: rgba(244,227,178,.86);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+}
+.solar-landing-hero-v2 .solar-live-badge {
+  border-color: rgba(244,227,178,.38);
+  background: rgba(10,10,10,.38);
+  color: #f4e3b2;
+  box-shadow: 0 18px 45px rgba(0,0,0,.22);
+}
+.solar-landing-hero-v2 h1 {
+  color: #fffaf0 !important;
+  text-wrap: balance;
+}
+.solar-landing-hero-v2 .solar-hero-v2-copy > p {
+  color: rgba(255,250,240,.72) !important;
+}
+.solar-landing-hero-v2 .solar-hero-v2-copy a:first-of-type {
+  background: #f4e3b2;
+  color: #16130d;
+}
+.solar-landing-hero-v2 .solar-hero-v2-copy a:last-of-type {
+  border-color: rgba(244,227,178,.48);
+  color: #fffaf0;
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+}
+.solar-hero-v2-visual {
+  min-height: 610px;
+  position: relative;
+}
+.solar-hero-v2-visual::before {
+  content: "";
+  position: absolute;
+  inset: 5%;
+  border-radius: 50%;
+  background: url("https://images.unsplash.com/photo-1534791547706-9b3f7f6c8a4a?auto=format&fit=crop&w=1400&q=80") center/cover;
+  opacity: .16;
+  filter: saturate(.65) contrast(1.1) blur(1px);
+  mix-blend-mode: screen;
+}
+.solar-hero-v2-eclipse {
+  z-index: 2;
+}
+.solar-hero-v2-caption {
+  color: rgba(244,227,178,.58) !important;
+}
+.solar-hero-v2-caption strong {
+  color: rgba(255,250,240,.78) !important;
+}
+@keyframes solar-v3-stars { from { transform: translate3d(0,0,0); } to { transform: translate3d(-18px,12px,0); } }
+@keyframes solar-v3-rise { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:none; } }
+
+@media (max-width: 900px) {
+  .solar-landing-hero-v2 {
+    background:
+      linear-gradient(180deg, rgba(8,8,8,.88), rgba(8,8,8,.72)),
+      url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=84") center/cover no-repeat !important;
+  }
+  .solar-hero-brand { align-items: center; }
+  .solar-hero-brand-name { letter-spacing: .25em; }
+}
+
+/* ADMIN — cinematic workspace shell. */
+.solar-admin-shell {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(135deg, rgba(13,13,13,.94), rgba(22,20,16,.90)),
+    url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=86") center/cover fixed !important;
+}
+.solar-admin-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 78% 8%, rgba(201,168,76,.14), transparent 25%),
+    radial-gradient(circle at 12% 80%, rgba(255,255,255,.06), transparent 23%),
+    linear-gradient(180deg, rgba(7,7,7,.06), rgba(7,7,7,.22));
+}
+.solar-admin-shell > .flex {
+  position: relative;
+  z-index: 1;
+}
+.solar-admin-shell aside {
+  background:
+    linear-gradient(180deg, rgba(14,14,14,.96), rgba(18,16,13,.93)),
+    url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=70") center/cover !important;
+  color: #fff;
+  border-color: rgba(255,255,255,.09) !important;
+  box-shadow: 18px 0 70px rgba(0,0,0,.18);
+}
+.solar-admin-shell aside .border-b,
+.solar-admin-shell aside .border-t {
+  border-color: rgba(255,255,255,.08) !important;
+}
+.solar-admin-shell aside .text-black\/35,
+.solar-admin-shell aside .text-black\/30 {
+  color: rgba(255,255,255,.34) !important;
+}
+.solar-admin-shell aside .text-black\/55 {
+  color: rgba(255,255,255,.62) !important;
+}
+.solar-admin-shell aside button:not(.bg-black):hover {
+  background: rgba(255,255,255,.08) !important;
+  color: #fff !important;
+}
+.solar-admin-shell header {
+  background: rgba(13,13,13,.72) !important;
+  border-color: rgba(255,255,255,.09) !important;
+  color: #fff;
+  box-shadow: 0 18px 55px rgba(0,0,0,.12);
+}
+.solar-admin-shell header .text-black\/35,
+.solar-admin-shell header .text-black\/50 {
+  color: rgba(255,255,255,.42) !important;
+}
+.solar-admin-shell .admin-workspace {
+  color: #fff;
+}
+.solar-admin-shell .admin-hero {
+  position: relative;
+  min-height: 390px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 34px;
+  background:
+    linear-gradient(90deg, rgba(6,6,6,.90) 0%, rgba(9,8,7,.66) 52%, rgba(9,8,7,.26) 100%),
+    url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=90") center/cover;
+  box-shadow: 0 35px 100px rgba(0,0,0,.34);
+}
+.solar-admin-shell .admin-hero-image {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(0,0,0,.52)),
+    url("https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1800&q=82") center/cover;
+  opacity: .30;
+  mix-blend-mode: screen;
+  animation: admin-v3-pan 22s ease-in-out infinite alternate;
+}
+.solar-admin-shell .admin-hero-content {
+  position: relative;
+  z-index: 3;
+  min-height: 390px;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 330px;
+  align-items: end;
+  gap: 40px;
+  padding: 48px;
+}
+.solar-admin-shell .admin-hero-copy {
+  max-width: 760px;
+}
+.solar-admin-shell .admin-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 12px;
+  border: 1px solid rgba(244,227,178,.28);
+  border-radius: 999px;
+  background: rgba(0,0,0,.26);
+  color: #f4e3b2;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+}
+.solar-admin-shell .admin-hero h1 {
+  margin-top: 18px;
+  color: #fffaf0;
+  font-size: clamp(3.2rem, 6vw, 6.2rem);
+  line-height: .88;
+  letter-spacing: -.075em;
+}
+.solar-admin-shell .admin-hero-copy > p {
+  max-width: 650px;
+  margin-top: 22px;
+  color: rgba(255,255,255,.68);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.solar-admin-shell .admin-hero-actions {
+  margin-top: 28px;
+}
+.solar-admin-shell .admin-hero-note {
+  color: rgba(255,255,255,.42);
+}
+.solar-admin-shell .admin-hero-clock {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid rgba(244,227,178,.24);
+  border-radius: 26px;
+  background: rgba(7,7,7,.46);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 25px 60px rgba(0,0,0,.25);
+  backdrop-filter: blur(18px);
+}
+.solar-admin-shell .admin-clock-top {
+  color: rgba(255,255,255,.55);
+}
+.solar-admin-shell .admin-clock-time {
+  display: block;
+  margin-top: 22px;
+  color: #f4e3b2;
+  font-size: 2.75rem;
+  font-weight: 500;
+  letter-spacing: -.055em;
+}
+.solar-admin-shell .admin-clock-date,
+.solar-admin-shell .admin-clock-caption {
+  color: rgba(255,255,255,.46);
+}
+.solar-admin-shell .admin-clock-rule {
+  background: linear-gradient(90deg, #c9a84c, transparent) !important;
+}
+.solar-admin-shell .admin-hero-ring {
+  border-color: rgba(244,227,178,.13) !important;
+}
+.solar-admin-shell .admin-hero-star {
+  color: #f4e3b2 !important;
+}
+.solar-admin-shell .admin-workspace > section:not(.admin-hero) {
+  position: relative;
+}
+.solar-admin-shell .admin-workspace > section.grid {
+  grid-template-columns: repeat(3,minmax(0,1fr));
+}
+.solar-admin-shell .admin-workspace > section.grid > div {
+  min-height: 150px;
+  border: 1px solid rgba(255,255,255,.11) !important;
+  border-radius: 24px !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.045)) !important;
+  box-shadow: 0 22px 55px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.07);
+  color: #fff;
+  backdrop-filter: blur(18px);
+}
+.solar-admin-shell .admin-workspace > section.grid .text-black\/35,
+.solar-admin-shell .admin-workspace > section.grid .text-black\/25 {
+  color: rgba(255,255,255,.40) !important;
+}
+.solar-admin-shell .admin-workspace > section.grid > div p {
+  color: #fff;
+}
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) {
+  border-color: rgba(255,255,255,.10) !important;
+  background: rgba(13,13,13,.62) !important;
+  box-shadow: 0 30px 80px rgba(0,0,0,.22);
+  backdrop-filter: blur(18px);
+}
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) .text-black\/35,
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) .text-black\/40,
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) .text-black\/45 {
+  color: rgba(255,255,255,.40) !important;
+}
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) h2,
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) p {
+  color: #fff;
+}
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) article {
+  border-color: rgba(255,255,255,.08) !important;
+  color: #fff;
+}
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) article:hover {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(244,227,178,.18) !important;
+  transform: translateX(4px);
+}
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) article > div:first-child > div:first-child {
+  background: linear-gradient(145deg,#c9a84c,#6d5420) !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,.28);
+}
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) .bg-\[\#f5f5f7\] {
+  background: rgba(255,255,255,.06) !important;
+}
+.solar-admin-shell .admin-message-panel {
+  border-color: rgba(244,227,178,.20) !important;
+  box-shadow: 0 35px 100px rgba(0,0,0,.36) !important;
+}
+.solar-admin-shell .admin-message-card {
+  background: rgba(255,255,255,.075) !important;
+}
+.solar-admin-shell .admin-workspace > section:nth-of-type(2) .rounded-full {
+  border-color: rgba(255,255,255,.14);
+}
+@keyframes admin-v3-pan {
+  from { transform: scale(1.04) translate3d(-1%,0,0); }
+  to { transform: scale(1.10) translate3d(2%,-1%,0); }
+}
+@media (max-width: 900px) {
+  .solar-admin-shell .admin-hero {
+    min-height: auto;
+  }
+  .solar-admin-shell .admin-hero-content {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    padding: 30px;
+  }
+  .solar-admin-shell .admin-hero-clock {
+    max-width: 380px;
+  }
+  .solar-admin-shell .admin-workspace > section.grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .solar-landing-hero-v2::after,
+  .solar-admin-shell .admin-hero-image { animation: none !important; }
+}
