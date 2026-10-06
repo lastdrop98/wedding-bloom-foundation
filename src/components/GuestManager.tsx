@@ -9,6 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+function guestStatus(value?: string | null) {
+  return value === "sim" || value === "nao" ? value : "pending";
+}
+
 const STATUS: Record<string, { label: string; className: string }> = {
   pending: { label: "Pendente", className: "text-muted-foreground" },
   sim: { label: "Confirmado", className: "text-emerald-500" },
@@ -78,8 +82,8 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
     return {
       total: rows.length,
       invited: rows.reduce((sum, guest) => sum + (guest.invited_count || 0), 0),
-      confirmed: rows.filter((guest) => guest.rsvp_status === "sim").length,
-      pending: rows.filter((guest) => guest.rsvp_status === "pending").length,
+      confirmed: rows.filter((guest) => guestStatus(guest.rsvp_status) === "sim").reduce((sum, guest) => sum + (guest.invited_count || 0), 0),
+      pending: rows.filter((guest) => guestStatus(guest.rsvp_status) === "pending").reduce((sum, guest) => sum + (guest.invited_count || 0), 0),
     };
   }, [guests]);
 
@@ -92,7 +96,7 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
         (guest.phone ?? "").toLocaleLowerCase("pt-PT").includes(query) ||
         (guest.table_label ?? "").toLocaleLowerCase("pt-PT").includes(query);
       const matchesStatus =
-        statusFilter === "all" || guest.rsvp_status === statusFilter;
+        statusFilter === "all" || guestStatus(guest.rsvp_status) === statusFilter;
       return matchesSearch && matchesStatus;
     });
   }, [guests, search, statusFilter]);
@@ -111,7 +115,7 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
         String(g.invited_count ?? 1),
         g.invite_type === "casal" ? "Casal" : "Individual",
         g.table_label ?? "",
-        STATUS[g.rsvp_status]?.label ?? g.rsvp_status,
+        STATUS[guestStatus(g.rsvp_status)]?.label ?? g.rsvp_status,
         `${origin}/${slug}?g=${g.token}`,
       ]),
     ];
@@ -283,7 +287,7 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
       ) : (
         <ul className="space-y-2">
           {filteredGuests.length ? filteredGuests.map((g) => {
-            const status = STATUS[g.rsvp_status] ?? STATUS["pending"]!;
+            const status = STATUS[guestStatus(g.rsvp_status)] ?? STATUS["pending"]!;
             return (
               <li
                 key={g.id}
