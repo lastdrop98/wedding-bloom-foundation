@@ -17,7 +17,7 @@ export function openWhatsApp(message: string) {
 
   let fallback: number | undefined;
   const cancelFallback = () => {
-    if (fallback) window.clearTimeout(fallback);
+    if (fallback !== undefined) window.clearTimeout(fallback);
   };
 
   const onVisibilityChange = () => {
@@ -27,8 +27,9 @@ export function openWhatsApp(message: string) {
   document.addEventListener("visibilitychange", onVisibilityChange, { once: true });
   window.location.href = appUrl;
 
-  fallback = window.setTimeout(() => {
+  const timeoutId = window.setTimeout(() => {
     document.removeEventListener("visibilitychange", onVisibilityChange);
     window.location.href = webUrl;
   }, 900);
+  fallback = timeoutId;
 }
