@@ -74,9 +74,9 @@ function GalleryCarousel({
       <div className="invite-carousel-track">
         {visible.map((item, index) => (
           <div
-            key={\`\${item.url}-\${active}-\${index}\`}
+            key={`${item.url}-${active}-${index}`}
             className={
-              \`invite-carousel-card \${index === 0 ? "is-active" : ""} \` +
+              `invite-carousel-card ${index === 0 ? "is-active" : ""} ` +
               (item.mediaType === "video" ? "is-video" : "")
             }
           >
@@ -84,7 +84,7 @@ function GalleryCarousel({
               <video src={item.url} muted autoPlay loop playsInline preload="metadata" />
             ) : (
               <button type="button" onClick={() => onOpen(item)} aria-label="Abrir fotografia">
-                <img src={item.url} alt={item.caption ?? \`Fotografia de \${eventName}\`} loading="lazy" />
+                <img src={item.url} alt={item.caption ?? `Fotografia de ${eventName}`} loading="lazy" />
               </button>
             )}
             {item.caption && <span>{item.caption}</span>}
@@ -97,7 +97,7 @@ function GalleryCarousel({
             <button
               key={index}
               type="button"
-              aria-label={\`Ir para fotografia \${index + 1}\`}
+              aria-label={`Ir para fotografia ${index + 1}`}
               aria-current={index === active}
               onClick={() => setActive(index)}
             />
