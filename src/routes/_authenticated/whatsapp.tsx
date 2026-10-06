@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, CheckCircle2, MessageCircle, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
 import { EclipseMark } from "@/components/EclipseMark";
 
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_authenticated/whatsapp")({
 function WhatsAppPage() {
   const [phone, setPhone] = useState("258847404160");
   const [message, setMessage] = useState("Olá! Este é um teste do Solar Eclipse.");
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(false);\n\n  useEffect(() => {\n    const stored = window.localStorage.getItem("solar-eclipse-whatsapp-phone");\n    if (stored) setPhone(stored);\n  }, []);
 
   function save() {
     window.localStorage.setItem("solar-eclipse-whatsapp-phone", phone.replace(/\D/g, ""));
