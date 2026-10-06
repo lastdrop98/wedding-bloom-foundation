@@ -16,45 +16,70 @@ revoke all on table public.template_requests from anon, authenticated;
 grant insert on table public.template_requests to anon, authenticated;
 grant select, update on table public.template_requests to authenticated;
 
-create policy "Public can create template requests"
-  on public.template_requests
-  for insert
-  to anon, authenticated
-  with check (true);
-
-create policy "Admins can read template requests"
-  on public.template_requests
-  for select
-  to authenticated
-  using (
-    exists (
-      select 1
-      from public.user_roles
-      where user_roles.user_id = (select auth.uid())
-        and user_roles.role = 'admin'
-    )
-  );
-
-create policy "Admins can update template requests"
-  on public.template_requests
-  for update
-  to authenticated
-  using (
-    exists (
-      select 1
-      from public.user_roles
-      where user_roles.user_id = (select auth.uid())
-        and user_roles.role = 'admin'
-    )
-  )
-  with check (
-    exists (
-      select 1
-      from public.user_roles
-      where user_roles.user_id = (select auth.uid())
-        and user_roles.role = 'admin'
-    )
-  );
-
 create index if not exists template_requests_created_at_idx
   on public.template_requests (created_at desc);
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_policies
+    where schemaname = 'public'
+      and tablename = 'template_requests'
+      and policyname = 'Public can create template requests'
+  ) then
+    create policy "Public can create template requests"
+      on public.template_requests
+      for insert
+      to anon, authenticated
+      with check (true);
+  end if;
+
+  if not exists (
+    select 1 from pg_policies
+    where schemaname = 'public'
+      and tablename = 'template_requests'
+      and policyname = 'Admins can read template requests'
+  ) then
+    create policy "Admins can read template requests"
+      on public.template_requests
+      for select
+      to authenticated
+      using (
+        exists (
+          select 1
+          from public.user_roles
+          where user_roles.user_id = (select auth.uid())
+            and user_roles.role = 'admin'
+        )
+      );
+  end if;
+
+  if not exists (
+    select 1 from pg_policies
+    where schemaname = 'public'
+      and tablename = 'template_requests'
+      and policyname = 'Admins can update template requests'
+  ) then
+    create policy "Admins can update template requests"
+      on public.template_requests
+      for update
+      to authenticated
+      using (
+        exists (
+          select 1
+          from public.user_roles
+          where user_roles.user_id = (select auth.uid())
+            and user_roles.role = 'admin'
+        )
+      )
+      with check (
+        exists (
+          select 1
+          from public.user_roles
+          where user_roles.user_id = (select auth.uid())
+            and user_roles.role = 'admin'
+        )
+      );
+  end if;
+end
+$$;
