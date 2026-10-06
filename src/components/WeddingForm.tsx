@@ -187,11 +187,13 @@ export function WeddingForm({
   eventType = "casamento",
   onSaved,
   onCancel,
+  initialValues,
 }: {
   event: EventRow | null;
   eventType?: string;
   onSaved: (event?: EventRow) => void;
   onCancel: () => void;
+  initialValues?: Partial<Record<string, string>>;
 }) {
   const [values, setValues] = useState<Record<string, string>>(() => {
     const detailValues = event ? readDetails(event) : {};
