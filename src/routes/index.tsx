@@ -173,13 +173,14 @@ function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-white to-[#faf8f3]" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_.95fr]">
           <div className="solar-hero-v2-copy">
+            <div className="solar-hero-brand" aria-label="Solar Eclipse">
+              <span className="solar-hero-brand-mark"><EclipseMark className="size-12 sm:size-14" /></span>
+              <span className="solar-hero-brand-name">Solar Eclipse</span>
+            </div>
             <div className="solar-live-badge">
               <span className="solar-live-dot" />
               SOLAR ECLIPSE • CONVITES DIGITAIS
             </div>
-          <p className="mb-6 text-sm uppercase tracking-[0.4em] text-[#C9A84C]">
-            Solar Eclipse
-          </p>
           <h1 className="text-5xl font-light leading-tight tracking-[-0.04em] md:text-7xl">
             O convite de casamento
             <br />
