@@ -33,6 +33,8 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
   const [phone, setPhone] = useState("");
   const [inviteType, setInviteType] = useState("individual");
   const [tableLabel, setTableLabel] = useState("");
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const { data: guests, isLoading } = useQuery({
     queryKey: ["guests", eventId],
@@ -80,6 +82,20 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
       pending: rows.filter((guest) => guest.rsvp_status === "pending").length,
     };
   }, [guests]);
+
+  const filteredGuests = useMemo(() => {
+    const query = search.trim().toLocaleLowerCase("pt-PT");
+    return (guests ?? []).filter((guest) => {
+      const matchesSearch =
+        !query ||
+        guest.name.toLocaleLowerCase("pt-PT").includes(query) ||
+        (guest.phone ?? "").toLocaleLowerCase("pt-PT").includes(query) ||
+        (guest.table_label ?? "").toLocaleLowerCase("pt-PT").includes(query);
+      const matchesStatus =
+        statusFilter === "all" || guest.rsvp_status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  }, [guests, search, statusFilter]);
 
   function exportCsv() {
     if (!guests?.length) {
@@ -229,13 +245,44 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
         </div>
       </div>
 
+      {!isLoading && guests?.length ? (
+        <div className="grid gap-3 rounded-xl border border-border bg-background/40 p-4 sm:grid-cols-[1fr_180px]">
+          <div className="space-y-2">
+            <Label htmlFor="guest-search">Pesquisar convidados</Label>
+            <Input
+              id="guest-search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Nome, telefone ou mesa…"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="guest-status">Estado</Label>
+            <select
+              id="guest-status"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+            >
+              <option value="all">Todos</option>
+              <option value="pending">Pendentes</option>
+              <option value="sim">Confirmados</option>
+              <option value="nao">Não vão</option>
+            </select>
+          </div>
+          <p className="text-xs text-muted-foreground sm:col-span-2">
+            A mostrar {filteredGuests.length} de {guests.length} convidado(s).
+          </p>
+        </div>
+      ) : null}
+
       {isLoading ? (
         <p className="text-sm text-muted-foreground">A carregar convidados…</p>
       ) : !guests?.length ? (
         <p className="text-sm text-muted-foreground">Ainda não há convidados.</p>
       ) : (
         <ul className="space-y-2">
-          {guests.map((g) => {
+          {filteredGuests.length ? filteredGuests.map((g) => {
             const status = STATUS[g.rsvp_status] ?? STATUS["pending"]!;
             return (
               <li
@@ -288,7 +335,11 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                 </div>
               </li>
             );
-          })}
+          }) : (
+            <li className="rounded-md border border-dashed border-border px-4 py-8 text-center text-sm text-muted-foreground">
+              Nenhum convidado corresponde aos filtros.
+            </li>
+          )}
         </ul>
       )}
     </section>
