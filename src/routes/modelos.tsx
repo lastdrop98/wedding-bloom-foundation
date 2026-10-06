@@ -32,12 +32,15 @@ const images = [
   "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
 ];
 
-const filters = ["Todos", "Luxury", "Minimalista", "Romântico", "Garden", "Royal", "Tradicional", "Africano"];
+const filters = ["Todos", "Luxury", "Minimalista", "Editorial", "Romântico", "Garden", "Royal", "Cinemático", "Destination", "Tradicional", "Africano"];
 
 function matchesFilter(family: string, filter: string) {
   if (filter === "Todos") return true;
   const value = family.toLowerCase();
   if (filter === "Africano") return value.includes("africano") || value.includes("xiguiane");
+  if (filter === "Editorial") return value.includes("editorial") || value.includes("fashion");
+  if (filter === "Cinemático") return value.includes("cinemático") || value.includes("dark");
+  if (filter === "Destination") return value.includes("destination") || value.includes("coastal");
   return value.includes(filter.toLowerCase());
 }
 
