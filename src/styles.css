@@ -3420,3 +3420,375 @@ div[id*="lovable-badge"] {
   background: #fff !important;
   color: #1d1d1f !important;
 }
+
+
+/* =========================================================
+   Featured invitation systems
+   The same template identity is used in Home demos, Admin
+   selection and the published couple invitation.
+   ========================================================= */
+
+.template-design-film-noir-motion {
+  background: #080808;
+  color: #f4efe5;
+}
+.template-design-film-noir-motion .template-hero {
+  min-height: 100svh;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: clamp(1.5rem, 6vw, 5rem);
+  text-align: left;
+}
+.template-design-film-noir-motion .template-hero-content {
+  max-width: 58rem;
+  margin-inline: 0;
+}
+.template-design-film-noir-motion .template-hero-content > h1 {
+  max-width: 8ch;
+  font-size: clamp(4rem, 13vw, 10rem);
+  line-height: .8;
+  letter-spacing: -.07em;
+  text-transform: uppercase;
+}
+.template-design-film-noir-motion .template-hero-gallery {
+  right: clamp(1rem, 5vw, 5rem);
+  bottom: clamp(2rem, 5vw, 5rem);
+  max-width: 30rem;
+}
+.template-design-film-noir-motion [data-template-section="welcome"],
+.template-design-film-noir-motion [data-template-section="story-video"] {
+  background: #050505;
+}
+.template-design-film-noir-motion [data-template-section="story"] {
+  background: linear-gradient(180deg,#0b0b0b,#17130f);
+}
+.template-design-film-noir-motion [data-template-section="story"] ol {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1rem;
+}
+.template-design-film-noir-motion [data-template-section="story"] li {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.template-design-film-noir-motion [data-template-section="story"] li > span {
+  display: none;
+}
+.template-design-film-noir-motion [data-template-section="story"] ol > span { display:none; }
+.template-design-film-noir-motion [data-template-section="schedule"] ol {
+  border-top: 1px solid rgba(216,180,106,.3);
+  border-bottom: 1px solid rgba(216,180,106,.3);
+}
+.template-design-film-noir-motion [data-template-section="schedule"] li {
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  letter-spacing: .08em;
+}
+
+.template-design-editorial-magazine {
+  background: #eeeae2;
+  color: #171513;
+}
+.template-design-editorial-magazine .template-hero {
+  min-height: 100svh;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+  text-align: left;
+}
+.template-design-editorial-magazine .template-hero-content {
+  width: 42%;
+  max-width: none;
+  margin: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.5rem,4vw,4rem);
+  color: #171513;
+}
+.template-design-editorial-magazine .template-hero-content > h1 {
+  font-size: clamp(4rem,9vw,8rem);
+  line-height: .78;
+  letter-spacing: -.08em;
+}
+.template-design-editorial-magazine .template-hero-gallery {
+  width: 58%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.template-design-editorial-magazine .template-hero-gallery .invite-carousel-track {
+  height: 100%;
+}
+.template-design-editorial-magazine .template-hero-gallery .invite-carousel-card {
+  height: 100%;
+  border-radius: 0;
+}
+.template-design-editorial-magazine [data-template-section] {
+  border-radius: 0;
+}
+.template-design-editorial-magazine [data-template-section="couple"] > div > div {
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+}
+.template-design-editorial-magazine [data-template-section="couple"] > div {
+  grid-template-columns: 1fr 1fr;
+}
+.template-design-editorial-magazine [data-template-section="couple"] img {
+  aspect-ratio: 4/5;
+  height: auto;
+}
+.template-design-editorial-magazine [data-template-section="story"] ol {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 0;
+}
+.template-design-editorial-magazine [data-template-section="story"] li {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 2rem !important;
+  border: 1px solid rgba(0,0,0,.1);
+}
+.template-design-editorial-magazine [data-template-section="schedule"] ol {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 0;
+}
+.template-design-editorial-magazine [data-template-section="schedule"] li {
+  border-radius: 0;
+  border: 1px solid rgba(0,0,0,.1);
+  min-height: 12rem;
+}
+
+.template-design-pearl-garden {
+  background: #f7f0ec;
+  color: #4b3b3a;
+}
+.template-design-pearl-garden .template-hero {
+  min-height: 92svh;
+  background:
+    radial-gradient(circle at 14% 20%,rgba(255,255,255,.9) 0 3px,transparent 4px),
+    radial-gradient(circle at 85% 30%,rgba(255,255,255,.7) 0 4px,transparent 5px),
+    #f7f0ec;
+}
+.template-design-pearl-garden .template-hero-content {
+  padding: clamp(1.5rem,5vw,4rem);
+  background: rgba(255,255,255,.6);
+  border: 1px solid rgba(184,149,152,.35);
+  border-radius: 50% 50% 1.5rem 1.5rem;
+  box-shadow: 0 30px 90px rgba(125,88,92,.12);
+}
+.template-design-pearl-garden .template-hero-content > h1 {
+  font-family: var(--font-script);
+  font-size: clamp(3rem,9vw,6rem);
+}
+.template-design-pearl-garden [data-template-section="couple"] > div {
+  grid-template-columns: 1fr 1fr;
+}
+.template-design-pearl-garden [data-template-section="couple"] .card-elegant {
+  border-radius: 7rem 7rem 1.5rem 1.5rem;
+  border: 1px solid rgba(184,149,152,.3);
+  overflow: hidden;
+}
+.template-design-pearl-garden [data-template-section="moments"] > div {
+  grid-template-columns: 1fr 1.5fr;
+}
+.template-design-pearl-garden [data-template-section="moments"] img {
+  border-radius: 50% 50% 1rem 1rem;
+}
+.template-design-pearl-garden [data-template-section="schedule"] ol {
+  max-width: 38rem;
+  margin-inline: auto;
+}
+.template-design-pearl-garden [data-template-section="schedule"] li {
+  border-left: 3px solid #b89598;
+  border-radius: 0 2rem 2rem 0;
+}
+
+.template-design-capulana-contemporary {
+  background: #3d2a20;
+  color: #f5ead8;
+}
+.template-design-capulana-contemporary .template-hero {
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+  background:
+    repeating-linear-gradient(45deg,rgba(196,154,98,.13) 0 12px,transparent 12px 24px),
+    repeating-linear-gradient(-45deg,rgba(29,77,65,.15) 0 10px,transparent 10px 20px);
+}
+.template-design-capulana-contemporary .template-hero::before,
+.template-design-capulana-contemporary .template-hero::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 16px;
+  background: repeating-linear-gradient(90deg,#b8864c 0 24px,#234c43 24px 48px,#c65b3a 48px 72px);
+  z-index: 3;
+}
+.template-design-capulana-contemporary .template-hero::before { top: 0; }
+.template-design-capulana-contemporary .template-hero::after { bottom: 0; }
+.template-design-capulana-contemporary .template-hero-content {
+  padding: 2rem;
+  border: 1px solid rgba(212,173,114,.5);
+  background: rgba(61,42,32,.78);
+  transform: rotate(-1deg);
+}
+.template-design-capulana-contemporary .template-hero-content > h1 {
+  font-size: clamp(3rem,8vw,6.5rem);
+  text-transform: uppercase;
+  letter-spacing: -.04em;
+}
+.template-design-capulana-contemporary [data-template-section] {
+  background:
+    repeating-linear-gradient(135deg,rgba(196,154,98,.05) 0 14px,transparent 14px 28px);
+}
+.template-design-capulana-contemporary [data-template-section="couple"] > div {
+  grid-template-columns: 1.2fr .8fr;
+}
+.template-design-capulana-contemporary [data-template-section="couple"] > div > div:nth-child(2) {
+  margin-top: 4rem;
+}
+.template-design-capulana-contemporary [data-template-section="story"] ol {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: .75rem;
+}
+.template-design-capulana-contemporary [data-template-section="story"] li {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.template-design-capulana-contemporary [data-template-section="story"] li > span { display:none; }
+.template-design-capulana-contemporary [data-template-section="schedule"] ol {
+  max-width: 48rem;
+  margin-inline: auto;
+  transform: skewY(-1deg);
+}
+.template-design-capulana-contemporary [data-template-section="schedule"] li {
+  border-left: 5px solid #b8864c;
+  border-radius: 0;
+}
+
+.template-design-celestial-ivory {
+  background: #f3efe5;
+  color: #1d1a16;
+}
+.template-design-celestial-ivory .template-hero {
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at 15% 18%,#a47b31 0 1px,transparent 2px),
+    radial-gradient(circle at 80% 24%,#a47b31 0 1px,transparent 2px),
+    radial-gradient(circle at 62% 76%,#a47b31 0 1px,transparent 2px),
+    #f3efe5;
+}
+.template-design-celestial-ivory .template-hero-content {
+  max-width: 48rem;
+  color: #1d1a16;
+}
+.template-design-celestial-ivory .template-hero-content .text-cream { color:#1d1a16 !important; }
+.template-design-celestial-ivory .template-hero-content > h1 {
+  font-size: clamp(4rem,10vw,8rem);
+  letter-spacing: -.08em;
+}
+.template-design-celestial-ivory [data-template-section="story"] {
+  background: #1d1a16;
+  color: #f3efe5;
+}
+.template-design-celestial-ivory [data-template-section="story"] ol {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+}
+.template-design-celestial-ivory [data-template-section="story"] li {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 2rem !important;
+}
+.template-design-celestial-ivory [data-template-section="schedule"] ol {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+}
+.template-design-celestial-ivory [data-template-section="schedule"] li {
+  border-top: 1px solid #a47b31;
+  border-radius: 0;
+}
+
+.template-design-coastal-blue {
+  background: #eaf2f3;
+  color: #17333a;
+}
+.template-design-coastal-blue .template-hero {
+  min-height: 100svh;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5rem;
+  border-radius: 0 0 50% 50% / 0 0 8% 8%;
+}
+.template-design-coastal-blue .template-hero-content {
+  width: min(56rem,100%);
+  padding: 2rem;
+  color: white;
+  background: linear-gradient(90deg,rgba(23,51,58,.88),rgba(23,51,58,.15));
+  border-left: 4px solid #d8b46a;
+  text-align: left;
+}
+.template-design-coastal-blue .template-hero-content > h1 {
+  font-size: clamp(3.5rem,10vw,8rem);
+  line-height: .86;
+}
+.template-design-coastal-blue [data-template-section="couple"] > div {
+  grid-template-columns: 1.5fr 1fr;
+}
+.template-design-coastal-blue [data-template-section="couple"] .card-elegant:first-child {
+  border-radius: 2rem 0 2rem 0;
+}
+.template-design-coastal-blue [data-template-section="couple"] .card-elegant:nth-child(2) {
+  border-radius: 0 2rem 0 2rem;
+  margin-top: 3rem;
+}
+.template-design-coastal-blue [data-template-section="moments"] > div {
+  grid-template-columns: 2fr 1fr;
+}
+.template-design-coastal-blue [data-template-section="moments"] img {
+  border-radius: 2rem 0 2rem 0;
+}
+.template-design-coastal-blue [data-template-section="schedule"] ol {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 0;
+}
+.template-design-coastal-blue [data-template-section="schedule"] li {
+  border-radius: 0;
+  border-inline: 1px solid rgba(45,114,128,.25);
+  background: rgba(255,255,255,.45);
+}
+
+@media (max-width: 760px) {
+  .template-design-film-noir-motion [data-template-section="story"] ol,
+  .template-design-editorial-magazine [data-template-section="story"] ol,
+  .template-design-celestial-ivory [data-template-section="story"] ol,
+  .template-design-capulana-contemporary [data-template-section="story"] ol,
+  .template-design-editorial-magazine [data-template-section="schedule"] ol,
+  .template-design-celestial-ivory [data-template-section="schedule"] ol,
+  .template-design-coastal-blue [data-template-section="schedule"] ol {
+    grid-template-columns: 1fr;
+  }
+  .template-design-editorial-magazine .template-hero-content {
+    width: 100%;
+    max-width: none;
+    min-height: 48%;
+  }
+  .template-design-editorial-magazine .template-hero-gallery {
+    position: absolute;
+    width: 100%;
+    height: 52%;
+    top: 0;
+  }
+  .template-design-capulana-contemporary [data-template-section="story"] ol {
+    grid-template-columns: 1fr 1fr;
+  }
+}
