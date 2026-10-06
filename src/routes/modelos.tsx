@@ -45,6 +45,12 @@ function matchesFilter(family: string, filter: string) {
 }
 
 function previewFamily(template: TemplateDefinition) {
+  if (template.value === "film-noir-motion") return "cinematic";
+  if (template.value === "editorial-magazine") return "magazine";
+  if (template.value === "pearl-garden") return "pearl";
+  if (template.value === "capulana-contemporary") return "heritage";
+  if (template.value === "celestial-ivory") return "celestial";
+  if (template.value === "coastal-blue") return "coastal";
   if (template.value === "xiguiane-tradicional" || /tradicional|africano|xiguiane/i.test(template.family)) return "heritage";
   if (template.value === "aquarela-botanica" || /romântico|garden|floral|botânica/i.test(template.family)) return "botanical";
   if (template.value === "emerald-elegante" || /verde|emerald|royal/i.test(template.family)) return "regal";
@@ -58,6 +64,11 @@ const previewStyles = {
   regal: { page: "bg-sage text-ink", accent: "text-cream", line: "border-cream/70", photo: "brightness-75", label: "O início de uma história", ornament: "◇" },
   heritage: { page: "bg-warm text-cream", accent: "text-gold-soft", line: "border-gold-soft/70", photo: "sepia", label: "Juntos em celebração", ornament: "✳" },
   editorial: { page: "bg-background text-foreground", accent: "text-wine", line: "border-foreground/40", photo: "grayscale", label: "O nosso dia", ornament: "—" },
+  cinematic: { page: "bg-[#090909] text-white", accent: "text-[#d8b46a]", line: "border-white/25", photo: "brightness-50 contrast-110", label: "A celebration in motion", ornament: "01" },
+  magazine: { page: "bg-[#eeeae2] text-black", accent: "text-black/55", line: "border-black/20", photo: "grayscale-[10%]", label: "WEDDING / ISSUE 01", ornament: "02" },
+  pearl: { page: "bg-[#f7f0ec] text-[#4b3b3a]", accent: "text-[#9b6f73]", line: "border-[#b89598]/40", photo: "brightness-105", label: "Pearl Garden", ornament: "❦" },
+  celestial: { page: "bg-[#f3efe5] text-[#1d1a16]", accent: "text-[#a47b31]", line: "border-[#a47b31]/40", photo: "brightness-90", label: "Celestial", ornament: "✦" },
+  coastal: { page: "bg-[#eaf2f3] text-[#17333a]", accent: "text-[#2d7280]", line: "border-[#2d7280]/30", photo: "brightness-105", label: "Destination / 01", ornament: "≈" },
 };
 
 function InvitationPreview({ template }: { template: TemplateDefinition }) {
