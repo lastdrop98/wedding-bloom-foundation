@@ -47,6 +47,77 @@ export const Route = createFileRoute("/$slug/home")({
 
 type GalleryImage = { url: string; caption: string | null; mediaType: string };
 
+function GalleryCarousel({
+  items,
+  eventName,
+  onOpen,
+}: {
+  items: GalleryImage[];
+  eventName: string;
+  onOpen: (item: GalleryImage) => void;
+}) {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (items.length < 2) return;
+    const id = window.setInterval(() => {
+      setActive((value) => (value + 1) % items.length);
+    }, 4200);
+    return () => window.clearInterval(id);
+  }, [items.length]);
+
+  if (!items.length) return null;
+  const visible = [0, 1, 2].map((offset) => items[(active + offset) % items.length]!);
+
+  return (
+    <div className="invite-carousel">
+      <div className="invite-carousel-track">
+        {visible.map((item, index) => (
+          <div
+            key={\`\${item.url}-\${active}-\${index}\`}
+            className={
+              \`invite-carousel-card \${index === 0 ? "is-active" : ""} \` +
+              (item.mediaType === "video" ? "is-video" : "")
+            }
+          >
+            {item.mediaType === "video" ? (
+              <video src={item.url} muted autoPlay loop playsInline preload="metadata" />
+            ) : (
+              <button type="button" onClick={() => onOpen(item)} aria-label="Abrir fotografia">
+                <img src={item.url} alt={item.caption ?? \`Fotografia de \${eventName}\`} loading="lazy" />
+              </button>
+            )}
+            {item.caption && <span>{item.caption}</span>}
+          </div>
+        ))}
+      </div>
+      {items.length > 1 && (
+        <div className="invite-carousel-dots" aria-label="Navegação da galeria">
+          {items.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              aria-label={\`Ir para fotografia \${index + 1}\`}
+              aria-current={index === active}
+              onClick={() => setActive(index)}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SolarEclipseBrandMark() {
+  return (
+    <div className="solar-eclipse-brand" aria-label="Solar Eclipse">
+      <span className="solar-eclipse-brand-orbit" />
+      <img src="/favicon.svg" alt="" aria-hidden="true" />
+      <span className="solar-eclipse-brand-name">Solar Eclipse</span>
+    </div>
+  );
+}
+
 function Section({
   title,
   eyebrow,
@@ -642,6 +713,7 @@ function HomePage() {
         </div>
 
         <div className="template-hero-content relative mx-auto max-w-3xl animate-fade-in">
+          <SolarEclipseBrandMark />
           <TemplateHeroAccent template={event.template} />
           <p className="eyebrow text-cream/70">Convite</p>
           <h1 className="mt-7 text-[clamp(2.5rem,9vw,5rem)] leading-[1.05] font-light tracking-wide text-cream">
@@ -945,34 +1017,11 @@ function HomePage() {
         <>
           <VineDivider className="my-6" />
           <Section sectionKey="gallery" title="Galeria" wide dark vines="c">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              {galleryUrls.map((g) =>
-                g.mediaType === "video" ? (
-                  <video
-                    key={g.url}
-                    src={g.url}
-                    controls
-                    playsInline
-                    preload="metadata"
-                    className="h-44 w-full rounded-sm border border-gold/30 bg-black object-cover md:h-60"
-                  />
-                ) : (
-                  <button
-                    key={g.url}
-                    type="button"
-                    onClick={() => setLightbox(g)}
-                    className="group overflow-hidden rounded-sm border border-gold/30"
-                  >
-                    <img
-                      src={g.url}
-                      alt={g.caption ?? `Fotografia de ${eventTitle(event)}`}
-                      loading="lazy"
-                      className="h-44 w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-60"
-                    />
-                  </button>
-                ),
-              )}
-            </div>
+            <GalleryCarousel
+              items={galleryUrls}
+              eventName={eventTitle(event)}
+              onOpen={setLightbox}
+            />
           </Section>
         </>
       )}
