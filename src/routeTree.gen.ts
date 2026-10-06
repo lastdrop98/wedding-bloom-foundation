@@ -158,6 +158,7 @@ export interface RootRouteChildren {
   SlugRoute: typeof SlugRouteWithChildren
   AuthRoute: typeof AuthRoute
   ModelosRoute: typeof ModelosRouteWithChildren
+  ModelosTemplateRoute: typeof ModelosTemplateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -275,6 +276,7 @@ const rootRouteChildren: RootRouteChildren = {
   SlugRoute: SlugRouteWithChildren,
   AuthRoute: AuthRoute,
   ModelosRoute: ModelosRoute,
+  ModelosTemplateRoute: ModelosTemplateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
