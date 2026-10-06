@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Check, Search, Sparkles } from "lucide-react";
 
-import { TEMPLATE_OPTIONS, type TemplateDefinition } from "@/lib/templates";
+import { TEMPLATE_OPTIONS, templateVisualClass, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
 
 const SWATCHES: Record<TemplateDefinition["tone"], string> = {
@@ -135,7 +135,7 @@ export function TemplatePicker({
               aria-pressed={selected}
             >
               <div
-                className={`relative h-36 overflow-hidden bg-gradient-to-br ${SWATCHES[item.tone]}`}
+                className={`relative h-36 overflow-hidden ${templateVisualClass(item.value)} bg-gradient-to-br ${SWATCHES[item.tone]}`}
               >
                 {item.value === "film-noir-motion" && <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,.35)_55%,rgba(0,0,0,.9)_100%)]"><span className="absolute left-3 top-3 border border-white/30 px-2 py-1 text-[8px] tracking-[.2em] text-white/60">FILM 01</span><span className="absolute bottom-3 left-3 right-3 h-px bg-white/20" /></div>}
                 {item.value === "editorial-magazine" && <div className="absolute inset-0 grid grid-cols-[38%_62%] bg-[#ece7de]"><div className="flex flex-col justify-between p-3 text-black"><span className="text-[7px] tracking-[.2em]">ISSUE 01</span><span className="font-serif text-2xl leading-[.8]">A&amp;<br/>M</span></div><div className="bg-black/20" /></div>}
