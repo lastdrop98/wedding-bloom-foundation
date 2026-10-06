@@ -5,12 +5,17 @@ import { useEffect } from "react";
 import {
   CalendarDays,
   CheckCircle2,
+  Copy,
   ExternalLink,
   Heart,
+  Link2,
+  MessageCircle,
   Printer,
   Users,
   XCircle,
 } from "lucide-react";
+import { toast } from "sonner";
+import { whatsappUrl } from "@/lib/whatsapp";
 
 import { supabase } from "@/integrations/supabase/client";
 import { eventTitle, fetchEventBySlug, formatDatePt } from "@/lib/event";
@@ -127,6 +132,32 @@ function ConfirmationsPage() {
     { label: "Pessoas", value: people, icon: Heart },
   ];
 
+  const inviteLink =
+    typeof window !== "undefined" ? `${window.location.origin}/${slug}` : `/${slug}`;
+  const printLink =
+    typeof window !== "undefined" ? `${window.location.origin}/${slug}/imprimir` : `/${slug}/imprimir`;
+  const privatePanelLink =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/${slug}/confirmacoes?acesso=${encodeURIComponent(acesso)}`
+      : `/${slug}/confirmacoes?acesso=${encodeURIComponent(acesso)}`;
+
+  async function copyLink(value: string, label: string) {
+    try {
+      await navigator.clipboard.writeText(value);
+      toast.success(label);
+    } catch {
+      toast.error("Não foi possível copiar o link.");
+    }
+  }
+
+  const shareText = [
+    `Convite de ${eventTitle(event)}`,
+    inviteLink,
+    event.event_date ? `Data: ${formatDatePt(event.event_date)}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
   return (
     <main className="min-h-screen bg-muted/40 pb-16">
       <header className="border-b border-border bg-background/90 backdrop-blur-xl">
@@ -168,16 +199,42 @@ function ConfirmationsPage() {
           })}
         </section>
 
-        <section aria-label="Atalhos" className="grid gap-3 sm:grid-cols-3">
-          <a href={`/${slug}`} target="_blank" rel="noreferrer" className="group flex items-center justify-between border border-border bg-background px-5 py-4 font-sans text-sm transition hover:border-primary/50">
+        <section aria-label="Entrega e partilha" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <a href={inviteLink} target="_blank" rel="noreferrer" className="group flex items-center justify-between border border-border bg-background px-5 py-4 font-sans text-sm transition hover:border-primary/50">
             Convite Digital <ExternalLink className="size-4 text-muted-foreground transition group-hover:text-primary" />
           </a>
-          <a href={`/${slug}/imprimir`} target="_blank" rel="noreferrer" className="group flex items-center justify-between border border-border bg-background px-5 py-4 font-sans text-sm transition hover:border-primary/50">
-            Convite para Impressão <Printer className="size-4 text-muted-foreground transition group-hover:text-primary" />
+          <a href={printLink} target="_blank" rel="noreferrer" className="group flex items-center justify-between border border-border bg-background px-5 py-4 font-sans text-sm transition hover:border-primary/50">
+            Versão para Impressão <Printer className="size-4 text-muted-foreground transition group-hover:text-primary" />
           </a>
-          <a href="#confirmacoes" className="group flex items-center justify-between border border-primary/40 bg-background px-5 py-4 font-sans text-sm transition hover:border-primary">
-            Confirmações <Users className="size-4 text-primary" />
+          <button type="button" onClick={() => void copyLink(inviteLink, "Link do convite copiado.")} className="group flex items-center justify-between border border-border bg-background px-5 py-4 text-left font-sans text-sm transition hover:border-primary/50">
+            Copiar convite <Copy className="size-4 text-muted-foreground transition group-hover:text-primary" />
+          </button>
+          <a href={whatsappUrl(shareText)} target="_blank" rel="noreferrer" className="group flex items-center justify-between border border-primary/40 bg-background px-5 py-4 font-sans text-sm transition hover:border-primary">
+            Partilhar no WhatsApp <MessageCircle className="size-4 text-primary" />
           </a>
+        </section>
+
+        <section aria-label="Links do casal" className="mt-8 grid gap-4 lg:grid-cols-2">
+          <div className="border border-border bg-background p-5">
+            <div className="flex items-center gap-2">
+              <Link2 className="size-4 text-primary" />
+              <p className="font-sans text-xs font-medium uppercase tracking-[0.18em]">Link público</p>
+            </div>
+            <p className="mt-3 break-all font-mono text-xs text-muted-foreground">{inviteLink}</p>
+            <button type="button" onClick={() => void copyLink(inviteLink, "Link público copiado.")} className="mt-4 inline-flex items-center gap-2 border border-border px-3 py-2 font-sans text-xs hover:border-primary/50">
+              <Copy className="size-3.5" /> Copiar
+            </button>
+          </div>
+          <div className="border border-primary/25 bg-primary/[0.03] p-5">
+            <div className="flex items-center gap-2">
+              <Heart className="size-4 text-primary" />
+              <p className="font-sans text-xs font-medium uppercase tracking-[0.18em]">Acesso privado</p>
+            </div>
+            <p className="mt-3 break-all font-mono text-xs text-muted-foreground">{privatePanelLink}</p>
+            <button type="button" onClick={() => void copyLink(privatePanelLink, "Link privado do casal copiado.")} className="mt-4 inline-flex items-center gap-2 border border-primary/25 px-3 py-2 font-sans text-xs text-primary hover:border-primary/60">
+              <Copy className="size-3.5" /> Copiar acesso
+            </button>
+          </div>
         </section>
 
         <section id="confirmacoes" className="scroll-mt-6 pt-12">
