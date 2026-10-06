@@ -329,6 +329,26 @@ export function getTemplateDefinition(value?: string | null) {
   return TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!;
 }
 
+export type TemplateLayout =
+  | "editorial"
+  | "organic"
+  | "framed"
+  | "heritage"
+  | "cinematic"
+  | "classic";
+
+export function getTemplateLayout(value?: string | null): TemplateLayout {
+  const template = getTemplateDefinition(value);
+  const source = `${template.value} ${template.label} ${template.family}`;
+
+  if (/xiguiane|african/i.test(source)) return "heritage";
+  if (/minimalist|editorial|cinematic|sapphire-editorial/i.test(source)) return "editorial";
+  if (/garden|botanical|floral|romantic|boho|tropical|mediterranean/i.test(source)) return "organic";
+  if (/royal|baroque|oriental|nikah|traditional-bronze/i.test(source)) return "framed";
+  if (/midnight|charcoal/i.test(source)) return "cinematic";
+  return "classic";
+}
+
 export function templateToneClass(value?: string | null) {
-  return "invite-tone-" + getTemplateDefinition(value).tone;
+  return `invite-tone-${getTemplateDefinition(value).tone} template-layout-${getTemplateLayout(value)}`;
 }
