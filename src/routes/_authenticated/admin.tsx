@@ -70,6 +70,29 @@ function formatAdminDateTime(value: string | Date | null | undefined) {
   }).format(date);
 }
 
+function formatAdminTime(value: string | Date | null | undefined) {
+  if (!value) return "—";
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return new Intl.DateTimeFormat("pt-MZ", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).format(date);
+}
+
+function formatAdminDate(value: string | Date | null | undefined) {
+  if (!value) return "—";
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return new Intl.DateTimeFormat("pt-MZ", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+}
+
 type Mode =
   | { kind: "dashboard" }
   | { kind: "choose-type" }
@@ -246,13 +269,6 @@ function AdminPage() {
                 <button type="button" className="lg:hidden" onClick={() => setMobileNav(true)} aria-label="Abrir menu">
                   <Menu className="size-5" />
                 </button>
-                <Link to="/" className="admin-header-brand group flex shrink-0 items-center gap-2.5" aria-label="Solar Eclipse — página inicial">
-                  <span className="admin-brand-mark flex size-8 items-center justify-center rounded-full bg-[#111] text-white shadow-sm">
-                    <EclipseMark className="size-6" />
-                  </span>
-                  <span className="hidden text-sm font-semibold tracking-[-0.025em] sm:inline">Solar Eclipse</span>
-                </Link>
-                <span className="hidden h-6 w-px bg-black/[0.08] sm:block" />
                 <div className="min-w-0">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/35">
                     {mode.kind === "dashboard" ? "Workspace" : "Editor"}
@@ -262,10 +278,15 @@ function AdminPage() {
                   </p>
                 </div>
               </div>
-              <div className="flex shrink-0 items-center gap-2">
-                <div className="admin-clock hidden items-center gap-2 rounded-full border border-black/[0.07] bg-[#f8f8f8] px-3 py-2 text-xs text-black/60 sm:flex" title="Data e hora atual">
-                  <Clock3 className="size-3.5 text-black/35" />
-                  <span className="tabular-nums font-medium">{formatAdminDateTime(now)}</span>
+              <div className="flex shrink-0 items-center gap-2.5">
+                <div className="admin-clock" title="Data e hora atual" aria-label={`Data e hora atual: ${formatAdminDateTime(now)}`}>
+                  <div className="admin-clock-icon" aria-hidden="true">
+                    <Clock3 className="size-4" />
+                  </div>
+                  <div className="admin-clock-copy">
+                    <span className="admin-clock-time tabular-nums">{formatAdminTime(now)}</span>
+                    <span className="admin-clock-date">{formatAdminDate(now)}</span>
+                  </div>
                 </div>
                 <a href="/" target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
                   Ver site
