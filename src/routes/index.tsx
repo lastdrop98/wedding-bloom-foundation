@@ -133,7 +133,7 @@ function HomePage() {
               <a href="#como-funciona" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 hover:bg-white">
                 Como funciona
               </a>
-              <a href={whatsapp("Olá! Gostaria de conhecer os convites Solar Eclipse.")} target="_blank" rel="noreferrer" className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 text-white">
+              <a href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")} target="_blank" rel="noreferrer" className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 text-white">
                 Falar connosco <MessageCircle className="size-4" />
               </a>
             </div>
@@ -164,7 +164,7 @@ function HomePage() {
               Ver modelos <ArrowRight className="size-4" />
             </a>
             <a
-              href={whatsapp("Olá! Quero criar o meu convite de casamento com a Solar Eclipse.")}
+              href={whatsappUrl("Olá! Quero criar o meu convite de casamento com a Solar Eclipse.")}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C] px-8 py-4 transition hover:bg-[#C9A84C]/10"
@@ -285,7 +285,7 @@ function HomePage() {
             Escolher modelo <ArrowRight className="size-4" />
           </a>
           <a
-            href={whatsapp("Olá! Quero falar sobre um convite Solar Eclipse.")}
+            href={whatsappUrl("Olá! Quero falar sobre um convite Solar Eclipse.")}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-white"

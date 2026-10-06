@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Check, Search, Sparkles, X, MessageCircle } from "lucide-react";
+import { ArrowRight, CalendarDays, Check, Clock, Gift, Heart, Images, MessageCircle, Search, Sparkles, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
@@ -60,9 +60,13 @@ const previewStyles = {
 function InvitationPreview({ template }: { template: TemplateDefinition }) {
   const family = previewFamily(template);
   const style = previewStyles[family];
+  const direction = getTemplateDirection(template);
+  const scrollTo = (section: string) => {
+    document.querySelector(`[data-demo-section="${section}"]`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
-    <div className={`mx-auto w-full max-w-[420px] overflow-hidden shadow-xl ${style.page}`}>
-      <div className={`relative flex min-h-[520px] flex-col items-center justify-between border-[10px] border-current/10 p-8 text-center ${family === "editorial" ? "items-start text-left" : ""}`}>
+    <div className={`relative mx-auto w-full max-w-[420px] overflow-clip shadow-xl ${style.page}`}>
+      <section data-demo-section="capa" className={`relative flex min-h-[620px] scroll-mt-2 flex-col items-center justify-between border-[10px] border-current/10 p-8 text-center ${family === "editorial" ? "items-start text-left" : ""}`}>
         <div className={`w-full border-t pt-6 ${style.line}`}>
           <p className="font-sans text-[10px] uppercase tracking-wider">SOLAR ECLIPSE · DEMONSTRAÇÃO</p>
           <p className={`mt-10 text-4xl ${style.accent}`} aria-hidden="true">{style.ornament}</p>
@@ -73,12 +77,23 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
           <p className="mt-8 font-sans text-xs uppercase tracking-wider">24 de Outubro de 2027</p>
         </div>
         <p className={`w-full border-b pb-6 font-sans text-[10px] uppercase tracking-wider ${style.line}`}>Convite de demonstração</p>
-      </div>
-      <div className="relative h-72 overflow-hidden">
+        <div className="grid w-full grid-cols-3 gap-2 font-sans text-[9px] uppercase tracking-wider opacity-75">
+          <span><strong className="block text-lg font-light">383</strong>Dias</span><span><strong className="block text-lg font-light">08</strong>Horas</span><span><strong className="block text-lg font-light">24</strong>Min</span>
+        </div>
+      </section>
+      <section data-demo-section="historia" className="relative scroll-mt-2">
+      <div className="relative h-80 overflow-hidden">
         <img src={images[0]} alt="Fotografia ilustrativa de celebração" className={`h-full w-full object-cover ${style.photo}`} />
         <span className="absolute bottom-4 left-4 bg-background/90 px-3 py-1 font-sans text-[10px] text-foreground">DEMONSTRAÇÃO</span>
       </div>
-      <div className={`px-8 py-16 text-center ${family === "editorial" ? "text-left" : ""}`}>
+      <div className={`px-8 py-14 text-center ${family === "editorial" ? "text-left" : ""}`}>
+        <p className="font-sans text-[10px] uppercase tracking-wider">A nossa história · DEMONSTRAÇÃO</p>
+        <h4 className="mt-4 font-serif text-4xl">Momentos que nos trouxeram aqui</h4>
+        <div className={`mt-8 border-l pl-5 text-left ${style.line}`}><p className={`font-sans text-[10px] uppercase ${style.accent}`}>2022 · O encontro</p><p className="mt-2 text-sm leading-6 opacity-75">Um encontro fictício que deu início a esta história de demonstração.</p></div>
+        <div className={`mt-6 border-l pl-5 text-left ${style.line}`}><p className={`font-sans text-[10px] uppercase ${style.accent}`}>2026 · O pedido</p><p className="mt-2 text-sm leading-6 opacity-75">Um sim, uma promessa e uma data para celebrar.</p></div>
+      </div>
+      </section>
+      <section data-demo-section="agenda" className={`scroll-mt-2 px-8 py-16 text-center ${family === "editorial" ? "text-left" : ""}`}>
         <p className={`text-3xl ${style.accent}`} aria-hidden="true">{style.ornament}</p>
         <p className="mt-5 font-sans text-[10px] uppercase tracking-wider">Demonstração · Programa do dia</p>
         <h4 className="mt-4 font-serif text-4xl">Um dia para recordar</h4>
@@ -91,9 +106,21 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
           <p className="font-sans text-xs uppercase tracking-wider">19:00 · Celebração</p>
           <p className="mt-2 text-sm opacity-75">Salão de demonstração · Local fictício</p>
         </div>
-        <p className={`mt-12 text-3xl ${style.accent}`} aria-hidden="true">{style.ornament}</p>
-        <p className="mt-6 font-sans text-[10px] uppercase tracking-wider">{template.label} · DEMONSTRAÇÃO</p>
-      </div>
+      </section>
+      <section data-demo-section="galeria" className="scroll-mt-2 px-5 py-14">
+        <div className="px-3 text-center"><Images className={`mx-auto size-5 ${style.accent}`} /><p className="mt-4 font-sans text-[10px] uppercase tracking-wider">Galeria · DEMONSTRAÇÃO</p><h4 className="mt-3 font-serif text-4xl">Memórias</h4></div>
+        <div className="mt-8 grid grid-cols-2 gap-2"><img src={images[1]} alt="Momento fictício do casal" className="h-44 w-full object-cover" /><img src={images[2]} alt="Celebração fictícia" className="h-56 w-full object-cover" /><img src={images[3]} alt="Local fictício" className="-mt-12 h-56 w-full object-cover" /><img src={images[0]} alt="Detalhe fictício" className="h-44 w-full object-cover" /></div>
+      </section>
+      <section data-demo-section="rsvp" className={`scroll-mt-2 border-y px-8 py-16 text-center ${style.line}`}>
+        <Heart className={`mx-auto size-5 ${style.accent}`} /><p className="mt-4 font-sans text-[10px] uppercase tracking-wider">RSVP · DEMONSTRAÇÃO</p><h4 className="mt-3 font-serif text-4xl">Celebram connosco?</h4><p className="mt-4 text-sm leading-6 opacity-75">A confirmação real permite indicar presença, acompanhantes e deixar uma mensagem.</p><span className="mt-7 inline-flex border border-current px-6 py-3 font-sans text-xs uppercase tracking-wider">Confirmar presença</span>
+      </section>
+      <section data-demo-section="presentes" className="scroll-mt-2 px-8 py-16 text-center">
+        <Gift className={`mx-auto size-5 ${style.accent}`} /><p className="mt-4 font-sans text-[10px] uppercase tracking-wider">Presentes · DEMONSTRAÇÃO</p><h4 className="mt-3 font-serif text-4xl">O vosso carinho é o maior presente</h4><div className={`mt-8 border py-6 ${style.line}`}><p className="font-sans text-[10px] uppercase tracking-wider">Lista personalizada</p><p className="mt-2 text-sm opacity-70">Informações ilustrativas e configuradas de forma privada.</p></div><p className={`mt-10 text-3xl ${style.accent}`}>{style.ornament}</p><p className="mt-5 font-sans text-[10px] uppercase tracking-wider">{template.label} · DEMONSTRAÇÃO</p>
+      </section>
+      <nav aria-label="Navegação da demonstração" className="sticky bottom-0 z-10 grid grid-cols-5 border-t border-current/15 bg-inherit px-2 py-2 shadow-xl backdrop-blur-xl">
+        {[{ id: "capa", label: "Capa", icon: Heart }, { id: "agenda", label: "Agenda", icon: Clock }, { id: "galeria", label: "Galeria", icon: Images }, { id: "rsvp", label: "RSVP", icon: CalendarDays }, { id: "presentes", label: "Presentes", icon: Gift }].map((item) => { const Icon = item.icon; return <button key={item.id} type="button" onClick={() => scrollTo(item.id)} className="flex flex-col items-center gap-1 py-1 font-sans text-[8px] uppercase opacity-70 transition hover:opacity-100" aria-label={`Ir para ${item.label}`}><Icon className="size-3.5" />{item.label}</button>; })}
+      </nav>
+      <div className="border-t border-current/10 px-6 py-8 text-center"><p className="font-sans text-[9px] uppercase tracking-wider opacity-60">Direção: {direction.appearance}</p></div>
     </div>
   );
 }

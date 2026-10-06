@@ -2,6 +2,15 @@ import { looseDb } from "@/lib/event";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
+import {
+  CalendarDays,
+  CheckCircle2,
+  ExternalLink,
+  Heart,
+  Printer,
+  Users,
+  XCircle,
+} from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { eventTitle, fetchEventBySlug, formatDatePt } from "@/lib/event";
@@ -53,7 +62,8 @@ function ConfirmationsPage() {
     queryKey: ["rsvps", eventId, acesso],
     enabled: !!eventId && !!acesso,
     queryFn: async () => {
-      const { data, error } = await looseDb.rpc("get_couple_rsvps", { _token: acesso! });
+      if (!acesso) return [];
+      const { data, error } = await looseDb.rpc("get_couple_rsvps", { _token: acesso });
       if (error) throw error;
       return (data ?? []) as Rsvp[];
     },
@@ -91,13 +101,18 @@ function ConfirmationsPage() {
 
   if (!acesso) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-3 px-6 text-center">
-        <p className="eyebrow">Painel privado</p>
-        <h1 className="text-3xl font-light">Acesso reservado ao casal</h1>
-        <p className="max-w-md font-sans text-sm text-muted-foreground">
-          Use o link privado entregue pela Solar Eclipse para consultar as confirmações.
-        </p>
-      </div>
+      <main className="flex min-h-screen items-center justify-center bg-muted px-6 py-16">
+        <div className="w-full max-w-md border border-border bg-background px-7 py-10 text-center shadow-xl sm:px-10">
+          <div className="mx-auto flex size-11 items-center justify-center rounded-full border border-primary/30 text-primary">
+            <Heart className="size-4" />
+          </div>
+          <p className="eyebrow mt-6">Solar Eclipse · Painel privado</p>
+          <h1 className="mt-4 text-3xl font-light">Acesso reservado ao casal</h1>
+          <p className="mt-4 font-sans text-sm leading-6 text-muted-foreground">
+            Use o link privado entregue pela Solar Eclipse para consultar as confirmações.
+          </p>
+        </div>
+      </main>
     );
   }
 
@@ -106,43 +121,76 @@ function ConfirmationsPage() {
   const people = yes.reduce((sum, r) => sum + (r.guest_count || 0), 0);
 
   const stats = [
-    { label: "Respostas", value: rsvps.length },
-    { label: "Vão", value: yes.length },
-    { label: "Não vão", value: no.length },
-    { label: "Pessoas confirmadas", value: people },
+    { label: "Respostas", value: rsvps.length, icon: Users },
+    { label: "Vão", value: yes.length, icon: CheckCircle2 },
+    { label: "Não vão", value: no.length, icon: XCircle },
+    { label: "Pessoas", value: people, icon: Heart },
   ];
 
   return (
-    <main className="mx-auto min-h-screen max-w-3xl px-6 py-14">
-      <p className="eyebrow">Painel do casal</p>
-      <h1 className="mt-2 text-3xl font-light">{eventTitle(event)}</h1>
-      <p className="mt-2 font-sans text-sm text-muted-foreground">
-        {formatDatePt(event.event_date)} · atualiza automaticamente quando chegam novas confirmações
-      </p>
+    <main className="min-h-screen bg-muted/40 pb-16">
+      <header className="border-b border-border bg-background/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4 sm:px-8">
+          <div className="flex items-center gap-3">
+            <span className="flex size-8 items-center justify-center rounded-full border border-primary/30 text-primary"><Heart className="size-3.5" /></span>
+            <div>
+              <p className="font-sans text-xs font-medium">Solar Eclipse</p>
+              <p className="font-sans text-[10px] text-muted-foreground">Painel do Casal</p>
+            </div>
+          </div>
+          <span className="font-sans text-[10px] uppercase tracking-wider text-muted-foreground">Acesso privado</span>
+        </div>
+      </header>
 
-      <span className="gold-rule mt-8" />
-
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {stats.map((s) => (
-          <div
-            key={s.label}
-            className="rounded-md border border-border bg-card px-4 py-5 text-center"
-          >
-            <p className="text-3xl font-light text-primary">{s.value}</p>
-            <p className="mt-1 font-sans text-[0.65rem] tracking-[0.2em] text-muted-foreground uppercase">
-              {s.label}
+      <div className="mx-auto max-w-5xl px-5 pt-10 sm:px-8 sm:pt-14">
+        <section className="grid gap-8 border-b border-border pb-10 md:grid-cols-[1fr_auto] md:items-end">
+          <div>
+            <p className="eyebrow">Visão geral</p>
+            <h1 className="mt-3 text-4xl font-light sm:text-5xl">{eventTitle(event)}</h1>
+            <p className="mt-4 flex items-center gap-2 font-sans text-sm text-muted-foreground">
+              <CalendarDays className="size-4 text-primary" /> {formatDatePt(event.event_date) || "Data por definir"}
             </p>
           </div>
-        ))}
-      </div>
+          <p className="max-w-xs font-sans text-xs leading-5 text-muted-foreground">
+            Os dados são atualizados automaticamente quando chegam novas confirmações.
+          </p>
+        </section>
 
-      <h2 className="mt-12 text-xl font-light">Confirmações</h2>
+        <section aria-label="Resumo das confirmações" className="grid grid-cols-2 gap-3 py-8 sm:grid-cols-4">
+          {stats.map((stat) => {
+            const Icon = stat.icon;
+            return (
+              <div key={stat.label} className="border border-border bg-card px-4 py-5 shadow-sm">
+                <div className="flex items-center justify-between"><Icon className="size-4 text-primary" /><span className="font-sans text-3xl font-light">{stat.value}</span></div>
+                <p className="mt-5 font-sans text-[10px] uppercase tracking-wider text-muted-foreground">{stat.label}</p>
+              </div>
+            );
+          })}
+        </section>
+
+        <section aria-label="Atalhos" className="grid gap-3 sm:grid-cols-3">
+          <a href={`/${slug}`} target="_blank" rel="noreferrer" className="group flex items-center justify-between border border-border bg-background px-5 py-4 font-sans text-sm transition hover:border-primary/50">
+            Convite Digital <ExternalLink className="size-4 text-muted-foreground transition group-hover:text-primary" />
+          </a>
+          <a href={`/${slug}/imprimir`} target="_blank" rel="noreferrer" className="group flex items-center justify-between border border-border bg-background px-5 py-4 font-sans text-sm transition hover:border-primary/50">
+            Convite para Impressão <Printer className="size-4 text-muted-foreground transition group-hover:text-primary" />
+          </a>
+          <a href="#confirmacoes" className="group flex items-center justify-between border border-primary/40 bg-background px-5 py-4 font-sans text-sm transition hover:border-primary">
+            Confirmações <Users className="size-4 text-primary" />
+          </a>
+        </section>
+
+        <section id="confirmacoes" className="scroll-mt-6 pt-12">
+          <div className="flex items-end justify-between gap-4 border-b border-border pb-4">
+            <div><p className="eyebrow">Lista em tempo real</p><h2 className="mt-2 text-2xl font-light">Confirmações</h2></div>
+            <span className="font-sans text-xs text-muted-foreground">{rsvps.length} respostas</span>
+          </div>
       {rsvps.length === 0 ? (
-        <p className="mt-4 font-sans text-sm text-muted-foreground">Ainda não há confirmações.</p>
+        <div className="mt-4 border border-dashed border-border bg-background px-6 py-12 text-center font-sans text-sm text-muted-foreground">Ainda não há confirmações.</div>
       ) : (
         <ul className="mt-4 space-y-3">
           {rsvps.map((r) => (
-            <li key={r.id} className="rounded-md border border-border bg-card px-5 py-4">
+            <li key={r.id} className="border border-border bg-card px-5 py-4 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-lg">{r.guest_name}</p>
                 <span
@@ -172,6 +220,8 @@ function ConfirmationsPage() {
           ))}
         </ul>
       )}
+        </section>
+      </div>
     </main>
   );
 }
