@@ -9,7 +9,7 @@ export function whatsappUrl(message: string) {
  * Opens the WhatsApp app when it is installed, then falls back to the
  * official wa.me universal link.
  */
-export function openWhatsApp(message: string) {
+export function openWhatsApp(message: string, phone = WHATSAPP_PHONE) {
   const encoded = encodeURIComponent(message);
   const webUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encoded}`;
   const appUrl = `whatsapp://send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
