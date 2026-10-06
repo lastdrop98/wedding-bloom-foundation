@@ -35,6 +35,7 @@ import { DeliveryPackage } from "@/components/DeliveryPackage";
 import { ScheduleManager } from "@/components/ScheduleManager";
 import { Button } from "@/components/ui/button";
 import { EclipseMark } from "@/components/EclipseMark";
+import { fetchTemplateRequests, updateTemplateRequestStatus, type TemplateRequest } from "@/lib/templateRequests";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -117,6 +118,7 @@ function AdminPage() {
   const [mobileNav, setMobileNav] = useState(false);
   const [now, setNow] = useState(() => new Date());
   const [adminTheme, setAdminTheme] = useState<"dark" | "light">("dark");
+  const [selectedTemplateRequest, setSelectedTemplateRequest] = useState<TemplateRequest | null>(null);
 
   useEffect(() => {
     const saved = window.localStorage.getItem("solar-eclipse-admin-theme");
@@ -163,6 +165,13 @@ function AdminPage() {
     },
   });
 
+
+  const { data: templateRequests = [] } = useQuery({
+    queryKey: ["admin-template-requests"],
+    queryFn: fetchTemplateRequests,
+    refetchInterval: 15000,
+  });
+
   const stats = useMemo(() => {
     const rows = events ?? [];
     return {
@@ -185,6 +194,7 @@ function AdminPage() {
   }
 
   function closeForm() {
+    setSelectedTemplateRequest(null);
     setMode({ kind: "dashboard" });
     void queryClient.invalidateQueries({ queryKey: ["admin-events"] });
   }
@@ -329,9 +339,17 @@ function AdminPage() {
                 isLoading={isLoading}
                 stats={stats}
                 messages={messages}
+                templateRequests={templateRequests}
                 now={now}
                 onNew={() => setMode({ kind: "choose-type" })}
                 onOpen={openEvent}
+                onOpenTemplateRequest={async (request) => {
+                  setSelectedTemplateRequest(request);
+                  setActiveSection("dados");
+                  await updateTemplateRequestStatus(request.id, "in_progress");
+                  void queryClient.invalidateQueries({ queryKey: ["admin-template-requests"] });
+                  setMode({ kind: "form", event: null, eventType: "casamento" });
+                }}
               />
             ) : (
               <EditorShell
@@ -341,6 +359,12 @@ function AdminPage() {
                 onSectionChange={setActiveSection}
                 onClose={closeForm}
                 onSaved={handleSaved}
+                initialValues={selectedTemplateRequest ? {
+                  template: selectedTemplateRequest.template_value,
+                  display_names: selectedTemplateRequest.couple_name,
+                  contact_1_phone: selectedTemplateRequest.phone,
+                  event_date: selectedTemplateRequest.wedding_date ? `${selectedTemplateRequest.wedding_date}T12:00` : "",
+                } : undefined}
               />
             )}
           </div>
@@ -398,9 +422,11 @@ function Dashboard({
   isLoading: boolean;
   stats: { total: number; weddings: number; latest?: EventRow | undefined };
   messages: AdminMessage[];
+  templateRequests: TemplateRequest[];
   now: Date;
   onNew: () => void;
   onOpen: (event: EventRow, section?: string) => void;
+  onOpenTemplateRequest: (request: TemplateRequest) => void;
 }) {
   const [messageIndex, setMessageIndex] = useState(0);
 
@@ -459,6 +485,33 @@ function Dashboard({
         <StatCard icon={LayoutDashboard} label="Projetos" value={stats.total} />
         <StatCard icon={Sparkles} label="Casamentos" value={stats.weddings} />
         <StatCard icon={BarChart3} label="Último projeto" value={stats.latest ? eventTitle(stats.latest) : "—"} compact />
+      </section>
+
+      <section className="rounded-[30px] border border-[#C9A84C]/25 bg-[#fffdf7] p-5 shadow-[0_12px_40px_rgba(0,0,0,.04)] sm:p-7">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9b7a2d]">Novas solicitações</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em]">Pedidos de modelos</h2>
+          </div>
+          <span className="rounded-full bg-[#C9A84C]/15 px-3 py-1.5 text-xs font-semibold text-[#7b5d16]">{templateRequests.filter((r) => r.status === "new").length} novos</span>
+        </div>
+        <div className="mt-5 space-y-2">
+          {templateRequests.length ? templateRequests.slice(0, 6).map((request) => (
+            <button key={request.id} type="button" onClick={() => onOpenTemplateRequest(request)} className="group flex w-full flex-col gap-3 rounded-2xl border border-black/[0.06] bg-white px-4 py-4 text-left transition hover:-translate-y-0.5 hover:border-[#C9A84C]/50 hover:shadow-md sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-medium">{request.couple_name}</span>
+                  <span className="rounded-full bg-black/[0.04] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]">{request.template_label}</span>
+                  {request.status === "new" && <span className="rounded-full bg-[#C9A84C] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">Novo</span>}
+                </div>
+                <p className="mt-1 text-xs text-black/45">{request.phone} · {request.wedding_date || "Data por definir"} · {formatAdminDateTime(request.created_at)}</p>
+              </div>
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-black px-4 py-2 text-xs font-medium text-white">Abrir convite <ChevronRight className="size-3.5" /></span>
+            </button>
+          )) : (
+            <div className="rounded-2xl border border-dashed border-black/10 px-5 py-8 text-center text-sm text-black/40">Ainda não há pedidos de modelos.</div>
+          )}
+        </div>
       </section>
 
       <section className="rounded-[30px] border border-black/[0.07] bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,.03)] sm:p-7">
@@ -606,6 +659,7 @@ function EditorShell({
   onSectionChange,
   onClose,
   onSaved,
+  initialValues,
 }: {
   event: EventRow | null;
   eventType: string;
@@ -613,6 +667,7 @@ function EditorShell({
   onSectionChange: (section: string) => void;
   onClose: () => void;
   onSaved: () => void;
+  initialValues?: Partial<Record<string, string>>;
 }) {
   const title = event ? eventTitle(event) : `Novo — ${eventTypeLabel(eventType)}`;
 
@@ -645,7 +700,18 @@ function EditorShell({
       </div>
 
       <section className="min-h-[600px] rounded-[30px] border border-black/[0.07] bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,.03)] sm:p-8">
-        {activeSection === "dados" && <WeddingForm event={event} eventType={eventType} onSaved={onSaved} onCancel={onClose} />}
+        {activeSection === "dados" && <WeddingForm
+          event={event}
+          eventType={eventType}
+          initialValues={event ? undefined : initialValues ?? (selectedTemplateRequest ? {
+            template: selectedTemplateRequest.template_value,
+            display_names: selectedTemplateRequest.couple_name,
+            contact_1_phone: selectedTemplateRequest.phone,
+            event_date: selectedTemplateRequest.wedding_date ? `${selectedTemplateRequest.wedding_date}T12:00` : "",
+          } : undefined)}
+          onSaved={onSaved}
+          onCancel={onClose}
+        />}
         {event && activeSection === "media" && (
           <div className="space-y-12">
             <MediaManager event={event} />
