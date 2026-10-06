@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { EclipseMark } from "@/components/EclipseMark";
+import { whatsappUrl } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -27,8 +28,6 @@ export const Route = createFileRoute("/")({
     ],
   }),
 });
-
-const WHATSAPP = "https://wa.me/258847404160";
 
 const features = [
   {
@@ -84,10 +83,6 @@ const templates = [
   },
 ];
 
-function whatsapp(message: string) {
-  return `${WHATSAPP}?text=${encodeURIComponent(message)}`;
-}
-
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -110,7 +105,7 @@ function HomePage() {
             <a href="#como-funciona" className="transition hover:text-black">
               Como funciona
             </a>
-            <a href={whatsapp("Olá! Gostaria de conhecer os convites Solar Eclipse.")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-white">
+            <a href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-white">
               Falar connosco <MessageCircle className="size-3.5" />
             </a>
           </nav>
