@@ -61,9 +61,10 @@ function Section({
   wide?: boolean;
   dark?: boolean;
   vines?: "a" | "b" | "c";
+  sectionKey?: string;
 }) {
   return (
-    <section className={`relative px-6 py-20 md:py-24 ${dark ? "section-dark" : ""}`}>
+    <section data-template-section={sectionKey} className={`relative px-6 py-20 md:py-24 ${dark ? "section-dark" : ""}`}>
       {vines && <SectionVines variant={vines} />}
       {dark && <FlourishFrame size={80} />}
       <Reveal className={wide ? "relative mx-auto max-w-5xl" : "relative mx-auto max-w-2xl"}>
@@ -697,7 +698,7 @@ function HomePage() {
       </header>
 
       {d("welcome_message") && (
-        <Section title="Uma mensagem para vocês" eyebrow="Com carinho" vines="b">
+        <Section sectionKey="welcome" title="Uma mensagem para vocês" eyebrow="Com carinho" vines="b">
           <div className="card-elegant mx-auto max-w-2xl p-8 text-center md:p-10">
             <p className="text-lg leading-relaxed font-light whitespace-pre-line">
               {d("welcome_message")}
@@ -706,14 +707,14 @@ function HomePage() {
         </Section>
       )}
 
-      <Section title="Contagem Decrescente" eyebrow="Falta pouco" vines="c">
+      <Section sectionKey="countdown" title="Contagem Decrescente" eyebrow="Falta pouco" vines="c">
         <Countdown date={event.event_date} />
       </Section>
 
       <VineDivider className="my-6" />
 
       {(d("verse_text") || d("verse_2_text")) && (
-        <Section title="Palavra" dark vines="a">
+        <Section sectionKey="word" title="Palavra" dark vines="a">
           <div className="grid gap-6">
             {[
               { text: d("verse_text"), ref: d("verse_reference") },
@@ -739,7 +740,7 @@ function HomePage() {
       {(d("bride_name") || d("groom_name")) && (
         <>
           <VineDivider className="my-6" />
-          <Section title="Os Noivos" wide vines="b">
+          <Section sectionKey="couple" title="Os Noivos" wide vines="b">
             <div className="grid gap-8 sm:grid-cols-2">
               {[
                 {
@@ -774,6 +775,7 @@ function HomePage() {
 
       {event.event_type === "casamento" && (
         <Section
+          sectionKey="story"
           title="A Nossa História"
           eyebrow={d("story_intro") || "O caminho até aqui"}
           wide
@@ -793,7 +795,7 @@ function HomePage() {
       )}
 
       {slotMedia["story_video"] && (
-        <Section title="Uma história em movimento" eyebrow="Vídeo" wide dark vines="b">
+        <Section sectionKey="story-video" title="Uma história em movimento" eyebrow="Vídeo" wide dark vines="b">
           <div className="overflow-hidden rounded-2xl border border-gold/30 bg-black shadow-2xl">
             <video
               src={slotMedia["story_video"]}
@@ -807,7 +809,7 @@ function HomePage() {
       )}
 
       {(slotMedia["section_1"] || slotMedia["section_2"]) && (
-        <Section title="Momentos especiais" eyebrow="Para guardar na memória" wide vines="c">
+        <Section sectionKey="moments" title="Momentos especiais" eyebrow="Para guardar na memória" wide vines="c">
           <div className="grid gap-6 md:grid-cols-2">
             {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((url, index) => (
               <div key={url} className="card-elegant overflow-hidden">
@@ -824,7 +826,7 @@ function HomePage() {
       )}
 
       {event.event_type === "casamento" && partyMembers.length > 0 && (
-        <Section title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
+        <Section sectionKey="party" title="Padrinhos e Damas" eyebrow="Quem nos acompanha" wide vines="c">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {partyMembers.map((m, i) => {
               const photo = galleryUrls[2 + i];
@@ -859,7 +861,7 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Programa do Dia" dark vines="a">
+      <Section sectionKey="schedule" title="Programa do Dia" dark vines="a">
         <ol className="space-y-4">
           {(schedule.length > 0
             ? schedule.map((item) => ({
@@ -909,14 +911,14 @@ function HomePage() {
       <Ornament />
 
       {d("dress_code") && (
-        <Section title="Dress Code" eyebrow="Para o grande dia" vines="c">
+        <Section sectionKey="dress-code" title="Dress Code" eyebrow="Para o grande dia" vines="c">
           <div className="card-elegant mx-auto max-w-xl p-8 text-center">
             <p className="text-lg font-light whitespace-pre-line">{d("dress_code")}</p>
           </div>
         </Section>
       )}
 
-      <Section title="Localização" wide vines="b">
+      <Section sectionKey="location" title="Localização" wide vines="b">
         <div className="grid gap-6 md:grid-cols-3">
           <LocationCard
             label="Cerimónia Civil"
@@ -942,7 +944,7 @@ function HomePage() {
       {galleryUrls.length > 0 && (
         <>
           <VineDivider className="my-6" />
-          <Section title="Galeria" wide dark vines="c">
+          <Section sectionKey="gallery" title="Galeria" wide dark vines="c">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               {galleryUrls.map((g) =>
                 g.mediaType === "video" ? (
@@ -977,7 +979,7 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Presentes" vines="b">
+      <Section sectionKey="gifts" title="Presentes" vines="b">
         <div className="grid gap-6">
           <div className="card-elegant p-7">
             <p className="eyebrow">Dados bancários</p>
@@ -1037,13 +1039,13 @@ function HomePage() {
 
       <Ornament />
 
-      <Section title="Livro de Recados" vines="c">
+      <Section sectionKey="guestbook" title="Livro de Recados" vines="c">
         <Guestbook eventId={event.id} />
       </Section>
 
       <Ornament />
 
-      <Section title="Confirmação de Presença" eyebrow="RSVP" dark vines="a">
+      <Section sectionKey="rsvp" title="Confirmação de Presença" eyebrow="RSVP" dark vines="a">
         <RsvpForm
           event={event}
           defaultCount={inviteType === "casal" ? 2 : 1}
@@ -1052,7 +1054,7 @@ function HomePage() {
       </Section>
 
       {(event.contact_1_name || event.contact_2_name) && (
-        <Section title="Contactos" vines="c">
+        <Section sectionKey="contacts" title="Contactos" vines="c">
           <div className="grid gap-6 text-center sm:grid-cols-2">
             {[
               { n: event.contact_1_name, p: event.contact_1_phone },
