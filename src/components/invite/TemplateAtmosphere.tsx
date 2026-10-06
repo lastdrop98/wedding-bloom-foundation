@@ -9,7 +9,12 @@ export function TemplateAtmosphere({
   template?: string | null;
   children?: ReactNode;
 }) {
-  const tone = getTemplateDefinition(template).tone;
+  const definition = getTemplateDefinition(template);
+  const tone = definition.tone;
+  const isFilm = definition.value === "film-noir-motion";
+  const isMagazine = definition.value === "editorial-magazine";
+  const isPearl = definition.value === "pearl-garden";
+  const isCapulana = definition.value === "capulana-contemporary";
 
   return (
     <div
@@ -22,6 +27,10 @@ export function TemplateAtmosphere({
       {tone === "midnight" && <span className="template-stars" />}
       {tone === "xiguiane" && <span className="template-geometry" />}
       {tone === "sand" && <span className="template-sun" />}
+      {isFilm && <span className="template-film-grain" />}
+      {isMagazine && <span className="template-magazine-grid" />}
+      {isPearl && <span className="template-pearl-bloom" />}
+      {isCapulana && <span className="template-capulana-pattern" />}
     </div>
   );
 }
