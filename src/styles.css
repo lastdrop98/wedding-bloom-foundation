@@ -3062,3 +3062,275 @@ div[id*="lovable-badge"] {
 @media (max-width: 900px) {
   .admin-theme-toggle { padding-inline: 10px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLAR ECLIPSE — V4 ADMIN CONTRAST + NEW INVITATION FAMILIES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* The editor inherits the chosen theme instead of retaining dark text from the old shell. */
+.solar-admin-shell.admin-theme-dark .admin-workspace,
+.solar-admin-shell.admin-theme-dark .admin-workspace * {
+  border-color: rgba(255,255,255,.10);
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/90,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/80,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/70,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/60,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/50,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/45,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/40,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/35,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/30,
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-black\/25 {
+  color: rgba(255,255,255,.72) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace button:not(.admin-theme-toggle),
+.solar-admin-shell.admin-theme-dark .admin-workspace a {
+  color: inherit;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace button.bg-black,
+.solar-admin-shell.admin-theme-dark .admin-workspace a.bg-black {
+  background: #f4e3b2 !important;
+  color: #17130c !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace button.border,
+.solar-admin-shell.admin-theme-dark .admin-workspace a.border {
+  color: #fffaf0 !important;
+  border-color: rgba(255,255,255,.18) !important;
+  background: rgba(255,255,255,.04);
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace .bg-white {
+  background: rgba(18,18,18,.92) !important;
+  color: #fffaf0 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace .bg-\[\#f5f5f7\] {
+  background: rgba(255,255,255,.055) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace input,
+.solar-admin-shell.admin-theme-dark .admin-workspace textarea,
+.solar-admin-shell.admin-theme-dark .admin-workspace select {
+  color: #fffaf0 !important;
+  background: rgba(255,255,255,.07) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace {
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .text-white,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-cream,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-white\/80,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-white\/70,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-white\/60,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-white\/50,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-white\/45,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-white\/40 {
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .text-black\/35,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-black\/40,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-black\/45,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-black\/50,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-black\/55,
+.solar-admin-shell.admin-theme-light .admin-workspace .text-black\/60 {
+  color: rgba(0,0,0,.58) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-white {
+  background: #fff !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-black {
+  background: #1d1d1f !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button.bg-black,
+.solar-admin-shell.admin-theme-light .admin-workspace a.bg-black {
+  background: #1d1d1f !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button.border,
+.solar-admin-shell.admin-theme-light .admin-workspace a.border {
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.15) !important;
+  background: #fff;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace input,
+.solar-admin-shell.admin-theme-light .admin-workspace textarea,
+.solar-admin-shell.admin-theme-light .admin-workspace select {
+  color: #1d1d1f !important;
+  background: #fff !important;
+  border-color: rgba(0,0,0,.14) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace input::placeholder,
+.solar-admin-shell.admin-theme-light .admin-workspace textarea::placeholder {
+  color: rgba(0,0,0,.40) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero-actions .admin-hero-note {
+  color: rgba(0,0,0,.52) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel {
+  background: #171717 !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/80,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/60,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/50,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/45,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/40 {
+  color: rgba(255,255,255,.80) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel h2,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel p {
+  color: inherit;
+}
+
+/* New theme families — intentionally different layouts, not recolours of one card. */
+.template-design-film-noir-motion .template-hero {
+  min-height: 100svh;
+  align-items: flex-end;
+  justify-content: flex-start;
+  text-align: left;
+}
+.template-design-film-noir-motion .template-hero-content {
+  margin-left: 0;
+  max-width: 760px;
+  padding-bottom: 9vh;
+}
+.template-design-film-noir-motion .template-hero-content h1 {
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  letter-spacing: -.07em;
+  text-transform: uppercase;
+}
+.template-design-film-noir-motion .template-hero::after {
+  content: "FILM 01 / THE BEGINNING";
+  position: absolute;
+  left: 7vw;
+  bottom: 28px;
+  color: rgba(244,227,178,.55);
+  font: 700 9px/1 sans-serif;
+  letter-spacing: .28em;
+}
+.template-design-editorial-magazine .template-hero {
+  min-height: 88svh;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+.template-design-editorial-magazine .template-hero-content {
+  width: min(100%, 1080px);
+  display: grid;
+  grid-template-columns: .55fr 1.45fr;
+  column-gap: 5vw;
+  align-items: end;
+  text-align: left;
+}
+.template-design-editorial-magazine .template-hero-content h1 {
+  grid-column: 2;
+  font-size: clamp(4rem, 10vw, 9rem);
+  line-height: .82;
+  letter-spacing: -.09em;
+}
+.template-design-editorial-magazine .template-hero-content .eyebrow,
+.template-design-editorial-magazine .template-hero-content > p:not(.eyebrow) {
+  grid-column: 2;
+}
+.template-design-editorial-magazine .template-hero-content .template-brand-mark,
+.template-design-editorial-magazine .template-hero-content .template-hero-accent {
+  grid-column: 1;
+}
+.template-design-editorial-magazine [data-template-section="gallery"] {
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+}
+.template-design-pearl-garden .template-hero {
+  border-bottom-left-radius: 90px;
+  border-bottom-right-radius: 18px;
+}
+.template-design-pearl-garden .template-hero-content {
+  background: rgba(255,250,248,.78);
+  color: #30282b;
+  padding: 42px;
+  border: 1px solid rgba(255,255,255,.75);
+  border-radius: 50% 44% 48% 36%;
+  box-shadow: 0 25px 80px rgba(96,64,75,.16);
+  backdrop-filter: blur(10px);
+}
+.template-design-pearl-garden .template-hero-content h1,
+.template-design-pearl-garden .template-hero-content .eyebrow {
+  color: #30282b !important;
+}
+.template-design-capulana-contemporary {
+  background-image:
+    linear-gradient(rgba(25,20,15,.18), rgba(25,20,15,.18)),
+    repeating-linear-gradient(45deg, rgba(201,168,76,.12) 0 10px, transparent 10px 20px),
+    repeating-linear-gradient(-45deg, rgba(92,50,38,.10) 0 10px, transparent 10px 20px);
+}
+.template-design-capulana-contemporary .template-hero {
+  border-bottom: 12px solid #c58a4b;
+}
+.template-design-capulana-contemporary .template-hero-content {
+  text-align: left;
+  margin-right: auto;
+  max-width: 680px;
+  padding: 42px;
+  border-left: 4px solid #c58a4b;
+  background: rgba(33,28,22,.68);
+}
+.template-design-capulana-contemporary [data-template-section="couple"] {
+  background:
+    repeating-linear-gradient(90deg, rgba(197,138,75,.12) 0 18px, transparent 18px 36px),
+    #f2e8d6;
+}
+.template-design-celestial-ivory .template-hero {
+  background-color: #f5f0e5;
+}
+.template-design-celestial-ivory .template-hero::before {
+  content: "✦  ·  ✧     ·     ✦       ·   ✧";
+  position: absolute;
+  inset: 10% 8%;
+  color: rgba(201,168,76,.55);
+  font-size: clamp(14px,2vw,24px);
+  letter-spacing: .8em;
+  line-height: 3.2;
+  pointer-events: none;
+}
+.template-design-celestial-ivory .template-hero-content {
+  color: #1d1a15;
+  mix-blend-mode: multiply;
+}
+.template-design-celestial-ivory .template-hero-content h1,
+.template-design-celestial-ivory .template-hero-content .eyebrow {
+  color: #1d1a15 !important;
+}
+.template-design-coastal-blue .template-hero {
+  min-height: 92svh;
+  justify-content: flex-end;
+  text-align: left;
+}
+.template-design-coastal-blue .template-hero-content {
+  width: min(100%, 1180px);
+  margin: 0;
+  padding-bottom: 7vh;
+}
+.template-design-coastal-blue .template-hero-content h1 {
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  letter-spacing: -.07em;
+}
+.template-design-coastal-blue [data-template-section="location"] {
+  background: linear-gradient(180deg,#edf5f7,#fff);
+}
+@media (max-width: 760px) {
+  .template-design-editorial-magazine .template-hero-content {
+    display: block;
+    text-align: center;
+  }
+  .template-design-editorial-magazine .template-hero-content h1 {
+    font-size: clamp(3.4rem, 16vw, 6rem);
+  }
+  .template-design-film-noir-motion .template-hero-content {
+    padding-bottom: 18vh;
+  }
+  .template-design-pearl-garden .template-hero-content {
+    padding: 28px 20px;
+  }
+}
