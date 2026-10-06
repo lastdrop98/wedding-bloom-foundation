@@ -113,7 +113,7 @@ function TemplatePreviewPage() {
   ][previewVariant];
 
   return (
-    <main className={`template-preview template-preview-${template.value} template-preview-variant-${previewVariant} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
+    <main className={`solar-template-page template-preview template-preview-${template.value} template-preview-variant-${previewVariant} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
           <a
@@ -134,7 +134,7 @@ function TemplatePreviewPage() {
         </div>
       </header>
 
-      <section className="px-5 pb-20 pt-28 sm:px-8 sm:pt-36">
+      <section className="solar-template-hero px-5 pb-20 pt-28 sm:px-8 sm:pt-36">
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[.24em] text-black/45">
@@ -172,7 +172,7 @@ function TemplatePreviewPage() {
           </div>
 
           <div className="relative mx-auto w-full max-w-[420px]">
-            <div className="rounded-[44px] bg-[#151515] p-3 shadow-[0_30px_90px_rgba(0,0,0,.25)]">
+            <div className="solar-template-device rounded-[44px] bg-[#151515] p-3 shadow-[0_30px_90px_rgba(0,0,0,.25)]">
               <div className="template-preview-screen relative aspect-[9/18] overflow-hidden rounded-[34px] bg-black">
                 <img
                   src={previewImage}
