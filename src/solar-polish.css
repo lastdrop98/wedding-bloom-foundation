@@ -388,3 +388,40 @@ textarea {
     letter-spacing: .09em;
   }
 }
+
+.template-hero-accent-film,
+.template-hero-accent-magazine,
+.template-hero-accent-pearl,
+.template-hero-accent-celestial,
+.template-hero-accent-coastal,
+.template-hero-accent-capulana {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+  font: 500 9px/1 var(--font-sans);
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.64);
+}
+
+.template-hero-accent-film i,
+.template-hero-accent-magazine i,
+.template-hero-accent-pearl i,
+.template-hero-accent-celestial i,
+.template-hero-accent-coastal i,
+.template-hero-accent-capulana i {
+  display: block;
+  width: 34px;
+  height: 1px;
+  background: currentColor;
+  opacity: .45;
+}
+
+.template-visual-cinematic .template-hero-accent-film { color: #d7b56d; }
+.template-visual-editorial .template-hero-accent-magazine { color: rgba(255,255,255,.72); }
+.template-visual-pearl .template-hero-accent-pearl { color: rgba(255,245,240,.78); }
+.template-visual-celestial .template-hero-accent-celestial { color: #d7b56d; }
+.template-visual-coastal .template-hero-accent-coastal { color: rgba(255,255,255,.8); }
+.template-visual-heritage .template-hero-accent-capulana { color: #f0d8aa; }
