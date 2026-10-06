@@ -419,9 +419,11 @@ function Dashboard({
   isLoading,
   stats,
   messages,
+  templateRequests,
   now,
   onNew,
   onOpen,
+  onOpenTemplateRequest,
 }: {
   events: EventRow[];
   isLoading: boolean;
