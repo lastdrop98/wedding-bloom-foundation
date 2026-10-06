@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TemplatePicker } from "@/components/TemplatePicker";
+import { getTemplateDefinition } from "@/lib/templates";
+import { getTemplateDirection } from "@/lib/templateDirections";
 
 type FieldKind = "text" | "date" | "datetime" | "textarea";
 
@@ -220,14 +222,33 @@ export function WeddingForm({
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState<string | null>(null);
   const [mediaItems, setMediaItems] = useState<Array<{ id: string; slot: string; media_type: string; storage_path: string }>>([]);
+  const [mediaUrls, setMediaUrls] = useState<Record<string, string>>({});
+  const [assetUrls, setAssetUrls] = useState<{ cover: string; music: string }>({ cover: "", music: "" });
 
   async function loadMedia() {
     if (!event) return;
     const { data } = await looseDb.from("event_media").select("id,slot,media_type,storage_path").eq("event_id", event.id).order("sort_order", { ascending: true });
-    setMediaItems(data ?? []);
+    const items = data ?? [];
+    setMediaItems(items);
+    const urls: Record<string, string> = {};
+    await Promise.all(items.map(async (item) => {
+      const { data: signed } = await supabase.storage.from(GALLERY_BUCKET).createSignedUrl(item.storage_path, 3600);
+      if (signed?.signedUrl) urls[item.id] = signed.signedUrl;
+    }));
+    setMediaUrls(urls);
+    const nextAssets = { cover: "", music: "" };
+    if (event.cover_image_path) {
+      const { data: cover } = await supabase.storage.from(GALLERY_BUCKET).createSignedUrl(event.cover_image_path, 3600);
+      nextAssets.cover = cover?.signedUrl ?? "";
+    }
+    if (event.music_path) {
+      const { data: music } = await supabase.storage.from(AUDIO_BUCKET).createSignedUrl(event.music_path, 3600);
+      nextAssets.music = music?.signedUrl ?? "";
+    }
+    setAssetUrls(nextAssets);
   }
 
-  useEffect(() => { void loadMedia(); }, [event?.id]);
+  useEffect(() => { void loadMedia(); }, [event?.id, event?.cover_image_path, event?.music_path]);
 
   function set(name: string, value: string) {
     setValues((v) => ({ ...v, [name]: value }));
@@ -466,6 +487,32 @@ export function WeddingForm({
         </p>
       </fieldset>
 
+      <fieldset className="space-y-4 rounded-2xl border border-border bg-background/40 p-5">
+        <legend className="eyebrow">Direção do modelo</legend>
+        {(() => {
+          const selected = getTemplateDefinition(values["template"]);
+          const direction = getTemplateDirection(selected);
+          return (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                ["Estrutura", direction.structure],
+                ["Design", direction.design],
+                ["Tipografia", direction.typography],
+                ["Elementos", direction.motifs],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-xl border border-border bg-background p-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">{label}</p>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">{value}</p>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
+        <p className="text-xs leading-5 text-muted-foreground">
+          O conteúdo continua editável no mesmo formulário, mas o convite final adapta a ordem, ritmo e composição ao modelo escolhido.
+        </p>
+      </fieldset>
+
       <fieldset className="space-y-4">
         <legend className="eyebrow">Ficheiros</legend>
         {event ? (
@@ -485,6 +532,8 @@ export function WeddingForm({
               <p className="text-xs text-muted-foreground">
                 Atual: {event.cover_image_path ?? "nenhuma"}
               </p>
+              {assetUrls.cover && <img src={assetUrls.cover} alt="Pré-visualização da capa" className="h-40 w-full rounded-xl object-cover" />}
+
             </div>
             <div className="space-y-2">
               <Label htmlFor="music">Música</Label>
@@ -501,6 +550,8 @@ export function WeddingForm({
               <p className="text-xs text-muted-foreground">
                 Atual: {event.music_path ?? "nenhuma"}
               </p>
+              {assetUrls.music && <audio controls preload="metadata" src={assetUrls.music} className="w-full" />}
+
             </div>
           </div>
         ) : (
@@ -549,7 +600,12 @@ export function WeddingForm({
               <div className="space-y-2">
                 {mediaItems.filter((item) => item.slot === slot).map((item) => (
                   <div key={item.id} className="flex items-center justify-between gap-3 rounded-lg bg-muted/40 px-3 py-2 text-xs">
-                    <span className="truncate">{item.media_type === "video" ? "Vídeo" : "Imagem"} · {item.storage_path.split("/").pop()}</span>
+                    <div className="min-w-0 flex-1">
+                      <span className="block truncate">{item.media_type === "video" ? "Vídeo" : "Imagem"} · {item.storage_path.split("/").pop()}</span>
+                      {mediaUrls[item.id] && (item.media_type === "video"
+                        ? <video controls preload="metadata" src={mediaUrls[item.id]} className="mt-2 h-28 w-full rounded-lg object-cover" />
+                        : <img src={mediaUrls[item.id]} alt={label} className="mt-2 h-28 w-full rounded-lg object-cover" />)}
+                    </div>
                     <Button type="button" size="sm" variant="ghost" onClick={() => void removeMedia(item)}>
                       Remover
                     </Button>
