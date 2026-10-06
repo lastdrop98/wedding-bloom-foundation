@@ -79,7 +79,7 @@ function WhatsAppPage() {
           <div className="mt-6 flex flex-wrap gap-3">
             <button
               type="button"
-              onClick={() => openWhatsApp(message)}
+              onClick={() => openWhatsApp(message, phone)}
               className="inline-flex items-center gap-2 rounded-xl bg-[#128C7E] px-5 py-3 text-sm font-semibold text-white hover:opacity-90"
             >
               <MessageCircle className="size-4" /> Abrir WhatsApp
