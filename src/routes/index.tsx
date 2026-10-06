@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { EclipseMark } from "@/components/EclipseMark";
-import { whatsappUrl } from "@/lib/whatsapp";
+import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -133,7 +133,7 @@ function HomePage() {
             <a href="#como-funciona" className="transition hover:text-black">
               Como funciona
             </a>
-            <a href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-white">
+            <a href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")} onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }} className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-white">
               Falar connosco <MessageCircle className="size-3.5" />
             </a>
           </nav>
@@ -161,7 +161,7 @@ function HomePage() {
               <a href="#como-funciona" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 hover:bg-white">
                 Como funciona
               </a>
-              <a href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")} target="_blank" rel="noreferrer" className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 text-white">
+              <a href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")} onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }} className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 text-white">
                 Falar connosco <MessageCircle className="size-4" />
               </a>
             </div>
@@ -199,8 +199,7 @@ function HomePage() {
             </a>
             <a
               href={whatsappUrl("Olá! Quero criar o meu convite de casamento com a Solar Eclipse.")}
-              target="_blank"
-              rel="noreferrer"
+              onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero criar o meu convite de casamento com a Solar Eclipse."); }}
               className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C] px-8 py-4 transition hover:bg-[#C9A84C]/10"
             >
               Criar meu convite <MessageCircle className="size-4" />
@@ -337,8 +336,7 @@ function HomePage() {
           </a>
           <a
             href={whatsappUrl("Olá! Quero falar sobre um convite Solar Eclipse.")}
-            target="_blank"
-            rel="noreferrer"
+            onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero falar sobre um convite Solar Eclipse."); }}
             className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-white"
           >
             Falar connosco <MessageCircle className="size-4" />
