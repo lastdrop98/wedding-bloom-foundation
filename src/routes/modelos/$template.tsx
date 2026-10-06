@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Check, MessageCircle } from "lucide-react";
 import { getTemplateDefinition } from "@/lib/templates";
+import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/modelos/$template")({
   component: TemplatePreviewPage,
@@ -21,13 +22,8 @@ export const Route = createFileRoute("/modelos/$template")({
   },
 });
 
-const WHATSAPP = "https://wa.me/258847404160";
 const previewImage =
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90";
-
-function whatsapp(message: string) {
-  return `${WHATSAPP}?text=${encodeURIComponent(message)}`;
-}
 
 function gradient(tone: string) {
   const gradients: Record<string, string> = {
@@ -71,7 +67,7 @@ function TemplatePreviewPage() {
       .filter(Boolean)
       .join("\n");
 
-    window.location.href = whatsapp(text);
+    openWhatsApp(text);
   }
 
   return (
@@ -282,7 +278,7 @@ function TemplatePreviewPage() {
           adapta-se ao vosso casamento.
         </p>
         <a
-          href={whatsapp(`Olá! Gostei do modelo ${template.label}. Quero saber como avançar.`)}
+          href={whatsappUrl(`Olá! Gostei do modelo ${template.label}. Quero saber como avançar.`)}
           target="_blank"
           rel="noreferrer"
           className="mt-9 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black"
