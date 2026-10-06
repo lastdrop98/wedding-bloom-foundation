@@ -82,7 +82,7 @@ function AuthPage() {
   }
 
   return (
-    <main className="grid min-h-screen bg-[#f5f5f7] lg:grid-cols-2">
+    <main className="solar-auth-page grid min-h-screen bg-[#f5f5f7] lg:grid-cols-2">
       <div className="relative hidden overflow-hidden bg-black lg:block">
         <img src={IMAGE} alt="" className="absolute inset-0 size-full object-cover opacity-80" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-black/20" />
