@@ -125,8 +125,11 @@ function ModelsPage() {
       `Data prevista: ${date || "Por definir"}`,
       `Mensagem: ${message.trim() || "Sem mensagem adicional"}`,
     ].join("\n");
-    setFeedback("Pedido preparado. A abrir o WhatsApp…");
-    window.open(`${WHATSAPP}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+    const whatsappUrl = `${WHATSAPP}?text=${encodeURIComponent(text)}`;
+    setFeedback("A abrir o WhatsApp…");
+    // Não dependemos de popup: alguns navegadores bloqueiam window.open
+    // quando o pedido é iniciado dentro de um Dialog.
+    window.location.assign(whatsappUrl);
   }
 
   const visible = useMemo(() => {
