@@ -4048,3 +4048,84 @@ div[id*="lovable-badge"] {
   border-color: rgba(0,0,0,.14) !important;
   background: #fff !important;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLAR ECLIPSE — COLLECTION CARD ART DIRECTION
+   ═══════════════════════════════════════════════════════════════ */
+.solar-home-template-preview {
+  isolation: isolate;
+  background: #17130f;
+}
+.solar-home-template-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .72;
+  mix-blend-mode: soft-light;
+}
+.solar-home-template-preview > img { z-index: 0; }
+.solar-home-template-preview > div { z-index: 2; }
+
+.solar-home-template-preview.template-visual-editorial::after {
+  background: linear-gradient(90deg, rgba(255,255,255,.82) 0 32%, transparent 32% 68%, rgba(0,0,0,.2) 68%);
+}
+.solar-home-template-preview.template-visual-cinematic::after {
+  background: radial-gradient(circle at 50% 42%, transparent 0 18%, rgba(0,0,0,.92) 72%);
+  mix-blend-mode: multiply;
+}
+.solar-home-template-preview.template-visual-botanical::after {
+  background:
+    radial-gradient(circle at 10% 18%, rgba(255,194,207,.7), transparent 22%),
+    radial-gradient(circle at 92% 82%, rgba(171,198,159,.65), transparent 24%);
+  mix-blend-mode: screen;
+}
+.solar-home-template-preview.template-visual-pearl::after {
+  background:
+    radial-gradient(ellipse at 50% 25%, rgba(255,255,255,.92), transparent 28%),
+    radial-gradient(ellipse at 20% 80%, rgba(226,194,206,.7), transparent 30%);
+  mix-blend-mode: screen;
+}
+.solar-home-template-preview.template-visual-royal::after {
+  inset: 10px;
+  border: 1px solid rgba(244,227,178,.8);
+  box-shadow: inset 0 0 0 6px rgba(244,227,178,.12);
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+.solar-home-template-preview.template-visual-heritage::after {
+  background: repeating-linear-gradient(45deg, rgba(201,168,76,.55) 0 9px, transparent 9px 18px, rgba(91,59,40,.5) 18px 27px);
+  mix-blend-mode: multiply;
+}
+.solar-home-template-preview.template-visual-celestial::after {
+  background:
+    radial-gradient(circle at 72% 25%, rgba(255,235,173,.85) 0 1px, transparent 2px),
+    radial-gradient(circle at 30% 40%, rgba(255,235,173,.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 52% 68%, rgba(255,235,173,.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 75%, rgba(255,235,173,.6) 0 1px, transparent 2px);
+  background-size: 90px 90px, 130px 130px, 110px 110px, 150px 150px;
+  mix-blend-mode: screen;
+}
+.solar-home-template-preview.template-visual-coastal::after {
+  background:
+    linear-gradient(180deg, rgba(196,228,232,.25), transparent 48%),
+    repeating-linear-gradient(0deg, transparent 0 24px, rgba(255,255,255,.18) 25px 26px);
+  mix-blend-mode: screen;
+}
+.solar-home-template-preview.template-visual-cinematic img {
+  filter: brightness(.58) contrast(1.12) saturate(.75);
+}
+.solar-home-template-preview.template-visual-editorial img {
+  filter: saturate(.72) contrast(1.06);
+}
+.solar-home-template-preview.template-visual-heritage img {
+  filter: sepia(.18) saturate(1.08) contrast(1.08);
+}
+.solar-home-template-preview.template-visual-celestial img {
+  filter: brightness(.78) contrast(1.12) saturate(.75);
+}
+.solar-home-template-preview.template-visual-coastal img {
+  filter: saturate(.82) brightness(1.05);
+}
