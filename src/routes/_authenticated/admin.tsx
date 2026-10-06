@@ -366,6 +366,7 @@ function Dashboard({
   isLoading,
   stats,
   messages,
+  now,
   onNew,
   onOpen,
 }: {
