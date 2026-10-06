@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { Coffee, Gem, Heart, Sparkles, type LucideIcon } from "lucide-react";
+import { CalendarPlus, Coffee, Gem, Heart, Share2, Sparkles, type LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -543,6 +543,36 @@ function TemplateHeroAccent({ template }: { template?: string | null }) {
   );
 }
 
+function formatIcsDate(value: string | null) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toISOString().replace(/[-:]/g, "").replace(/\\.\\d{3}Z$/, "Z");
+}
+
+function calendarHref(event: EventRow) {
+  const start = formatIcsDate(event.event_date);
+  if (!start) return "#";
+  const endDate = new Date(new Date(event.event_date).getTime() + 4 * 60 * 60 * 1000);
+  const end = formatIcsDate(endDate.toISOString());
+  const venue = [event.ceremony_venue, event.ceremony_address].filter(Boolean).join(", ");
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Solar Eclipse//Wedding Invitation//PT",
+    "BEGIN:VEVENT",
+    `UID:${event.id}@solar-eclipse`,
+    `DTSTAMP:${formatIcsDate(new Date().toISOString())}`,
+    `DTSTART:${start}`,
+    `DTEND:${end}`,
+    `SUMMARY:${eventTitle(event).replace(/[,;\\\\]/g, " ")}`,
+    `LOCATION:${venue.replace(/[,;\\\\]/g, " ")}`,
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\\r\\n");
+  return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
+}
+
 function initials(name: string) {
   return name
     .split(" ")
@@ -770,6 +800,30 @@ function HomePage() {
             </button>
           )}
           {music && <audio ref={audioRef} src={music} loop preload="auto" />}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={calendarHref(event)}
+              download="solar-eclipse-event.ics"
+              className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-black/20 px-5 py-2.5 font-sans text-[0.68rem] tracking-[0.18em] text-cream uppercase backdrop-blur-sm transition hover:bg-black/35"
+            >
+              <CalendarPlus className="size-4" /> Guardar data
+            </a>
+            <button
+              type="button"
+              onClick={() => {
+                const shareData = { title: eventTitle(event), text: "Convite de casamento", url: window.location.href };
+                if (navigator.share) {
+                  void navigator.share(shareData).catch(() => undefined);
+                } else {
+                  void navigator.clipboard?.writeText(window.location.href);
+                  toast.success("Link do convite copiado.");
+                }
+              }}
+              className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-black/20 px-5 py-2.5 font-sans text-[0.68rem] tracking-[0.18em] text-cream uppercase backdrop-blur-sm transition hover:bg-black/35"
+            >
+              <Share2 className="size-4" /> Partilhar
+            </button>
+          </div>
         </div>
 
         {heroGalleryItems.length > 0 && (
