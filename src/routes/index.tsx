@@ -151,8 +151,8 @@ function HomePage() {
               Cada modelo tem uma direção visual própria. Escolha um ponto de partida e personalize o conteúdo depois.
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {TEMPLATE_OPTIONS.slice(0, 12).map((item, index) => (
+          <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {TEMPLATE_OPTIONS.map((item, index) => (
               <a key={item.value} href={`/modelos/${item.value}`} className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1">
                 <div className={`solar-home-template-preview ${templateVisualClass(item.value)} relative h-80 overflow-hidden`}>
                   <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-105" />
