@@ -3968,3 +3968,83 @@ div[id*="lovable-badge"] {
   .template-catalog-family-cinematic .template-catalog-names,
   .template-catalog-family-editorial .template-catalog-names { font-size: 2rem; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLAR ECLIPSE — FINAL ADMIN READABILITY PASS
+   ═══════════════════════════════════════════════════════════════ */
+.solar-admin-shell.admin-theme-dark {
+  background-color: #0d0d0d !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="text-"] {
+  text-shadow: none;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace p,
+.solar-admin-shell.admin-theme-dark .admin-workspace span,
+.solar-admin-shell.admin-theme-dark .admin-workspace small,
+.solar-admin-shell.admin-theme-dark .admin-workspace label,
+.solar-admin-shell.admin-theme-dark .admin-workspace legend {
+  color: inherit;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace .text-muted-foreground,
+.solar-admin-shell.admin-theme-dark .admin-workspace [data-slot="label"] {
+  color: rgba(255,255,255,.70) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [role="dialog"] *,
+.solar-admin-shell.admin-theme-dark .admin-workspace [data-radix-dialog-content] * {
+  color: inherit;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace input,
+.solar-admin-shell.admin-theme-dark .admin-workspace textarea,
+.solar-admin-shell.admin-theme-dark .admin-workspace select,
+.solar-admin-shell.admin-theme-dark .admin-workspace [role="combobox"] {
+  min-height: 42px;
+  color: #fffaf0 !important;
+  caret-color: #f4e3b2;
+  background-color: #191919 !important;
+  border-color: rgba(244,227,178,.22) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace option {
+  color: #fffaf0 !important;
+  background: #191919 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace button {
+  text-shadow: none;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace button:not(.bg-black):not([aria-label*="Fechar"]) {
+  border-color: rgba(255,255,255,.14);
+}
+.solar-admin-shell.admin-theme-light .admin-workspace {
+  background: transparent !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace p,
+.solar-admin-shell.admin-theme-light .admin-workspace span,
+.solar-admin-shell.admin-theme-light .admin-workspace small,
+.solar-admin-shell.admin-theme-light .admin-workspace label,
+.solar-admin-shell.admin-theme-light .admin-workspace legend {
+  color: inherit;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace input,
+.solar-admin-shell.admin-theme-light .admin-workspace textarea,
+.solar-admin-shell.admin-theme-light .admin-workspace select,
+.solar-admin-shell.admin-theme-light .admin-workspace [role="combobox"] {
+  min-height: 42px;
+  color: #1d1d1f !important;
+  background-color: #fff !important;
+  border-color: rgba(0,0,0,.14) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace option {
+  color: #1d1d1f !important;
+  background: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button.bg-black,
+.solar-admin-shell.admin-theme-light .admin-workspace a.bg-black {
+  background: #171717 !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button.border,
+.solar-admin-shell.admin-theme-light .admin-workspace a.border {
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.14) !important;
+  background: #fff !important;
+}
