@@ -230,6 +230,13 @@ function AdminPage() {
           <div className="px-4 py-6">
             <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/35">Workspace</p>
             <nav className="mt-3 space-y-1">
+              <Link
+                to="/whatsapp"
+                className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm text-black/65 transition-colors hover:bg-black/[.04] hover:text-black"
+              >
+                <MessageCircle className="size-4" />
+                WhatsApp API
+              </Link>
               <button
                 type="button"
                 onClick={() => setMode({ kind: "dashboard" })}
