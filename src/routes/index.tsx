@@ -279,6 +279,10 @@ function HomePage() {
               <a
                 key={item.id}
                 href={`/modelos/${item.id}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  window.location.href = `/modelos/${item.id}`;
+                }}
                 className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1"
               >
                 <img
