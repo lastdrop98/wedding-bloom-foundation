@@ -672,6 +672,11 @@ function HomePage() {
     }
   }
 
+  const heroGalleryItems = [
+    ...(cover ? [{ url: cover, caption: null, mediaType: "image" }] : []),
+    ...galleryUrls,
+  ].filter((item, index, list) => list.findIndex((candidate) => candidate.url === item.url) === index);
+
   return (
     <main
       className={`${templateToneClass(event.template)} template-design-${event.template} pb-24`}
@@ -766,6 +771,17 @@ function HomePage() {
           )}
           {music && <audio ref={audioRef} src={music} loop preload="auto" />}
         </div>
+
+        {heroGalleryItems.length > 0 && (
+          <div className="template-hero-gallery" aria-label="Momentos do convite">
+            <div className="template-hero-gallery-label"><span /> Momentos</div>
+            <GalleryCarousel
+              items={heroGalleryItems}
+              eventName={eventTitle(event)}
+              onOpen={setLightbox}
+            />
+          </div>
+        )}
 
         <span className="breathe absolute bottom-8 left-1/2 block h-12 w-px -translate-x-1/2 bg-linear-to-b from-transparent to-gold/80" />
       </header>
