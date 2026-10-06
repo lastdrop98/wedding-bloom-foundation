@@ -476,6 +476,13 @@ const PARTY: PartyMember[] = [];
 
 function TemplateHeroAccent({ template }: { template?: string | null }) {
   const family = getTemplateDefinition(template).family;
+  const isFilm = template === "film-noir-motion" || template === "cinematic-charcoal";
+  const isMagazine = template === "editorial-magazine";
+  const isPearl = template === "pearl-garden" || template === "floral-pearl";
+  const isCelestial = template === "celestial-ivory";
+  const isCoastal = template === "coastal-blue";
+  const isCapulana = template === "capulana-contemporary";
+
   const isHeritage = template === "xiguiane-tradicional" || template === "african-heritage";
   const isEditorial =
     template?.includes("minimalist") ||
@@ -493,6 +500,54 @@ function TemplateHeroAccent({ template }: { template?: string | null }) {
     template?.startsWith("oriental-") ||
     template === "nikah-emerald" ||
     template === "traditional-bronze";
+
+  if (isFilm) {
+    return (
+      <div className="template-hero-accent template-hero-accent-film" aria-hidden="true">
+        <span>01</span><i /><span>IN MOTION</span>
+      </div>
+    );
+  }
+
+  if (isMagazine) {
+    return (
+      <div className="template-hero-accent template-hero-accent-magazine" aria-hidden="true">
+        <span>ISSUE 01</span><i /><span>THE WEDDING EDIT</span>
+      </div>
+    );
+  }
+
+  if (isPearl) {
+    return (
+      <div className="template-hero-accent template-hero-accent-pearl" aria-hidden="true">
+        <span>✦</span><i /><span>PEARL GARDEN</span><i /><span>✦</span>
+      </div>
+    );
+  }
+
+  if (isCelestial) {
+    return (
+      <div className="template-hero-accent template-hero-accent-celestial" aria-hidden="true">
+        <span>✦</span><i /><span>CELESTIAL</span><i /><span>✦</span>
+      </div>
+    );
+  }
+
+  if (isCoastal) {
+    return (
+      <div className="template-hero-accent template-hero-accent-coastal" aria-hidden="true">
+        <span>DESTINATION</span><i /><span>24°58′ S · 32°35′ E</span>
+      </div>
+    );
+  }
+
+  if (isCapulana) {
+    return (
+      <div className="template-hero-accent template-hero-accent-capulana" aria-hidden="true">
+        <span>MAPUTO</span><i /><span>HERITAGE / MODERN</span>
+      </div>
+    );
+  }
 
   if (isHeritage) {
     return (
