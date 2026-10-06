@@ -555,7 +555,7 @@ function calendarHref(event: EventRow) {
   if (!start) return "#";
   const endDate = new Date(new Date(event.event_date).getTime() + 4 * 60 * 60 * 1000);
   const end = formatIcsDate(endDate.toISOString());
-  const venue = [event.ceremony_venue, event.ceremony_address].filter(Boolean).join(", ");
+  const venue = [detail(event, "ceremony_venue"), detail(event, "ceremony_address")].filter(Boolean).join(", ");
   const ics = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
