@@ -369,7 +369,7 @@ function ModelsPage() {
   }, [filter, query]);
 
   return (
-    <main className="min-h-screen bg-[#faf8f3] text-neutral-900">
+    <main className="solar-models-page min-h-screen bg-[#faf8f3] text-neutral-900">
       <header className="sticky top-0 z-40 border-b border-black/5 bg-[#faf8f3]/90 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
           <a href="/" className="text-sm font-semibold tracking-tight">Solar Eclipse</a>
@@ -377,7 +377,7 @@ function ModelsPage() {
         </div>
       </header>
 
-      <section className="px-5 pb-16 pt-20 text-center sm:px-8 sm:pt-28">
+      <section className="solar-models-hero px-5 pb-16 pt-20 text-center sm:px-8 sm:pt-28">
         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C9A84C]">
           Solar Eclipse · Coleção
         </p>
@@ -423,11 +423,11 @@ function ModelsPage() {
         </p>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-8 px-5 pb-24 sm:px-8 md:grid-cols-2">
+      <section className="solar-models-grid mx-auto grid max-w-7xl gap-8 px-5 pb-24 sm:px-8 md:grid-cols-2">
         {visible.map((template, index) => (
           <article
             key={template.value}
-            className="group overflow-hidden rounded-[30px] bg-white shadow-[0_18px_60px_rgba(0,0,0,.07)] transition duration-500 hover:-translate-y-1"
+            className="solar-model-card group overflow-hidden rounded-[30px] bg-white shadow-[0_18px_60px_rgba(0,0,0,.07)] transition duration-500 hover:-translate-y-1"
           >
             <Button type="button" variant="ghost" onClick={() => setDemo(template)} aria-label={`Ver demonstração de ${template.label}`} aria-expanded={demo?.value === template.value} className="block h-auto w-full rounded-none p-0 text-left hover:bg-transparent">
               <div className="relative overflow-hidden">
