@@ -125,6 +125,7 @@ function Section({
   wide,
   dark,
   vines,
+  sectionKey,
 }: {
   title: string;
   eyebrow?: string;
