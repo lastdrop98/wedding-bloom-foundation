@@ -2600,3 +2600,130 @@ div[id*="lovable-badge"] {
     font-size: 3.2rem;
   }
 }
+
+
+/* ——— Estruturas reais por família de template ———
+   A aparência pode variar por modelo, mas a ordem da experiência também muda.
+   Isto evita que todos os convites sejam apenas a mesma página com cores diferentes.
+*/
+main[class*="template-layout-"] {
+  display: flex;
+  flex-direction: column;
+}
+
+main[class*="template-layout-"] > header {
+  order: 1;
+}
+
+main[class*="template-layout-"] > [data-template-section] {
+  order: 10;
+}
+
+main[class*="template-layout-"] > footer {
+  order: 120;
+}
+
+main[class*="template-layout-"] > .my-6 {
+  order: 110;
+}
+
+main[class*="template-layout-"] > svg {
+  order: 111;
+}
+
+main.template-layout-classic > [data-template-section="welcome"] { order: 10; }
+main.template-layout-classic > [data-template-section="countdown"] { order: 20; }
+main.template-layout-classic > [data-template-section="word"] { order: 30; }
+main.template-layout-classic > [data-template-section="couple"] { order: 40; }
+main.template-layout-classic > [data-template-section="story"] { order: 50; }
+main.template-layout-classic > [data-template-section="party"] { order: 60; }
+main.template-layout-classic > [data-template-section="schedule"] { order: 70; }
+main.template-layout-classic > [data-template-section="location"] { order: 80; }
+main.template-layout-classic > [data-template-section="gallery"] { order: 90; }
+main.template-layout-classic > [data-template-section="gifts"] { order: 100; }
+main.template-layout-classic > [data-template-section="guestbook"] { order: 101; }
+main.template-layout-classic > [data-template-section="rsvp"] { order: 102; }
+main.template-layout-classic > [data-template-section="contacts"] { order: 103; }
+
+main.template-layout-editorial > [data-template-section="welcome"] { order: 10; }
+main.template-layout-editorial > [data-template-section="couple"] { order: 20; }
+main.template-layout-editorial > [data-template-section="story"] { order: 30; }
+main.template-layout-editorial > [data-template-section="moments"] { order: 40; }
+main.template-layout-editorial > [data-template-section="party"] { order: 45; }
+main.template-layout-editorial > [data-template-section="gallery"] { order: 50; }
+main.template-layout-editorial > [data-template-section="schedule"] { order: 60; }
+main.template-layout-editorial > [data-template-section="location"] { order: 70; }
+main.template-layout-editorial > [data-template-section="dress-code"] { order: 75; }
+main.template-layout-editorial > [data-template-section="rsvp"] { order: 80; }
+main.template-layout-editorial > [data-template-section="guestbook"] { order: 90; }
+main.template-layout-editorial > [data-template-section="gifts"] { order: 100; }
+main.template-layout-editorial > [data-template-section="contacts"] { order: 110; }
+main.template-layout-editorial > [data-template-section="countdown"] { order: 115; }
+main.template-layout-editorial > [data-template-section="word"] { order: 116; }
+
+main.template-layout-organic > [data-template-section="welcome"] { order: 10; }
+main.template-layout-organic > [data-template-section="couple"] { order: 20; }
+main.template-layout-organic > [data-template-section="story"] { order: 30; }
+main.template-layout-organic > [data-template-section="gallery"] { order: 40; }
+main.template-layout-organic > [data-template-section="moments"] { order: 50; }
+main.template-layout-organic > [data-template-section="party"] { order: 60; }
+main.template-layout-organic > [data-template-section="location"] { order: 70; }
+main.template-layout-organic > [data-template-section="schedule"] { order: 80; }
+main.template-layout-organic > [data-template-section="dress-code"] { order: 85; }
+main.template-layout-organic > [data-template-section="guestbook"] { order: 90; }
+main.template-layout-organic > [data-template-section="gifts"] { order: 100; }
+main.template-layout-organic > [data-template-section="rsvp"] { order: 110; }
+main.template-layout-organic > [data-template-section="contacts"] { order: 120; }
+main.template-layout-organic > [data-template-section="countdown"] { order: 125; }
+main.template-layout-organic > [data-template-section="word"] { order: 130; }
+
+main.template-layout-heritage > [data-template-section="word"] { order: 10; }
+main.template-layout-heritage > [data-template-section="welcome"] { order: 15; }
+main.template-layout-heritage > [data-template-section="couple"] { order: 20; }
+main.template-layout-heritage > [data-template-section="party"] { order: 30; }
+main.template-layout-heritage > [data-template-section="story"] { order: 40; }
+main.template-layout-heritage > [data-template-section="schedule"] { order: 50; }
+main.template-layout-heritage > [data-template-section="location"] { order: 60; }
+main.template-layout-heritage > [data-template-section="gallery"] { order: 70; }
+main.template-layout-heritage > [data-template-section="gifts"] { order: 80; }
+main.template-layout-heritage > [data-template-section="guestbook"] { order: 90; }
+main.template-layout-heritage > [data-template-section="rsvp"] { order: 100; }
+main.template-layout-heritage > [data-template-section="contacts"] { order: 110; }
+main.template-layout-heritage > [data-template-section="countdown"] { order: 115; }
+main.template-layout-heritage > [data-template-section="dress-code"] { order: 116; }
+
+main.template-layout-framed > [data-template-section="welcome"] { order: 10; }
+main.template-layout-framed > [data-template-section="word"] { order: 20; }
+main.template-layout-framed > [data-template-section="couple"] { order: 30; }
+main.template-layout-framed > [data-template-section="party"] { order: 40; }
+main.template-layout-framed > [data-template-section="schedule"] { order: 50; }
+main.template-layout-framed > [data-template-section="location"] { order: 60; }
+main.template-layout-framed > [data-template-section="gallery"] { order: 70; }
+main.template-layout-framed > [data-template-section="gifts"] { order: 80; }
+main.template-layout-framed > [data-template-section="guestbook"] { order: 90; }
+main.template-layout-framed > [data-template-section="rsvp"] { order: 100; }
+main.template-layout-framed > [data-template-section="contacts"] { order: 110; }
+main.template-layout-framed > [data-template-section="countdown"] { order: 115; }
+main.template-layout-framed > [data-template-section="story"] { order: 120; }
+main.template-layout-framed > [data-template-section="dress-code"] { order: 125; }
+
+main.template-layout-cinematic > [data-template-section="countdown"] { order: 10; }
+main.template-layout-cinematic > [data-template-section="story"] { order: 20; }
+main.template-layout-cinematic > [data-template-section="moments"] { order: 30; }
+main.template-layout-cinematic > [data-template-section="gallery"] { order: 40; }
+main.template-layout-cinematic > [data-template-section="schedule"] { order: 50; }
+main.template-layout-cinematic > [data-template-section="location"] { order: 60; }
+main.template-layout-cinematic > [data-template-section="couple"] { order: 70; }
+main.template-layout-cinematic > [data-template-section="rsvp"] { order: 80; }
+main.template-layout-cinematic > [data-template-section="guestbook"] { order: 90; }
+main.template-layout-cinematic > [data-template-section="gifts"] { order: 100; }
+main.template-layout-cinematic > [data-template-section="contacts"] { order: 110; }
+main.template-layout-cinematic > [data-template-section="welcome"] { order: 115; }
+main.template-layout-cinematic > [data-template-section="word"] { order: 116; }
+
+/* No mobile, a estrutura continua variada sem quebrar o fluxo vertical. */
+@media (max-width: 767px) {
+  main[class*="template-layout-"] > [data-template-section] {
+    min-width: 0;
+  }
+}
