@@ -124,7 +124,7 @@ function TemplatePreviewPage() {
   ][previewVariant];
 
   return (
-    <main className={`solar-template-page template-preview template-preview-${template.value} template-preview-variant-${previewVariant} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
+    <main className={`solar-template-page template-preview template-preview-${template.value} template-preview-variant-${previewVariant} ${templateVisualClass(template.value)} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
           <a
