@@ -103,6 +103,42 @@ const templates = [
       "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
   },
   {
+    id: "film-noir-motion",
+    name: "Film Noir Motion",
+    style: "Cinemático com vídeo",
+    image: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "editorial-magazine",
+    name: "Editorial Magazine",
+    style: "Fashion editorial",
+    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "pearl-garden",
+    name: "Pearl Garden",
+    style: "Jardim de luxo",
+    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "capulana-contemporary",
+    name: "Capulana Contemporary",
+    style: "Herança moçambicana",
+    image: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "celestial-ivory",
+    name: "Celestial Ivory",
+    style: "Luxury celestial",
+    image: "https://images.unsplash.com/photo-1534791547706-9b3f7f6c8a4a?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "coastal-blue",
+    name: "Coastal Blue",
+    style: "Destination wedding",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+  },
+  {
     id: "cinematic-charcoal",
     name: "Cinematic Charcoal",
     style: "Cinemático premium",
