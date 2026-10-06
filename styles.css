@@ -2727,3 +2727,16 @@ main.template-layout-cinematic > [data-template-section="word"] { order: 116; }
     min-width: 0;
   }
 }
+
+main[class*="template-layout-"] > .template-atmosphere,
+main[class*="template-layout-"] > .template-background-media {
+  order: 0;
+}
+
+main[class*="template-layout-"] > [aria-hidden="true"]:not(.template-atmosphere) {
+  order: 111;
+}
+
+main[class*="template-layout-"] > footer {
+  order: 130;
+}
