@@ -2291,6 +2291,7 @@ div[id*="lovable-badge"] {
 
 
 /* Solar Eclipse — reusable invitation layout families */
+/* Build trigger: patched TanStack Start dependencies are installed from a fresh lockfile. */
 .template-layout-classic .card-elegant {
   border-radius: 1.25rem;
 }
