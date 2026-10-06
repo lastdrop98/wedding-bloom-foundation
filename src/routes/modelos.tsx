@@ -505,6 +505,11 @@ function ModelsPage() {
                 {template.description}
               </p>
 
+              <div className="mt-5 rounded-2xl border border-black/[0.06] bg-[#faf9f6] px-4 py-3">
+                <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[#9b7a2d]">Ritmo do convite</p>
+                <p className="mt-1.5 text-xs leading-5 text-black/55">{getTemplateDirection(template).structure}</p>
+              </div>
+
               <ul className="mt-6 space-y-2.5">
                 {[
                   "Nomes e data personalizados",
