@@ -116,6 +116,20 @@ function AdminPage() {
   const [activeSection, setActiveSection] = useState("dados");
   const [mobileNav, setMobileNav] = useState(false);
   const [now, setNow] = useState(() => new Date());
+  const [adminTheme, setAdminTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("solar-eclipse-admin-theme");
+    if (saved === "light" || saved === "dark") setAdminTheme(saved);
+  }, []);
+
+  function toggleAdminTheme() {
+    setAdminTheme((current) => {
+      const next = current === "dark" ? "light" : "dark";
+      window.localStorage.setItem("solar-eclipse-admin-theme", next);
+      return next;
+    });
+  }
 
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 1000);
@@ -189,7 +203,7 @@ function AdminPage() {
   const currentEvent = mode.kind === "form" ? mode.event : null;
 
   return (
-    <main className="solar-admin-shell min-h-screen bg-[#f5f5f7] text-[#1d1d1f]">
+    <main className={`solar-admin-shell admin-theme-${adminTheme} min-h-screen bg-[#f5f5f7] text-[#1d1d1f]`}>
       <div className="flex min-h-screen">
         <aside className="fixed inset-y-0 left-0 z-50 hidden w-[248px] border-r border-black/[0.06] bg-white lg:flex lg:flex-col">
           <div className="flex h-16 items-center border-b border-black/[0.06] px-6">
@@ -278,7 +292,17 @@ function AdminPage() {
                   </p>
                 </div>
               </div>
-              <div className="flex shrink-0 items-center gap-2.5">
+              <div className="flex shrink-0 items-center gap-2">
+                <button
+                  type="button"
+                  onClick={toggleAdminTheme}
+                  className="admin-theme-toggle inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs transition"
+                  aria-label={adminTheme === "dark" ? "Mudar para modo claro" : "Mudar para modo escuro"}
+                  title={adminTheme === "dark" ? "Modo claro" : "Modo escuro"}
+                >
+                  {adminTheme === "dark" ? "☀️" : "🌙"}
+                  <span className="hidden sm:inline">{adminTheme === "dark" ? "Claro" : "Escuro"}</span>
+                </button>
                 <a href="/" target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
                   Ver site
                 </a>
