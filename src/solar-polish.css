@@ -425,3 +425,65 @@ textarea {
 .template-visual-celestial .template-hero-accent-celestial { color: #d7b56d; }
 .template-visual-coastal .template-hero-accent-coastal { color: rgba(255,255,255,.8); }
 .template-visual-heritage .template-hero-accent-capulana { color: #f0d8aa; }
+
+/* Admin: theme tokens must cover the whole shell, including navigation and cards. */
+.solar-admin-shell.admin-theme-dark aside,
+.solar-admin-shell.admin-theme-dark header,
+.solar-admin-shell.admin-theme-dark .admin-theme-toggle {
+  background: #111 !important;
+  color: #f5f5f7;
+  border-color: rgba(255,255,255,.09) !important;
+}
+
+.solar-admin-shell.admin-theme-dark .admin-workspace,
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(h1,h2,h3,h4,p,span,label) {
+  color: inherit;
+}
+
+.solar-admin-shell.admin-theme-dark .admin-workspace {
+  color: #f5f5f7;
+}
+
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="bg-white"] {
+  background-color: #181818 !important;
+}
+
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="border-black"] {
+  border-color: rgba(255,255,255,.1) !important;
+}
+
+.solar-admin-shell.admin-theme-dark :is(input,textarea,select) {
+  background: #181818 !important;
+  color: #f5f5f7 !important;
+  border-color: rgba(255,255,255,.14) !important;
+}
+
+.solar-admin-shell.admin-theme-dark :is(input,textarea,select)::placeholder {
+  color: rgba(255,255,255,.34) !important;
+}
+
+.solar-admin-shell.admin-theme-dark button:not(.bg-black),
+.solar-admin-shell.admin-theme-dark a:not(.bg-black) {
+  color: rgba(255,255,255,.78);
+}
+
+.solar-admin-shell.admin-theme-dark .admin-theme-toggle {
+  color: #f5f5f7 !important;
+}
+
+.solar-admin-shell.admin-theme-light aside,
+.solar-admin-shell.admin-theme-light header {
+  color: #1d1d1f;
+}
+
+.solar-admin-shell.admin-theme-light .admin-theme-toggle {
+  background: #fff !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.09) !important;
+}
+
+@media (max-width: 1023px) {
+  .solar-admin-shell.admin-theme-dark > div > div > header {
+    background: rgba(17,17,17,.88) !important;
+  }
+}
