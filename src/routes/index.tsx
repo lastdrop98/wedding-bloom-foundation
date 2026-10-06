@@ -81,6 +81,34 @@ const templates = [
     image:
       "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=800&q=80",
   },
+  {
+    id: "minimalist-white",
+    name: "Minimalist White",
+    style: "Editorial minimalista",
+    image:
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "royal-black-gold",
+    name: "Royal Black & Gold",
+    style: "Royal contemporâneo",
+    image:
+      "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "garden-green",
+    name: "Spring Garden Green",
+    style: "Botânico orgânico",
+    image:
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "cinematic-charcoal",
+    name: "Cinematic Charcoal",
+    style: "Cinemático premium",
+    image:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+  },
 ];
 
 function HomePage() {
