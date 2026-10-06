@@ -17,7 +17,12 @@ export const Route = createFileRoute("/_authenticated/whatsapp")({
 function WhatsAppPage() {
   const [phone, setPhone] = useState("258847404160");
   const [message, setMessage] = useState("Olá! Este é um teste do Solar Eclipse.");
-  const [saved, setSaved] = useState(false);\n\n  useEffect(() => {\n    const stored = window.localStorage.getItem("solar-eclipse-whatsapp-phone");\n    if (stored) setPhone(stored);\n  }, []);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem("solar-eclipse-whatsapp-phone");
+    if (stored) setPhone(stored);
+  }, []);
 
   function save() {
     window.localStorage.setItem("solar-eclipse-whatsapp-phone", phone.replace(/\D/g, ""));
