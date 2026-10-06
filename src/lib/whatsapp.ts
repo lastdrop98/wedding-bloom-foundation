@@ -26,13 +26,13 @@ export function openWhatsApp(message: string, phone = WHATSAPP_PHONE) {
   const appUrl = `whatsapp://send?phone=${target}&text=${encoded}`;
 
   if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    let fallback: number | undefined;
+    const fallback = window.setTimeout(() => {}, 0);
     const onVisibilityChange = () => {
       if (document.hidden && fallback) window.clearTimeout(fallback);
     };
     document.addEventListener("visibilitychange", onVisibilityChange, { once: true });
     window.location.href = appUrl;
-    fallback = window.setTimeout(() => {
+    window.setTimeout(() => {
       document.removeEventListener("visibilitychange", onVisibilityChange);
       window.location.href = webUrl;
     }, 1200);
