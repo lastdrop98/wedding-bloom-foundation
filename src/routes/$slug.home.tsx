@@ -565,8 +565,8 @@ function calendarHref(event: EventRow) {
     `DTSTAMP:${formatIcsDate(new Date().toISOString())}`,
     `DTSTART:${start}`,
     `DTEND:${end}`,
-    \`SUMMARY:\${eventTitle(event).replace(/[,;\\]/g, " ")}\`,
-    \`LOCATION:\${venue.replace(/[,;\\]/g, " ")}\`,
+    "SUMMARY:" + eventTitle(event).replace(/[,;\\]/g, " ") + "",
+    "LOCATION:" + venue.replace(/[,;\\]/g, " ") + "",
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
