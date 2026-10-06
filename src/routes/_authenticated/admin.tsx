@@ -279,15 +279,6 @@ function AdminPage() {
                 </div>
               </div>
               <div className="flex shrink-0 items-center gap-2.5">
-                <div className="admin-clock" title="Data e hora atual" aria-label={`Data e hora atual: ${formatAdminDateTime(now)}`}>
-                  <div className="admin-clock-icon" aria-hidden="true">
-                    <Clock3 className="size-4" />
-                  </div>
-                  <div className="admin-clock-copy">
-                    <span className="admin-clock-time tabular-nums">{formatAdminTime(now)}</span>
-                    <span className="admin-clock-date">{formatAdminDate(now)}</span>
-                  </div>
-                </div>
                 <a href="/" target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
                   Ver site
                 </a>
@@ -314,6 +305,7 @@ function AdminPage() {
                 isLoading={isLoading}
                 stats={stats}
                 messages={messages}
+                now={now}
                 onNew={() => setMode({ kind: "choose-type" })}
                 onOpen={openEvent}
               />
@@ -381,6 +373,7 @@ function Dashboard({
   isLoading: boolean;
   stats: { total: number; weddings: number; latest?: EventRow | undefined };
   messages: AdminMessage[];
+  now: Date;
   onNew: () => void;
   onOpen: (event: EventRow, section?: string) => void;
 }) {
@@ -404,18 +397,37 @@ function Dashboard({
   const messageEvent = activeMessage ? events.find((event) => event.id === activeMessage.event_id) : undefined;
 
   return (
-    <div className="space-y-10">
-      <section className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
-        <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">Workspace</p>
-          <h1 className="mt-4 text-[clamp(2.7rem,6vw,5rem)] font-semibold leading-[.94] tracking-[-0.06em]">Bom trabalho.</h1>
-          <p className="mt-5 max-w-xl text-base leading-7 text-black/50">
-            Todos os seus eventos, conteúdos e entregas num espaço simples de gerir.
-          </p>
+    <div className="admin-workspace space-y-10">
+      <section className="admin-hero">
+        <div className="admin-hero-image" aria-hidden="true" />
+        <div className="admin-hero-glow admin-hero-glow-one" aria-hidden="true" />
+        <div className="admin-hero-glow admin-hero-glow-two" aria-hidden="true" />
+        <div className="admin-hero-content">
+          <div className="admin-hero-copy">
+            <div className="admin-eyebrow"><span className="admin-live-dot" /> Workspace</div>
+            <h1>Bom trabalho.</h1>
+            <p>O centro de comando do Solar Eclipse para criar, acompanhar e entregar experiências memoráveis.</p>
+            <div className="admin-hero-actions">
+              <Button onClick={onNew} className="h-11 rounded-full bg-black px-5 text-white shadow-lg shadow-black/15 hover:bg-black/85">
+                <Plus className="mr-2 size-4" /> Criar evento
+              </Button>
+              <span className="admin-hero-note">Tudo num só espaço</span>
+            </div>
+          </div>
+          <div className="admin-hero-clock">
+            <div className="admin-clock-orbit" aria-hidden="true"><span /><span /><span /></div>
+            <div className="admin-clock-top"><span>Agora</span><Clock3 className="size-4" /></div>
+            <span className="admin-clock-time tabular-nums">{formatAdminTime(now)}</span>
+            <span className="admin-clock-date">{formatAdminDate(now)}</span>
+            <div className="admin-clock-rule" />
+            <span className="admin-clock-caption">Horário local do workspace</span>
+          </div>
         </div>
-        <Button onClick={onNew} className="h-11 rounded-full bg-black px-5 text-white hover:bg-black/85">
-          <Plus className="mr-2 size-4" /> Criar evento
-        </Button>
+        <div className="admin-hero-decor" aria-hidden="true">
+          <span className="admin-hero-ring ring-one" />
+          <span className="admin-hero-ring ring-two" />
+          <span className="admin-hero-star">✦</span>
+        </div>
       </section>
 
       <section className="grid gap-3 sm:grid-cols-3">
