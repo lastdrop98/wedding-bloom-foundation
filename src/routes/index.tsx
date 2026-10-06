@@ -169,9 +169,14 @@ function HomePage() {
         )}
       </header>
 
-      <section className="solar-landing-hero relative overflow-hidden px-6 py-28 text-center sm:py-36">
+      <section className="solar-landing-hero solar-landing-hero-v2 relative overflow-hidden px-6 py-28 text-left sm:py-36">
         <div className="absolute inset-0 bg-gradient-to-b from-white to-[#faf8f3]" />
-        <div className="relative mx-auto max-w-5xl">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_.95fr]">
+          <div className="solar-hero-v2-copy">
+            <div className="solar-live-badge">
+              <span className="solar-live-dot" />
+              SOLAR ECLIPSE • CONVITES DIGITAIS
+            </div>
           <p className="mb-6 text-sm uppercase tracking-[0.4em] text-[#C9A84C]">
             Solar Eclipse
           </p>
@@ -199,6 +204,22 @@ function HomePage() {
             >
               Criar meu convite <MessageCircle className="size-4" />
             </a>
+          </div>
+          <div className="solar-hero-v2-visual" aria-hidden="true">
+            <div className="solar-hero-v2-eclipse">
+              <span className="solar-hero-v2-corona" />
+              <span className="solar-hero-v2-core" />
+              <span className="solar-hero-v2-orbit orbit-a" />
+              <span className="solar-hero-v2-orbit orbit-b" />
+              <span className="solar-hero-v2-star star-a">✦</span>
+              <span className="solar-hero-v2-star star-b">·</span>
+              <span className="solar-hero-v2-star star-c">✦</span>
+            </div>
+            <div className="solar-hero-v2-caption">
+              <span>01</span>
+              <strong>Uma experiência feita para durar</strong>
+              <span>2026</span>
+            </div>
           </div>
         </div>
       </section>
