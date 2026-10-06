@@ -205,6 +205,7 @@ function HomePage() {
               Criar meu convite <MessageCircle className="size-4" />
             </a>
           </div>
+          </div>
           <div className="solar-hero-v2-visual" aria-hidden="true">
             <div className="solar-hero-v2-eclipse">
               <span className="solar-hero-v2-corona" />
