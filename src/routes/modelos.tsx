@@ -282,7 +282,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
       : [gallery, story, program, rsvp, gifts, guestbook];
 
   return (
-    <div className={`relative mx-auto w-full max-w-[420px] overflow-hidden shadow-2xl ${style.page}`}>
+    <div data-demo-variant={variant} className={`template-demo template-demo-${template.value} demo-variant-${variant} relative mx-auto w-full max-w-[420px] overflow-hidden shadow-2xl ${style.page}`}>
       {cover}
       <section data-demo-section="direcao" className={`px-7 py-8 ${family === "editorial" ? "bg-white text-black" : family === "botanical" ? "bg-[#fffaf8] text-[#473c39]" : family === "regal" ? "bg-[#21372f] text-cream" : family === "heritage" ? "bg-[#3b281f] text-cream" : "bg-ink text-cream"}`}>
         <div className="grid grid-cols-2 gap-3 text-left">
