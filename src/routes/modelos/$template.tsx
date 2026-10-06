@@ -48,6 +48,7 @@ function TemplatePreviewPage() {
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const previewVariant = [...template.value].reduce((sum, char) => sum + char.charCodeAt(0), 0) % 8;
 
   function request() {
     if (!name.trim() || !phone.trim()) {
@@ -71,7 +72,7 @@ function TemplatePreviewPage() {
   }
 
   return (
-    <main className={`template-preview template-preview-${template.value} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
+    <main className={`template-preview template-preview-${template.value} template-preview-variant-${previewVariant} min-h-screen bg-gradient-to-b ${gradient(template.tone)}`}>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
           <a
