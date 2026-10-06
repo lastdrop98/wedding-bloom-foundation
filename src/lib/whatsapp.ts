@@ -1,21 +1,20 @@
 const WHATSAPP_PHONE = "258847404160";
 
 /**
- * Opens a WhatsApp conversation using the wa.me deep link.
- * This avoids the embedded api.whatsapp.com endpoint that can be
- * blocked by some browsers/privacy settings.
+ * Builds a WhatsApp URL without using api.whatsapp.com.
+ * Desktop browsers go directly to WhatsApp Web; mobile browsers use wa.me.
  */
 export function whatsappUrl(message: string) {
-  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
+  const encoded = encodeURIComponent(message);
+  if (typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    return `https://wa.me/${WHATSAPP_PHONE}?text=${encoded}`;
+  }
+  return `https://web.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
 }
 
 export function openWhatsApp(message: string) {
   const url = whatsappUrl(message);
-
-  // Prefer the same navigation path used by mobile WhatsApp and WhatsApp Web.
-  // If a popup is blocked, fall back to normal navigation.
-  const popup = window.open(url, "_blank", "noopener,noreferrer");
-  if (!popup) {
-    window.location.assign(url);
-  }
+  // Navigate directly from the user's click. This avoids popup blockers and
+  // prevents the browser from getting stuck on api.whatsapp.com.
+  window.location.href = url;
 }
