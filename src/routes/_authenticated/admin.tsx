@@ -703,12 +703,7 @@ function EditorShell({
         {activeSection === "dados" && <WeddingForm
           event={event}
           eventType={eventType}
-          initialValues={event ? undefined : initialValues ?? (selectedTemplateRequest ? {
-            template: selectedTemplateRequest.template_value,
-            display_names: selectedTemplateRequest.couple_name,
-            contact_1_phone: selectedTemplateRequest.phone,
-            event_date: selectedTemplateRequest.wedding_date ? `${selectedTemplateRequest.wedding_date}T12:00` : "",
-          } : undefined)}
+          initialValues={event ? undefined : initialValues}
           onSaved={onSaved}
           onCancel={onClose}
         />}
