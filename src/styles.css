@@ -3368,3 +3368,55 @@ div[id*="lovable-badge"] {
   inset: 0;
   background: repeating-linear-gradient(45deg, rgba(197,138,75,.08) 0 12px, transparent 12px 24px), repeating-linear-gradient(-45deg, rgba(91,59,40,.07) 0 12px, transparent 12px 24px);
 }
+
+
+/* Admin shell theme — keep sidebar/header and the editor in the same visual mode. */
+.solar-admin-shell.admin-theme-dark {
+  background: #0b0b0d !important;
+  color: #f7f2e8 !important;
+}
+.solar-admin-shell.admin-theme-dark aside {
+  background: #111113 !important;
+  border-color: rgba(255,255,255,.08) !important;
+  color: #f7f2e8 !important;
+}
+.solar-admin-shell.admin-theme-dark aside .text-black\/35,
+.solar-admin-shell.admin-theme-dark aside .text-black\/30,
+.solar-admin-shell.admin-theme-dark aside .text-black\/55 {
+  color: rgba(255,255,255,.58) !important;
+}
+.solar-admin-shell.admin-theme-dark aside button:hover {
+  background: rgba(255,255,255,.06) !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-dark header {
+  background: rgba(17,17,19,.86) !important;
+  border-color: rgba(255,255,255,.08) !important;
+  color: #f7f2e8 !important;
+}
+.solar-admin-shell.admin-theme-dark header .text-black\/35,
+.solar-admin-shell.admin-theme-dark header .text-black\/50 {
+  color: rgba(255,255,255,.52) !important;
+}
+.solar-admin-shell.admin-theme-dark header a.text-black\/50 {
+  color: rgba(255,255,255,.65) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-theme-toggle {
+  color: #f7f2e8 !important;
+  border-color: rgba(255,255,255,.14) !important;
+  background: rgba(255,255,255,.06) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-theme-toggle:hover {
+  background: rgba(255,255,255,.11) !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace > section {
+  color: #f7f2e8;
+}
+.solar-admin-shell.admin-theme-light {
+  background: #f5f5f7 !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light aside {
+  background: #fff !important;
+  color: #1d1d1f !important;
+}
