@@ -2949,3 +2949,76 @@ main[class*="template-layout-"] > footer {
 
   .template-hero-content { animation: none; }
 }
+
+
+/* ═══════════ Admin workspace — conforto, presença e movimento ═══════════ */
+.admin-header-brand {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.admin-header-brand:hover {
+  transform: translateY(-1px);
+}
+.admin-brand-mark {
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+.admin-brand-mark::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid color-mix(in oklab, #c9a84c 35%, transparent);
+  border-radius: 999px;
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    opacity 0.35s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.admin-header-brand:hover .admin-brand-mark::before {
+  opacity: 1;
+  transform: scale(1.12);
+}
+.admin-brand-mark svg {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.admin-header-brand:hover .admin-brand-mark svg {
+  transform: rotate(8deg) scale(1.06);
+}
+.admin-clock {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.admin-message-panel {
+  background:
+    radial-gradient(80% 120% at 100% 0%, color-mix(in oklab, #c9a84c 11%, transparent), transparent 55%),
+    radial-gradient(70% 100% at 0% 100%, rgba(255,255,255,.045), transparent 60%),
+    #111;
+}
+.admin-message-card {
+  animation: admin-message-in 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes admin-message-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (max-width: 639px) {
+  .admin-clock {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-message-card,
+  .admin-header-brand,
+  .admin-brand-mark svg {
+    animation: none !important;
+    transition: none !important;
+  }
+}
