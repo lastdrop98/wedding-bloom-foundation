@@ -142,7 +142,7 @@ export function MediaManager({ event }: { event: EventRow }) {
       };
 
       if (existing) {
-        const { data: updatedRows, error: updateError } = await looseDb
+        const { error: updateError } = await looseDb
           .from("event_media")
           .update(payload)
           .eq("id", existing.id)
