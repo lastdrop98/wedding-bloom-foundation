@@ -159,6 +159,14 @@ const NEW_TEMPLATE_DIRECTIONS: Record<string, Partial<TemplateDirection>> = {
 };
 
 const TEMPLATE_DIRECTION_OVERRIDES: Record<string, Partial<TemplateDirection>> = {
+  "premium-emerald": {
+    structure: "Capa + bênção + noivos + famílias + declarações + agenda + mapa + amigos e família + countdown + RSVP + felicitações + presentes + mensagens + encerramento",
+    design: "Mobile-first em cartões verticais, fotografia protagonista em molduras arredondadas, cabeçalho compacto e barra fixa de navegação inferior",
+    appearance: "Marfim quente, branco, dourado champagne e grafite, com sombras suaves, bordas finas e ritmo de papelaria premium",
+    typography: "Serif elegante de alto contraste para nomes e títulos + sans compacta para etiquetas, horários e ações + script pontual para bênçãos",
+    palette: "Marfim #F4EFE7, branco #FFFFFF, dourado #C9A84C, grafite #403A33 e taupe #8B8175",
+    motifs: "Cartões sobrepostos, arcos fotográficos, marcadores dourados, botões pill e barra de ações fixa",
+  },
   "limintso-emerald": {
     structure: "Abertura vertical + bênção + noivos + declarações + famílias + agenda + local + amigos e família + countdown + RSVP + felicitações + presentes + galeria + encerramento",
     design: "Convite mobile-first em cartões brancos, cabeçalho compacto, imagem protagonista e navegação fixa de acesso rápido",
