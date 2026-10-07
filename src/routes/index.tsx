@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Heart,
   Image,
   Menu,
   MessageCircle,
@@ -152,7 +151,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="solar-home-carousel relative overflow-hidden border-y border-black/5 bg-[#161616] px-6 py-20 text-white sm:py-24" aria-label="Destaques de modelos">
+      <section className="solar-home-carousel relative overflow-hidden border-y border-black/5 bg-[#10100f] px-6 py-20 text-white sm:py-28" aria-label="Destaques de modelos">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
@@ -175,8 +174,8 @@ function HomePage() {
                 const index = (carouselIndex + offset) % HOME_TEMPLATE_IMAGES.length;
                 const item = TEMPLATE_OPTIONS.find((template) => template.value === HOME_CAROUSEL_VALUES[index]) ?? TEMPLATE_OPTIONS[0]!;
                 return (
-                  <a key={`${carouselIndex}-${offset}`} href={`/modelos/${item.value}`} className={`group relative overflow-hidden rounded-[24px] ${offset === 1 ? "sm:-translate-y-3" : ""}`}>
-                    <img src={HOME_TEMPLATE_IMAGES[index]} alt="" className="h-[360px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[430px]" />
+                  <a key={`${carouselIndex}-${offset}`} href={`/modelos/${item.value}`} className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#1a1917] shadow-[0_24px_70px_rgba(0,0,0,.32)] ${offset === 1 ? "sm:-translate-y-5 sm:scale-[1.025]" : ""}`}>
+                    <img src={HOME_TEMPLATE_IMAGES[index]} alt="" className="h-[390px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
                       <span className="text-[9px] uppercase tracking-[.24em] text-white/55">{String(index + 1).padStart(2, "0")} / Solar Eclipse</span>
@@ -226,7 +225,7 @@ function HomePage() {
           </div>
           <div className="mt-12 flex flex-col items-center gap-3 text-center">
             <p className="text-xs text-black/40">Uma seleção dos nossos estilos. A coleção completa está na página de modelos.</p>
-            <a href="/modelos" className="inline-flex items-center gap-2 rounded-full bg-[#C9A84C] px-8 py-4 text-white transition hover:opacity-90">
+            <a href="/modelos" className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C] bg-[#C9A84C] px-8 py-4 text-white shadow-[0_10px_30px_rgba(201,168,76,.18)] transition hover:-translate-y-px hover:bg-[#b9973f]">
               Ver coleção completa <ArrowRight className="size-4" />
             </a>
           </div>
@@ -306,7 +305,7 @@ function HomePage() {
 
       <section id="como-funciona" className="scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-5xl text-center">
-          <Heart className="mx-auto text-[#C9A84C]" />
+          <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-12 bg-current/45" /><span className="size-2 rounded-full border border-current bg-current/20" /><span className="h-px w-12 bg-current/45" /></div>
           <h2 className="mt-6 text-4xl font-light">Como funciona?</h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[["01", "Escolha o modelo"], ["02", "Envie os dados e fale connosco"], ["03", "Receba link digital + PDF"]].map(([number, step]) => (
