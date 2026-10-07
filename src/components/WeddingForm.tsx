@@ -223,13 +223,21 @@ export function WeddingForm({
   });
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState<string | null>(null);
-  const [mediaItems, setMediaItems] = useState<Array<{ id: string; slot: string; media_type: string; storage_path: string }>>([]);
+  const [mediaItems, setMediaItems] = useState<Array<{ id: string; slot: string; media_type: string; storage_path: string; sort_order: number }>>([]);
   const [mediaUrls, setMediaUrls] = useState<Record<string, string>>({});
   const [assetUrls, setAssetUrls] = useState<{ cover: string; music: string }>({ cover: "", music: "" });
 
   async function loadMedia() {
     if (!event) return;
-    const { data } = await looseDb.from("event_media").select("id,slot,media_type,storage_path").eq("event_id", event.id).order("sort_order", { ascending: true });
+    const { data, error } = await looseDb
+      .from("event_media")
+      .select("id,slot,media_type,storage_path,sort_order")
+      .eq("event_id", event.id)
+      .order("sort_order", { ascending: true });
+    if (error) {
+      toast.error(`Não foi possível carregar a media: ${error.message}`);
+      return;
+    }
     const items = data ?? [];
     setMediaItems(items);
     const urls: Record<string, string> = {};
@@ -390,17 +398,24 @@ export function WeddingForm({
       return;
     }
     const column = kind === "cover" ? "cover_image_path" : "music_path";
-    const { error: updateError } = await supabase
+    const { data: updatedEvent, error: updateError } = await supabase
       .from("events")
       .update({ [column]: path } as never)
-      .eq("id", event.id);
+      .eq("id", event.id)
+      .select("*")
+      .single();
     setUploading(null);
-    if (updateError) {
-      toast.error(updateError.message);
+    if (updateError || !updatedEvent) {
+      await supabase.storage.from(bucket).remove([path]);
+      toast.error(updateError?.message ?? "Não foi possível guardar o ficheiro no evento.");
       return;
     }
+    const previousPath = kind === "cover" ? event.cover_image_path : event.music_path;
+    if (previousPath && previousPath !== path) {
+      await supabase.storage.from(bucket).remove([previousPath]);
+    }
     toast.success(kind === "cover" ? "Foto de capa atualizada." : "Música atualizada.");
-    onSaved(event);
+    onSaved(updatedEvent as EventRow);
   }
 
   return (
