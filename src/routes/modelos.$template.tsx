@@ -33,6 +33,14 @@ const PREVIEW_IMAGES = {
   heritage: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1800&q=90",
   celestial: "https://images.unsplash.com/photo-1534791547706-9b3f7f6c8a4a?auto=format&fit=crop&w=1800&q=90",
   coastal: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=90",
+  cinema: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90",
+  portrait: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90",
+  olive: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=90",
+  atelier: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1800&q=90",
+  mozambique: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1800&q=90",
+  sunset: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1800&q=90",
+  paper: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=90",
+  "pearl-editorial": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90",
 } as const;
 
 function gradient(tone: string) {
@@ -61,7 +69,25 @@ function TemplatePreviewPage() {
   const [busy, setBusy] = useState(false);
   const visualFamily = getTemplateVisualFamily(template.value);
   const previewImage = PREVIEW_IMAGES[visualFamily];
-  const previewVariantByFamily = { classic: 0, editorial: 3, cinematic: 7, botanical: 5, pearl: 2, royal: 4, heritage: 6, celestial: 1, coastal: 3 } as const;
+  const previewVariantByFamily = {
+    classic: 0,
+    editorial: 3,
+    cinematic: 7,
+    botanical: 5,
+    pearl: 2,
+    royal: 4,
+    heritage: 6,
+    celestial: 1,
+    coastal: 3,
+    cinema: 7,
+    portrait: 2,
+    olive: 3,
+    atelier: 5,
+    mozambique: 6,
+    sunset: 1,
+    paper: 7,
+    "pearl-editorial": 2,
+  } as const;
   const previewVariant = previewVariantByFamily[visualFamily];
   async function request() {
     if (busy) return;
