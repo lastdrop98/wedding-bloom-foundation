@@ -813,7 +813,7 @@ function HomePage() {
 
   const storyMilestones = [1, 2, 3, 4]
     .map((n, index) => ({
-      icon: [Coffee, Heart, Gem, Sparkles][index]!,
+      icon: [Coffee, Heart, Gem, CircleDot][index]!,
       date: d(`story_${n}_date` as Parameters<typeof detail>[1]) ?? "",
       title: d(`story_${n}_title` as Parameters<typeof detail>[1]) ?? "",
       text: d(`story_${n}_text` as Parameters<typeof detail>[1]) ?? "",
@@ -1066,6 +1066,17 @@ function HomePage() {
           dark
           vines="b"
         >
+          {(d("bride_letter") || d("groom_letter")) && (
+            <div className="mb-10 grid gap-5 md:grid-cols-2">
+              {[["A Noiva", d("bride_letter")], ["O Noivo", d("groom_letter")]].filter(([, text]) => text).map(([label, text]) => (
+                <article key={label} className="card-elegant p-7 sm:p-9">
+                  <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-primary">{label}</p>
+                  <p className="mt-5 whitespace-pre-line text-sm leading-8 text-muted-foreground">{text}</p>
+                </article>
+              ))}
+            </div>
+          )}
+
           {slotMedia["story"]?.url && (
             <div className="mb-8 overflow-hidden rounded-2xl border border-gold/25">
               <img
