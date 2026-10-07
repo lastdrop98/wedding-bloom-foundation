@@ -3515,3 +3515,124 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
 .solar-admin-shell.admin-theme-light .admin-workspace :is(button,a):not([disabled]):hover {
   filter:brightness(.98);
 }
+
+
+/* Premium Emerald reference variant: mobile-first Limintso package direction. */
+.limintso-signature.variant-premium-emerald{
+  --limintso-gold:#c9a84c;
+  --limintso-ink:#51483d;
+  --limintso-paper:#f5f3ef;
+  background:#f4f2ee !important;
+  color:#51483d;
+}
+.limintso-signature.variant-premium-emerald .limintso-header{
+  background:rgba(255,255,255,.96);
+  border-bottom-color:rgba(201,168,76,.24);
+}
+.limintso-signature.variant-premium-emerald .limintso-mark{
+  width:30px;height:30px;
+  background:#fbfaf7;
+  box-shadow:0 4px 16px rgba(80,68,50,.08);
+}
+.limintso-signature.variant-premium-emerald .limintso-section{
+  width:min(100%,430px);
+  padding:56px 16px;
+}
+.limintso-signature.variant-premium-emerald .limintso-cover{
+  padding-top:18px;
+  padding-bottom:12px;
+}
+.limintso-signature.variant-premium-emerald .limintso-cover-card{
+  min-height:min(82svh,760px);
+  border-radius:25px;
+  border-color:rgba(201,168,76,.34);
+  box-shadow:0 24px 65px rgba(63,52,38,.14);
+}
+.limintso-signature.variant-premium-emerald .limintso-cover-card h1{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-style:italic;
+  font-weight:400;
+}
+.limintso-signature.variant-premium-emerald .limintso-cover-card::after{
+  background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.08) 38%,rgba(0,0,0,.78));
+}
+.limintso-signature.variant-premium-emerald .limintso-paper-card{
+  background:#fff;
+  border-block-color:rgba(201,168,76,.2);
+  box-shadow:0 14px 40px rgba(60,50,37,.045);
+}
+.limintso-signature.variant-premium-emerald .limintso-seal{
+  background:#fff;
+  box-shadow:0 8px 25px rgba(60,50,37,.08);
+}
+.limintso-signature.variant-premium-emerald .limintso-person-card{
+  border-radius:22px;
+  background:#fff;
+}
+.limintso-signature.variant-premium-emerald .limintso-person-photo{
+  height:330px;
+}
+.limintso-signature.variant-premium-emerald .limintso-dark-card{
+  background:#b89a55;
+  color:#fff;
+}
+.limintso-signature.variant-premium-emerald .limintso-dark-card .limintso-kicker{
+  color:#fff1c8;
+}
+.limintso-signature.variant-premium-emerald .limintso-schedule-card,
+.limintso-signature.variant-premium-emerald .limintso-location-card{
+  border-radius:18px;
+  background:#fff;
+}
+.limintso-signature.variant-premium-emerald .limintso-gallery-item{
+  border-radius:17px;
+}
+.limintso-signature.variant-premium-emerald .limintso-bottom-nav{
+  border-color:rgba(201,168,76,.28);
+  background:rgba(255,255,255,.94);
+  box-shadow:0 16px 48px rgba(50,42,31,.16);
+}
+.limintso-signature.variant-premium-emerald .limintso-bottom-nav a{
+  color:#776c5e;
+}
+.limintso-signature.variant-premium-emerald .limintso-bottom-nav a:first-child,
+.limintso-signature.variant-premium-emerald .limintso-bottom-nav a:hover{
+  color:#8f7540;
+  background:rgba(201,168,76,.1);
+}
+.limintso-signature .limintso-cover-media{position:absolute}
+.limintso-play-badge{
+  position:absolute;
+  left:50%;top:50%;
+  width:48px;height:48px;
+  transform:translate(-50%,-50%);
+  display:grid;place-items:center;
+  padding-left:2px;
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:50%;
+  background:rgba(34,30,25,.32);
+  color:#fff;
+  font-size:13px;
+  backdrop-filter:blur(8px);
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+  animation:limintso-play-pulse 2.2s ease-in-out infinite;
+}
+@keyframes limintso-play-pulse{
+  0%,100%{box-shadow:0 10px 28px rgba(0,0,0,.22),0 0 0 0 rgba(255,255,255,.18)}
+  50%{box-shadow:0 10px 28px rgba(0,0,0,.22),0 0 0 9px rgba(255,255,255,0)}
+}
+.limintso-signature.variant-black{--limintso-gold:#d7b56d;background:#111;color:#eee8df}
+.limintso-signature.variant-black .limintso-header{background:rgba(17,17,17,.94);color:#eee8df}
+.limintso-signature.variant-black .limintso-paper-card,.limintso-signature.variant-black .limintso-person-card,.limintso-signature.variant-black .limintso-location-card{background:#181716;color:#eee8df;border-color:rgba(215,181,109,.18)}
+.limintso-signature.variant-sapphire{--limintso-gold:#b7c9e6;background:#edf2f7}
+.limintso-signature.variant-sapphire .limintso-header{background:rgba(245,249,253,.95)}
+.limintso-signature.variant-forest{--limintso-gold:#c9a84c;background:#edf0ea}
+.limintso-signature.variant-forest .limintso-header{background:rgba(247,249,245,.95)}
+.limintso-signature.variant-rose{--limintso-gold:#b8878d;background:#f5eeed}
+.limintso-signature.variant-rose .limintso-header{background:rgba(252,247,247,.95)}
+.limintso-signature.variant-mozambique{--limintso-gold:#c9a84c;background:#eee9df}
+.limintso-signature.variant-mozambique .limintso-dark-card{background:#5b4935}
+@media(max-width:640px){
+  .limintso-signature.variant-premium-emerald .limintso-section{padding:50px 16px}
+  .limintso-signature.variant-premium-emerald .limintso-cover-card{min-height:78svh;border-radius:22px}
+}
