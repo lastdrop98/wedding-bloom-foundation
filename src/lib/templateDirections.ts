@@ -145,6 +145,55 @@ const DIRECTIONS: Array<{ match: RegExp; direction: TemplateDirection }> = [
 ];
 
 const TEMPLATE_DIRECTION_OVERRIDES: Record<string, Partial<TemplateDirection>> = {
+  "ceremony-editorial": {
+    structure: "Capa + boas-vindas + bênção/famílias + casal + cerimónia + programa + local + RSVP + felicitações",
+    design: "Editorial cerimonial com eixo tipográfico e cartões de informação bem separados",
+    appearance: "Papel marfim, fotografia protagonista e detalhes de impressão fina",
+    typography: "Serif editorial + sans de informação",
+    palette: "Marfim, carvão, taupe e bronze",
+    motifs: "Monograma, filetes, números de capítulo e separadores",
+  },
+  "portrait-ceremony": {
+    structure: "Retrato de abertura + mensagem + casal + cerimónia + agenda + galeria + RSVP + guestbook",
+    design: "Convite fotográfico vertical com foco no retrato e leitura em camadas",
+    appearance: "Papel fotográfico suave, molduras discretas e muito espaço negativo",
+    typography: "Serif elegante + sans leve",
+    palette: "Marfim, areia, preto suave e champagne",
+    motifs: "Moldura de retrato, legendas e pequenos marcadores",
+  },
+  "garden-letter": {
+    structure: "Abertura + carta + casal + história + memórias + programa + local + RSVP + mensagens",
+    design: "Jardim editorial com sensação de carta manuscrita e fotografias em camadas",
+    appearance: "Aguarela, papel texturizado e folhagem delicada",
+    typography: "Serif romântica + script pontual + sans",
+    palette: "Pérola, blush, sálvia e rosa antigo",
+    motifs: "Ramos, manchas de tinta, papel dobrado e molduras orgânicas",
+  },
+  "cinema-love-story": {
+    structure: "Capa em vídeo + título de filme + história em capítulos + momentos + agenda + RSVP + créditos",
+    design: "Narrativa cinematográfica com transições, números de cena e fotografia panorâmica",
+    appearance: "Carvão, preto profundo, marfim e bronze",
+    typography: "Serif cinematográfica + sans condensada",
+    palette: "Preto, grafite, marfim e dourado queimado",
+    motifs: "Frames, timeline, capítulos, créditos e coordenadas",
+  },
+  "heritage-ceremony": {
+    structure: "Capa + bênção + famílias + casal + ritual + programa + local + dress code + RSVP",
+    design: "Cerimonial africano contemporâneo com módulos familiares e grafismos",
+    appearance: "Textura têxtil, terra, bronze e fotografia de família",
+    typography: "Serif forte + sans geométrica",
+    palette: "Terracota, areia, verde profundo e bronze",
+    motifs: "Padrões têxteis, selos, linhas de costura e módulos",
+  },
+  "pearl-ceremony": {
+    structure: "Capa pérola + boas-vindas + palavra + casal + galeria + programa + RSVP + felicitações",
+    design: "Luxo luminoso com molduras orgânicas e blocos editoriais",
+    appearance: "Pérola, blush, vidro fosco e fotografia suave",
+    typography: "Serif refinada + sans microtipográfica",
+    palette: "Pérola, champagne, blush e sálvia",
+    motifs: "Anéis, filetes, molduras suaves e pequenos marcadores",
+  },
+
   "editorial-cinema": {
       structure: "Capa cinematográfica + palavra + casal + história + agenda + RSVP + créditos",
       design: "Filme editorial com capítulos, cortes fotográficos e final de créditos",
