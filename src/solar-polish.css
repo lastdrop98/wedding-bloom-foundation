@@ -3216,3 +3216,181 @@ main.template-design-premium-emerald .template-hero-content > *:nth-child(4) { a
   color: #0b4d26 !important;
   border-color: #25d366 !important;
 }
+
+
+/* Diamond Signature — reference-driven premium vertical card system. */
+main.template-design-diamond-signature {
+  --diamond-paper:#efefed; --diamond-card:#fff; --diamond-ink:#2f2b27;
+  --diamond-muted:#8b8378; --diamond-gold:#c9a84c; --diamond-line:rgba(63,56,48,.14);
+  width:min(100%,760px); margin-inline:auto; min-height:100svh;
+  background:linear-gradient(180deg,#f7f7f5,var(--diamond-paper));
+  color:var(--diamond-ink); box-shadow:0 0 0 1px rgba(0,0,0,.035),0 30px 90px rgba(42,36,29,.10);
+  isolation:isolate;
+}
+main.template-design-diamond-signature .template-hero {
+  min-height:100svh; padding:1.25rem 1rem 6.5rem; background:var(--diamond-card);
+  justify-content:flex-start;
+}
+main.template-design-diamond-signature .template-hero > .absolute:first-child {
+  inset:5.2rem 1rem auto; height:47%; border-radius:18px; overflow:hidden;
+  box-shadow:0 18px 44px rgba(40,34,28,.13);
+}
+main.template-design-diamond-signature .template-hero > .absolute:first-child .template-hero-veil {
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(24,21,18,.38));
+}
+main.template-design-diamond-signature .template-hero::before {
+  content:"SOLAR ECLIPSE"; position:absolute; top:1rem; left:1rem; right:1rem; height:2.9rem;
+  display:flex; align-items:center; justify-content:center; z-index:4;
+  border-bottom:1px solid var(--diamond-line); background:rgba(255,255,255,.94);
+  color:var(--diamond-muted); font:600 8px/1 Inter,ui-sans-serif,sans-serif; letter-spacing:.26em;
+}
+main.template-design-diamond-signature .template-hero-content {
+  width:min(100%,590px); padding-top:54vh; text-align:center; z-index:3;
+}
+main.template-design-diamond-signature .template-hero h1,
+main.template-design-diamond-signature h2,
+main.template-design-diamond-signature h3,
+main.template-design-diamond-signature h4 {
+  font-family:"Cormorant Garamond",Georgia,serif; font-weight:500; letter-spacing:-.03em;
+}
+main.template-design-diamond-signature .template-hero h1 {
+  max-width:11ch; margin-inline:auto; font-size:clamp(3rem,12vw,5.6rem); line-height:.86; color:var(--diamond-ink);
+}
+main.template-design-diamond-signature .solar-eclipse-brand,
+main.template-design-diamond-signature .template-hero .eyebrow { color:var(--diamond-gold); }
+main.template-design-diamond-signature .template-hero .solar-eclipse-brand { transform:scale(.82); transform-origin:center; }
+main.template-design-diamond-signature > section[data-template-section]:not([data-template-section="hero"]) {
+  width:min(calc(100% - 1.5rem),640px); margin-inline:auto; margin-block:.75rem; padding-block:2.8rem;
+  border:1px solid var(--diamond-line); border-radius:22px; background:var(--diamond-card);
+  box-shadow:0 12px 34px rgba(47,43,39,.065);
+}
+main.template-design-diamond-signature > section[data-template-section="welcome"],
+main.template-design-diamond-signature > section[data-template-section="word"] { background:#f8f8f6; }
+main.template-design-diamond-signature > section[data-template-section="story"],
+main.template-design-diamond-signature > section[data-template-section="moments"] { background:#f3f3f1; }
+main.template-design-diamond-signature > section[data-template-section="countdown"] {
+  background:#2f2b27; color:#fff; border-color:#2f2b27;
+}
+main.template-design-diamond-signature .card-elegant {
+  background:#fff; border:1px solid var(--diamond-line); border-radius:16px;
+  box-shadow:0 10px 28px rgba(47,43,39,.055);
+}
+main.template-design-diamond-signature .eyebrow { color:var(--diamond-gold); letter-spacing:.22em; }
+main.template-design-diamond-signature .draw-rule { width:48px; height:1px; background:var(--diamond-gold); }
+main.template-design-diamond-signature .template-hero-accent-diamond { color:var(--diamond-gold); }
+main.template-design-diamond-signature [data-template-section="couple"] img,
+main.template-design-diamond-signature [data-template-section="gallery"] img,
+main.template-design-diamond-signature [data-template-section="story"] img {
+  border-radius:14px; box-shadow:0 12px 30px rgba(47,43,39,.10);
+}
+main.template-design-diamond-signature [data-template-section="schedule"] li {
+  border:1px solid var(--diamond-line); border-radius:13px; background:#fff;
+}
+main.template-design-diamond-signature .invite-quick-actions {
+  left:50%; right:auto; transform:translateX(-50%); bottom:10px; width:min(96%,610px);
+  padding:6px; border:1px solid rgba(201,168,76,.48); border-radius:18px 18px 24px 24px;
+  background:linear-gradient(90deg,#a88743,#c9a84c,#a88743); box-shadow:0 18px 42px rgba(55,45,31,.22);
+  backdrop-filter:blur(14px); z-index:50;
+}
+main.template-design-diamond-signature .invite-quick-actions button {
+  min-height:42px; border:1px solid transparent; border-radius:13px; background:transparent; color:#fff;
+  transition:transform .2s ease,background .2s ease,border-color .2s ease;
+}
+main.template-design-diamond-signature .invite-quick-actions button:hover,
+main.template-design-diamond-signature .invite-quick-actions button:focus-visible {
+  border-color:rgba(255,255,255,.45); background:rgba(255,255,255,.14); transform:translateY(-1px);
+}
+main.template-design-diamond-signature .invite-quick-actions button:active { transform:scale(.96); }
+main.template-design-diamond-signature [data-template-section="rsvp"] button,
+main.template-design-diamond-signature [data-template-section="gifts"] button,
+main.template-design-diamond-signature [data-template-section="guestbook"] button {
+  border:1px solid var(--diamond-gold); border-radius:999px; background:var(--diamond-gold); color:#fff;
+  box-shadow:0 8px 24px rgba(201,168,76,.20);
+}
+main.template-design-diamond-signature .template-hero-content > * {
+  animation:diamond-reveal .75s cubic-bezier(.2,.7,.2,1) both;
+}
+main.template-design-diamond-signature .template-hero-content > *:nth-child(2){animation-delay:.08s}
+main.template-design-diamond-signature .template-hero-content > *:nth-child(3){animation-delay:.16s}
+main.template-design-diamond-signature .template-hero-content > *:nth-child(4){animation-delay:.24s}
+@keyframes diamond-reveal { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+@media (prefers-reduced-motion:reduce) {
+  main.template-design-diamond-signature .template-hero-content > * { animation:none; }
+}
+@media (max-width:640px) {
+  main.template-design-diamond-signature { width:100%; box-shadow:none; }
+  main.template-design-diamond-signature .template-hero { padding-inline:.7rem; }
+  main.template-design-diamond-signature .template-hero > .absolute:first-child { inset:5.1rem .7rem auto; height:45%; }
+  main.template-design-diamond-signature .template-hero-content { padding-top:52vh; }
+  main.template-design-diamond-signature > section[data-template-section]:not([data-template-section="hero"]) {
+    width:calc(100% - .9rem); border-radius:18px;
+  }
+}
+.template-flow-diamond > [data-template-section="welcome"]{order:10!important}
+.template-flow-diamond > [data-template-section="word"]{order:11!important}
+.template-flow-diamond > [data-template-section="couple"]{order:12!important}
+.template-flow-diamond > [data-template-section="party"]{order:13!important}
+.template-flow-diamond > [data-template-section="story"]{order:14!important}
+.template-flow-diamond > [data-template-section="moments"]{order:15!important}
+.template-flow-diamond > [data-template-section="gallery"]{order:16!important}
+.template-flow-diamond > [data-template-section="schedule"]{order:17!important}
+.template-flow-diamond > [data-template-section="location"]{order:18!important}
+.template-flow-diamond > [data-template-section="countdown"]{order:19!important}
+.template-flow-diamond > [data-template-section="rsvp"]{order:20!important}
+.template-flow-diamond > [data-template-section="guestbook"]{order:21!important}
+.template-flow-diamond > [data-template-section="gifts"]{order:22!important}
+.template-flow-diamond > [data-template-section="contacts"]{order:23!important}
+.template-flow-diamond > [data-template-section="closing"]{order:24!important}
+
+/* Replace generic AI-looking CTA ornament with a simple editorial rule. */
+.solar-cta-rule{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto;width:112px;height:10px;opacity:.8}
+.solar-cta-rule span{display:block;width:32px;height:1px;background:#c9a84c}
+.solar-cta-rule b{display:block;width:7px;height:7px;border:1px solid #c9a84c;border-radius:50%}
+.solar-landing section.bg-black :is(.star,.sparkle,.spark,.stars,.sparkles){display:none!important}
+
+/* Homepage carousel: larger, clearer, product-showcase treatment. */
+.solar-home-carousel{scroll-margin-top:5rem}
+.solar-home-carousel .group{transition:transform .55s cubic-bezier(.2,.7,.2,1),box-shadow .55s ease}
+.solar-home-carousel .group:hover{box-shadow:0 30px 80px rgba(0,0,0,.42)}
+.solar-home-carousel img{object-position:center}
+@media (min-width:900px){.solar-home-carousel .group img{height:560px}}
+@media (max-width:640px){.solar-home-carousel .group img{height:520px}}
+
+/* Admin light mode: never wash out cards, artwork, buttons or file controls. */
+.solar-admin-shell.admin-theme-light .admin-workspace{
+  --admin-card:#fff; --admin-surface:#f5f5f3; --admin-border:rgba(29,29,31,.14);
+  background:#f5f5f3!important; color:#1d1d1f!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.rounded-xl,.rounded-2xl,.rounded-3xl)[class*="border"]{
+  background:var(--admin-card)!important; border-color:var(--admin-border)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-background,.bg-background\/40,.bg-background\/60,.bg-muted\/40,.bg-muted\/50){
+  background:var(--admin-card)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input,textarea,select){
+  background:#fff!important; color:#1d1d1f!important; border-color:var(--admin-border)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace input[type="file"]{
+  background:#fff!important; color:#1d1d1f!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace input[type="file"]::file-selector-button{
+  background:#1d1d1f!important; color:#fff!important; border:0; border-radius:8px; padding:.5rem .8rem; margin-right:.75rem;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace img,
+.solar-admin-shell.admin-theme-light .admin-workspace video{
+  opacity:1!important; filter:none!important; visibility:visible!important; mix-blend-mode:normal!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker img{display:block!important;opacity:1!important}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker > div{
+  background:#fff!important; color:#1d1d1f!important; border-color:var(--admin-border)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker button{
+  color:#1d1d1f!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker button [class*="text-white"]{color:#fff!important}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button,[role="button"])[class*="bg-primary"]{
+  background:#a88332!important; color:#fff!important; border-color:#a88332!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button,[role="button"])[class*="variant-outline"]{
+  background:#fff!important; color:#1d1d1f!important;
+}
