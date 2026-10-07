@@ -177,7 +177,7 @@ function TemplatePreviewPage() {
       <div className="h-5 w-full border-y border-[#d0a85a]/70 bg-[repeating-linear-gradient(45deg,transparent_0_7px,#d0a85a_7px_8px,transparent_8px_14px)]" />
       <div>
         <p className="text-[8px] uppercase tracking-[.3em] text-[#e0bf7a]">União · Família · Tradição</p>
-        <div className="mx-auto mt-7 size-14 rounded-full border border-[#d0a85a] p-3">✳</div>
+        <div className="mx-auto mt-7 size-14 rounded-full border border-[#d0a85a] p-3">03</div>
         <h2 className="template-preview-names mt-7 text-4xl">Ana & Miguel</h2>
       </div>
       <p className="text-[9px] uppercase tracking-[.24em] text-white/55">Maputo · Moçambique</p>
