@@ -88,9 +88,9 @@ function HomePage() {
             <span>Solar Eclipse</span>
           </a>
           <nav className="hidden items-center gap-7 text-xs text-black/55 md:flex">
-            <a href="#modelos" className="rounded-full border-2 border-black/20 bg-white px-4 py-2.5 font-medium shadow-[inset_0_0_0_1px_rgba(255,255,255,.7),0_2px_10px_rgba(0,0,0,.05)] transition hover:border-black/45 hover:bg-white hover:shadow-md">Modelos</a>
-            <a href="#experiencia" className="rounded-full border-2 border-black/10 bg-white/70 px-4 py-2.5 font-medium shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/30 hover:bg-white hover:shadow-sm">Experiência</a>
-            <a href="#como-funciona" className="rounded-full border-2 border-black/15 bg-white/80 px-4 py-2.5 shadow-[inset_0_0_0_1px_rgba(255,255,255,.8)] transition hover:border-black/35 hover:bg-white hover:shadow-sm">Como funciona</a>
+            <a href="#modelos" className="rounded-full border-2 border-black/35 bg-white px-4 py-2.5 font-medium shadow-[inset_0_0_0_1px_rgba(255,255,255,.7),0_2px_10px_rgba(0,0,0,.05)] transition hover:border-black/45 hover:bg-white hover:shadow-md">Modelos</a>
+            <a href="#experiencia" className="rounded-full border-2 border-black/25 bg-white px-4 py-2.5 font-medium shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/30 hover:bg-white hover:shadow-sm">Experiência</a>
+            <a href="#como-funciona" className="rounded-full border-2 border-black/30 bg-white px-4 py-2.5 shadow-[inset_0_0_0_1px_rgba(255,255,255,.8)] transition hover:border-black/35 hover:bg-white hover:shadow-sm">Como funciona</a>
             <a
               href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
               onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }}
@@ -344,7 +344,7 @@ function HomePage() {
         <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-[#C9A84C]/35 bg-[#C9A84C]/[.06] px-4 py-2 text-[9px] font-semibold uppercase tracking-[.24em] text-[#C9A84C]">
           Solar Eclipse · 2026
         </div>
-        <div className="solar-cta-rule" aria-hidden="true"><span /><span /></div>
+        <div className="mx-auto mt-6 h-px w-16 bg-[#C9A84C]/60" aria-hidden="true" />
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-neutral-300">
           Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.
