@@ -124,13 +124,13 @@ function HomePage() {
               Convites digitais premium com fotografia, música, confirmação de convidados, presentes e versão para impressão.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <a href="/modelos" className="inline-flex items-center gap-2 rounded-full bg-black px-8 py-4 text-white transition hover:bg-neutral-800">
+              <a href="/modelos" className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-8 py-4 text-white shadow-[0_8px_24px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-800">
                 Ver modelos <ArrowRight className="size-4" />
               </a>
               <a
                 href={whatsappUrl("Olá! Quero criar o meu convite de casamento com a Solar Eclipse.")}
                 onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero criar o meu convite de casamento com a Solar Eclipse."); }}
-                className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C] px-8 py-4 transition hover:bg-[#C9A84C]/10"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-[#C9A84C] bg-white/70 px-8 py-4 transition hover:-translate-y-px hover:bg-[#C9A84C]/10"
               >
                 Criar meu convite <MessageCircle className="size-4" />
               </a>
@@ -305,7 +305,7 @@ function HomePage() {
 
       <section id="como-funciona" className="scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-5xl text-center">
-          <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-12 bg-current/45" /><span className="size-2 rounded-full border border-current bg-current/20" /><span className="h-px w-12 bg-current/45" /></div>
+          <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-14 bg-current/45" /><span className="h-1.5 w-10 rounded-full bg-current/65" /><span className="h-px w-14 bg-current/45" /></div>
           <h2 className="mt-6 text-4xl font-light">Como funciona?</h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[["01", "Escolha o modelo"], ["02", "Envie os dados e fale connosco"], ["03", "Receba link digital + PDF"]].map(([number, step]) => (
@@ -322,7 +322,7 @@ function HomePage() {
       </section>
 
       <section className="bg-black px-6 py-24 text-center text-white">
-        <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-16 bg-current/70" /><span className="inline-flex size-6 items-center justify-center rounded-full border border-current text-[7px] font-semibold tracking-[.08em]">SE</span><span className="h-px w-16 bg-current/70" /></div>
+        <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-16 bg-current/70" /><span className="h-1.5 w-12 rounded-full bg-current/80" /><span className="h-px w-16 bg-current/70" /></div>
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-neutral-300">
           Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.
