@@ -2521,6 +2521,51 @@ main.template-base-signature { isolation: isolate; }
 .solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-white/"] { color: #1d1d1f; }
 .solar-admin-shell.admin-theme-light .admin-workspace button:not([disabled]) { text-shadow: none; }
 
+/* Admin template picker: preserve real artwork and card contrast in light mode. */
+.solar-admin-shell.admin-theme-light .template-picker {
+  color: #1d1d1f;
+}
+.solar-admin-shell.admin-theme-light .template-picker > div:first-child {
+  background: #fff !important;
+  border-color: rgba(0,0,0,.1) !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker button {
+  color: #1d1d1f;
+}
+.solar-admin-shell.admin-theme-light .template-picker .border-border {
+  border-color: rgba(0,0,0,.12) !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker .bg-background,
+.solar-admin-shell.admin-theme-light .template-picker [class*="bg-background/"] {
+  background: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker [class*="text-muted-foreground"] {
+  color: rgba(29,29,31,.62) !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker [class*="text-primary"] {
+  color: #8a6b22 !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker .bg-primary {
+  background: #9a7a2d !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker img {
+  opacity: .82 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  visibility: visible !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker .group:hover img {
+  opacity: .95 !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker > div:last-child > button {
+  background: #fff;
+}
+.solar-admin-shell.admin-theme-light .template-picker > div:last-child > button:hover {
+  background: #fbfaf7;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+}
+
 @media (max-width: 700px) {
   main.template-base-limintso .invite-carousel { padding: 8px; border-radius: 22px; }
   main.template-base-limintso .card-elegant { border-radius: 20px; }
