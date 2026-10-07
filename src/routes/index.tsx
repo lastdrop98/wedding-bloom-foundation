@@ -36,8 +36,8 @@ const features = [
   { icon: QrCode, title: "Presentes Digitais", text: "Receba contribuições através de QR Code." },
 ];
 
-const HOME_FEATURED_VALUES = ["editorial-cinema", "ivory-portrait", "modern-olive", "rose-atelier", "mozambique-luxe", "sunset-destination"];
-const HOME_CAROUSEL_VALUES = ["editorial-cinema", "ivory-portrait", "modern-olive", "rose-atelier", "mozambique-luxe", "sunset-destination", "black-paper", "pearl-editorial"];
+const HOME_FEATURED_VALUES = ["ceremony-editorial", "portrait-ceremony", "garden-letter", "cinema-love-story", "heritage-ceremony", "pearl-ceremony"];
+const HOME_CAROUSEL_VALUES = ["ceremony-editorial", "portrait-ceremony", "garden-letter", "cinema-love-story", "heritage-ceremony", "pearl-ceremony", "editorial-cinema", "mozambique-luxe"];
 
 const HOME_TEMPLATE_IMAGES = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85",
