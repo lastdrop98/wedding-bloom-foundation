@@ -78,6 +78,12 @@ const FAMILY_ACCENTS: Record<string, string> = {
   "Cinemático / História": "LOVE STORY",
   "Herança / Cerimonial": "HERITAGE",
   "Pérola / Editorial": "PEARL",
+  "Signature Cards / Romantic": "SIGNATURE",
+  "Signature Cards / Minimal": "SIGNATURE",
+  "Signature Cards / Destination": "SIGNATURE",
+  "Signature Cards / Noir": "SIGNATURE",
+  "Signature Cards / Botanical": "SIGNATURE",
+  "Signature Cards / Africano": "SIGNATURE",
 };
 
 export function TemplatePicker({
@@ -175,7 +181,22 @@ export function TemplatePicker({
                 />
                 <div className="absolute inset-0 bg-black/35" />
                 {item.value === "film-noir-motion" && <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,.35)_55%,rgba(0,0,0,.9)_100%)]"><span className="absolute left-3 top-3 border border-white/30 px-2 py-1 text-[8px] tracking-[.2em] text-white/60">FILM 01</span><span className="absolute bottom-3 left-3 right-3 h-px bg-white/20" /></div>}
-{item.value === "limintso-emerald" && (
+{item.value.startsWith("limintso-") && item.value !== "limintso-emerald" && (
+  <div className="absolute inset-0 bg-[#f4efe7]">
+    <div className="absolute inset-x-4 top-3 h-5 border-b border-[#c9ab68]/45" />
+    <div className="absolute inset-x-5 top-8 bottom-3 rounded-xl border border-[#c9ab68]/35 bg-white shadow-sm" />
+    <div className="absolute inset-x-9 top-12 bottom-7 overflow-hidden rounded-lg bg-gradient-to-b from-[#b98a6a] to-[#efe4d5]">
+      <div className="absolute inset-x-0 top-0 h-1/2 bg-black/10" />
+      <div className="absolute inset-x-0 bottom-4 text-center">
+        <span className="block text-[5px] uppercase tracking-[.2em] text-[#8f7540]">Signature</span>
+        <strong className="block font-serif text-lg text-[#5c4d35]">A&amp;M</strong>
+      </div>
+    </div>
+    <span className="absolute right-7 top-4 rounded-full bg-[#c9ab68] px-2 py-1 text-[5px] font-semibold uppercase tracking-[.12em] text-white">Card</span>
+  </div>
+)}
+
+                {item.value === "limintso-emerald" && (
   <div className="absolute inset-0 bg-[#f4efe7]">
     <div className="absolute inset-x-4 top-3 h-5 border-b border-[#c9ab68]/45" />
     <div className="absolute inset-x-5 top-8 bottom-3 rounded-xl border border-[#c9ab68]/35 bg-white shadow-sm" />
