@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Check, LayoutGrid, Search } from "lucide-react";
 
-import { TEMPLATE_OPTIONS, templateVisualClass, type TemplateDefinition } from "@/lib/templates";
+import { getTemplateVisualFamily, TEMPLATE_OPTIONS, templateVisualClass, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
 
 const SWATCHES: Record<TemplateDefinition["tone"], string> = {
@@ -22,6 +22,14 @@ const PREVIEW_IMAGES: Record<string, string> = {
   botanical: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80",
   pearl: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80",
   heritage: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=900&q=80",
+  cinema: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=80",
+  portrait: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80",
+  olive: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80",
+  atelier: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80",
+  mozambique: "https://images.unsplash.com/photo-1534791547706-9b3f7f6c8a4a?auto=format&fit=crop&w=900&q=80",
+  sunset: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+  paper: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=80",
+  "pearl-editorial": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80",
 };
 
 const FAMILY_ACCENTS: Record<string, string> = {
@@ -154,7 +162,7 @@ export function TemplatePicker({
                 className={`relative h-36 overflow-hidden ${templateVisualClass(item.value)} bg-gradient-to-br ${SWATCHES[item.tone]}`}
               >
                 <img
-                  src={PREVIEW_IMAGES[item.value.includes("african") || item.value.includes("xiguiane") || item.value.includes("capulana") ? "heritage" : item.value.includes("cinematic") || item.value.includes("film") ? "cinematic" : item.value.includes("garden") || item.value.includes("floral") || item.value.includes("aquarela") ? "botanical" : item.value.includes("pearl") ? "pearl" : item.value.includes("editorial") || item.value.includes("minimalist") ? "editorial" : "classic"]}
+                  src={PREVIEW_IMAGES[getTemplateVisualFamily(item.value)] ?? PREVIEW_IMAGES.classic}
                   alt=""
                   aria-hidden="true"
                   className="absolute inset-0 size-full object-cover opacity-55 transition duration-500 group-hover:scale-105 group-hover:opacity-70"
