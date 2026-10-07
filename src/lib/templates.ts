@@ -364,6 +364,54 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
     implemented: true,
   },
   {
+    value: "ceremony-editorial",
+    label: "Ceremony Editorial",
+    family: "Cerimonial / Editorial",
+    tone: "sand",
+    description: "Convite de cerimónia com abertura tipográfica, famílias, programa e RSVP.",
+    implemented: true,
+  },
+  {
+    value: "portrait-ceremony",
+    label: "Portrait Ceremony",
+    family: "Fotográfico / Cerimonial",
+    tone: "sand",
+    description: "Retrato protagonista, mensagem de abertura, cerimónia, agenda e livro de recados.",
+    implemented: true,
+  },
+  {
+    value: "garden-letter",
+    label: "Garden Letter",
+    family: "Botânico / Carta",
+    tone: "rose",
+    description: "Uma experiência botânica construída como carta, memória e celebração.",
+    implemented: true,
+  },
+  {
+    value: "cinema-love-story",
+    label: "Cinema Love Story",
+    family: "Cinemático / História",
+    tone: "midnight",
+    description: "Abertura cinematográfica, capítulos da história, galeria, agenda e final de filme.",
+    implemented: true,
+  },
+  {
+    value: "heritage-ceremony",
+    label: "Heritage Ceremony",
+    family: "Herança / Cerimonial",
+    tone: "xiguiane",
+    description: "Família, bênção, ritual, programa e fotografia numa linguagem contemporânea.",
+    implemented: true,
+  },
+  {
+    value: "pearl-ceremony",
+    label: "Pearl Ceremony",
+    family: "Pérola / Editorial",
+    tone: "rose",
+    description: "Convite luminoso com molduras suaves, mensagem, casal, agenda e RSVP.",
+    implemented: true,
+  },
+  {
     value: "aquarela-botanica",
     label: "Aguarela Botânica",
     family: "Floral / Garden",
@@ -484,8 +532,16 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   const template = getTemplateDefinition(value);
   const source = `${template.value} ${template.label} ${template.family}`.toLowerCase();
 
-  if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue|editorial-cinema/.test(source)) return "cinematic";
-  if (/editorial|minimalist|minimalista|sapphire-editorial|black-paper/.test(source)) return "editorial";
+  if (/cinema-love-story|editorial-cinema/.test(source)) return "cinema";
+  if (/portrait-ceremony|ivory-portrait|classic-ivory/.test(source)) return "portrait";
+  if (/modern-olive|emerald-elegante/.test(source)) return "olive";
+  if (/rose-atelier/.test(source)) return "atelier";
+  if (/mozambique-luxe/.test(source)) return "mozambique";
+  if (/sunset-destination|sicilian-terracotta|tropical-sunset/.test(source)) return "sunset";
+  if (/black-paper/.test(source)) return "paper";
+  if (/pearl-ceremony|pearl-editorial/.test(source)) return "pearl-editorial";
+  if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue/.test(source)) return "cinematic";
+  if (/editorial|minimalist|minimalista|sapphire-editorial/.test(source)) return "editorial";
   if (/aquarela|garden|botanical|floral|romantic|boho|tropical/.test(source)) {
     if (/pearl|floral-pearl|pearl-garden/.test(source)) return "pearl";
     return "botanical";
