@@ -829,3 +829,221 @@ main[class*="template-flow-"] .vine-run {
   background: #1b1b1b !important;
   border-color: rgba(255,255,255,.12) !important;
 }
+
+
+/* Signature template systems — exact model values get their own art direction.
+   These rules sit above the shared family styles so the selected model is
+   recognisable even when the couple has not uploaded media yet. */
+
+main.template-design-film-noir-motion {
+  background: #080808;
+  color: #f4efe6;
+}
+main.template-design-film-noir-motion .template-hero {
+  min-height: 100svh;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: clamp(5rem, 10vw, 8rem);
+  text-align: left;
+}
+main.template-design-film-noir-motion .template-hero-content {
+  width: min(100%, 860px);
+  margin-inline: 0;
+}
+main.template-design-film-noir-motion .template-hero-content h1 {
+  max-width: 8ch;
+  font-size: clamp(3.4rem, 10vw, 7.5rem);
+  line-height: .86;
+  letter-spacing: -.075em;
+  text-transform: uppercase;
+}
+main.template-design-film-noir-motion [data-template-section="story-video"] {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  background: #050505;
+}
+main.template-design-film-noir-motion [data-template-section="schedule"] ol {
+  max-width: 760px;
+  margin-inline: auto;
+}
+main.template-design-film-noir-motion [data-template-section="schedule"] .card-elegant {
+  border-radius: 0;
+  border-left: 2px solid rgba(215,181,109,.72);
+}
+
+main.template-design-editorial-magazine {
+  background: #eeeae2;
+  color: #181715;
+}
+main.template-design-editorial-magazine .template-hero {
+  min-height: 94svh;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: clamp(2rem, 5vw, 5rem);
+  text-align: left;
+  background: #e8e3da;
+}
+main.template-design-editorial-magazine .template-hero-content {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(90px,.28fr) minmax(0,1fr);
+  align-items: end;
+  gap: clamp(1.5rem,5vw,5rem);
+}
+main.template-design-editorial-magazine .template-hero-content h1 {
+  max-width: 8ch;
+  font-size: clamp(4rem, 11vw, 9rem);
+  line-height: .78;
+  letter-spacing: -.09em;
+  color: #171613;
+}
+main.template-design-editorial-magazine .template-hero-content .eyebrow,
+main.template-design-editorial-magazine .solar-eclipse-brand {
+  color: rgba(23,22,19,.64);
+}
+main.template-design-editorial-magazine > [data-template-section] {
+  border-top: 1px solid rgba(23,22,19,.12);
+}
+main.template-design-editorial-magazine [data-template-section="word"],
+main.template-design-editorial-magazine [data-template-section="story"] {
+  text-align: left;
+}
+main.template-design-editorial-magazine [data-template-section="gallery"] .invite-carousel-track {
+  grid-template-columns: 1.5fr .7fr .7fr;
+}
+main.template-design-editorial-magazine [data-template-section="gallery"] .invite-carousel-card:first-child {
+  grid-row: span 2;
+}
+main.template-design-editorial-magazine [data-template-section="rsvp"] .card-elegant {
+  border-radius: 0;
+  border-width: 1px;
+}
+
+main.template-design-pearl-garden {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255,255,255,.9), transparent 24rem),
+    #f6efea;
+  color: #4b3b3a;
+}
+main.template-design-pearl-garden .template-hero {
+  min-height: 94svh;
+  background: #eadbd6;
+}
+main.template-design-pearl-garden .template-hero::before,
+main.template-design-pearl-garden .template-hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+main.template-design-pearl-garden .template-hero::before {
+  inset: 5%;
+  border: 1px solid rgba(184,149,152,.42);
+  border-radius: 46% 54% 58% 42% / 55% 42% 58% 45%;
+}
+main.template-design-pearl-garden .template-hero::after {
+  inset: 10%;
+  border: 1px dashed rgba(184,149,152,.26);
+  border-radius: 54% 46% 42% 58% / 46% 58% 42% 54%;
+}
+main.template-design-pearl-garden .template-hero-content h1 {
+  font-weight: 400;
+  letter-spacing: -.055em;
+}
+main.template-design-pearl-garden [data-template-section] .card-elegant {
+  border-radius: 32px;
+  border-color: rgba(184,149,152,.24);
+  background: rgba(255,255,255,.62);
+}
+main.template-design-pearl-garden [data-template-section="gallery"] .invite-carousel-card {
+  border-radius: 34px;
+  overflow: hidden;
+}
+
+main.template-design-capulana-contemporary {
+  background: #2b211b;
+  color: #f6ead8;
+}
+main.template-design-capulana-contemporary .template-hero {
+  min-height: 96svh;
+  background: #3a2a21;
+}
+main.template-design-capulana-contemporary .template-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 24px, rgba(240,216,170,.55) 24px 26px),
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(240,216,170,.35) 34px 36px);
+  mix-blend-mode: screen;
+}
+main.template-design-capulana-contemporary .template-hero-content {
+  max-width: 980px;
+}
+main.template-design-capulana-contemporary .template-hero-content h1 {
+  max-width: 10ch;
+  font-weight: 500;
+  letter-spacing: -.055em;
+}
+main.template-design-capulana-contemporary [data-template-section="party"],
+main.template-design-capulana-contemporary [data-template-section="moments"] {
+  background: #33251d;
+}
+main.template-design-capulana-contemporary [data-template-section] .card-elegant {
+  border-radius: 10px;
+  border-color: rgba(240,216,170,.2);
+  background: rgba(72,49,37,.64);
+}
+main.template-design-capulana-contemporary [data-template-section="gallery"] .invite-carousel-track {
+  grid-template-columns: .75fr 1.4fr .75fr;
+}
+main.template-design-capulana-contemporary [data-template-section="gallery"] .invite-carousel-card {
+  border-radius: 8px;
+}
+
+main.template-design-celestial-ivory [data-template-section="word"] {
+  max-width: 900px;
+  margin-inline: auto;
+}
+main.template-design-celestial-ivory [data-template-section="story"] .card-elegant {
+  background: rgba(255,255,255,.72);
+}
+main.template-design-celestial-ivory [data-template-section="gallery"] {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(164,123,49,.08) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 60%, rgba(164,123,49,.08) 0 1px, transparent 2px);
+  background-size: 130px 130px, 190px 190px;
+}
+
+main.template-design-coastal-blue [data-template-section="location"] {
+  background: #e5eff1;
+}
+main.template-design-coastal-blue [data-template-section="gallery"] {
+  background: #dbe9eb;
+}
+main.template-design-coastal-blue [data-template-section="location"] .card-elegant {
+  border-radius: 30px 8px 30px 8px;
+}
+main.template-design-coastal-blue [data-template-section="gallery"] .invite-carousel-card {
+  border-radius: 26px 8px 26px 8px;
+}
+
+@media (max-width: 700px) {
+  main.template-design-film-noir-motion .template-hero {
+    padding: 4rem 1.25rem 6rem;
+  }
+  main.template-design-editorial-magazine .template-hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  main.template-design-editorial-magazine .template-hero-content h1 {
+    font-size: clamp(3.6rem, 17vw, 6rem);
+  }
+  main.template-design-capulana-contemporary .template-hero::before {
+    opacity: .11;
+  }
+}
