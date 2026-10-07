@@ -564,6 +564,14 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
     implemented: true,
   },
   {
+    value: "limintso-emerald",
+    label: "Emerald Signature",
+    family: "Editorial / Cerimonial / Luxury",
+    tone: "sand",
+    description: "Convite vertical em cartões, inspirado em experiências de convite premium, com fotografia, bênção, famílias, agenda, RSVP, felicitações e presentes.",
+    implemented: true,
+  },
+  {
     value: "pearl-editorial",
     label: "Pearl Editorial",
     family: "Garden / Luxury",
@@ -631,6 +639,7 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   if (/mozambique-luxe|heritage-ceremony/.test(source)) return source.includes("heritage-ceremony") ? "heritage" : "mozambique";
   if (/sunset-destination|sicilian-terracotta|tropical-sunset/.test(source)) return "sunset";
   if (/black-paper/.test(source)) return "paper";
+  if (/limintso-emerald/.test(source)) return "pearl-editorial";
   if (/pearl-ceremony|pearl-editorial/.test(source)) return "pearl-editorial";
   if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue/.test(source)) return "cinematic";
   if (/editorial|minimalist|minimalista|sapphire-editorial/.test(source)) return "editorial";
