@@ -2965,3 +2965,254 @@ main[class*="template-"] :is(.star,.sparkle,.spark,.stars,.sparkles) {
   color: #1d1d1f !important;
   background: #fff !important;
 }
+
+
+/* Premium Emerald — supplied reference: vertical card invitation system. */
+main.template-design-premium-emerald {
+  --pe-paper: #f4efe7;
+  --pe-card: #ffffff;
+  --pe-ink: #403a33;
+  --pe-muted: #8b8175;
+  --pe-gold: #c9a84c;
+  --pe-line: rgba(201,168,76,.28);
+  background: var(--pe-paper);
+  color: var(--pe-ink);
+  isolation: isolate;
+}
+main.template-design-premium-emerald .template-hero {
+  min-height: 100svh;
+  padding: 3.5rem 1rem 6.75rem;
+  background: var(--pe-paper);
+}
+main.template-design-premium-emerald .template-hero > .absolute:first-child {
+  inset: 12% 5% auto;
+  height: 48%;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(55,45,31,.14);
+}
+main.template-design-premium-emerald .template-hero > .absolute:first-child .template-hero-veil {
+  background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.42));
+}
+main.template-design-premium-emerald .template-hero-content {
+  width: min(100%, 520px);
+  padding-top: 28vh;
+  text-align: center;
+}
+main.template-design-premium-emerald .template-hero h1,
+main.template-design-premium-emerald h2,
+main.template-design-premium-emerald h3,
+main.template-design-premium-emerald h4 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+main.template-design-premium-emerald .template-hero h1 {
+  max-width: 11ch;
+  margin-inline: auto;
+  color: var(--pe-ink);
+  font-size: clamp(3.2rem, 13vw, 6.2rem);
+  line-height: .86;
+}
+main.template-design-premium-emerald .template-hero .solar-eclipse-brand {
+  color: var(--pe-gold);
+}
+main.template-design-premium-emerald > section[data-template-section]:not([data-template-section="hero"]) {
+  padding-block: 3.5rem;
+}
+main.template-design-premium-emerald > section[data-template-section="welcome"],
+main.template-design-premium-emerald > section[data-template-section="word"],
+main.template-design-premium-emerald > section[data-template-section="party"] {
+  background: var(--pe-paper);
+}
+main.template-design-premium-emerald > section[data-template-section="couple"],
+main.template-design-premium-emerald > section[data-template-section="story"],
+main.template-design-premium-emerald > section[data-template-section="gallery"],
+main.template-design-premium-emerald > section[data-template-section="guestbook"] {
+  background: #ebe4d8;
+}
+main.template-design-premium-emerald > section[data-template-section="schedule"],
+main.template-design-premium-emerald > section[data-template-section="location"],
+main.template-design-premium-emerald > section[data-template-section="rsvp"] {
+  background: #fff;
+}
+main.template-design-premium-emerald > section[data-template-section="countdown"] {
+  background: var(--pe-gold);
+  color: #fff;
+}
+main.template-design-premium-emerald > section[data-template-section="gifts"] {
+  background: #e4d8c5;
+}
+main.template-design-premium-emerald .card-elegant {
+  background: var(--pe-card);
+  border: 1px solid var(--pe-line);
+  border-radius: 18px;
+  box-shadow: 0 16px 46px rgba(56,46,31,.08);
+}
+main.template-design-premium-emerald .eyebrow {
+  color: var(--pe-gold);
+  letter-spacing: .22em;
+}
+main.template-design-premium-emerald .draw-rule {
+  width: 52px;
+  height: 1px;
+  background: var(--pe-gold);
+}
+main.template-design-premium-emerald .invite-carousel {
+  border-radius: 18px;
+  background: var(--pe-card);
+  border: 1px solid var(--pe-line);
+}
+main.template-design-premium-emerald .invite-quick-actions {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  bottom: 12px;
+  width: min(96%, 520px);
+  padding: 6px;
+  gap: 2px;
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 18px 18px 26px 26px;
+  background: linear-gradient(90deg,#b38d35,#c9a84c,#b38d35);
+  box-shadow: 0 18px 42px rgba(72,57,31,.22);
+  backdrop-filter: blur(16px);
+}
+main.template-design-premium-emerald .invite-quick-actions button {
+  min-width: 0;
+  min-height: 42px;
+  flex: 1 1 0;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: transparent;
+  color: #fff;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+main.template-design-premium-emerald .invite-quick-actions button:hover,
+main.template-design-premium-emerald .invite-quick-actions button:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.45);
+  background: rgba(255,255,255,.13);
+}
+main.template-design-premium-emerald .invite-quick-actions button:active {
+  transform: translateY(0) scale(.96);
+}
+main.template-design-premium-emerald [data-template-section="rsvp"] button,
+main.template-design-premium-emerald [data-template-section="gifts"] button,
+main.template-design-premium-emerald [data-template-section="guestbook"] button {
+  border: 1px solid var(--pe-gold);
+  border-radius: 999px;
+  background: var(--pe-gold);
+  color: #fff;
+  box-shadow: 0 9px 24px rgba(201,168,76,.22);
+  transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+}
+main.template-design-premium-emerald [data-template-section="rsvp"] button:hover,
+main.template-design-premium-emerald [data-template-section="gifts"] button:hover,
+main.template-design-premium-emerald [data-template-section="guestbook"] button:hover {
+  transform: translateY(-1px);
+  filter: brightness(.96);
+  box-shadow: 0 13px 30px rgba(201,168,76,.28);
+}
+main.template-design-premium-emerald [data-template-section="rsvp"] button:active,
+main.template-design-premium-emerald [data-template-section="gifts"] button:active,
+main.template-design-premium-emerald [data-template-section="guestbook"] button:active {
+  transform: translateY(0) scale(.98);
+}
+main.template-design-premium-emerald [data-template-section="gallery"] img,
+main.template-design-premium-emerald [data-template-section="story"] img {
+  border-radius: 16px;
+  box-shadow: 0 14px 32px rgba(45,36,26,.12);
+}
+main.template-design-premium-emerald [data-template-section="schedule"] li {
+  border: 1px solid var(--pe-line);
+  border-radius: 14px;
+  background: var(--pe-card);
+}
+main.template-design-premium-emerald .template-hero-content > * {
+  animation: premium-emerald-reveal .8s cubic-bezier(.2,.7,.2,1) both;
+}
+main.template-design-premium-emerald .template-hero-content > *:nth-child(2) { animation-delay: .08s; }
+main.template-design-premium-emerald .template-hero-content > *:nth-child(3) { animation-delay: .16s; }
+main.template-design-premium-emerald .template-hero-content > *:nth-child(4) { animation-delay: .24s; }
+@keyframes premium-emerald-reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  main.template-design-premium-emerald .template-hero-content > * { animation: none; }
+}
+@media (max-width: 640px) {
+  main.template-design-premium-emerald .template-hero {
+    padding: 3.5rem 1rem 6.5rem;
+  }
+  main.template-design-premium-emerald .template-hero > .absolute:first-child {
+    inset: 11% 4.5% auto;
+    height: 46%;
+    border-radius: 20px;
+  }
+  main.template-design-premium-emerald .template-hero-content { padding-top: 27vh; }
+  main.template-design-premium-emerald .invite-quick-actions {
+    max-width: calc(100vw - 18px);
+    overflow-x: auto;
+  }
+  main.template-design-premium-emerald .invite-quick-actions button { flex: 0 0 auto; }
+}
+
+/* Admin light mode: preserve artwork, readable text and semantic action colours. */
+.solar-admin-shell.admin-theme-light .admin-workspace {
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(h1,h2,h3,h4,h5,h6,p,label,span,strong,small) {
+  color: #1d1d1f;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.text-muted-foreground,.text-black\/35,.text-black\/40,.text-black\/50,.text-black\/55,.text-black\/65) {
+  color: rgba(29,29,31,.62) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace img,
+.solar-admin-shell.admin-theme-light .admin-workspace video {
+  opacity: 1 !important;
+  filter: none !important;
+  visibility: visible !important;
+  mix-blend-mode: normal !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker > div:first-child,
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker > div:first-child input {
+  background: #fff !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.14) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker button {
+  color: #1d1d1f;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker button [class*="text-white"] {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker .bg-black\/35 {
+  background: rgba(0,0,0,.32) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input,textarea,select) {
+  background: #fff !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.16) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input,textarea,select)::placeholder {
+  color: rgba(29,29,31,.42) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button:not(.template-picker button) {
+  border-color: rgba(0,0,0,.14);
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-primary"] {
+  background: #a88332 !important;
+  color: #fff !important;
+  border-color: #a88332 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-[#C9A84C]"] {
+  background: #b38d35 !important;
+  color: #fff !important;
+  border-color: #b38d35 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-[#25D366]"] {
+  background: #25d366 !important;
+  color: #0b4d26 !important;
+  border-color: #25d366 !important;
+}
