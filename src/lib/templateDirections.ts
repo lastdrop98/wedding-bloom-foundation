@@ -144,6 +144,20 @@ const DIRECTIONS: Array<{ match: RegExp; direction: TemplateDirection }> = [
   },
 ];
 
+const NEW_TEMPLATE_DIRECTIONS: Record<string, Partial<TemplateDirection>> = {
+  "porcelain-botanical": { structure: "Capa floral + famílias + casal + programa + galeria + RSVP", design: "Cartões de papel arredondados sobre fundo floral contínuo", appearance: "Floral rico com conteúdo sempre protegido por superfícies claras", motifs: "Flores pintadas, filetes finos e calendário em bloco" },
+  "glass-garden": { structure: "Capa + palavra + casal + jardim de memórias + programa + local + RSVP", design: "Painéis translúcidos sobre fotografia e folhagem", appearance: "Luminoso, fresco e sofisticado", motifs: "Arcos de vidro, folhas e bordas translúcidas" },
+  "silk-ribbon": { structure: "Capa + família + casal + história + agenda + galeria + RSVP", design: "Convite de papelaria com fita vertical e retratos em molduras", appearance: "Romântico de luxo, tátil e editorial", motifs: "Fitas, molduras e pequenos laços" },
+  "dried-flower": { structure: "Capa + carta + casal + história + galeria + programa + RSVP", design: "Papel quente com flores secas e blocos de memória", appearance: "Natural, artesanal e contemporâneo", motifs: "Flores secas, ramos e papel texturizado" },
+  "elegant-leaf": { structure: "Capa + casal + família + história + agenda + galeria + RSVP", design: "Botânico moderno com folhas laterais e cartões de leitura", appearance: "Verde elegante, limpo e fotográfico", motifs: "Folhas finas, linhas orgânicas e recortes" },
+  "chateau-coastal": { structure: "Capa panorâmica + destino + casal + agenda + local + galeria + RSVP", design: "Destination editorial com moldura clássica e fotografia ampla", appearance: "Europeu, costeiro e luminoso", motifs: "Arcos, ondas, coordenadas e filetes" },
+  "lotus-atelier": { structure: "Capa + palavra + casal + carta + galeria + programa + RSVP", design: "Atelier floral com retratos em passpartout e lótus", appearance: "Suave, artístico e premium", motifs: "Lótus, molduras de retrato e filetes" },
+  "royal-forest": { structure: "Capa + bênção + família + casal + programa + galeria + RSVP", design: "Royal botânico com moldura dourada e fundo florestal", appearance: "Profundo, majestoso e acolhedor", motifs: "Folhagem, medalhões e molduras douradas" },
+  "double-happiness": { structure: "Abertura cerimonial + famílias + casal + programa + receção + RSVP", design: "Heritage contemporâneo com selo central e cartões simétricos", appearance: "Cerimonial, festivo e elegante", motifs: "Selo de união, padrões geométricos e filetes" },
+  "crystal-floral": { structure: "Capa + casal + história + galeria + agenda + localização + RSVP", design: "Editorial floral com molduras cristalinas e fotografia azul", appearance: "Fresco, luminoso e sofisticado", motifs: "Flores cristalinas, molduras e pequenos marcadores" },
+  "ribbon-ivory": { structure: "Capa + palavra + casal + programa + galeria + RSVP", design: "Minimalismo de papel com fita e cartões de informação", appearance: "Marfim, discreto e premium", motifs: "Fita, linhas finas e blocos de papel" },
+};
+
 const TEMPLATE_DIRECTION_OVERRIDES: Record<string, Partial<TemplateDirection>> = {
   "ceremony-editorial": {
     structure: "Capa + boas-vindas + bênção/famílias + casal + cerimónia + programa + local + RSVP + felicitações",
@@ -364,5 +378,5 @@ const DEFAULT_DIRECTION: TemplateDirection = {
 export function getTemplateDirection(template: TemplateDefinition): TemplateDirection {
   const source = template.value + " " + template.label + " " + template.family;
   const base = DIRECTIONS.find(({ match }) => match.test(source))?.direction ?? DEFAULT_DIRECTION;
-  return { ...base, ...(TEMPLATE_DIRECTION_OVERRIDES[template.value] ?? {}) };
+  return { ...base, ...(NEW_TEMPLATE_DIRECTIONS[template.value] ?? {}), ...(TEMPLATE_DIRECTION_OVERRIDES[template.value] ?? {}) };
 }
