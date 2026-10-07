@@ -564,6 +564,14 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
     implemented: true,
   },
   {
+    value: "premium-emerald",
+    label: "Premium Emerald",
+    family: "Signature Cards / Emerald",
+    tone: "sand",
+    description: "Experiência vertical premium inspirada no modelo de referência: capa fotográfica, bênção, noivos, famílias, agenda, mapa, RSVP, felicitações, presentes e mensagens.",
+    implemented: true,
+  },
+  {
     value: "limintso-emerald",
     label: "Emerald Signature",
     family: "Editorial / Cerimonial / Luxury",
@@ -688,7 +696,7 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   if (/mozambique-luxe|heritage-ceremony/.test(source)) return source.includes("heritage-ceremony") ? "heritage" : "mozambique";
   if (/sunset-destination|sicilian-terracotta|tropical-sunset/.test(source)) return "sunset";
   if (/black-paper/.test(source)) return "paper";
-  if (/limintso-/.test(source)) return "limintso";
+  if (/limintso-|premium-emerald/.test(source)) return "limintso";
   if (/pearl-ceremony|pearl-editorial/.test(source)) return "pearl-editorial";
   if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue/.test(source)) return "cinematic";
   if (/editorial|minimalist|minimalista|sapphire-editorial/.test(source)) return "editorial";
@@ -721,6 +729,7 @@ export function templateBaseClass(value?: string | null) {
     "cinema-love-story",
     "black-paper",
     "limintso-emerald",
+    "premium-emerald",
     "limintso-rose",
     "limintso-ivory",
     "limintso-sapphire",
