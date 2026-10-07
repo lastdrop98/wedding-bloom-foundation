@@ -589,6 +589,10 @@ export function getTemplateLayout(value?: string | null): TemplateLayout {
   const template = getTemplateDefinition(value);
   const source = `${template.value} ${template.label} ${template.family}`;
 
+  if (/cinema-love-story/i.test(source)) return "cinematic";
+  if (/portrait-ceremony|ceremony-editorial/i.test(source)) return "editorial";
+  if (/garden-letter|pearl-ceremony/i.test(source)) return "organic";
+  if (/heritage-ceremony/i.test(source)) return "heritage";
   if (/xiguiane|african/i.test(source)) return "heritage";
   if (/minimalist|editorial|cinematic|sapphire-editorial/i.test(source)) return "editorial";
   if (/garden|botanical|floral|romantic|boho|tropical|mediterranean/i.test(source)) return "organic";
