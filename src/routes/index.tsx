@@ -174,14 +174,13 @@ function HomePage() {
             <div className="grid gap-3 sm:grid-cols-3">
               {[0,1,2].map((offset) => {
                 const index = (carouselIndex + offset) % HOME_TEMPLATE_IMAGES.length;
-                const carouselTemplates = HOME_CAROUSEL_VALUES.map((value) => TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!);
-                                const item = carouselTemplates[index];
+                const item = TEMPLATE_OPTIONS.find((template) => template.value === HOME_CAROUSEL_VALUES[index]) ?? TEMPLATE_OPTIONS[0]!;
                 return (
                   <a key={`${carouselIndex}-${offset}`} href={`/modelos/${item.value}`} className={`group relative overflow-hidden rounded-[24px] ${offset === 1 ? "sm:-translate-y-3" : ""}`}>
                     <img src={HOME_TEMPLATE_IMAGES[index]} alt="" className="h-[360px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[430px]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
-                      <span className="text-[9px] uppercase tracking-[.24em] text-white/55">0${index + 1} / Solar Eclipse</span>
+                      <span className="text-[9px] uppercase tracking-[.24em] text-white/55">{String(index + 1).padStart(2, "0")} / Solar Eclipse</span>
                       <h3 className="mt-2 text-2xl font-light">{item.label}</h3>
                       <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-xs text-white/85">Ver coleção <ArrowRight className="size-3.5" /></span>
                     </div>
