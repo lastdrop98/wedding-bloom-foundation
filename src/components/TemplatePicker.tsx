@@ -110,7 +110,7 @@ export function TemplatePicker({
   }, [family, query]);
 
   return (
-    <div className="space-y-5">
+    <div className="template-picker space-y-5">
       <div className="rounded-2xl border border-border bg-background/60 p-4">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           <div className="relative min-w-0 flex-1">
@@ -179,7 +179,18 @@ export function TemplatePicker({
                 {item.value === "pearl-garden" && <><span className="absolute -left-8 top-2 size-28 rounded-full bg-white/25 blur-xl"/><span className="absolute right-4 bottom-2 size-14 rounded-full border border-white/45"/></>}
                 {item.value === "celestial-ivory" && <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(164,123,49,.8)_0_1px,transparent_2px),radial-gradient(circle_at_75%_30%,rgba(164,123,49,.7)_0_1px,transparent_2px),radial-gradient(circle_at_55%_75%,rgba(164,123,49,.7)_0_1px,transparent_2px)]" />}
 {item.value === "coastal-blue" && <div className="absolute inset-0 bg-[linear-gradient(165deg,transparent_45%,rgba(45,114,128,.5)_46%_49%,transparent_50%)]" />}
-{item.value === "capulana-contemporary" && (
+{item.value === "porcelain-botanical" && <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(160,63,72,.22)_0_2px,transparent_2px_14px)]" />}
+                {item.value === "glass-garden" && <div className="absolute inset-5 rounded-[40%] border border-white/55 bg-white/15 backdrop-blur-sm" />}
+                {item.value === "silk-ribbon" && <div className="absolute left-7 top-0 bottom-0 w-7 bg-gradient-to-r from-white/10 via-white/45 to-rose-900/20" />}
+                {item.value === "dried-flower" && <div className="absolute right-5 top-4 h-24 w-12 rotate-12 rounded-[60%] border border-amber-900/25" />}
+                {item.value === "elegant-leaf" && <div className="absolute right-3 top-1/2 h-24 w-14 -rotate-12 rounded-[60%_40%] border border-white/40" />}
+                {item.value === "chateau-coastal" && <div className="absolute inset-3 rounded-[40px_4px] border border-white/40" />}
+                {item.value === "lotus-atelier" && <div className="absolute inset-8 rounded-[50%_12%] border border-white/35" />}
+                {item.value === "royal-forest" && <div className="absolute inset-2 border border-[#d7b56d]/45" />}
+                {item.value === "double-happiness" && <div className="absolute left-1/2 top-1/2 size-12 -translate-x-1/2 -translate-y-1/2 rotate-45 border border-white/45" />}
+                {item.value === "crystal-floral" && <div className="absolute inset-4 rounded-2xl border border-white/55 bg-white/10" />}
+                {item.value === "ribbon-ivory" && <div className="absolute left-1/2 top-0 bottom-0 w-5 -translate-x-1/2 bg-white/20" />}
+                {item.value === "capulana-contemporary" && (
                   <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(255,255,255,.12)_0_8px,transparent_8px_16px)]" />
                 )}
                 <div className="absolute inset-3 rounded-xl border border-white/30" />
