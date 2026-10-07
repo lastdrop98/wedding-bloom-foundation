@@ -1092,3 +1092,577 @@ main.template-design-coastal-blue [data-template-section="gallery"] .invite-caro
 .template-flow-capulana > [data-template-section="guestbook"] { order: 22; }
 .template-flow-capulana > [data-template-section="welcome"] { order: 23; }
 .template-flow-capulana > [data-template-section="contacts"] { order: 24; }
+
+
+/* -------------------------------------------------------------------------- */
+/* Template finishing matrix: each catalog model gets a recognisable layout   */
+/* signature, not just a different colour. These variables are shared by the */
+/* real invitation and the catalogue demonstration surface.                  */
+/* -------------------------------------------------------------------------- */
+
+main[class*="template-design-"],
+.template-demo[class*="template-demo-"] {
+  --template-card-radius: 22px;
+  --template-image-radius: 18px;
+  --template-section-border: rgba(0,0,0,.08);
+  --template-title-spacing: -.045em;
+}
+
+main[class*="template-design-"] [data-template-section] .card-elegant {
+  border-radius: var(--template-card-radius);
+  border-color: var(--template-section-border);
+}
+.template-demo[class*="template-demo-"] [data-demo-section="historia"] img,
+.template-demo[class*="template-demo-"] [data-demo-section="galeria"] img {
+  border-radius: var(--template-image-radius);
+}
+
+/* Classic / paper */
+main.template-design-golden-classic,
+.template-demo-golden-classic {
+  --template-card-radius: 4px;
+  --template-image-radius: 4px;
+  --template-section-border: rgba(170,132,62,.28);
+  --template-title-spacing: -.025em;
+}
+main.template-design-golden-classic .template-hero {
+  min-height: 100svh;
+}
+main.template-design-golden-classic [data-template-section="rsvp"] .card-elegant {
+  border-width: 1px;
+  box-shadow: 0 18px 50px rgba(60,40,15,.08);
+}
+
+main.template-design-classic-ivory,
+.template-demo-classic-ivory {
+  --template-card-radius: 2px;
+  --template-image-radius: 2px;
+  --template-section-border: rgba(93,73,49,.18);
+}
+main.template-design-classic-ivory .template-hero,
+.template-demo-classic-ivory [data-demo-section="capa"] {
+  background: linear-gradient(180deg,#f8f2e7,#eee5d5);
+}
+main.template-design-classic-ivory [data-template-section="word"] {
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+main.template-design-emerald-elegante,
+.template-demo-emerald-elegante {
+  --template-card-radius: 18px;
+  --template-image-radius: 18px;
+  --template-section-border: rgba(29,75,57,.18);
+}
+main.template-design-emerald-elegante .template-hero {
+  text-align: left;
+  align-items: flex-end;
+}
+main.template-design-emerald-elegante [data-template-section="couple"] {
+  text-align: left;
+}
+main.template-design-emerald-elegante [data-template-section="schedule"] .card-elegant {
+  border-left: 3px solid currentColor;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 0;
+}
+
+/* Minimal collection: each variant has a different editorial rhythm */
+main.template-design-minimalist-brown,
+.template-demo-minimalist-brown {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(82,59,42,.2);
+}
+main.template-design-minimalist-brown .template-hero { text-align: left; }
+main.template-design-minimalist-brown [data-template-section="gallery"] .invite-carousel-card:first-child {
+  grid-column: span 2;
+}
+
+main.template-design-minimalist-burgundy,
+.template-demo-minimalist-burgundy {
+  --template-card-radius: 8px;
+  --template-image-radius: 8px;
+  --template-section-border: rgba(113,34,48,.22);
+}
+main.template-design-minimalist-burgundy .template-hero-content h1 { max-width: 9ch; }
+main.template-design-minimalist-burgundy [data-template-section="word"] {
+  border-left: 2px solid currentColor;
+  padding-left: clamp(1.5rem,5vw,4rem);
+  text-align: left;
+}
+
+main.template-design-minimalist-lavender,
+.template-demo-minimalist-lavender {
+  --template-card-radius: 30px;
+  --template-image-radius: 30px;
+  --template-section-border: rgba(122,103,143,.2);
+}
+main.template-design-minimalist-lavender .template-hero {
+  min-height: 92svh;
+  border-radius: 0 0 48px 48px;
+}
+main.template-design-minimalist-lavender [data-template-section="gallery"] .invite-carousel-card {
+  border-radius: 42px 12px 42px 12px;
+}
+
+main.template-design-minimalist-white,
+.template-demo-minimalist-white {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(0,0,0,.11);
+}
+main.template-design-minimalist-white .template-hero-content h1 { letter-spacing: -.085em; }
+main.template-design-minimalist-white [data-template-section] {
+  padding-block: clamp(5rem,10vw,9rem);
+}
+
+main.template-design-minimalist-black,
+.template-demo-minimalist-black {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(255,255,255,.14);
+}
+main.template-design-minimalist-black .template-hero {
+  justify-content: flex-end;
+  align-items: flex-start;
+  text-align: left;
+}
+main.template-design-minimalist-black .template-hero-content h1 { font-size: clamp(4rem,11vw,9rem); }
+
+/* Blue / editorial */
+main.template-design-midnight-blue,
+.template-demo-midnight-blue {
+  --template-card-radius: 12px;
+  --template-image-radius: 12px;
+  --template-section-border: rgba(173,151,105,.22);
+}
+main.template-design-midnight-blue .template-hero {
+  min-height: 100svh;
+  justify-content: flex-end;
+  text-align: left;
+}
+main.template-design-midnight-blue [data-template-section="countdown"] {
+  border-top: 1px solid rgba(255,255,255,.14);
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+main.template-design-sapphire-editorial,
+.template-demo-sapphire-editorial {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(32,58,92,.18);
+}
+main.template-design-sapphire-editorial .template-hero-content { text-align: left; }
+main.template-design-sapphire-editorial [data-template-section="gallery"] .invite-carousel-track {
+  grid-template-columns: 1.3fr .7fr .7fr;
+}
+main.template-design-sapphire-editorial [data-template-section="gallery"] .invite-carousel-card:first-child {
+  grid-row: span 2;
+}
+
+main.template-design-editorial-dark,
+.template-demo-editorial-dark {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(255,255,255,.13);
+}
+main.template-design-editorial-dark .template-hero {
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+}
+main.template-design-editorial-dark [data-template-section="story"] {
+  text-align: left;
+  max-width: 980px;
+  margin-inline: auto;
+}
+
+/* Cinematic */
+main.template-design-cinematic-charcoal,
+.template-demo-cinematic-charcoal {
+  --template-card-radius: 2px;
+  --template-image-radius: 2px;
+  --template-section-border: rgba(210,190,153,.22);
+}
+main.template-design-cinematic-charcoal .template-hero {
+  min-height: 100svh;
+  justify-content: flex-end;
+  text-align: left;
+}
+main.template-design-cinematic-charcoal [data-template-section="gallery"] .invite-carousel-card {
+  filter: saturate(.75);
+}
+
+main.template-design-film-noir-motion,
+.template-demo-film-noir-motion {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(216,180,106,.22);
+}
+
+/* Royal / ceremonial: frame, gate and symmetry change by model */
+main.template-design-baroque-gold,
+.template-demo-baroque-gold {
+  --template-card-radius: 3px;
+  --template-image-radius: 3px;
+  --template-section-border: rgba(201,168,76,.34);
+}
+main.template-design-baroque-gold .template-hero::after {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border: 1px solid rgba(201,168,76,.42);
+  pointer-events: none;
+}
+
+main.template-design-royal-emerald,
+.template-demo-royal-emerald {
+  --template-card-radius: 16px;
+  --template-image-radius: 16px;
+  --template-section-border: rgba(216,185,104,.28);
+}
+main.template-design-royal-emerald .template-hero { min-height: 94svh; }
+main.template-design-royal-emerald [data-template-section="couple"] .card-elegant {
+  border-top: 2px solid rgba(216,185,104,.5);
+}
+
+main.template-design-royal-burgundy,
+.template-demo-royal-burgundy {
+  --template-card-radius: 10px;
+  --template-image-radius: 10px;
+  --template-section-border: rgba(216,185,104,.28);
+}
+main.template-design-royal-burgundy .template-hero {
+  min-height: 94svh;
+}
+main.template-design-royal-burgundy [data-template-section="schedule"] .card-elegant {
+  border-radius: 999px;
+}
+
+main.template-design-royal-sapphire,
+.template-demo-royal-sapphire {
+  --template-card-radius: 22px;
+  --template-image-radius: 22px;
+  --template-section-border: rgba(201,168,76,.3);
+}
+main.template-design-royal-sapphire .template-hero-content h1 {
+  max-width: 11ch;
+}
+main.template-design-royal-sapphire [data-template-section="gallery"] .invite-carousel-card {
+  border-radius: 22px;
+}
+
+main.template-design-royal-black-gold,
+.template-demo-royal-black-gold {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(201,168,76,.42);
+}
+main.template-design-royal-black-gold .template-hero::before,
+main.template-design-royal-black-gold .template-hero::after {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(201,168,76,.35);
+  pointer-events: none;
+}
+main.template-design-royal-black-gold .template-hero::after { inset: 24px; border-color: rgba(255,255,255,.12); }
+
+/* Romantic / garden */
+main.template-design-romantic-rose,
+.template-demo-romantic-rose {
+  --template-card-radius: 34px;
+  --template-image-radius: 34px;
+  --template-section-border: rgba(166,105,121,.2);
+}
+main.template-design-romantic-rose .template-hero {
+  border-radius: 0 0 48% 48% / 0 0 10% 10%;
+}
+main.template-design-romantic-rose [data-template-section="couple"] .card-elegant {
+  border-radius: 44px;
+}
+
+main.template-design-romantic-champagne,
+.template-demo-romantic-champagne {
+  --template-card-radius: 18px;
+  --template-image-radius: 50%;
+  --template-section-border: rgba(184,151,91,.24);
+}
+main.template-design-romantic-champagne [data-template-section="couple"] img {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+main.template-design-garden-green,
+.template-demo-garden-green {
+  --template-card-radius: 34px 8px 34px 8px;
+  --template-image-radius: 34px 8px 34px 8px;
+  --template-section-border: rgba(68,111,73,.2);
+}
+main.template-design-garden-green [data-template-section="gallery"] .invite-carousel-card:nth-child(2) {
+  transform: translateY(18px);
+}
+
+main.template-design-garden-blue,
+.template-demo-garden-blue {
+  --template-card-radius: 8px 32px 8px 32px;
+  --template-image-radius: 8px 32px 8px 32px;
+  --template-section-border: rgba(61,105,126,.2);
+}
+main.template-design-garden-blue .template-hero { text-align: left; }
+
+main.template-design-garden-ivory,
+.template-demo-garden-ivory {
+  --template-card-radius: 26px;
+  --template-image-radius: 26px;
+  --template-section-border: rgba(112,118,93,.18);
+}
+main.template-design-garden-ivory [data-template-section="word"] {
+  max-width: 820px;
+  margin-inline: auto;
+}
+
+/* Boho / vintage / destination */
+main.template-design-boho-sand,
+.template-demo-boho-sand {
+  --template-card-radius: 10px 30px 10px 30px;
+  --template-image-radius: 10px 30px 10px 30px;
+  --template-section-border: rgba(157,116,78,.2);
+}
+main.template-design-boho-sand .template-hero { text-align: left; }
+
+main.template-design-boho-rose,
+.template-demo-boho-rose {
+  --template-card-radius: 38px 12px;
+  --template-image-radius: 38px 12px;
+  --template-section-border: rgba(167,106,126,.2);
+}
+main.template-design-boho-rose [data-template-section="gallery"] .invite-carousel-card:first-child {
+  transform: rotate(-1deg);
+}
+
+main.template-design-vintage-cream,
+.template-demo-vintage-cream {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(116,87,56,.24);
+}
+main.template-design-vintage-cream .template-hero {
+  min-height: 90svh;
+  background-image: repeating-linear-gradient(0deg, rgba(104,76,44,.025) 0 1px, transparent 1px 5px);
+}
+
+main.template-design-european-ivory,
+.template-demo-european-ivory {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(50,50,47,.16);
+}
+main.template-design-european-ivory [data-template-section="schedule"] {
+  max-width: 880px;
+  margin-inline: auto;
+}
+main.template-design-european-ivory .template-hero-content h1 { letter-spacing: -.075em; }
+
+/* Mediterranean / destination */
+main.template-design-mediterranean-blue,
+.template-demo-mediterranean-blue {
+  --template-card-radius: 28px 6px 28px 6px;
+  --template-image-radius: 28px 6px 28px 6px;
+  --template-section-border: rgba(45,114,128,.2);
+}
+main.template-design-mediterranean-blue .template-hero { text-align: left; }
+main.template-design-mediterranean-blue [data-template-section="location"] {
+  border-top: 4px solid rgba(45,114,128,.35);
+}
+
+main.template-design-sicilian-terracotta,
+.template-demo-sicilian-terracotta {
+  --template-card-radius: 4px 24px 4px 24px;
+  --template-image-radius: 4px 24px 4px 24px;
+  --template-section-border: rgba(160,89,54,.24);
+}
+main.template-design-sicilian-terracotta [data-template-section="story"] {
+  text-align: left;
+}
+main.template-design-sicilian-terracotta [data-template-section="gallery"] .invite-carousel-card {
+  transform: none;
+}
+
+/* Heritage / traditional */
+main.template-design-oriental-red,
+.template-demo-oriental-red {
+  --template-card-radius: 2px;
+  --template-image-radius: 2px;
+  --template-section-border: rgba(168,73,49,.32);
+}
+main.template-design-oriental-red .template-hero::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 2px solid rgba(210,163,90,.42);
+  pointer-events: none;
+}
+
+main.template-design-oriental-green,
+.template-demo-oriental-green {
+  --template-card-radius: 14px;
+  --template-image-radius: 14px;
+  --template-section-border: rgba(88,129,91,.24);
+}
+main.template-design-oriental-green [data-template-section="couple"] {
+  text-align: left;
+}
+
+main.template-design-oriental-blue,
+.template-demo-oriental-blue {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(63,100,142,.24);
+}
+main.template-design-oriental-blue [data-template-section="gallery"] .invite-carousel-card {
+  border: 1px solid currentColor;
+  padding: 5px;
+}
+
+main.template-design-nikah-emerald,
+.template-demo-nikah-emerald {
+  --template-card-radius: 999px;
+  --template-image-radius: 999px;
+  --template-section-border: rgba(201,168,76,.28);
+}
+main.template-design-nikah-emerald [data-template-section="word"] {
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+main.template-design-traditional-bronze,
+.template-demo-traditional-bronze {
+  --template-card-radius: 3px;
+  --template-image-radius: 3px;
+  --template-section-border: rgba(157,112,61,.28);
+}
+main.template-design-traditional-bronze [data-template-section="schedule"] .card-elegant {
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(157,112,61,.1);
+}
+
+/* Tropical */
+main.template-design-tropical-green,
+.template-demo-tropical-green {
+  --template-card-radius: 42px 8px 42px 8px;
+  --template-image-radius: 42px 8px 42px 8px;
+  --template-section-border: rgba(51,110,75,.22);
+}
+main.template-design-tropical-green [data-template-section="gallery"] .invite-carousel-card:nth-child(2) {
+  margin-top: 24px;
+}
+
+main.template-design-tropical-sunset,
+.template-demo-tropical-sunset {
+  --template-card-radius: 24px 4px 24px 4px;
+  --template-image-radius: 24px 4px 24px 4px;
+  --template-section-border: rgba(184,108,86,.22);
+}
+main.template-design-tropical-sunset .template-hero {
+  justify-content: flex-end;
+  text-align: left;
+}
+
+/* African signature */
+main.template-design-african-heritage,
+.template-demo-african-heritage {
+  --template-card-radius: 8px;
+  --template-image-radius: 8px;
+  --template-section-border: rgba(198,157,92,.28);
+}
+main.template-design-african-heritage [data-template-section="party"] {
+  position: relative;
+}
+main.template-design-african-heritage [data-template-section="party"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .08;
+  background: repeating-linear-gradient(45deg, currentColor 0 2px, transparent 2px 18px);
+  pointer-events: none;
+}
+
+main.template-design-xiguiane-tradicional,
+.template-demo-xiguiane-tradicional {
+  --template-card-radius: 6px;
+  --template-image-radius: 6px;
+  --template-section-border: rgba(191,146,79,.3);
+}
+main.template-design-xiguiane-tradicional .template-hero {
+  min-height: 100svh;
+}
+main.template-design-xiguiane-tradicional [data-template-section="party"] .card-elegant {
+  border-radius: 6px;
+  border-width: 2px;
+}
+
+main.template-design-capulana-contemporary,
+.template-demo-capulana-contemporary {
+  --template-card-radius: 8px;
+  --template-image-radius: 8px;
+  --template-section-border: rgba(240,216,170,.2);
+}
+
+/* Signature models */
+main.template-design-editorial-magazine,
+.template-demo-editorial-magazine {
+  --template-card-radius: 0;
+  --template-image-radius: 0;
+  --template-section-border: rgba(23,22,19,.14);
+}
+main.template-design-pearl-garden,
+.template-demo-pearl-garden {
+  --template-card-radius: 32px;
+  --template-image-radius: 34px;
+  --template-section-border: rgba(184,149,152,.24);
+}
+main.template-design-celestial-ivory,
+.template-demo-celestial-ivory {
+  --template-card-radius: 6px;
+  --template-image-radius: 6px;
+  --template-section-border: rgba(164,123,49,.2);
+}
+main.template-design-coastal-blue,
+.template-demo-coastal-blue {
+  --template-card-radius: 26px 8px 26px 8px;
+  --template-image-radius: 26px 8px 26px 8px;
+  --template-section-border: rgba(45,114,128,.2);
+}
+
+/* Demo surface: make the 45 catalogue models visibly distinct even before
+   real couple media is loaded. */
+.template-demo[class*="template-demo-"] [data-demo-section] {
+  transition: border-radius .2s ease, background-color .2s ease;
+}
+.template-demo[class*="template-demo-"] [data-demo-section="direcao"] {
+  border-top: 1px solid var(--template-section-border);
+}
+.template-demo[class*="template-demo-"] [data-demo-section="rodape"] {
+  border-top: 1px solid var(--template-section-border);
+}
+
+@media (max-width: 700px) {
+  main.template-design-minimalist-white [data-template-section] {
+    padding-block: 4.5rem;
+  }
+  main.template-design-minimalist-black .template-hero-content h1,
+  main.template-design-midnight-blue .template-hero-content h1 {
+    font-size: clamp(3.4rem, 16vw, 6rem);
+  }
+  main.template-design-editorial-dark .template-hero,
+  main.template-design-tropical-sunset .template-hero {
+    min-height: 90svh;
+  }
+}
