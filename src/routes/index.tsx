@@ -36,7 +36,20 @@ const features = [
 ];
 
 const HOME_FEATURED_VALUES = ["limintso-emerald", "ceremony-editorial", "cinema-love-story", "heritage-ceremony", "pearl-ceremony", "editorial-cinema"];
-const HOME_CAROUSEL_VALUES = ["limintso-emerald", "ceremony-editorial", "portrait-ceremony", "garden-letter", "cinema-love-story", "heritage-ceremony", "pearl-ceremony", "mozambique-luxe"];
+const HOME_CAROUSEL_VALUES = [
+  "limintso-emerald",
+  "limintso-rose",
+  "limintso-ivory",
+  "limintso-sapphire",
+  "limintso-black",
+  "limintso-forest",
+  "limintso-mozambique",
+  "ceremony-editorial",
+  "cinema-love-story",
+  "heritage-ceremony",
+  "pearl-ceremony",
+  "mozambique-luxe",
+];
 
 const HOME_TEMPLATE_IMAGES = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85",
@@ -47,6 +60,10 @@ const HOME_TEMPLATE_IMAGES = [
   "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=85",
   "https://images.unsplash.com/photo-1534791547706-9b3f7f6c8a4a?auto=format&fit=crop&w=1200&q=85",
   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85",
+  "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=1200&q=85",
+  "https://images.unsplash.com/photo-1515861461225-1488dfdaf2a8?auto=format&fit=crop&w=1200&q=85",
+  "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1200&q=85",
+  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85",
 ];
 
 function HomePage() {
