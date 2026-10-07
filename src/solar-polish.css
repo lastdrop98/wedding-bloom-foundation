@@ -2303,7 +2303,7 @@ main.template-design-pearl-editorial [data-template-section="gallery"] .invite-c
   background: rgba(0,0,0,.035) !important;
 }
 .solar-admin-shell.admin-theme-light .admin-workspace .bg-white {
-  background: #fff !important;
+  background-color: #fff !important;
   color: #1d1d1f !important;
 }
 .solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-[#fffdf7]"] {
@@ -2527,7 +2527,7 @@ main.template-base-signature { isolation: isolate; }
   color: #1d1d1f;
 }
 .solar-admin-shell.admin-theme-light .template-picker > div:first-child {
-  background: #fff !important;
+  background-color: #fff !important;
   border-color: rgba(0,0,0,.1) !important;
 }
 .solar-admin-shell.admin-theme-light .template-picker button {
@@ -3362,7 +3362,7 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
   background:#f5f5f3!important; color:#1d1d1f!important;
 }
 .solar-admin-shell.admin-theme-light .admin-workspace :is(.rounded-xl,.rounded-2xl,.rounded-3xl)[class*="border"]{
-  background:var(--admin-card)!important; border-color:var(--admin-border)!important;
+  background-color:var(--admin-card)!important; border-color:var(--admin-border)!important;
 }
 .solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-background,.bg-background\/40,.bg-background\/60,.bg-muted\/40,.bg-muted\/50){
   background:var(--admin-card)!important;
