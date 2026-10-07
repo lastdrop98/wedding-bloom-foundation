@@ -428,6 +428,14 @@ const TEMPLATE_DIRECTION_OVERRIDES: Record<string, Partial<TemplateDirection>> =
   "celestial-ivory": { structure: "Capa celestial + palavra + countdown + casal + constelação + RSVP", design: "Luxury minimal com mapa estelar e espaço negativo", motifs: "Órbitas, constelações e microestrelas" },
   "coastal-blue": { structure: "Capa destino + localização + casal + galeria + agenda + RSVP", design: "Coastal editorial com fotografia panorâmica e ritmo de viagem", motifs: "Ondas, coordenadas e linhas de costa" },
   "aquarela-botanica": { structure: "Capa aguarela + palavra + casal + história + galeria + programa + RSVP", design: "Botânico pintado à mão com camadas de aguarela e fotografia suave", motifs: "Manchas de tinta, folhas, flores e pinceladas" },
+  "diamond-signature": {
+    structure: "Abertura vertical + bênção + noivos + famílias + agenda + local + história + galeria + countdown + RSVP + felicitações + presentes + encerramento",
+    design: "Sistema mobile-first de cartões premium com capa fotográfica, cartões elevados, molduras finas e navegação inferior fixa",
+    appearance: "Papel branco e cinza muito claro, dourado champagne, grafite e taupe",
+    typography: "Serif editorial de alto contraste + sans compacta para etiquetas, horários e ações",
+    palette: "Branco #FFFFFF, cinza papel #F0F0EE, dourado #C9A84C, grafite #2F2B27 e taupe #8B8378",
+    motifs: "Cartões empilhados, cantos arredondados, marcadores numerados, linhas finas e botão circular de destaque",
+  },
 };
 
 const DEFAULT_DIRECTION: TemplateDirection = {
