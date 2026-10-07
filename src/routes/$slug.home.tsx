@@ -736,7 +736,13 @@ main.template-design-limintso-emerald .template-hero::after {
   z-index: 4;
 }
 main.template-design-limintso-emerald .template-hero::after {
-  clip-path: polygon(42% 32%, 72% 50%, 42% 68%);
+  content: "▶";
+  display: grid;
+  place-items: center;
+  clip-path: none;
+  color: #7b6843;
+  font-size: 10px;
+  text-indent: 2px;
 }
 main.template-design-limintso-emerald .template-hero {
   min-height: 100svh;
