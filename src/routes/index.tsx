@@ -35,7 +35,7 @@ const features = [
   { icon: QrCode, title: "Presentes Digitais", text: "Receba contribuições através de QR Code." },
 ];
 
-const HOME_FEATURED_VALUES = ["premium-emerald", "limintso-emerald", "ceremony-editorial", "cinema-love-story", "heritage-ceremony", "pearl-ceremony", "editorial-cinema"];
+const HOME_FEATURED_VALUES = ["premium-emerald", "limintso-emerald", "ceremony-editorial", "cinema-love-story", "heritage-ceremony", "pearl-ceremony", "diamond-signature"];
 const HOME_CAROUSEL_VALUES = [
   "premium-emerald",
   "limintso-emerald",
