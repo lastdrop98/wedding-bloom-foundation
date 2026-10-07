@@ -389,6 +389,7 @@ const DEFAULT_DIRECTION: TemplateDirection = {
   typography: "Serif editorial + sans contemporânea",
   palette: "Neutros sofisticados com uma cor de assinatura",
   motifs: "Linhas finas, selos e detalhes gráficos discretos",
+  },
   "diamond-signature": {
     structure: "Abertura vertical + bênção + noivos + famílias + convite + agenda + local + história + galeria + countdown + RSVP + felicitações + presentes + encerramento",
     design: "Sistema mobile-first de cartões premium: cabeçalho branco compacto, capa fotográfica, cartões brancos elevados, molduras finas e navegação inferior fixa",
