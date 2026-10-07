@@ -2906,3 +2906,62 @@ main[class*="template-design-limintso-"] [data-template-section="schedule"] li {
 main[class*="template-"] :is(.star,.sparkle,.spark,.stars,.sparkles) {
   display: none !important;
 }
+
+
+/* Final light-admin contrast pass: neutralize inherited white utility text, then
+   restore it only inside intentionally dark panels. */
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-white"] {
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel * {
+  color: inherit;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel [class*="text-white"] {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/80 {
+  color: rgba(255,255,255,.82) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/55 {
+  color: rgba(255,255,255,.55) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/45 {
+  color: rgba(255,255,255,.45) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/40 {
+  color: rgba(255,255,255,.4) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .text-white\/30 {
+  color: rgba(255,255,255,.3) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .bg-white\/\[\.055\] {
+  background: rgba(255,255,255,.055) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel .bg-white\/\[\.04\] {
+  background: rgba(255,255,255,.04) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker img,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero-image,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero img {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  visibility: visible !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker .bg-black\/35 {
+  background: rgba(0,0,0,.28) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.template-picker button, .template-picker a) {
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.template-picker button, .template-picker a) [class*="text-white"] {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker > div:first-child {
+  background: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker input {
+  color: #1d1d1f !important;
+  background: #fff !important;
+}
