@@ -7,11 +7,11 @@ import {
   MessageCircle,
   Music,
   QrCode,
-  Sparkles,
+  CircleDot,
   Users,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EclipseMark } from "@/components/EclipseMark";
 import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
 import { TEMPLATE_OPTIONS, templateVisualClass } from "@/lib/templates";
@@ -50,6 +50,14 @@ const HOME_TEMPLATE_IMAGES = [
 
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setCarouselIndex((current) => (current + 1) % HOME_TEMPLATE_IMAGES.length);
+    }, 4200);
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
     <main className="solar-landing min-h-screen bg-[#faf8f3] text-neutral-900">
@@ -60,13 +68,13 @@ function HomePage() {
             <span>Solar Eclipse</span>
           </a>
           <nav className="hidden items-center gap-7 text-xs text-black/55 md:flex">
-            <a href="#modelos" className="transition hover:text-black">Modelos</a>
-            <a href="#experiencia" className="transition hover:text-black">Experiência</a>
-            <a href="#como-funciona" className="transition hover:text-black">Como funciona</a>
+            <a href="#modelos" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Modelos</a>
+            <a href="#experiencia" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Experiência</a>
+            <a href="#como-funciona" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Como funciona</a>
             <a
               href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
               onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }}
-              className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-black bg-black px-4 py-2.5 text-white shadow-sm"
             >
               Falar connosco <MessageCircle className="size-3.5" />
             </a>
@@ -84,13 +92,13 @@ function HomePage() {
         {menuOpen && (
           <div className="border-t border-black/5 bg-[#faf8f3] px-5 py-4 md:hidden">
             <div className="mx-auto flex max-w-7xl flex-col gap-2 text-sm">
-              <a href="#modelos" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 hover:bg-white">Modelos</a>
-              <a href="#experiencia" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 hover:bg-white">Experiência</a>
-              <a href="#como-funciona" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 hover:bg-white">Como funciona</a>
+              <a href="#modelos" onClick={() => setMenuOpen(false)} className="rounded-xl border border-black/10 bg-white px-3 py-3 hover:border-black/20">Modelos</a>
+              <a href="#experiencia" onClick={() => setMenuOpen(false)} className="rounded-xl border border-black/10 bg-white px-3 py-3 hover:border-black/20">Experiência</a>
+              <a href="#como-funciona" onClick={() => setMenuOpen(false)} className="rounded-xl border border-black/10 bg-white px-3 py-3 hover:border-black/20">Como funciona</a>
               <a
                 href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
                 onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }}
-                className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 text-white"
+                className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl border border-black bg-black px-4 py-3 text-white shadow-sm"
               >
                 Falar connosco <MessageCircle className="size-4" />
               </a>
@@ -133,11 +141,55 @@ function HomePage() {
               <span className="solar-hero-v2-core" />
               <span className="solar-hero-v2-orbit orbit-a" />
               <span className="solar-hero-v2-orbit orbit-b" />
-              <span className="solar-hero-v2-star star-a">✦</span>
-              <span className="solar-hero-v2-star star-b">·</span>
-              <span className="solar-hero-v2-star star-c">✦</span>
+              <span className="solar-hero-v2-orbit-label orbit-label-a">01</span>
+              <span className="solar-hero-v2-orbit-label orbit-label-b">02</span>
+              <span className="solar-hero-v2-orbit-label orbit-label-c">03</span>
             </div>
             <div className="solar-hero-v2-caption"><span>01</span><strong>Uma experiência feita para durar</strong><span>2026</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="solar-home-carousel relative overflow-hidden border-y border-black/5 bg-[#161616] px-6 py-20 text-white sm:py-24" aria-label="Destaques de modelos">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#d7b56d]">Uma coleção feita para o vosso dia</p>
+              <h2 className="mt-4 text-4xl font-light tracking-[-0.045em] sm:text-5xl">Veja o convite ganhar forma.</h2>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-white/55">Uma seleção de capas, fotografias e composições diferentes. O carrossel avança automaticamente para mostrar vários estilos sem transformar a página numa parede de cartões.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button type="button" aria-label="Modelo anterior" onClick={() => setCarouselIndex((carouselIndex - 1 + HOME_TEMPLATE_IMAGES.length) % HOME_TEMPLATE_IMAGES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
+                <span aria-hidden="true">←</span>
+              </button>
+              <button type="button" aria-label="Próximo modelo" onClick={() => setCarouselIndex((carouselIndex + 1) % HOME_TEMPLATE_IMAGES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+          <div className="mt-10 overflow-hidden rounded-[30px] border border-white/10 bg-white/[.035] p-2 sm:p-3">
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[0,1,2].map((offset) => {
+                const index = (carouselIndex + offset) % HOME_TEMPLATE_IMAGES.length;
+                const labels = ["Noir & Ouro", "Editorial Magazine", "Pearl Garden", "Capulana Contemporary", "Celestial Ivory", "Coastal Blue", "Film Noir Motion", "Aquarela Botânica"];
+                return (
+                  <a key={`${carouselIndex}-${offset}`} href="/modelos" className={`group relative overflow-hidden rounded-[24px] ${offset === 1 ? "sm:-translate-y-3" : ""}`}>
+                    <img src={HOME_TEMPLATE_IMAGES[index]} alt="" className="h-[360px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[430px]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <span className="text-[9px] uppercase tracking-[.24em] text-white/55">0${index + 1} / Solar Eclipse</span>
+                      <h3 className="mt-2 text-2xl font-light">{labels[index]}</h3>
+                      <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-xs text-white/85">Ver coleção <ArrowRight className="size-3.5" /></span>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+          <div className="mt-5 flex items-center justify-center gap-1.5" aria-label="Posição do carrossel">
+            {HOME_TEMPLATE_IMAGES.map((_, index) => (
+              <button key={index} type="button" aria-label={`Ir para destaque ${index + 1}`} aria-current={index === carouselIndex} onClick={() => setCarouselIndex(index)} className={`h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-8 bg-[#d7b56d]" : "w-1.5 bg-white/20 hover:bg-white/40"}`} />
+            ))}
           </div>
         </div>
       </section>
@@ -266,7 +318,7 @@ function HomePage() {
       </section>
 
       <section className="bg-black px-6 py-24 text-center text-white">
-        <Sparkles className="mx-auto text-[#C9A84C]" />
+        <CircleDot className="mx-auto text-[#C9A84C]" />
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-neutral-300">
           Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.
@@ -278,7 +330,7 @@ function HomePage() {
           <a
             href={whatsappUrl("Olá! Quero falar sobre um convite Solar Eclipse.")}
             onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero falar sobre um convite Solar Eclipse."); }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-white"
+            className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/[.03] px-8 py-4 text-white transition hover:bg-white/10"
           >
             Falar connosco <MessageCircle className="size-4" />
           </a>
@@ -292,10 +344,10 @@ function HomePage() {
             <p className="mt-3 max-w-sm text-xs leading-6 text-white/40">Convites digitais de casamento pensados para serem vistos, partilhados e lembrados.</p>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs text-white/45">
-            <a href="/modelos" className="transition hover:text-white">Modelos</a>
-            <a href="#experiencia" className="transition hover:text-white">Experiência</a>
-            <a href="#como-funciona" className="transition hover:text-white">Como funciona</a>
-            <a href={whatsappUrl("Olá! Quero saber mais sobre os convites Solar Eclipse.")} onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero saber mais sobre os convites Solar Eclipse."); }} className="transition hover:text-white">Contacto</a>
+            <a href="/modelos" className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Modelos</a>
+            <a href="#experiencia" className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Experiência</a>
+            <a href="#como-funciona" className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Como funciona</a>
+            <a href={whatsappUrl("Olá! Quero saber mais sobre os convites Solar Eclipse.")} onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero saber mais sobre os convites Solar Eclipse."); }} className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Contacto</a>
           </div>
         </div>
         <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-5 text-[10px] text-white/25">© {new Date().getFullYear()} Solar Eclipse. Todos os direitos reservados.</div>
