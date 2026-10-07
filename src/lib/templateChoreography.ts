@@ -22,7 +22,8 @@ export type TemplateFlow =
   | "sunset"
   | "paper"
   | "pearl-editorial"
-  | "limintso";
+  | "limintso"
+  | "diamond";
 
 const FLOW_BY_VALUE: Record<string, TemplateFlow> = {
   "golden-classic": "web",
@@ -97,6 +98,7 @@ const FLOW_BY_VALUE: Record<string, TemplateFlow> = {
   "limintso-black": "limintso",
   "limintso-forest": "limintso",
   "limintso-mozambique": "limintso",
+  "diamond-signature": "diamond",
 };
 
 const DEFAULT_ORDER = [
@@ -129,6 +131,7 @@ export const TEMPLATE_SECTION_ORDERS: Record<TemplateFlow, string[]> = {
   paper: ["hero", "word", "couple", "story", "schedule", "location", "rsvp", "gallery", "gifts", "guestbook", "countdown", "closing", "contacts"],
   "pearl-editorial": ["hero", "welcome", "word", "couple", "gallery", "story", "countdown", "schedule", "location", "rsvp", "gifts", "guestbook", "closing", "contacts"],
   limintso: ["hero", "welcome", "word", "couple", "party", "story", "schedule", "location", "dress-code", "countdown", "rsvp", "guestbook", "gifts", "gallery", "contacts", "closing"],
+  diamond: ["hero", "welcome", "word", "couple", "party", "story", "moments", "gallery", "schedule", "location", "countdown", "rsvp", "guestbook", "gifts", "contacts", "closing"],
 };
 
 export function getTemplateFlow(value?: string | null): TemplateFlow {
