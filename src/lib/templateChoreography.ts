@@ -121,7 +121,7 @@ export const TEMPLATE_SECTION_ORDERS: Record<TemplateFlow, string[]> = {
   sunset: ["hero", "welcome", "location", "couple", "schedule", "dress-code", "story", "gallery", "countdown", "rsvp", "gifts", "guestbook", "closing", "contacts"],
   paper: ["hero", "word", "couple", "story", "schedule", "location", "rsvp", "gallery", "gifts", "guestbook", "countdown", "closing", "contacts"],
   "pearl-editorial": ["hero", "welcome", "word", "couple", "gallery", "story", "countdown", "schedule", "location", "rsvp", "gifts", "guestbook", "closing", "contacts"],
-  limintso: ["hero", "welcome", "word", "couple", "party", "schedule", "location", "countdown", "rsvp", "guestbook", "gifts", "story", "gallery", "contacts", "closing"],
+  limintso: ["hero", "welcome", "word", "couple", "party", "story", "schedule", "location", "dress-code", "countdown", "rsvp", "guestbook", "gifts", "gallery", "contacts", "closing"],
 };
 
 export function getTemplateFlow(value?: string | null): TemplateFlow {
