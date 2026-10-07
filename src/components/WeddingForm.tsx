@@ -381,10 +381,10 @@ export function WeddingForm({
       setUploading(null);
     }
 
-    // Keep parent/editor refresh outside the upload transaction. If the
-    // parent refresh has its own async work, it must not turn a successful
-    // upload into a false "media failed" toast.
-    if (succeeded) onSaved(event);
+    // The media panel already refreshes itself with loadMedia().
+    // Do not re-save/reload the parent editor here: its asynchronous refresh
+    // used to surface a false failure after a successful upload.
+    if (succeeded) return;
   }
 
   async function removeMedia(item: { id: string; storage_path: string }) {
