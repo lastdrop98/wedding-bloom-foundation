@@ -195,7 +195,7 @@ export function WeddingForm({
   eventType?: string;
   onSaved: (event?: EventRow) => void;
   onCancel: () => void;
-  initialValues?: Partial<Record<string, string>>;
+  initialValues?: Partial<Record<string, string>> | undefined;
 }) {
   const [values, setValues] = useState<Record<string, string>>(() => {
     const detailValues = event ? readDetails(event) : {};
@@ -211,7 +211,7 @@ export function WeddingForm({
         base[f.name] = toInputValue(raw, f.kind);
       }),
     );
-    if (!event) base["template"] = initialValues?.template || "golden-classic";
+    if (!event) base["template"] = initialValues?.["template"] || "golden-classic";
     if (!event && initialValues) {
       Object.entries(initialValues).forEach(([key, value]) => {
         if (value != null) base[key] = value;
@@ -231,7 +231,7 @@ export function WeddingForm({
     const items = data ?? [];
     setMediaItems(items);
     const urls: Record<string, string> = {};
-    await Promise.all(items.map(async (item) => {
+    await Promise.all(items.map(async (item: { id: string; storage_path: string }) => {
       const { data: signed } = await supabase.storage.from(GALLERY_BUCKET).createSignedUrl(item.storage_path, 3600);
       if (signed?.signedUrl) urls[item.id] = signed.signedUrl;
     }));
@@ -567,7 +567,7 @@ export function WeddingForm({
           Adicione fotos ou vídeos específicos para a capa, história, galeria e outros pontos do convite.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
-          {[
+          {([
             ["hero", "Capa / abertura"],
             ["cover_video", "Vídeo de abertura"],
             ["background", "Fundo do convite"],
@@ -579,7 +579,7 @@ export function WeddingForm({
             ["section_2", "Momento especial 2"],
             ["gallery", "Galeria / destaque"],
             ["closing", "Encerramento"],
-          ].map(([slot, label]) => (
+          ] as const).map(([slot, label]) => (
             <div key={slot} className="rounded-xl border border-border p-4 space-y-3">
               <div>
                 <p className="font-medium">{label}</p>

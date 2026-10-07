@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, CalendarDays, Check, Clock, Gift, Heart, Images, MessageCircle, Search, Sparkles, X } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, getTemplateVisualFamily, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
 import { openWhatsApp } from "@/lib/whatsapp";
@@ -84,9 +84,9 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
   const photoA = images[hash % images.length];
   const photoB = images[(hash + 1) % images.length];
 
-  const demoScrollRef = useRef<HTMLDivElement | null>(null);
   const scrollTo = (section: string) => {
-    demoScrollRef.current
+    document
+      .querySelector("[data-model-demo-scroll]")
       ?.querySelector<HTMLElement>(`[data-demo-section="${section}"]`)
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -324,7 +324,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
         <p className="mt-3 text-[9px] uppercase tracking-[0.25em] opacity-55">Solar Eclipse · demonstração</p>
       </section>
       <div className="sticky bottom-3 z-10 mx-auto mt-[-1px] flex w-fit gap-1 rounded-full border border-black/10 bg-white/90 p-1 shadow-xl backdrop-blur">
-        {[
+        {([
           ["capa", "Capa"],
           ["historia", "História"],
           ["galeria", "Galeria"],
@@ -332,7 +332,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
           ["rsvp", "RSVP"],
           ["presentes", "Presentes"],
           ["mensagens", "Mensagens"],
-        ].map(([id, label]) => (
+        ] as const).map(([id, label]) => (
           <button key={id} type="button" onClick={() => scrollTo(id)} className="rounded-full px-2.5 py-2 text-[8px] font-medium text-black/60 hover:bg-black/5">
             {label}
           </button>
@@ -596,7 +596,7 @@ function ModelsPage() {
                 <X /> <span className="hidden sm:inline">Fechar</span>
               </Button>
             </div>
-            <div ref={demoScrollRef} data-model-demo-scroll className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#ece8df] p-2 sm:p-6" tabIndex={0} aria-label="Percorrer convite de demonstração">
+            <div data-model-demo-scroll className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#ece8df] p-2 sm:p-6" tabIndex={0} aria-label="Percorrer convite de demonstração">
               <InvitationPreview template={demo} />
               <div className="mx-auto mt-4 max-w-[420px] rounded-2xl border border-black/10 bg-white p-5 text-left">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/40">Direção do tema</p>

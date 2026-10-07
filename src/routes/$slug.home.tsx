@@ -622,6 +622,7 @@ function formatIcsDate(value: string | null) {
 }
 
 function calendarHref(event: EventRow) {
+  if (!event.event_date) return "#";
   const start = formatIcsDate(event.event_date);
   if (!start) return "#";
   const endDate = new Date(new Date(event.event_date).getTime() + 4 * 60 * 60 * 1000);
@@ -1104,7 +1105,7 @@ function HomePage() {
       {(slotMedia["section_1"] || slotMedia["section_2"]) && (
         <Section data-template-section="moments" sectionKey="moments" title="Momentos especiais" eyebrow="Para guardar na memória" wide vines="c">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((media, index) => (
+            {[slotMedia["section_1"], slotMedia["section_2"]].flatMap((m) => (m ? [m] : [])).map((media, index) => (
               <div key={media.url} className="card-elegant overflow-hidden">
                 {media.mediaType === "video" ? (
                   <video

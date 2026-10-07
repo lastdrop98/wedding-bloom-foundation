@@ -696,7 +696,7 @@ function EditorShell({
   onSectionChange: (section: string) => void;
   onClose: () => void;
   onSaved: () => void;
-  initialValues?: Partial<Record<string, string>>;
+  initialValues?: Partial<Record<string, string>> | undefined;
 }) {
   const title = event ? eventTitle(event) : `Novo — ${eventTypeLabel(eventType)}`;
 

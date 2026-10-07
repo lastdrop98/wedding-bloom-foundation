@@ -36,6 +36,37 @@ import { Guestbook } from "@/components/invite/Guestbook";
 
 type GalleryImage = { url: string; caption: string | null; mediaType: string };
 
+function InviteQuickActions({ event }: { event: Pick<EventRow, "display_names" | "details"> }) {
+  const goTo = (section: string) => {
+    const target = document.querySelector(`[data-template-section="${section}"]`);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    toast.message("Esta secção ainda não foi preenchida.");
+  };
+
+  const share = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      await navigator.share({ title: eventTitle(event), text: "Convite de casamento", url }).catch(() => undefined);
+      return;
+    }
+    await navigator.clipboard?.writeText(url);
+    toast.success("Link do convite copiado.");
+  };
+
+  return (
+    <nav className="invite-quick-actions" aria-label="Navegação rápida do convite">
+      <button type="button" onClick={() => goTo("story")}>História</button>
+      <button type="button" onClick={() => goTo("schedule")}>Programa</button>
+      <button type="button" onClick={() => goTo("location")}>Local</button>
+      <button type="button" onClick={() => goTo("rsvp")}>RSVP</button>
+      <button type="button" onClick={() => void share()}>Partilhar</button>
+    </nav>
+  );
+}
+
 function Section({
   title,
   eyebrow,
@@ -629,7 +660,7 @@ export function AquarelaHome({
       {(slotMedia["section_1"] || slotMedia["section_2"]) && (
         <Section sectionKey="moments" title="Momentos especiais" eyebrow="Para guardar na memória" wide flora="bagas">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((media, index) => (
+            {[slotMedia["section_1"], slotMedia["section_2"]].flatMap((m) => (m ? [m] : [])).map((media, index) => (
               <div key={media.url} className="card-aquarela overflow-hidden">
                 {media.mediaType === "video" ? (
                   <video src={media.url} controls playsInline preload="metadata" className="h-72 w-full object-cover md:h-96" />
