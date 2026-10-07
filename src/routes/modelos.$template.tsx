@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Check, MessageCircle } from "lucide-react";
 import { getTemplateDefinition, getTemplateVisualFamily, templateVisualClass } from "@/lib/templates";
 import { createTemplateRequest } from "@/lib/templateRequests";
 import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
+import { LimintsoSignaturePreview } from "@/components/invite/templates/limintso/SignaturePreview";
 
 export const Route = createFileRoute("/modelos/$template")({
   component: TemplatePreviewPage,
@@ -88,6 +89,7 @@ function TemplatePreviewPage() {
     sunset: 1,
     paper: 7,
     "pearl-editorial": 2,
+    limintso: 8,
   } as const;
   const previewVariant = isLimintsoEmerald ? 8 : previewVariantByFamily[visualFamily];
   async function request() {
@@ -278,7 +280,7 @@ function TemplatePreviewPage() {
                   src={previewImage}
                   alt=""
                   className="absolute inset-0 size-full object-cover"
-                />
+                />}
                 <div className="template-preview-veil absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/85" />
                 <span className="template-preview-pattern pointer-events-none absolute inset-0" aria-hidden="true" />
                                 {previewCover}
