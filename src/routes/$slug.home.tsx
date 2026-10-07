@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { CalendarPlus, Coffee, Gem, Heart, Share2, Sparkles, type LucideIcon } from "lucide-react";
+import { CalendarPlus, CircleDot, Coffee, Gem, Heart, Share2, type LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -536,7 +536,7 @@ function TemplateHeroAccent({ template }: { template?: string | null }) {
   if (isPearl) {
     return (
       <div className="template-hero-accent template-hero-accent-pearl" aria-hidden="true">
-        <span>✦</span><i /><span>PEARL GARDEN</span><i /><span>✦</span>
+        <span>01</span><i /><span>PEARL GARDEN</span><i /><span>02</span>
       </div>
     );
   }
@@ -544,7 +544,7 @@ function TemplateHeroAccent({ template }: { template?: string | null }) {
   if (isCelestial) {
     return (
       <div className="template-hero-accent template-hero-accent-celestial" aria-hidden="true">
-        <span>✦</span><i /><span>CELESTIAL</span><i /><span>✦</span>
+        <span>01</span><i /><span>CELESTIAL</span><i /><span>02</span>
       </div>
     );
   }
@@ -598,11 +598,11 @@ function TemplateHeroAccent({ template }: { template?: string | null }) {
   if (isCeremonial) {
     return (
       <div className="template-hero-accent template-hero-accent-ceremonial" aria-hidden="true">
-        <span>✦</span>
+        <span>01</span>
         <i />
         <span>{family}</span>
         <i />
-        <span>✦</span>
+        <span>02</span>
       </div>
     );
   }
