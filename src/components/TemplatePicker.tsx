@@ -175,6 +175,21 @@ export function TemplatePicker({
                 />
                 <div className="absolute inset-0 bg-black/35" />
                 {item.value === "film-noir-motion" && <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,.35)_55%,rgba(0,0,0,.9)_100%)]"><span className="absolute left-3 top-3 border border-white/30 px-2 py-1 text-[8px] tracking-[.2em] text-white/60">FILM 01</span><span className="absolute bottom-3 left-3 right-3 h-px bg-white/20" /></div>}
+{item.value === "limintso-emerald" && (
+  <div className="absolute inset-0 bg-[#f4efe7]">
+    <div className="absolute inset-x-4 top-3 h-5 border-b border-[#c9ab68]/45" />
+    <div className="absolute inset-x-5 top-8 bottom-3 rounded-xl border border-[#c9ab68]/35 bg-white shadow-sm" />
+    <div className="absolute inset-x-9 top-12 bottom-7 overflow-hidden rounded-lg">
+      <img src={PREVIEW_IMAGES.pearl} alt="" className="size-full object-cover opacity-85" />
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-2 pb-2 pt-6 text-center text-white">
+        <span className="block text-[5px] uppercase tracking-[.2em]">A união matrimonial de</span>
+        <strong className="block font-serif text-lg">A&amp;M</strong>
+      </div>
+    </div>
+    <span className="absolute right-7 top-4 rounded-full bg-[#c9ab68] px-2 py-1 text-[5px] font-semibold uppercase tracking-[.12em] text-white">Emerald</span>
+  </div>
+)}
+
                 {item.value === "editorial-magazine" && <div className="absolute inset-0 grid grid-cols-[38%_62%] bg-[#ece7de]"><div className="flex flex-col justify-between p-3 text-black"><span className="text-[7px] tracking-[.2em]">ISSUE 01</span><span className="font-serif text-2xl leading-[.8]">A&amp;<br/>M</span></div><div className="bg-black/20" /></div>}
                 {item.value === "pearl-garden" && <><span className="absolute -left-8 top-2 size-28 rounded-full bg-white/25 blur-xl"/><span className="absolute right-4 bottom-2 size-14 rounded-full border border-white/45"/></>}
                 {item.value === "celestial-ivory" && <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(164,123,49,.8)_0_1px,transparent_2px),radial-gradient(circle_at_75%_30%,rgba(164,123,49,.7)_0_1px,transparent_2px),radial-gradient(circle_at_55%_75%,rgba(164,123,49,.7)_0_1px,transparent_2px)]" />}
