@@ -792,3 +792,43 @@ main[class*="template-design-"] .solar-landing-hero-v2 {
 .solar-admin-shell.admin-theme-dark::before {
   display: none !important;
 }
+
+/* Invitation pages own their visual language. Never show the legacy animated vine system. */
+main[class*="template-visual-"] .vine-run,
+main[class*="template-design-"] .vine-run,
+main[class*="template-flow-"] .vine-run {
+  display: none !important;
+}
+
+/* Model demo navigation must scroll only inside the demo surface. */
+[data-model-demo-scroll] {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Admin theme hardening: legacy utility classes cannot create low-contrast text. */
+.solar-admin-shell.admin-theme-dark :is([class~="text-black"],[class*="text-black/"]) {
+  color: rgba(245,245,247,.82) !important;
+}
+.solar-admin-shell.admin-theme-dark :is([class*="text-black/35"],[class*="text-black/40"],[class*="text-black/45"],[class*="text-black/50"]) {
+  color: rgba(245,245,247,.52) !important;
+}
+.solar-admin-shell.admin-theme-dark :is([class*="border-black/"]) {
+  border-color: rgba(255,255,255,.10) !important;
+}
+.solar-admin-shell.admin-theme-dark :is([class*="bg-white"]) {
+  background-color: #171717 !important;
+}
+.solar-admin-shell.admin-theme-dark :is([class*="bg-[#faf9f6]"],[class*="bg-[#fffdf7]"],[class*="bg-[#f5f5f7]"]) {
+  background-color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-dark input,
+.solar-admin-shell.admin-theme-dark textarea,
+.solar-admin-shell.admin-theme-dark select {
+  color: #f5f5f7 !important;
+  background: #1b1b1b !important;
+  border-color: rgba(255,255,255,.12) !important;
+}
+.solar-admin-shell.admin-theme-light :is([class~="text-white"],[class*="text-white/"]) {
+  color: rgba(29,29,31,.70) !important;
+}
