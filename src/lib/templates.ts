@@ -572,6 +572,54 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
     implemented: true,
   },
   {
+    value: "limintso-rose",
+    label: "Rose Signature",
+    family: "Signature Cards / Romantic",
+    tone: "rose",
+    description: "Estrutura vertical de cartões, retratos recortados e detalhes blush com acabamento de papelaria.",
+    implemented: true,
+  },
+  {
+    value: "limintso-ivory",
+    label: "Ivory Signature",
+    family: "Signature Cards / Minimal",
+    tone: "sand",
+    description: "Marfim editorial, fotografia protagonista, molduras finas e ritmo de convite premium.",
+    implemented: true,
+  },
+  {
+    value: "limintso-sapphire",
+    label: "Sapphire Signature",
+    family: "Signature Cards / Destination",
+    tone: "sapphire",
+    description: "Azul profundo, cartões claros, fotografia costeira e navegação dourada discreta.",
+    implemented: true,
+  },
+  {
+    value: "limintso-black",
+    label: "Black Signature",
+    family: "Signature Cards / Noir",
+    tone: "midnight",
+    description: "Papel preto, serifas luminosas, fotografia cinematográfica e navegação compacta.",
+    implemented: true,
+  },
+  {
+    value: "limintso-forest",
+    label: "Forest Signature",
+    family: "Signature Cards / Botanical",
+    tone: "emerald",
+    description: "Verde floresta, marfim quente, retratos em cartões e detalhes botânicos discretos.",
+    implemented: true,
+  },
+  {
+    value: "limintso-mozambique",
+    label: "Moçambique Signature",
+    family: "Signature Cards / Africano",
+    tone: "xiguiane",
+    description: "Base de cartões premium com paleta terracota, verde e dourado para celebrações moçambicanas.",
+    implemented: true,
+  },
+  {
     value: "pearl-editorial",
     label: "Pearl Editorial",
     family: "Garden / Luxury",
@@ -640,7 +688,7 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   if (/mozambique-luxe|heritage-ceremony/.test(source)) return source.includes("heritage-ceremony") ? "heritage" : "mozambique";
   if (/sunset-destination|sicilian-terracotta|tropical-sunset/.test(source)) return "sunset";
   if (/black-paper/.test(source)) return "paper";
-  if (/limintso-emerald/.test(source)) return "limintso";
+  if (/limintso-/.test(source)) return "limintso";
   if (/pearl-ceremony|pearl-editorial/.test(source)) return "pearl-editorial";
   if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue/.test(source)) return "cinematic";
   if (/editorial|minimalist|minimalista|sapphire-editorial/.test(source)) return "editorial";
@@ -673,6 +721,12 @@ export function templateBaseClass(value?: string | null) {
     "cinema-love-story",
     "black-paper",
     "limintso-emerald",
+    "limintso-rose",
+    "limintso-ivory",
+    "limintso-sapphire",
+    "limintso-black",
+    "limintso-forest",
+    "limintso-mozambique",
   ]);
   return special.has(value ?? "") ? "template-base-signature" : "template-base-standard";
 }
