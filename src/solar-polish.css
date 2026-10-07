@@ -2677,3 +2677,232 @@ main.template-base-signature { isolation: isolate; }
   background: #168a44 !important;
   border-color: #168a44 !important;
 }
+
+
+/* --------------------------------------------------------------------------
+   Signature Card family — Limintso-inspired reference rhythm
+   Shared structure, distinct art direction per variant.
+---------------------------------------------------------------------------- */
+main[class*="template-design-limintso-"] {
+  --sig-paper: #f7f3eb;
+  --sig-card: #fffdf9;
+  --sig-ink: #4d4336;
+  --sig-accent: #c8a866;
+  --sig-muted: #817766;
+  background: var(--sig-paper);
+  color: var(--sig-ink);
+}
+main[class*="template-design-limintso-"] .template-hero {
+  min-height: 100svh;
+  padding: 4.5rem 1rem 6.5rem;
+  background: var(--sig-paper);
+}
+main[class*="template-design-limintso-"] .template-hero > .absolute:first-child {
+  inset: 16% 7% auto;
+  height: 47%;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 18px 44px rgba(64,53,39,.13);
+  z-index: 0;
+}
+main[class*="template-design-limintso-"] .template-hero > .absolute:first-child .template-hero-veil {
+  background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.38));
+}
+main[class*="template-design-limintso-"] .template-hero-content {
+  width: min(100%, 520px);
+  z-index: 2;
+  padding-top: 25vh;
+}
+main[class*="template-design-limintso-"] .template-hero h1,
+main[class*="template-design-limintso-"] h2,
+main[class*="template-design-limintso-"] h3,
+main[class*="template-design-limintso-"] h4 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+main[class*="template-design-limintso-"] .template-hero h1 {
+  max-width: 10ch;
+  margin-inline: auto;
+  color: var(--sig-ink);
+  font-size: clamp(3.4rem, 14vw, 6.6rem);
+  line-height: .84;
+}
+main[class*="template-design-limintso-"] .template-hero .solar-eclipse-brand,
+main[class*="template-design-limintso-"] .template-hero .template-hero-accent-limintso {
+  color: var(--sig-accent);
+}
+main[class*="template-design-limintso-"] > section[data-template-section]:not([data-template-section="hero"]) {
+  padding-block: 3.75rem;
+}
+main[class*="template-design-limintso-"] > section[data-template-section="welcome"],
+main[class*="template-design-limintso-"] > section[data-template-section="word"],
+main[class*="template-design-limintso-"] > section[data-template-section="party"] {
+  background: var(--sig-paper);
+}
+main[class*="template-design-limintso-"] > section[data-template-section="couple"],
+main[class*="template-design-limintso-"] > section[data-template-section="story"],
+main[class*="template-design-limintso-"] > section[data-template-section="gallery"] {
+  background: color-mix(in srgb, var(--sig-paper) 82%, #d9d0c0);
+}
+main[class*="template-design-limintso-"] > section[data-template-section="schedule"],
+main[class*="template-design-limintso-"] > section[data-template-section="location"] {
+  background: #fff;
+}
+main[class*="template-design-limintso-"] > section[data-template-section="countdown"] {
+  background: var(--sig-accent);
+  color: #fffdf8;
+}
+main[class*="template-design-limintso-"] > section[data-template-section="rsvp"] {
+  background: color-mix(in srgb, var(--sig-paper) 88%, white);
+}
+main[class*="template-design-limintso-"] > section[data-template-section="gifts"] {
+  background: color-mix(in srgb, var(--sig-paper) 76%, #ded2bf);
+}
+main[class*="template-design-limintso-"] .card-elegant {
+  background: var(--sig-card);
+  border: 1px solid color-mix(in srgb, var(--sig-accent) 22%, transparent);
+  border-radius: 18px;
+  box-shadow: 0 18px 55px rgba(40,31,20,.08);
+}
+main[class*="template-design-limintso-"] .eyebrow {
+  color: var(--sig-accent);
+  letter-spacing: .22em;
+}
+main[class*="template-design-limintso-"] .draw-rule {
+  width: 54px;
+  height: 1px;
+  background: var(--sig-accent);
+}
+main[class*="template-design-limintso-"] .invite-carousel {
+  border-radius: 18px;
+  background: var(--sig-card);
+}
+main[class*="template-design-limintso-"] .invite-quick-actions {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  bottom: 12px;
+  width: min(96%, 520px);
+  gap: 2px;
+  padding: 6px;
+  border: 1px solid color-mix(in srgb, var(--sig-accent) 38%, transparent);
+  border-radius: 18px 18px 26px 26px;
+  background: color-mix(in srgb, var(--sig-accent) 92%, #fff 8%);
+  box-shadow: 0 16px 38px rgba(60,49,34,.18);
+  backdrop-filter: blur(16px);
+}
+main[class*="template-design-limintso-"] .invite-quick-actions button {
+  min-width: 0;
+  min-height: 40px;
+  flex: 1 1 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 5px 7px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: transparent;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+main[class*="template-design-limintso-"] .invite-quick-actions button:hover,
+main[class*="template-design-limintso-"] .invite-quick-actions button:focus-visible {
+  border-color: rgba(255,255,255,.4);
+  background: rgba(255,255,255,.12);
+}
+main[class*="template-design-limintso-"] [data-template-section="rsvp"] button,
+main[class*="template-design-limintso-"] [data-template-section="gifts"] button,
+main[class*="template-design-limintso-"] [data-template-section="guestbook"] button {
+  border-radius: 999px;
+  border: 1px solid var(--sig-accent);
+  background: var(--sig-accent);
+  color: #fff;
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--sig-accent) 22%, transparent);
+}
+main[class*="template-design-limintso-"] [data-template-section="rsvp"] button:hover,
+main[class*="template-design-limintso-"] [data-template-section="gifts"] button:hover,
+main[class*="template-design-limintso-"] [data-template-section="guestbook"] button:hover {
+  transform: translateY(-1px);
+  filter: brightness(.96);
+}
+main.template-design-limintso-rose {
+  --sig-paper: #f7eeed; --sig-card: #fffafa; --sig-ink: #684b50; --sig-accent: #b76f7c;
+}
+main.template-design-limintso-ivory {
+  --sig-paper: #f7f3eb; --sig-card: #fffefb; --sig-ink: #4f493f; --sig-accent: #a98b59;
+}
+main.template-design-limintso-sapphire {
+  --sig-paper: #eef3f4; --sig-card: #fbfdfd; --sig-ink: #344b56; --sig-accent: #668f9f;
+}
+main.template-design-limintso-black {
+  --sig-paper: #151515; --sig-card: #202020; --sig-ink: #f2eadc; --sig-accent: #c9ab68; --sig-muted: #b9b0a2;
+}
+main.template-design-limintso-black .template-hero h1,
+main.template-design-limintso-black h2,
+main.template-design-limintso-black h3,
+main.template-design-limintso-black h4 { color: #f2eadc; }
+main.template-design-limintso-black > section[data-template-section="couple"],
+main.template-design-limintso-black > section[data-template-section="story"],
+main.template-design-limintso-black > section[data-template-section="gallery"] { background: #1b1b1b; }
+main.template-design-limintso-black > section[data-template-section="schedule"],
+main.template-design-limintso-black > section[data-template-section="location"] { background: #121212; }
+main.template-design-limintso-black .card-elegant { color: #eee7db; border-color: rgba(201,171,104,.2); }
+main.template-design-limintso-black .template-hero > .absolute:first-child .template-hero-veil { background: linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.56)); }
+main.template-design-limintso-forest {
+  --sig-paper: #edf0e9; --sig-card: #fbfcf8; --sig-ink: #3e5141; --sig-accent: #6e8c70;
+}
+main.template-design-limintso-mozambique {
+  --sig-paper: #f1e5d7; --sig-card: #fff9f1; --sig-ink: #5d4330; --sig-accent: #a36c3d;
+  background-image: repeating-linear-gradient(45deg, rgba(91,74,50,.045) 0 8px, transparent 8px 16px);
+}
+main.template-design-limintso-mozambique .invite-quick-actions {
+  background: linear-gradient(90deg,#9a6840,#6d7b42,#b58b4d);
+}
+main.template-design-limintso-mozambique .template-hero::after {
+  content: "";
+  position: absolute;
+  inset: 7%;
+  border: 1px solid rgba(163,108,61,.26);
+  pointer-events: none;
+}
+main[class*="template-design-limintso-"] [data-template-section="gallery"] img,
+main[class*="template-design-limintso-"] [data-template-section="story"] img {
+  border-radius: 16px;
+}
+main[class*="template-design-limintso-"] [data-template-section="schedule"] li {
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--sig-accent) 16%, transparent);
+  background: var(--sig-card);
+}
+@media (max-width: 640px) {
+  main[class*="template-design-limintso-"] .template-hero {
+    padding: 4.5rem 1rem 6.5rem;
+  }
+  main[class*="template-design-limintso-"] .template-hero > .absolute:first-child {
+    inset: 12% 4.5% auto;
+    height: 45%;
+    border-radius: 20px;
+  }
+  main[class*="template-design-limintso-"] .template-hero-content {
+    padding-top: 25vh;
+  }
+  main[class*="template-design-limintso-"] .invite-quick-actions {
+    max-width: calc(100vw - 18px);
+    overflow-x: auto;
+  }
+  main[class*="template-design-limintso-"] .invite-quick-actions button {
+    flex: 0 0 auto;
+  }
+}
+
+/* Remove generic AI-looking star/sparkle decorations across landing, previews and invites. */
+.solar-landing :is(.star,.sparkle,.spark,.stars,.sparkles),
+.solar-models-page :is(.star,.sparkle,.spark,.stars,.sparkles),
+main[class*="template-"] :is(.star,.sparkle,.spark,.stars,.sparkles) {
+  display: none !important;
+}
