@@ -412,6 +412,94 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
     implemented: true,
   },
   {
+    value: "porcelain-botanical",
+    label: "Porcelain Botanical",
+    family: "Floral / Paper",
+    tone: "rose",
+    description: "Padrão floral de papel, cartões de conteúdo e calendário editorial.",
+    implemented: true,
+  },
+  {
+    value: "glass-garden",
+    label: "Glass Garden",
+    family: "Garden / Glass",
+    tone: "emerald",
+    description: "Jardim luminoso com molduras de vidro, fotografia e cartões translúcidos.",
+    implemented: true,
+  },
+  {
+    value: "silk-ribbon",
+    label: "Silk Ribbon",
+    family: "Floral / Luxury",
+    tone: "rose",
+    description: "Laços de seda, retratos emoldurados e ritmo de convite de papelaria.",
+    implemented: true,
+  },
+  {
+    value: "dried-flower",
+    label: "Dried Flower",
+    family: "Natural / Editorial",
+    tone: "sand",
+    description: "Flores secas, papel quente e composição de memória natural.",
+    implemented: true,
+  },
+  {
+    value: "elegant-leaf",
+    label: "Elegant Leaf",
+    family: "Botânico / Moderno",
+    tone: "emerald",
+    description: "Folhagem elegante, fotografia recortada e cartões editoriais limpos.",
+    implemented: true,
+  },
+  {
+    value: "chateau-coastal",
+    label: "Chateau Coastal",
+    family: "Destination / European",
+    tone: "sapphire",
+    description: "Abertura panorâmica, moldura clássica e ritmo de casamento de destino.",
+    implemented: true,
+  },
+  {
+    value: "lotus-atelier",
+    label: "Lotus Atelier",
+    family: "Floral / Atelier",
+    tone: "rose",
+    description: "Lótus, molduras finas e fotografia de retrato com acabamento de atelier.",
+    implemented: true,
+  },
+  {
+    value: "royal-forest",
+    label: "Royal Forest",
+    family: "Royal / Botanical",
+    tone: "emerald",
+    description: "Floresta profunda, molduras douradas e cartões cerimoniais.",
+    implemented: true,
+  },
+  {
+    value: "double-happiness",
+    label: "Double Happiness",
+    family: "Cerimonial / Heritage",
+    tone: "burgundy",
+    description: "Abertura cerimonial, selo de união, famílias e programa em cartões.",
+    implemented: true,
+  },
+  {
+    value: "crystal-floral",
+    label: "Crystal Floral",
+    family: "Floral / Crystal",
+    tone: "sapphire",
+    description: "Flores cristalinas, molduras translúcidas e composição editorial azul.",
+    implemented: true,
+  },
+  {
+    value: "ribbon-ivory",
+    label: "Ribbon Ivory",
+    family: "Minimalista / Luxury",
+    tone: "sand",
+    description: "Marfim, fita editorial e cartões de informação com acabamento premium.",
+    implemented: true,
+  },
+  {
     value: "aquarela-botanica",
     label: "Aguarela Botânica",
     family: "Floral / Garden",
@@ -557,6 +645,21 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   if (/pearl-editorial/.test(source)) return "pearl-editorial";
   if (/coastal|destination|mediterranean|sicilian/.test(source)) return "coastal";
   return "classic";
+}
+
+export function templateBaseClass(value?: string | null) {
+  const special = new Set([
+    "film-noir-motion",
+    "editorial-magazine",
+    "pearl-garden",
+    "capulana-contemporary",
+    "celestial-ivory",
+    "coastal-blue",
+    "editorial-cinema",
+    "cinema-love-story",
+    "black-paper",
+  ]);
+  return special.has(value ?? "") ? "template-base-signature" : "template-base-limintso";
 }
 
 export function templateVisualClass(value?: string | null) {
