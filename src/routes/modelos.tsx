@@ -8,6 +8,7 @@ import { openWhatsApp } from "@/lib/whatsapp";
 import { createTemplateRequest } from "@/lib/templateRequests";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { LimintsoSignaturePreview } from "@/components/invite/templates/limintso/SignaturePreview";
 
 export const Route = createFileRoute("/modelos")({
   component: ModelsPage,
@@ -79,6 +80,7 @@ const previewStyles = {
 
 function InvitationPreview({ template }: { template: TemplateDefinition }) {
   const family = previewFamily(template);
+  if (family === "limintso") return <LimintsoSignaturePreview template={template} />;
   const style = previewStyles[family];
   const direction = getTemplateDirection(template);
 
