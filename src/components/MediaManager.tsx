@@ -26,7 +26,6 @@ type MediaItem = {
   slot: MediaSlot;
   media_type: "image" | "video";
   storage_path: string;
-  caption: string | null;
   sort_order: number;
 };
 
@@ -91,7 +90,6 @@ function SlotPreview({ item }: { item: MediaItem }) {
 export function MediaManager({ event }: { event: EventRow }) {
   const queryClient = useQueryClient();
   const [fileBySlot, setFileBySlot] = useState<Record<string, File | null>>({});
-  const [captionBySlot, setCaptionBySlot] = useState<Record<string, string>>({});
   const [orderBySlot, setOrderBySlot] = useState<Record<string, string>>({});
   const [musicFile, setMusicFile] = useState<File | null>(null);
   const [musicTitle, setMusicTitle] = useState(() => details(event).music_title ?? "");
@@ -104,7 +102,7 @@ export function MediaManager({ event }: { event: EventRow }) {
     queryFn: async () => {
       const { data, error } = await looseDb
         .from("event_media")
-        .select("*")
+        .select("id,event_id,slot,media_type,storage_path,sort_order")
         .eq("event_id", event.id)
         .order("sort_order", { ascending: true });
       if (error) throw error;
@@ -135,7 +133,6 @@ export function MediaManager({ event }: { event: EventRow }) {
         slot,
         media_type: mediaType,
         storage_path: path,
-        caption: captionBySlot[slot]?.trim() || null,
         sort_order: Number.isFinite(order) ? order : 1,
       };
 
@@ -171,25 +168,23 @@ export function MediaManager({ event }: { event: EventRow }) {
     onSuccess: (_, variables) => {
       setFileBySlot((current) => ({ ...current, [variables.slot]: null }));
       void queryClient.invalidateQueries({ queryKey: key });
-      toast.success("Media atualizada.");
+      toast.success(variables.slot === "cover" ? "Capa atualizada." : "Media adicionada.");
     },
     onError: (error) =>
-      toast.error(error instanceof Error ? error.message : "Não foi possível atualizar a media."),
+      toast.error(error instanceof Error ? error.message : "Não foi possível guardar esta media. Verifique o ficheiro e tente novamente."),
   });
 
   const updateSlot = useMutation({
     mutationFn: async ({
       item,
-      caption,
       sortOrder,
     }: {
       item: MediaItem;
-      caption: string;
       sortOrder: number;
     }) => {
       const { error } = await looseDb
         .from("event_media")
-        .update({ caption: caption.trim() || null, sort_order: sortOrder })
+        .update({ sort_order: sortOrder })
         .eq("id", item.id)
         .eq("event_id", event.id);
       if (error) throw error;
@@ -270,7 +265,7 @@ export function MediaManager({ event }: { event: EventRow }) {
     const order = orderBySlot[definition.value] ?? String(item?.sort_order ?? "");
 
     return (
-      <div key={definition.value} className="space-y-3 rounded-lg border border-border p-4">
+      <div key={definition.value} className="space-y-3 rounded-lg border border-border bg-background/60 p-4">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="font-medium">{definition.label}</p>
@@ -279,7 +274,7 @@ export function MediaManager({ event }: { event: EventRow }) {
           {item && <SlotPreview item={item} />}
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-[1fr_1fr_110px_auto] sm:items-end">
+        <div className="grid gap-3 sm:grid-cols-[1fr_110px_auto] sm:items-end">
           <div className="space-y-2">
             <Label>Substituir ficheiro</Label>
             <Input
@@ -290,15 +285,6 @@ export function MediaManager({ event }: { event: EventRow }) {
                   ...current,
                   [definition.value]: e.target.files?.[0] ?? null,
                 }))
-              }
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>Legenda opcional</Label>
-            <Input
-              value={captionBySlot[definition.value] ?? item?.caption ?? ""}
-              onChange={(e) =>
-                setCaptionBySlot((current) => ({ ...current, [definition.value]: e.target.value }))
               }
             />
           </div>
@@ -329,15 +315,9 @@ export function MediaManager({ event }: { event: EventRow }) {
               variant="outline"
               size="sm"
               disabled={updateSlot.isPending}
-              onClick={() =>
-                updateSlot.mutate({
-                  item,
-                  caption: captionBySlot[definition.value] ?? item.caption ?? "",
-                  sortOrder: Math.max(0, Number(order) || 0),
-                })
-              }
+              onClick={() => updateSlot.mutate({ item, sortOrder: Math.max(0, Number(order) || 0) })}
             >
-              Guardar legenda/ordem
+              Guardar ordem
             </Button>
             <Button
               type="button"
