@@ -74,7 +74,7 @@ function HomePage() {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setCarouselIndex((current) => (current + 1) % HOME_TEMPLATE_IMAGES.length);
+      setCarouselIndex((current) => (current + 1) % HOME_CAROUSEL_VALUES.length);
     }, 4200);
     return () => window.clearInterval(timer);
   }, []);
@@ -190,7 +190,7 @@ function HomePage() {
           <div className="mt-10 overflow-hidden rounded-[30px] border border-white/10 bg-white/[.035] p-2 sm:p-3">
             <div className="grid gap-3 sm:grid-cols-3">
               {[0,1,2].map((offset) => {
-                const index = (carouselIndex + offset) % HOME_TEMPLATE_IMAGES.length;
+                const index = (carouselIndex + offset) % HOME_CAROUSEL_VALUES.length;
                 const item = TEMPLATE_OPTIONS.find((template) => template.value === HOME_CAROUSEL_VALUES[index]) ?? TEMPLATE_OPTIONS[0]!;
                 return (
                   <a key={`${carouselIndex}-${offset}`} href={`/modelos/${item.value}`} className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#1a1917] shadow-[0_24px_70px_rgba(0,0,0,.32)] ${offset === 1 ? "sm:-translate-y-5 sm:scale-[1.025]" : ""}`}>
@@ -207,8 +207,8 @@ function HomePage() {
             </div>
           </div>
           <div className="mt-5 flex items-center justify-center gap-1.5" aria-label="Posição do carrossel">
-            {HOME_TEMPLATE_IMAGES.map((_, index) => (
-              <button key={index} type="button" aria-label={`Ir para destaque ${index + 1}`} aria-current={index === carouselIndex} onClick={() => setCarouselIndex(index)} className={`h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-8 bg-[#d7b56d]" : "w-1.5 bg-white/20 hover:bg-white/40"}`} />
+            {HOME_CAROUSEL_VALUES.map((_, index) => (
+              <button key={index} type="button" aria-label={`Ir para destaque ${index + 1}`} aria-current={index === carouselIndex} onClick={() => setCarouselIndex(index)} className={``h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-8 bg-[#d7b56d]" : "w-1.5 bg-white/20 hover:bg-white/40"}`} />
             ))}
           </div>
         </div>
