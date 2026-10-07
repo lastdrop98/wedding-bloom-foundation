@@ -36,7 +36,7 @@ import { Guestbook } from "@/components/invite/Guestbook";
 
 type GalleryImage = { url: string; caption: string | null; mediaType: string };
 
-function InviteQuickActions({ event }: { event: { display_names: string | null } }) {
+function InviteQuickActions({ event }: { event: Pick<EventRow, "display_names" | "details"> }) {
   const goTo = (section: string) => {
     const target = document.querySelector(`[data-template-section="${section}"]`);
     if (target) {

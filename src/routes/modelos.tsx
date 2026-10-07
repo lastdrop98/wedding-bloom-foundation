@@ -324,7 +324,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
         <p className="mt-3 text-[9px] uppercase tracking-[0.25em] opacity-55">Solar Eclipse · demonstração</p>
       </section>
       <div className="sticky bottom-3 z-10 mx-auto mt-[-1px] flex w-fit gap-1 rounded-full border border-black/10 bg-white/90 p-1 shadow-xl backdrop-blur">
-        {[
+        {([
           ["capa", "Capa"],
           ["historia", "História"],
           ["galeria", "Galeria"],
@@ -332,7 +332,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
           ["rsvp", "RSVP"],
           ["presentes", "Presentes"],
           ["mensagens", "Mensagens"],
-        ].map(([id, label]: [string, string]) => (
+        ] as const).map(([id, label]) => (
           <button key={id} type="button" onClick={() => scrollTo(id)} className="rounded-full px-2.5 py-2 text-[8px] font-medium text-black/60 hover:bg-black/5">
             {label}
           </button>

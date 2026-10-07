@@ -567,7 +567,7 @@ export function WeddingForm({
           Adicione fotos ou vídeos específicos para a capa, história, galeria e outros pontos do convite.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
-          {[
+          {([
             ["hero", "Capa / abertura"],
             ["cover_video", "Vídeo de abertura"],
             ["background", "Fundo do convite"],
@@ -579,7 +579,7 @@ export function WeddingForm({
             ["section_2", "Momento especial 2"],
             ["gallery", "Galeria / destaque"],
             ["closing", "Encerramento"],
-          ].map(([slot, label]: [string, string]) => (
+          ] as const).map(([slot, label]) => (
             <div key={slot} className="rounded-xl border border-border p-4 space-y-3">
               <div>
                 <p className="font-medium">{label}</p>
