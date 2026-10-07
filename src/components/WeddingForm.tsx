@@ -315,10 +315,15 @@ export function WeddingForm({
       toast.error("Este campo aceita apenas vídeo.");
       return;
     }
+    if (!file.size) {
+      toast.error("O ficheiro selecionado está vazio.");
+      return;
+    }
 
     setUploading(`media:${slot}`);
     const ext = file.name.split(".").pop()?.toLowerCase() ?? (isVideo ? "mp4" : "jpg");
     const storagePath = `${event.id}/media/${slot}-${Date.now()}.${ext}`;
+    let stored = false;
 
     try {
       const { error: uploadError } = await supabase.storage
@@ -326,6 +331,7 @@ export function WeddingForm({
         .upload(storagePath, file, { upsert: false });
 
       if (uploadError) throw new Error(`Não foi possível enviar o ficheiro: ${uploadError.message}`);
+      stored = true;
 
       const current = mediaItems.filter((item) => item.slot === slot);
       const isRepeatable = slot === "gallery";
@@ -358,15 +364,25 @@ export function WeddingForm({
         await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
       }
 
-      toast.success(existing ? "Media substituída no convite." : "Media adicionada ao convite.");
       await loadMedia();
-      onSaved(event);
+      toast.success(existing ? "Media substituída no convite." : "Media adicionada ao convite.");
     } catch (error) {
-      await supabase.storage.from(GALLERY_BUCKET).remove([storagePath]);
-      toast.error(error instanceof Error ? error.message : "Não foi possível atualizar a media.");
+      if (stored) {
+        await supabase.storage.from(GALLERY_BUCKET).remove([storagePath]);
+      }
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível guardar esta media. Tente novamente.",
+      );
     } finally {
       setUploading(null);
     }
+
+    // Keep parent/editor refresh outside the upload transaction. If the
+    // parent refresh has its own async work, it must not turn a successful
+    // upload into a false "media failed" toast.
+    onSaved(event);
   }
 
   async function removeMedia(item: { id: string; storage_path: string }) {
