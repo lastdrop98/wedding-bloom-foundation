@@ -36,6 +36,37 @@ import { Guestbook } from "@/components/invite/Guestbook";
 
 type GalleryImage = { url: string; caption: string | null; mediaType: string };
 
+function InviteQuickActions({ event }: { event: { display_names: string | null } }) {
+  const goTo = (section: string) => {
+    const target = document.querySelector(`[data-template-section="${section}"]`);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    toast.message("Esta secção ainda não foi preenchida.");
+  };
+
+  const share = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      await navigator.share({ title: eventTitle(event), text: "Convite de casamento", url }).catch(() => undefined);
+      return;
+    }
+    await navigator.clipboard?.writeText(url);
+    toast.success("Link do convite copiado.");
+  };
+
+  return (
+    <nav className="invite-quick-actions" aria-label="Navegação rápida do convite">
+      <button type="button" onClick={() => goTo("story")}>História</button>
+      <button type="button" onClick={() => goTo("schedule")}>Programa</button>
+      <button type="button" onClick={() => goTo("location")}>Local</button>
+      <button type="button" onClick={() => goTo("rsvp")}>RSVP</button>
+      <button type="button" onClick={() => void share()}>Partilhar</button>
+    </nav>
+  );
+}
+
 function Section({
   title,
   eyebrow,
