@@ -2656,3 +2656,23 @@ main.template-base-signature { isolation: isolate; }
 .invite-quick-actions .invite-quick-icon {
   flex: 0 0 auto;
 }
+
+.solar-admin-shell.admin-theme-light .template-picker img {
+  opacity: .94 !important;
+  filter: none !important;
+}
+.solar-admin-shell.admin-theme-light .template-picker [class*="bg-black/35"] {
+  background: rgba(0,0,0,.14) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button[class*="bg-primary"],
+.solar-admin-shell.admin-theme-light .admin-workspace a[class*="bg-primary"] {
+  background: #a88332 !important;
+  color: #fff !important;
+  border-color: #a88332 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button[class*="bg-[#168a44]"],
+.solar-admin-shell.admin-theme-light .admin-workspace a[class*="bg-[#168a44]"] {
+  color: #fff !important;
+  background: #168a44 !important;
+  border-color: #168a44 !important;
+}
