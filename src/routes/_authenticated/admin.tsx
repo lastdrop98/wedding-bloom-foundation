@@ -19,7 +19,7 @@ import {
   Plus,
   Printer,
   Settings2,
-  Sparkles,
+  CircleDot,
   Users,
   X,
 } from "lucide-react";
@@ -410,7 +410,7 @@ function ChooseEvent({ onCancel, onChoose }: { onCancel: () => void; onChoose: (
             className="group rounded-[28px] border border-black/[0.08] bg-white p-6 text-left transition-all enabled:hover:-translate-y-1 enabled:hover:border-black/20 enabled:hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-40"
           >
             <span className="flex size-10 items-center justify-center rounded-full bg-[#f5f5f7]">
-              <Sparkles className="size-4" />
+              <CircleDot className="size-4" />
             </span>
             <h2 className="mt-10 text-xl font-semibold tracking-[-0.025em]">{type.label}</h2>
             <p className="mt-2 text-sm text-black/45">{type.available ? "Criar novo evento" : "Disponível em breve"}</p>
@@ -492,13 +492,13 @@ function Dashboard({
         <div className="admin-hero-decor" aria-hidden="true">
           <span className="admin-hero-ring ring-one" />
           <span className="admin-hero-ring ring-two" />
-          <span className="admin-hero-star">✦</span>
+          <span className="admin-hero-mark" aria-hidden="true">SE</span>
         </div>
       </section>
 
       <section className="grid gap-3 sm:grid-cols-3">
         <StatCard icon={LayoutDashboard} label="Projetos" value={stats.total} />
-        <StatCard icon={Sparkles} label="Casamentos" value={stats.weddings} />
+        <StatCard icon={CircleDot} label="Casamentos" value={stats.weddings} />
         <StatCard icon={BarChart3} label="Último projeto" value={stats.latest ? eventTitle(stats.latest) : "—"} compact />
       </section>
 
@@ -556,7 +556,7 @@ function Dashboard({
           <div className="mt-8 h-24 animate-pulse rounded-2xl bg-[#f5f5f7]" />
         ) : !events.length ? (
           <div className="mt-8 rounded-2xl bg-[#f5f5f7] px-6 py-12 text-center">
-            <Sparkles className="mx-auto size-7 text-black/25" />
+            <CircleDot className="mx-auto size-7 text-black/25" />
             <p className="mt-4 font-medium">O seu primeiro projeto começa aqui.</p>
             <p className="mt-1 text-sm text-black/45">Crie um evento para abrir o editor completo.</p>
             <Button onClick={onNew} className="mt-5 rounded-full bg-black text-white hover:bg-black/85">Criar evento</Button>
@@ -567,7 +567,7 @@ function Dashboard({
               <article key={event.id} className="group flex flex-col gap-4 rounded-2xl border border-transparent px-3 py-4 transition-colors hover:border-black/[0.07] hover:bg-[#f5f5f7] sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex min-w-0 items-center gap-4">
                   <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-black text-white">
-                    <Sparkles className="size-4" />
+                    <CircleDot className="size-4" />
                   </div>
                   <div className="min-w-0">
                     <p className="truncate font-medium">{eventTitle(event)}</p>
