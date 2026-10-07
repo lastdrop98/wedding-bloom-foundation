@@ -543,9 +543,32 @@ export function WeddingForm({
             </div>
           );
         })()}
-        <p className="text-xs leading-5 text-muted-foreground">
-          O conteúdo continua editável no mesmo formulário, mas o convite final adapta a ordem, ritmo e composição ao modelo escolhido.
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+          <p className="max-w-2xl text-xs leading-5 text-muted-foreground">
+            Este é o modelo que será aplicado ao convite publicado. O conteúdo continua editável,
+            mas a ordem, ritmo, tipografia e composição seguem a direção escolhida.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <a
+              href={`/modelos/${selected.value}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center rounded-full border border-border px-3.5 py-2 text-xs font-medium transition hover:border-primary hover:text-primary"
+            >
+              Ver modelo
+            </a>
+            {event && values["slug"] && (
+              <a
+                href={`/${values["slug"]}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-full bg-primary px-3.5 py-2 text-xs font-medium text-primary-foreground transition hover:opacity-90"
+              >
+                Ver convite atual
+              </a>
+            )}
+          </div>
+        </div>
       </fieldset>
 
       <fieldset className="space-y-4">
