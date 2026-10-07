@@ -131,7 +131,16 @@ export function MediaManager({ event }: { event: EventRow }) {
         .upload(path, file, { upsert: false, cacheControl: "3600", contentType: file.type || undefined });
       if (uploadError) throw uploadError;
 
-      const existing = media?.find((item) => item.slot === slot);
+      const { data: latestMedia, error: latestMediaError } = await looseDb
+        .from("event_media")
+        .select("id,event_id,slot,media_type,storage_path,sort_order")
+        .eq("event_id", event.id)
+        .eq("slot", slot)
+        .order("sort_order", { ascending: true })
+        .limit(1)
+        .maybeSingle();
+      if (latestMediaError) throw new Error(`Não foi possível verificar a media atual: ${latestMediaError.message}`);
+      const existing = (latestMedia ?? media?.find((item) => item.slot === slot)) as MediaItem | undefined;
       const order = Number(orderBySlot[slot] ?? existing?.sort_order ?? (media?.length ?? 0) + 1);
       const payload = {
         event_id: event.id,
@@ -149,7 +158,7 @@ export function MediaManager({ event }: { event: EventRow }) {
           .eq("event_id", event.id);
         if (updateError) {
           await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-          throw new Error(`A base de dados recusou a substituição da media: ${updateError?.message ?? "o registo não foi atualizado"}`);
+          throw new Error(`Não foi possível atualizar a media existente: ${updateError?.message ?? "o registo não foi atualizado"}`);
         }
       } else {
         const { error: insertError } = await looseDb
