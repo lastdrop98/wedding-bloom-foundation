@@ -50,7 +50,7 @@ function matchesFilter(family: string, filter: string) {
 type PreviewFamily = "noir" | "botanical" | "regal" | "heritage" | "editorial" | "cinematic" | "magazine" | "pearl" | "celestial" | "coastal" | "limintso";
 
 function previewFamily(template: TemplateDefinition): PreviewFamily {
-  if (template.value === "limintso-emerald") return "limintso";
+  if (template.value === "limintso-emerald" || template.value === "premium-emerald" || template.value === "diamond-signature" || template.family.includes("Signature Cards") || template.value.startsWith("limintso-")) return "limintso";
   if (template.value === "film-noir-motion") return "cinematic";
   if (template.value === "editorial-magazine") return "magazine";
   if (template.value === "pearl-garden") return "pearl";
