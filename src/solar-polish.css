@@ -3394,3 +3394,56 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
 .solar-admin-shell.admin-theme-light .admin-workspace :is(button,[role="button"])[class*="variant-outline"]{
   background:#fff!important; color:#1d1d1f!important;
 }
+
+
+/* Limintso / Signature Cards — dedicated invitation system */
+.limintso-signature{--limintso-gold:#c9a84c;--limintso-ink:#51483d;--limintso-paper:#f6f3ee;--limintso-line:rgba(201,168,76,.2);font-family:var(--font-sans);padding-bottom:86px}
+.limintso-signature *{box-sizing:border-box}
+.limintso-header{color:var(--limintso-ink)}
+.limintso-mark,.limintso-seal,.limintso-footer-mark{display:grid;place-items:center;border:1px solid rgba(201,168,76,.55);border-radius:50%;font:500 9px/1 var(--font-sans);letter-spacing:.12em}
+.limintso-mark{width:28px;height:28px}
+.limintso-seal{width:46px;height:46px;margin-inline:auto;color:#9d8553}
+.limintso-icon-button,.limintso-menu-button,.limintso-round-action{display:grid;place-items:center;border:1px solid rgba(80,70,58,.18);background:rgba(255,255,255,.82);color:#62584b;transition:transform .22s ease,border-color .22s ease,background .22s ease}
+.limintso-icon-button,.limintso-menu-button{width:38px;height:38px;border-radius:50%}
+.limintso-round-action{width:38px;height:38px;border-radius:50%;box-shadow:0 8px 22px rgba(66,54,39,.08)}
+.limintso-round-action:hover,.limintso-icon-button:hover,.limintso-menu-button:hover{transform:translateY(-2px);border-color:rgba(201,168,76,.6);background:#fff}
+.limintso-round-action.is-liked{color:#a65353;border-color:rgba(166,83,83,.4)}
+.limintso-section{width:min(100%,760px);margin-inline:auto;padding:76px 22px}
+.limintso-paper-card{margin-block:18px;border-block:1px solid var(--limintso-line);background:#fbfaf7}
+.limintso-dark-card{max-width:none;width:100%;padding-inline:max(22px,calc((100vw - 716px)/2));background:#191817;color:#eee8df}
+.limintso-kicker{font-size:9px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#9d8553}
+.limintso-title{margin-top:10px;font-family:var(--font-serif);font-size:clamp(2.1rem,7vw,3.4rem);font-style:italic;font-weight:400;line-height:.95;letter-spacing:-.045em}
+.limintso-cover-card{position:relative;min-height:min(78svh,760px);overflow:hidden;border:1px solid rgba(201,168,76,.24);border-radius:28px;background:#d6d0c7;box-shadow:0 28px 90px rgba(52,43,33,.16)}
+.limintso-cover-media{position:absolute;inset:0}
+.limintso-cover-media img,.limintso-cover-media video{display:block;width:100%;height:100%;object-fit:cover}
+.limintso-cover-card:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.08) 42%,rgba(0,0,0,.72))}
+.limintso-person-card,.limintso-location-card,.limintso-schedule-card{overflow:hidden;border:1px solid rgba(80,70,58,.12);background:#fbfaf7;box-shadow:0 18px 55px rgba(57,47,35,.08);transition:transform .3s ease,box-shadow .3s ease}
+.limintso-person-card:hover,.limintso-location-card:hover,.limintso-schedule-card:hover{transform:translateY(-3px);box-shadow:0 24px 65px rgba(57,47,35,.12)}
+.limintso-person-photo{height:310px;background:#ddd5c8}
+.limintso-person-photo img{width:100%;height:100%;object-fit:cover}
+.limintso-story-row{display:grid;grid-template-columns:76px 1fr;gap:18px;padding:20px 0;border-top:1px solid rgba(80,70,58,.12)}
+.limintso-story-row>span{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#a88d58;padding-top:7px}
+.limintso-schedule-card{display:grid;grid-template-columns:86px 1fr;gap:16px;padding:20px}
+.limintso-time{font-size:10px;font-weight:600;letter-spacing:.12em;color:#a88d58;padding-top:7px}
+.limintso-location-card{padding:22px}
+.limintso-location-icon{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:50%;background:rgba(201,168,76,.11);color:#9d8553}
+.limintso-gallery-item{height:210px;overflow:hidden;border-radius:18px;background:#ddd5c8}
+.limintso-gallery-item.tall{grid-row:span 2;height:432px}
+.limintso-gallery-item img,.limintso-gallery-item video{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.limintso-gallery-item:hover img,.limintso-gallery-item:hover video{transform:scale(1.04)}
+.limintso-input{width:100%;border:1px solid rgba(80,70,58,.18);border-radius:13px;background:#fff;padding:13px 15px;color:#51483d;outline:none;transition:border-color .2s ease,box-shadow .2s ease}
+.limintso-input:focus{border-color:rgba(201,168,76,.75);box-shadow:0 0 0 4px rgba(201,168,76,.1)}
+.limintso-choice{border:1px solid rgba(80,70,58,.18);border-radius:13px;background:#fff;padding:13px;font-size:11px;font-weight:600;transition:.2s}
+.limintso-choice.is-active{border-color:#c9a84c;background:#c9a84c;color:#fff;box-shadow:0 8px 24px rgba(201,168,76,.18)}
+.limintso-primary-button{width:100%;border:1px solid #b9953d;border-radius:999px;background:#c9a84c;color:#fff;padding:14px 20px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;transition:transform .2s,background .2s}
+.limintso-primary-button:hover{transform:translateY(-1px);background:#b8953f}
+.limintso-footer{padding:72px 22px 110px;text-align:center;background:#151414;color:#fff}
+.limintso-footer-mark{width:52px;height:52px;margin-inline:auto;color:#d7b56d;border-color:rgba(215,181,109,.5)}
+.limintso-bottom-nav{position:fixed;z-index:60;left:50%;bottom:max(10px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);width:min(calc(100% - 18px),540px);padding:5px;transform:translateX(-50%);border:1px solid rgba(80,70,58,.14);border-radius:18px;background:rgba(250,248,244,.9);box-shadow:0 18px 60px rgba(42,35,28,.18);backdrop-filter:blur(18px)}
+.limintso-bottom-nav a{display:flex;align-items:center;justify-content:center;min-height:42px;border-radius:13px;color:#776c5e;font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:.2s}
+.limintso-bottom-nav a:hover{background:rgba(201,168,76,.1);color:#8f7540}
+@keyframes limintso-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.limintso-section>*{animation:limintso-rise .7s ease both}
+.limintso-section>*:nth-child(2){animation-delay:.06s}
+.limintso-section>*:nth-child(3){animation-delay:.12s}
+@media(max-width:640px){.limintso-section{padding:62px 18px}.limintso-cover{padding-top:12px}.limintso-cover-card{min-height:74svh;border-radius:22px}.limintso-person-photo{height:280px}.limintso-gallery-item{height:170px}.limintso-gallery-item.tall{height:352px}.limintso-bottom-nav{width:calc(100% - 12px)}}
