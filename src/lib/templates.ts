@@ -628,6 +628,14 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
     implemented: true,
   },
   {
+    value: "diamond-signature",
+    label: "Diamond Signature",
+    family: "Signature Cards / Premium",
+    tone: "sand",
+    description: "Experiência vertical premium inspirada no modelo de referência: abertura fotográfica, bênção, noivos, famílias, agenda, mapa, RSVP, felicitações, presentes e galeria.",
+    implemented: true,
+  },
+  {
     value: "pearl-editorial",
     label: "Pearl Editorial",
     family: "Garden / Luxury",
@@ -683,7 +691,8 @@ export type TemplateVisualFamily =
   | "sunset"
   | "paper"
   | "pearl-editorial"
-  | "limintso";
+  | "limintso"
+  | "diamond";
 
 export function getTemplateVisualFamily(value?: string | null): TemplateVisualFamily {
   const template = getTemplateDefinition(value);
@@ -696,6 +705,7 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   if (/mozambique-luxe|heritage-ceremony/.test(source)) return source.includes("heritage-ceremony") ? "heritage" : "mozambique";
   if (/sunset-destination|sicilian-terracotta|tropical-sunset/.test(source)) return "sunset";
   if (/black-paper/.test(source)) return "paper";
+  if (/diamond-signature/.test(source)) return "limintso";
   if (/limintso-|premium-emerald/.test(source)) return "limintso";
   if (/pearl-ceremony|pearl-editorial/.test(source)) return "pearl-editorial";
   if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue/.test(source)) return "cinematic";
@@ -736,6 +746,7 @@ export function templateBaseClass(value?: string | null) {
     "limintso-black",
     "limintso-forest",
     "limintso-mozambique",
+    "diamond-signature",
   ]);
   return special.has(value ?? "") ? "template-base-signature" : "template-base-standard";
 }
