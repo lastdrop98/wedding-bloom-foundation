@@ -79,7 +79,7 @@ function SlotPreview({ item }: { item: MediaItem }) {
   return url ? (
     <img
       src={url}
-      alt={item.caption ?? "Media do convite"}
+      alt="Media do convite"
       className="h-24 w-32 rounded-md object-cover"
     />
   ) : (
