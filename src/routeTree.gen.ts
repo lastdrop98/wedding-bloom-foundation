@@ -19,7 +19,6 @@ import { Route as SlugConfirmacoesRouteImport } from './routes/$slug.confirmacoe
 import { Route as SlugHomeRouteImport } from './routes/$slug.home'
 import { Route as SlugImprimirRouteImport } from './routes/$slug.imprimir'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as AuthenticatedWhatsappRouteImport } from './routes/_authenticated/whatsapp'
 import { Route as ModelosTemplateRouteImport } from './routes/modelos.$template'
 
 const IndexRoute = IndexRouteImport.update({
@@ -71,39 +70,32 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedWhatsappRoute = AuthenticatedWhatsappRouteImport.update({
-  id: '/whatsapp',
-  path: '/whatsapp',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const ModelosTemplateRoute = ModelosTemplateRouteImport.update({
   id: '/$template',
   path: '/$template',
-  getParentRoute: () => ModelosRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRouteWithChildren
   '/auth': typeof AuthRoute
-  '/modelos': typeof ModelosRouteWithChildren
+  '/modelos': typeof ModelosRoute
   '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
   '/$slug/imprimir': typeof SlugImprimirRoute
   '/admin': typeof AuthenticatedAdminRoute
-  '/whatsapp': typeof AuthenticatedWhatsappRoute
   '/modelos/$template': typeof ModelosTemplateRoute
   '/$slug/': typeof SlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/modelos': typeof ModelosRouteWithChildren
+  '/modelos': typeof ModelosRoute
   '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
   '/$slug/imprimir': typeof SlugImprimirRoute
   '/admin': typeof AuthenticatedAdminRoute
-  '/whatsapp': typeof AuthenticatedWhatsappRoute
   '/modelos/$template': typeof ModelosTemplateRoute
   '/$slug': typeof SlugIndexRoute
 }
@@ -113,12 +105,11 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/$slug': typeof SlugRouteWithChildren
   '/auth': typeof AuthRoute
-  '/modelos': typeof ModelosRouteWithChildren
+  '/modelos': typeof ModelosRoute
   '/$slug/confirmacoes': typeof SlugConfirmacoesRoute
   '/$slug/home': typeof SlugHomeRoute
   '/$slug/imprimir': typeof SlugImprimirRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
-  '/_authenticated/whatsapp': typeof AuthenticatedWhatsappRoute
   '/modelos/$template': typeof ModelosTemplateRoute
   '/$slug/': typeof SlugIndexRoute
 }
@@ -133,7 +124,6 @@ export interface FileRouteTypes {
     | '/$slug/home'
     | '/$slug/imprimir'
     | '/admin'
-    | '/whatsapp'
     | '/modelos/$template'
     | '/$slug/'
   fileRoutesByTo: FileRoutesByTo
@@ -145,7 +135,6 @@ export interface FileRouteTypes {
     | '/$slug/home'
     | '/$slug/imprimir'
     | '/admin'
-    | '/whatsapp'
     | '/modelos/$template'
     | '/$slug'
   id:
@@ -159,7 +148,6 @@ export interface FileRouteTypes {
     | '/$slug/home'
     | '/$slug/imprimir'
     | '/_authenticated/admin'
-    | '/_authenticated/whatsapp'
     | '/modelos/$template'
     | '/$slug/'
   fileRoutesById: FileRoutesById
@@ -170,6 +158,7 @@ export interface RootRouteChildren {
   SlugRoute: typeof SlugRouteWithChildren
   AuthRoute: typeof AuthRoute
   ModelosRoute: typeof ModelosRouteWithChildren
+  ModelosTemplateRoute: typeof ModelosTemplateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -244,31 +233,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/whatsapp': {
-      id: '/_authenticated/whatsapp'
-      path: '/whatsapp'
-      fullPath: '/whatsapp'
-      preLoaderRoute: typeof AuthenticatedWhatsappRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/modelos/$template': {
       id: '/modelos/$template'
       path: '/$template'
       fullPath: '/modelos/$template'
       preLoaderRoute: typeof ModelosTemplateRouteImport
-      parentRoute: typeof ModelosRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
-  AuthenticatedWhatsappRoute: typeof AuthenticatedWhatsappRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
-  AuthenticatedWhatsappRoute: AuthenticatedWhatsappRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -290,23 +270,13 @@ const SlugRouteChildren: SlugRouteChildren = {
 
 const SlugRouteWithChildren = SlugRoute._addFileChildren(SlugRouteChildren)
 
-interface ModelosRouteChildren {
-  ModelosTemplateRoute: typeof ModelosTemplateRoute
-}
-
-const ModelosRouteChildren: ModelosRouteChildren = {
-  ModelosTemplateRoute: ModelosTemplateRoute,
-}
-
-const ModelosRouteWithChildren =
-  ModelosRoute._addFileChildren(ModelosRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   SlugRoute: SlugRouteWithChildren,
   AuthRoute: AuthRoute,
-  ModelosRoute: ModelosRouteWithChildren,
+  ModelosRoute: ModelosRoute,
+  ModelosTemplateRoute: ModelosTemplateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
