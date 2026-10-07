@@ -626,7 +626,8 @@ export type TemplateVisualFamily =
   | "mozambique"
   | "sunset"
   | "paper"
-  | "pearl-editorial";
+  | "pearl-editorial"
+  | "limintso";
 
 export function getTemplateVisualFamily(value?: string | null): TemplateVisualFamily {
   const template = getTemplateDefinition(value);
@@ -639,7 +640,7 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   if (/mozambique-luxe|heritage-ceremony/.test(source)) return source.includes("heritage-ceremony") ? "heritage" : "mozambique";
   if (/sunset-destination|sicilian-terracotta|tropical-sunset/.test(source)) return "sunset";
   if (/black-paper/.test(source)) return "paper";
-  if (/limintso-emerald/.test(source)) return "pearl-editorial";
+  if (/limintso-emerald/.test(source)) return "limintso";
   if (/pearl-ceremony|pearl-editorial/.test(source)) return "pearl-editorial";
   if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue/.test(source)) return "cinematic";
   if (/editorial|minimalist|minimalista|sapphire-editorial/.test(source)) return "editorial";
@@ -671,6 +672,7 @@ export function templateBaseClass(value?: string | null) {
     "editorial-cinema",
     "cinema-love-story",
     "black-paper",
+    "limintso-emerald",
   ]);
   return special.has(value ?? "") ? "template-base-signature" : "template-base-limintso";
 }
