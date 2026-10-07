@@ -130,20 +130,31 @@ export function MediaManager({ event }: { event: EventRow }) {
 
       const existing = media?.find((item) => item.slot === slot);
       const order = Number(orderBySlot[slot] ?? existing?.sort_order ?? (media?.length ?? 0) + 1);
-      const { error: upsertError } = await looseDb.from("event_media").upsert(
-        {
-          event_id: event.id,
-          slot,
-          media_type: mediaType,
-          storage_path: path,
-          caption: captionBySlot[slot]?.trim() || null,
-          sort_order: Number.isFinite(order) ? order : 1,
-        },
-        { onConflict: "event_id,slot" },
-      );
-      if (upsertError) {
-        await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-        throw upsertError;
+      const payload = {
+        event_id: event.id,
+        slot,
+        media_type: mediaType,
+        storage_path: path,
+        caption: captionBySlot[slot]?.trim() || null,
+        sort_order: Number.isFinite(order) ? order : 1,
+      };
+
+      if (existing) {
+        const { error: updateError } = await looseDb
+          .from("event_media")
+          .update(payload)
+          .eq("id", existing.id)
+          .eq("event_id", event.id);
+        if (updateError) {
+          await supabase.storage.from(GALLERY_BUCKET).remove([path]);
+          throw new Error(`A base de dados recusou a media: ${updateError.message}`);
+        }
+      } else {
+        const { error: insertError } = await looseDb.from("event_media").insert(payload);
+        if (insertError) {
+          await supabase.storage.from(GALLERY_BUCKET).remove([path]);
+          throw new Error(`A base de dados recusou a media: ${insertError.message}`);
+        }
       }
 
       if (slot === "cover") {
@@ -151,7 +162,7 @@ export function MediaManager({ event }: { event: EventRow }) {
           .from("events")
           .update({ cover_image_path: path })
           .eq("id", event.id);
-        if (coverError) throw coverError;
+        if (coverError) throw new Error(`A capa foi enviada, mas não foi possível ligá-la ao evento: ${coverError.message}`);
       }
       if (existing?.storage_path && existing.storage_path !== path) {
         await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
