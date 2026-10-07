@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, CalendarDays, Check, Clock, Gift, Heart, Images, MessageCircle, Search, Sparkles, X } from "lucide-react";
+import { ArrowRight, CalendarDays, Check, Clock, Gift, Heart, Images, MessageCircle, Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, getTemplateVisualFamily, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateFlow } from "@/lib/templateChoreography";
@@ -201,7 +201,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
         <div className="relative flex min-h-[660px] flex-col justify-between px-7 py-28">
           <div className="text-center">
             <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft">União · Família · Tradição</p>
-            <p className="mt-5 text-3xl text-gold-soft">✳</p>
+            <span className="mx-auto mt-5 block h-px w-16 bg-gold-soft/60" />
           </div>
           <div className="relative mx-auto w-full max-w-[300px]">
             <img src={photoA} alt="" className="h-64 w-full rounded-t-[90px] object-cover" />
@@ -558,7 +558,7 @@ function ModelsPage() {
                     <span className="template-catalog-rule" />
                     <strong className="template-catalog-names">Ana <em>&</em> Miguel</strong>
                     <span className="template-catalog-date">24 · 10 · 2027</span>
-                    <span className="template-catalog-seal">✦</span>
+                    <span className="template-catalog-seal">SE</span>
                   </div>
                 </div>
                 <div className="absolute inset-x-6 bottom-6 flex items-center justify-between">
@@ -577,7 +577,7 @@ function ModelsPage() {
                 <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#C9A84C]">
                   {template.family}
                 </span>
-                <Sparkles className="size-4 shrink-0 text-[#C9A84C]" />
+                <span className="size-2.5 shrink-0 rounded-full border border-[#C9A84C] bg-[#C9A84C]/15" aria-hidden="true" />
               </div>
 
               <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
