@@ -165,7 +165,19 @@ export function MediaManager({ event }: { event: EventRow }) {
           .update({ cover_image_path: path })
           .eq("id", event.id);
         if (coverError) {
-          await looseDb.from("event_media").delete().eq("id", existing?.id ?? "__missing__").eq("event_id", event.id);
+          if (existing) {
+            await looseDb
+              .from("event_media")
+              .update({
+                storage_path: existing.storage_path,
+                media_type: existing.media_type,
+                sort_order: existing.sort_order,
+              })
+              .eq("id", existing.id)
+              .eq("event_id", event.id);
+          } else {
+            await looseDb.from("event_media").delete().eq("event_id", event.id).eq("storage_path", path);
+          }
           await supabase.storage.from(GALLERY_BUCKET).remove([path]);
           throw new Error(`A capa foi enviada, mas não foi possível ligá-la ao evento: ${coverError.message}`);
         }
