@@ -311,6 +311,11 @@ export function WeddingForm({
 
     const isVideo = file.type.startsWith("video/") || /\.(mp4|mov|webm|m4v|avi|mkv)$/i.test(file.name);
     const expectsVideo = slot.endsWith("_video");
+    const maxBytes = isVideo ? 120 * 1024 * 1024 : 20 * 1024 * 1024;
+    if (file.size > maxBytes) {
+      toast.error(isVideo ? "O vídeo ultrapassa o limite de 120 MB." : "A imagem ultrapassa o limite de 20 MB.");
+      return;
+    }
     if (expectsVideo && !isVideo) {
       toast.error("Este campo aceita apenas vídeo.");
       return;
@@ -329,7 +334,7 @@ export function WeddingForm({
     try {
       const { error: uploadError } = await supabase.storage
         .from(GALLERY_BUCKET)
-        .upload(storagePath, file, { upsert: false });
+        .upload(storagePath, file, { upsert: false, cacheControl: "3600" });
 
       if (uploadError) throw new Error(`Não foi possível enviar o ficheiro: ${uploadError.message}`);
       stored = true;
