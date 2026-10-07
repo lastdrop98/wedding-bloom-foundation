@@ -85,7 +85,10 @@ export function GalleryManager({ eventId }: { eventId: string }) {
         media_type: isVideoFile(file) ? "video" : "image",
         sort_order: nextOrder,
       });
-      if (error) throw error;
+      if (error) {
+        await supabase.storage.from(GALLERY_BUCKET).remove([path]);
+        throw new Error(`A base de dados recusou a galeria: ${error.message}`);
+      }
     },
     onSuccess: () => {
       setCaption("");
@@ -94,7 +97,8 @@ export function GalleryManager({ eventId }: { eventId: string }) {
       toast.success("Item adicionado à galeria.");
       void refresh();
     },
-    onError: () => toast.error("Não foi possível adicionar o item."),
+    onError: (error) =>
+      toast.error(error instanceof Error ? error.message : "Não foi possível adicionar o item."),
   });
 
   const remove = useMutation({
