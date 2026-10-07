@@ -371,6 +371,70 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
     description: "Aguarela romântica com elementos botânicos.",
     implemented: true,
   },
+  {
+    value: "editorial-cinema",
+    label: "Editorial Cinema",
+    family: "Cinemático / Editorial",
+    tone: "midnight",
+    description: "Narrativa de filme com fotografia protagonista, capítulos e final cinematográfico.",
+    implemented: true,
+  },
+  {
+    value: "ivory-portrait",
+    label: "Ivory Portrait",
+    family: "Minimalista / Fotográfico",
+    tone: "sand",
+    description: "Convite marfim centrado no retrato, com leitura limpa e elegante.",
+    implemented: true,
+  },
+  {
+    value: "modern-olive",
+    label: "Modern Olive",
+    family: "Minimalista / Natural",
+    tone: "emerald",
+    description: "Verde oliva, tipografia editorial e blocos assimétricos de inspiração mediterrânica.",
+    implemented: true,
+  },
+  {
+    value: "rose-atelier",
+    label: "Rose Atelier",
+    family: "Romântico / Editorial",
+    tone: "rose",
+    description: "Blush sofisticado com galeria de atelier, carta do casal e composição de moda.",
+    implemented: true,
+  },
+  {
+    value: "mozambique-luxe",
+    label: "Moçambique Luxe",
+    family: "Tradicional Africano / Luxury",
+    tone: "xiguiane",
+    description: "Herança moçambicana contemporânea com tecido, família, ritual e fotografia premium.",
+    implemented: true,
+  },
+  {
+    value: "sunset-destination",
+    label: "Sunset Destination",
+    family: "Destination / Tropical",
+    tone: "rose",
+    description: "Experiência de destino com abertura panorâmica, agenda e atmosfera de pôr do sol.",
+    implemented: true,
+  },
+  {
+    value: "black-paper",
+    label: "Black Paper",
+    family: "Editorial / Dark",
+    tone: "midnight",
+    description: "Papel preto, tipografia monumental e informação em capítulos curtos.",
+    implemented: true,
+  },
+  {
+    value: "pearl-editorial",
+    label: "Pearl Editorial",
+    family: "Garden / Luxury",
+    tone: "rose",
+    description: "Pérola contemporânea com fotografia em molduras suaves e ritmo editorial.",
+    implemented: true,
+  },
 ];
 
 export function getTemplateDefinition(value?: string | null) {
@@ -406,14 +470,22 @@ export type TemplateVisualFamily =
   | "royal"
   | "heritage"
   | "celestial"
-  | "coastal";
+  | "coastal"
+  | "cinema"
+  | "portrait"
+  | "olive"
+  | "atelier"
+  | "mozambique"
+  | "sunset"
+  | "paper"
+  | "pearl-editorial";
 
 export function getTemplateVisualFamily(value?: string | null): TemplateVisualFamily {
   const template = getTemplateDefinition(value);
   const source = `${template.value} ${template.label} ${template.family}`.toLowerCase();
 
-  if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue/.test(source)) return "cinematic";
-  if (/editorial|minimalist|sapphire-editorial/.test(source)) return "editorial";
+  if (/film-noir|cinematic-charcoal|editorial-dark|midnight-blue|editorial-cinema/.test(source)) return "cinematic";
+  if (/editorial|minimalist|minimalista|sapphire-editorial|black-paper/.test(source)) return "editorial";
   if (/aquarela|garden|botanical|floral|romantic|boho|tropical/.test(source)) {
     if (/pearl|floral-pearl|pearl-garden/.test(source)) return "pearl";
     return "botanical";
@@ -421,6 +493,12 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   if (/royal|baroque|oriental|nikah|traditional-bronze/.test(source)) return "royal";
   if (/xiguiane|african|capulana/.test(source)) return "heritage";
   if (/celestial/.test(source)) return "celestial";
+  if (/ivory-portrait/.test(source)) return "portrait";
+  if (/modern-olive/.test(source)) return "olive";
+  if (/rose-atelier/.test(source)) return "atelier";
+  if (/mozambique-luxe/.test(source)) return "mozambique";
+  if (/sunset-destination/.test(source)) return "sunset";
+  if (/pearl-editorial/.test(source)) return "pearl-editorial";
   if (/coastal|destination|mediterranean|sicilian/.test(source)) return "coastal";
   return "classic";
 }
