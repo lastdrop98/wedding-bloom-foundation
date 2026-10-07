@@ -72,6 +72,12 @@ const FAMILY_ACCENTS: Record<string, string> = {
   "Tradicional Africano / Luxury": "MOÇAMBIQUE",
   "Destination / Tropical": "DESTINATION",
   "Garden / Luxury": "PEARL",
+  "Cerimonial / Editorial": "CEREMONY",
+  "Fotográfico / Cerimonial": "PORTRAIT",
+  "Botânico / Carta": "LETTER",
+  "Cinemático / História": "LOVE STORY",
+  "Herança / Cerimonial": "HERITAGE",
+  "Pérola / Editorial": "PEARL",
 };
 
 export function TemplatePicker({
