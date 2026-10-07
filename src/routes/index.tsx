@@ -7,7 +7,6 @@ import {
   MessageCircle,
   Music,
   QrCode,
-  CircleDot,
   Users,
   X,
 } from "lucide-react";
@@ -71,13 +70,13 @@ function HomePage() {
             <span>Solar Eclipse</span>
           </a>
           <nav className="hidden items-center gap-7 text-xs text-black/55 md:flex">
-            <a href="#modelos" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Modelos</a>
+            <a href="#modelos" className="rounded-full border-2 border-black/15 bg-white/70 px-4 py-2.5 font-medium shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/35 hover:bg-white hover:shadow-sm">Modelos</a>
             <a href="#experiencia" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Experiência</a>
             <a href="#como-funciona" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Como funciona</a>
             <a
               href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
               onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }}
-              className="inline-flex items-center gap-2 rounded-full border border-black bg-black px-4 py-2.5 text-white shadow-sm"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-4 py-2.5 font-medium text-white shadow-[0_4px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-900"
             >
               Falar connosco <MessageCircle className="size-3.5" />
             </a>
@@ -87,7 +86,7 @@ function HomePage() {
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((value) => !value)}
-            className="rounded-full border border-black/10 bg-white p-2 md:hidden"
+            className="rounded-full border-2 border-black/15 bg-white p-2 shadow-sm md:hidden"
           >
             {menuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
