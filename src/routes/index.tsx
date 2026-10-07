@@ -70,13 +70,13 @@ function HomePage() {
             <span>Solar Eclipse</span>
           </a>
           <nav className="hidden items-center gap-7 text-xs text-black/55 md:flex">
-            <a href="#modelos" className="rounded-full border-2 border-black/15 bg-white/70 px-4 py-2.5 font-medium shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/35 hover:bg-white hover:shadow-sm">Modelos</a>
+            <a href="#modelos" className="rounded-full border-2 border-black/20 bg-white px-4 py-2.5 font-medium shadow-[inset_0_0_0_1px_rgba(255,255,255,.7),0_2px_10px_rgba(0,0,0,.05)] transition hover:border-black/45 hover:bg-white hover:shadow-md">Modelos</a>
             <a href="#experiencia" className="rounded-full border-2 border-black/10 bg-white/70 px-4 py-2.5 font-medium shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/30 hover:bg-white hover:shadow-sm">Experiência</a>
-            <a href="#como-funciona" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Como funciona</a>
+            <a href="#como-funciona" className="rounded-full border-2 border-black/15 bg-white/80 px-4 py-2.5 shadow-[inset_0_0_0_1px_rgba(255,255,255,.8)] transition hover:border-black/35 hover:bg-white hover:shadow-sm">Como funciona</a>
             <a
               href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
               onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-4 py-2.5 font-medium text-white shadow-[0_4px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-900"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-4 py-2.5 font-medium text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.08),0_4px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-900"
             >
               Falar connosco <MessageCircle className="size-3.5" />
             </a>
@@ -323,7 +323,7 @@ function HomePage() {
       </section>
 
       <section className="bg-black px-6 py-24 text-center text-white">
-        <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-12 bg-current" /><EclipseMark className="size-7" /><span className="h-px w-12 bg-current" /></div>
+        <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-16 bg-current/70" /><span className="size-2 rounded-full border border-current bg-black" /><span className="h-px w-16 bg-current/70" /></div>
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-neutral-300">
           Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.
