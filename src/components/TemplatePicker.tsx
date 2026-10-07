@@ -78,6 +78,7 @@ const FAMILY_ACCENTS: Record<string, string> = {
   "Cinemático / História": "LOVE STORY",
   "Herança / Cerimonial": "HERITAGE",
   "Pérola / Editorial": "PEARL",
+  "Signature Cards / Emerald": "SIGNATURE",
   "Signature Cards / Romantic": "SIGNATURE",
   "Signature Cards / Minimal": "SIGNATURE",
   "Signature Cards / Destination": "SIGNATURE",
@@ -193,6 +194,22 @@ export function TemplatePicker({
       </div>
     </div>
     <span className="absolute right-7 top-4 rounded-full bg-[#c9ab68] px-2 py-1 text-[5px] font-semibold uppercase tracking-[.12em] text-white">Card</span>
+  </div>
+)}
+
+                {item.value === "premium-emerald" && (
+  <div className="absolute inset-0 bg-[#f4efe7]">
+    <div className="absolute inset-x-4 top-3 h-5 border-b border-[#c9ab68]/45" />
+    <div className="absolute inset-x-5 top-8 bottom-3 rounded-xl border border-[#c9ab68]/35 bg-white shadow-sm" />
+    <div className="absolute inset-x-9 top-12 bottom-7 overflow-hidden rounded-lg">
+      <img src={PREVIEW_IMAGES.pearl} alt="" className="size-full object-cover opacity-85" />
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-2 pb-2 pt-7 text-center text-white">
+        <span className="block text-[5px] uppercase tracking-[.2em]">A união matrimonial de</span>
+        <strong className="block font-serif text-lg">A&amp;M</strong>
+        <span className="mt-1 block text-[5px] tracking-[.16em]">PACOTE PREMIUM</span>
+      </div>
+    </div>
+    <span className="absolute right-7 top-4 rounded-full bg-[#c9ab68] px-2 py-1 text-[5px] font-semibold uppercase tracking-[.12em] text-white">Premium</span>
   </div>
 )}
 
