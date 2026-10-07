@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { CalendarPlus, CircleDot, Coffee, Gem, Heart, Share2, type LucideIcon } from "lucide-react";
+import { BookOpen, CalendarDays, CalendarPlus, CheckCircle2, CircleDot, Coffee, Gem, Heart, MapPin, Share2, type LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -684,19 +684,35 @@ function InviteQuickActions({ event }: { event: EventRow }) {
     toast.success("Link do convite copiado.");
   };
 
+  const actions = [
+    ["story", "História", BookOpen],
+    ["schedule", "Programa", CalendarDays],
+    ["location", "Local", MapPin],
+    ["rsvp", "RSVP", CheckCircle2],
+  ] as const;
+
   return (
     <nav className="invite-quick-actions" aria-label="Navegação rápida do convite">
-      <button type="button" onClick={() => goTo("story")}>História</button>
-      <button type="button" onClick={() => goTo("schedule")}>Programa</button>
-      <button type="button" onClick={() => goTo("location")}>Local</button>
-      <button type="button" onClick={() => goTo("rsvp")}>RSVP</button>
-      <button type="button" onClick={() => void share()}>Partilhar</button>
+      {actions.map(([section, label, Icon]) => (
+        <button key={section} type="button" onClick={() => goTo(section)} title={label}>
+          <Icon className="invite-quick-icon" aria-hidden="true" />
+          <span className="invite-quick-label">{label}</span>
+        </button>
+      ))}
+      <button type="button" onClick={() => void share()} title="Partilhar">
+        <Share2 className="invite-quick-icon" aria-hidden="true" />
+        <span className="invite-quick-label">Partilhar</span>
+      </button>
     </nav>
   );
 }
 
 const TEMPLATE_FLOW_CSS = `
 main.template-design-limintso-emerald {
+  max-width: 560px;
+  margin-inline: auto;
+  box-shadow: 0 0 0 1px rgba(72,58,38,.05), 0 30px 90px rgba(43,35,25,.14);
+  overflow-x: clip;
   --lim-card: rgba(255,255,255,.96);
   --lim-card-border: rgba(71,61,50,.12);
   --lim-shadow: 0 16px 42px rgba(64,53,39,.09);
