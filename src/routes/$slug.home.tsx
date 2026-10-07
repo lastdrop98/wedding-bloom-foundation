@@ -772,6 +772,31 @@ main.template-design-limintso-emerald .limintso-monogram {
 main.template-design-limintso-emerald > section[data-template-section]:not([data-template-section="hero"]) {
   padding-block: 3.75rem;
 }
+main.template-design-limintso-emerald .template-hero > .absolute:first-child {
+  inset: 16% 7% auto;
+  height: 47%;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 18px 44px rgba(64,53,39,.13);
+  z-index: 0;
+}
+main.template-design-limintso-emerald .template-hero > .absolute:first-child .template-hero-veil {
+  background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.38));
+}
+main.template-design-limintso-emerald .template-hero-content {
+  z-index: 2;
+  padding-top: 25vh;
+}
+main.template-design-limintso-emerald .template-hero .limintso-monogram,
+main.template-design-limintso-emerald .template-hero .solar-eclipse-brand,
+main.template-design-limintso-emerald .template-hero .template-hero-accent-limintso {
+  position: relative;
+  z-index: 3;
+}
+main.template-design-limintso-emerald .template-hero > .absolute:first-child img,
+main.template-design-limintso-emerald .template-hero > .absolute:first-child video {
+  filter: saturate(.88) contrast(.98);
+}
 main.template-design-limintso-emerald > section[data-template-section]:not([data-template-section="hero"]) > div {
   max-width: 760px;
 }
