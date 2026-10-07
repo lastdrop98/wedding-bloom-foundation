@@ -12,7 +12,15 @@ export type TemplateFlow =
   | "celestial"
   | "magazine"
   | "pearl"
-  | "capulana";
+  | "capulana"
+  | "cinema"
+  | "portrait"
+  | "olive"
+  | "atelier"
+  | "mozambique"
+  | "sunset"
+  | "paper"
+  | "pearl-editorial";
 
 const FLOW_BY_VALUE: Record<string, TemplateFlow> = {
   "golden-classic": "classic",
@@ -60,12 +68,19 @@ const FLOW_BY_VALUE: Record<string, TemplateFlow> = {
   "celestial-ivory": "celestial",
   "coastal-blue": "destination",
   "aquarela-botanica": "garden",
+  "editorial-cinema": "cinema",
+  "ivory-portrait": "portrait",
+  "modern-olive": "olive",
+  "rose-atelier": "atelier",
+  "mozambique-luxe": "mozambique",
+  "sunset-destination": "sunset",
+  "black-paper": "paper",
+  "pearl-editorial": "pearl-editorial",
 };
 
 const DEFAULT_ORDER = [
-  "hero", "welcome", "word", "countdown", "couple", "story", "story-video",
-  "moments", "party", "schedule", "dress-code", "location", "gallery",
-  "gifts", "guestbook", "rsvp", "contacts", "closing",
+  "hero", "welcome", "word", "couple", "story", "schedule", "location", "rsvp",
+  "gifts", "dress-code", "guestbook", "countdown", "gallery", "contacts", "closing",
 ];
 
 export const TEMPLATE_SECTION_ORDERS: Record<TemplateFlow, string[]> = {
@@ -83,6 +98,14 @@ export const TEMPLATE_SECTION_ORDERS: Record<TemplateFlow, string[]> = {
   magazine: ["hero", "word", "couple", "story", "gallery", "schedule", "location", "countdown", "party", "gifts", "rsvp", "guestbook", "welcome", "contacts", "closing"],
   pearl: ["hero", "welcome", "couple", "story", "gallery", "countdown", "schedule", "location", "guestbook", "gifts", "rsvp", "word", "contacts", "closing"],
   capulana: ["hero", "word", "party", "couple", "story", "moments", "schedule", "location", "gallery", "dress-code", "countdown", "gifts", "rsvp", "guestbook", "welcome", "contacts", "closing"],
+  cinema: ["hero", "word", "story-video", "story", "couple", "schedule", "location", "rsvp", "gifts", "dress-code", "guestbook", "countdown", "gallery", "closing", "contacts"],
+  portrait: ["hero", "welcome", "couple", "word", "gallery", "story", "schedule", "location", "rsvp", "gifts", "guestbook", "countdown", "closing", "contacts"],
+  olive: ["hero", "welcome", "story", "couple", "location", "schedule", "gallery", "dress-code", "rsvp", "gifts", "guestbook", "countdown", "closing", "contacts"],
+  atelier: ["hero", "welcome", "word", "couple", "story", "gallery", "schedule", "location", "gifts", "rsvp", "guestbook", "countdown", "closing", "contacts"],
+  mozambique: ["hero", "word", "party", "couple", "story", "moments", "schedule", "location", "dress-code", "rsvp", "gifts", "guestbook", "countdown", "gallery", "closing", "contacts"],
+  sunset: ["hero", "welcome", "location", "couple", "schedule", "dress-code", "story", "gallery", "countdown", "rsvp", "gifts", "guestbook", "closing", "contacts"],
+  paper: ["hero", "word", "couple", "story", "schedule", "location", "rsvp", "gallery", "gifts", "guestbook", "countdown", "closing", "contacts"],
+  "pearl-editorial": ["hero", "welcome", "word", "couple", "gallery", "story", "countdown", "schedule", "location", "rsvp", "gifts", "guestbook", "closing", "contacts"],
 };
 
 export function getTemplateFlow(value?: string | null): TemplateFlow {
