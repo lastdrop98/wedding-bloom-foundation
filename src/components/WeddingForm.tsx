@@ -298,32 +298,65 @@ export function WeddingForm({
       toast.error("Guarde o evento primeiro.");
       return;
     }
+
+    const isVideo = file.type.startsWith("video/") || /\.(mp4|mov|webm|m4v|avi|mkv)$/i.test(file.name);
+    const expectsVideo = slot.endsWith("_video");
+    if (expectsVideo && !isVideo) {
+      toast.error("Este campo aceita apenas vídeo.");
+      return;
+    }
+
     setUploading(`media:${slot}`);
-    const isVideo = file.type.startsWith("video/");
-    const ext = file.name.split(".").pop() ?? (isVideo ? "mp4" : "jpg");
-    const path = `${event.id}/media/${slot}-${Date.now()}.${ext}`;
-    const { error: uploadError } = await supabase.storage.from(GALLERY_BUCKET).upload(path, file, { upsert: true });
-    if (uploadError) {
+    const ext = file.name.split(".").pop()?.toLowerCase() ?? (isVideo ? "mp4" : "jpg");
+    const storagePath = `${event.id}/media/${slot}-${Date.now()}.${ext}`;
+
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from(GALLERY_BUCKET)
+        .upload(storagePath, file, { upsert: false });
+
+      if (uploadError) throw new Error(`Não foi possível enviar o ficheiro: ${uploadError.message}`);
+
+      const current = mediaItems.filter((item) => item.slot === slot);
+      const isRepeatable = slot === "gallery";
+      const existing = isRepeatable ? null : current[0] ?? null;
+      const sortOrder = existing?.sort_order ?? current.length;
+
+      if (existing) {
+        const { error: updateError } = await looseDb
+          .from("event_media")
+          .update({
+            storage_path: storagePath,
+            media_type: isVideo ? "video" : "image",
+            sort_order: sortOrder,
+          })
+          .eq("id", existing.id)
+          .eq("event_id", event.id);
+        if (updateError) throw new Error(`A base de dados recusou a media: ${updateError.message}`);
+      } else {
+        const { error: insertError } = await looseDb.from("event_media").insert({
+          event_id: event.id,
+          slot,
+          storage_path: storagePath,
+          media_type: isVideo ? "video" : "image",
+          sort_order: sortOrder,
+        });
+        if (insertError) throw new Error(`A base de dados recusou a media: ${insertError.message}`);
+      }
+
+      if (existing?.storage_path && existing.storage_path !== storagePath) {
+        await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
+      }
+
+      toast.success(existing ? "Media substituída no convite." : "Media adicionada ao convite.");
+      await loadMedia();
+      onSaved(event);
+    } catch (error) {
+      await supabase.storage.from(GALLERY_BUCKET).remove([storagePath]);
+      toast.error(error instanceof Error ? error.message : "Não foi possível atualizar a media.");
+    } finally {
       setUploading(null);
-      toast.error(uploadError.message);
-      return;
     }
-    const { error } = await looseDb.from("event_media").insert({
-      event_id: event.id,
-      slot,
-      storage_path: path,
-      media_type: isVideo ? "video" : "image",
-      sort_order: mediaItems.filter((item) => item.slot === slot).length,
-    });
-    setUploading(null);
-    if (error) {
-      await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-      toast.error(error.message);
-      return;
-    }
-    toast.success("Media adicionada ao convite.");
-    await loadMedia();
-    onSaved(event);
   }
 
   async function removeMedia(item: { id: string; storage_path: string }) {
