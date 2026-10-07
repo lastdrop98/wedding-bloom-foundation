@@ -71,7 +71,7 @@ function HomePage() {
           </a>
           <nav className="hidden items-center gap-7 text-xs text-black/55 md:flex">
             <a href="#modelos" className="rounded-full border-2 border-black/15 bg-white/70 px-4 py-2.5 font-medium shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/35 hover:bg-white hover:shadow-sm">Modelos</a>
-            <a href="#experiencia" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Experiência</a>
+            <a href="#experiencia" className="rounded-full border-2 border-black/10 bg-white/70 px-4 py-2.5 font-medium shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/30 hover:bg-white hover:shadow-sm">Experiência</a>
             <a href="#como-funciona" className="rounded-full border border-black/10 bg-white/45 px-4 py-2.5 transition hover:border-black/25 hover:bg-white">Como funciona</a>
             <a
               href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
@@ -349,7 +349,7 @@ function HomePage() {
             <p className="mt-3 max-w-sm text-xs leading-6 text-white/40">Convites digitais de casamento pensados para serem vistos, partilhados e lembrados.</p>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs text-white/45">
-            <a href="/modelos" className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Modelos</a>
+            <a href="/modelos" className="rounded-full border-2 border-white/12 px-3 py-1.5 transition hover:border-white/30 hover:text-white">Modelos</a>
             <a href="#experiencia" className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Experiência</a>
             <a href="#como-funciona" className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Como funciona</a>
             <a href={whatsappUrl("Olá! Quero saber mais sobre os convites Solar Eclipse.")} onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero saber mais sobre os convites Solar Eclipse."); }} className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Contacto</a>
