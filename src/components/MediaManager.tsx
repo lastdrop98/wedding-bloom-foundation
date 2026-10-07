@@ -128,7 +128,7 @@ export function MediaManager({ event }: { event: EventRow }) {
       const path = event.id + "/slots/" + slot + "-" + Date.now() + "." + ext;
       const { error: uploadError } = await supabase.storage
         .from(GALLERY_BUCKET)
-        .upload(path, file, { upsert: false });
+        .upload(path, file, { upsert: false, cacheControl: "3600", contentType: file.type || undefined });
       if (uploadError) throw uploadError;
 
       const existing = media?.find((item) => item.slot === slot);
@@ -142,11 +142,12 @@ export function MediaManager({ event }: { event: EventRow }) {
       };
 
       if (existing) {
-        const { error: updateError } = await looseDb
+        const { data: updatedRows, error: updateError } = await looseDb
           .from("event_media")
           .update(payload)
           .eq("id", existing.id)
-          .eq("event_id", event.id);
+          .eq("event_id", event.id)
+          .select("id");
         if (updateError) {
           await supabase.storage.from(GALLERY_BUCKET).remove([path]);
           throw new Error(`A base de dados recusou a media: ${updateError.message}`);
@@ -160,11 +161,12 @@ export function MediaManager({ event }: { event: EventRow }) {
       }
 
       if (slot === "cover") {
-        const { error: coverError } = await supabase
+        const { data: coverRows, error: coverError } = await supabase
           .from("events")
           .update({ cover_image_path: path })
-          .eq("id", event.id);
-        if (coverError) {
+          .eq("id", event.id)
+          .select("id");
+        if (coverError || !coverRows?.length) {
           if (existing) {
             await looseDb
               .from("event_media")
@@ -179,7 +181,7 @@ export function MediaManager({ event }: { event: EventRow }) {
             await looseDb.from("event_media").delete().eq("event_id", event.id).eq("storage_path", path);
           }
           await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-          throw new Error(`A capa foi enviada, mas não foi possível ligá-la ao evento: ${coverError.message}`);
+          throw new Error(`A capa foi enviada, mas não foi possível ligá-la ao evento: ${coverError?.message ?? "nenhuma linha do evento foi atualizada"}`);
         }
       }
       if (existing?.storage_path && existing.storage_path !== path) {
