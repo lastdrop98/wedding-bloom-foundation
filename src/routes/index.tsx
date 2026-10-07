@@ -37,6 +37,9 @@ const features = [
   { icon: QrCode, title: "Presentes Digitais", text: "Receba contribuições através de QR Code." },
 ];
 
+const HOME_FEATURED_VALUES = ["editorial-cinema", "ivory-portrait", "modern-olive", "rose-atelier", "mozambique-luxe", "sunset-destination"];
+const HOME_CAROUSEL_VALUES = ["editorial-cinema", "ivory-portrait", "modern-olive", "rose-atelier", "mozambique-luxe", "sunset-destination", "black-paper", "pearl-editorial"];
+
 const HOME_TEMPLATE_IMAGES = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85",
   "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=85",
@@ -171,14 +174,15 @@ function HomePage() {
             <div className="grid gap-3 sm:grid-cols-3">
               {[0,1,2].map((offset) => {
                 const index = (carouselIndex + offset) % HOME_TEMPLATE_IMAGES.length;
-                const labels = ["Noir & Ouro", "Editorial Magazine", "Pearl Garden", "Capulana Contemporary", "Celestial Ivory", "Coastal Blue", "Film Noir Motion", "Aquarela Botânica"];
+                const carouselTemplates = HOME_CAROUSEL_VALUES.map((value) => TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!);
+                                const item = carouselTemplates[index];
                 return (
-                  <a key={`${carouselIndex}-${offset}`} href="/modelos" className={`group relative overflow-hidden rounded-[24px] ${offset === 1 ? "sm:-translate-y-3" : ""}`}>
+                  <a key={`${carouselIndex}-${offset}`} href={`/modelos/${item.value}`} className={`group relative overflow-hidden rounded-[24px] ${offset === 1 ? "sm:-translate-y-3" : ""}`}>
                     <img src={HOME_TEMPLATE_IMAGES[index]} alt="" className="h-[360px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[430px]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
                       <span className="text-[9px] uppercase tracking-[.24em] text-white/55">0${index + 1} / Solar Eclipse</span>
-                      <h3 className="mt-2 text-2xl font-light">{labels[index]}</h3>
+                      <h3 className="mt-2 text-2xl font-light">{item.label}</h3>
                       <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-xs text-white/85">Ver coleção <ArrowRight className="size-3.5" /></span>
                     </div>
                   </a>
@@ -204,7 +208,9 @@ function HomePage() {
             </p>
           </div>
           <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-            {TEMPLATE_OPTIONS.slice(0, 6).map((item, index) => (
+            {HOME_FEATURED_VALUES.map((value, index) => {
+              const item = TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!;
+              return (
               <a key={item.value} href={`/modelos/${item.value}`} className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1">
                 <div className={`solar-home-template-preview ${templateVisualClass(item.value)} relative h-80 overflow-hidden`}>
                   <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-105" />
@@ -217,7 +223,8 @@ function HomePage() {
                   </div>
                 </div>
               </a>
-            ))}
+              );
+            })}
           </div>
           <div className="mt-12 flex flex-col items-center gap-3 text-center">
             <p className="text-xs text-black/40">Uma seleção dos nossos estilos. A coleção completa está na página de modelos.</p>
