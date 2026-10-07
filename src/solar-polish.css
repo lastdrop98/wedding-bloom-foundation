@@ -2509,6 +2509,7 @@ main.template-design-ribbon-ivory .template-hero::before { content:""; position:
 
 /* Keep signature themes intentionally outside the common card system. */
 main.template-base-signature { isolation: isolate; }
+.template-base-standard { isolation: isolate; }
 
 /* Admin light mode: keep artwork, image cards and semantic button colours intact. */
 .solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-primary"] { background-color: #9a7a2d !important; color: #fff !important; }
