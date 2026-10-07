@@ -339,7 +339,9 @@ function HomePage() {
       </section>
 
       <section className="bg-black px-6 py-24 text-center text-white">
-        <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-16 bg-current/70" /><span className="h-1.5 w-12 rounded-full bg-current/80" /><span className="h-px w-16 bg-current/70" /></div>
+        <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-[#C9A84C]/35 bg-[#C9A84C]/[.06] px-4 py-2 text-[9px] font-semibold uppercase tracking-[.24em] text-[#C9A84C]">
+          Solar Eclipse · 2026
+        </div>
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-neutral-300">
           Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.
