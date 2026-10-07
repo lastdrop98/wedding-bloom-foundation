@@ -529,7 +529,19 @@ function ModelsPage() {
             key={template.value}
             className="solar-model-card group overflow-hidden rounded-[30px] bg-white shadow-[0_18px_60px_rgba(0,0,0,.07)] transition duration-500 hover:-translate-y-1"
           >
-            <button type="button" onClick={() => setDemo(template)} aria-label={`Abrir demonstração de ${template.label}`} className="block w-full cursor-pointer rounded-none p-0 text-left">
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => setDemo(template)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setDemo(template);
+                }
+              }}
+              aria-label={`Abrir demonstração de ${template.label}`}
+              className="block w-full cursor-pointer rounded-none text-left outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C]"
+            >
               <div className="relative overflow-hidden">
                 <img
                   src={images[index % images.length]}
@@ -558,7 +570,7 @@ function ModelsPage() {
                   </span>
                 </div>
               </div>
-            </button>
+            </div>
 
             <div className="p-7 sm:p-8">
               <div className="mb-4 flex items-center justify-between gap-4">
@@ -594,10 +606,14 @@ function ModelsPage() {
                 ))}
               </ul>
 
-              <Button type="button" onClick={() => openRequest(template)} aria-label={`Escolher este modelo: ${template.label}`} aria-expanded={selected?.value === template.value} className="mt-7 flex h-auto w-full items-center justify-center gap-3 rounded-full bg-ink px-6 py-4 text-sm font-medium text-cream hover:bg-ink/90">
-                Escolher este modelo
-                <ArrowRight className="size-4" />
-              </Button>
+              <div className="mt-7 grid gap-2 sm:grid-cols-2">
+                <Button type="button" onClick={() => setDemo(template)} className="flex h-auto w-full items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-6 py-4 text-sm font-medium text-black hover:bg-[#faf8f3]">
+                  Ver demonstração <ArrowRight className="size-4" />
+                </Button>
+                <Button asChild type="button" className="flex h-auto w-full items-center justify-center gap-3 rounded-full bg-ink px-6 py-4 text-sm font-medium text-cream hover:bg-ink/90">
+                  <a href={`/modelos/${template.value}`}>Abrir modelo <ArrowRight className="size-4" /></a>
+                </Button>
+              </div>
             </div>
           </article>
         ))}
