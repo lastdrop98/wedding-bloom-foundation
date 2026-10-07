@@ -324,6 +324,7 @@ export function WeddingForm({
     const ext = file.name.split(".").pop()?.toLowerCase() ?? (isVideo ? "mp4" : "jpg");
     const storagePath = `${event.id}/media/${slot}-${Date.now()}.${ext}`;
     let stored = false;
+    let succeeded = false;
 
     try {
       const { error: uploadError } = await supabase.storage
@@ -366,6 +367,7 @@ export function WeddingForm({
 
       await loadMedia();
       toast.success(existing ? "Media substituída no convite." : "Media adicionada ao convite.");
+      succeeded = true;
     } catch (error) {
       if (stored) {
         await supabase.storage.from(GALLERY_BUCKET).remove([storagePath]);
@@ -382,7 +384,7 @@ export function WeddingForm({
     // Keep parent/editor refresh outside the upload transaction. If the
     // parent refresh has its own async work, it must not turn a successful
     // upload into a false "media failed" toast.
-    onSaved(event);
+    if (succeeded) onSaved(event);
   }
 
   async function removeMedia(item: { id: string; storage_path: string }) {
