@@ -340,7 +340,7 @@ function AdminPage() {
             </div>
           </header>
 
-          <div className="mx-auto max-w-[1440px] px-5 py-8 sm:px-8 sm:py-10">
+          <div className="admin-workspace mx-auto max-w-[1440px] px-5 py-8 sm:px-8 sm:py-10">
             {mode.kind === "choose-type" ? (
               <ChooseEvent onCancel={() => setMode({ kind: "dashboard" })} onChoose={(eventType) => {
                 setActiveSection("dados");
