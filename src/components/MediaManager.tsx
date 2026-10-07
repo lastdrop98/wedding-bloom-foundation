@@ -146,16 +146,22 @@ export function MediaManager({ event }: { event: EventRow }) {
           .from("event_media")
           .update(payload)
           .eq("id", existing.id)
-          .eq("event_id", event.id);
-        if (updateError) {
+          .eq("event_id", event.id)
+          .select("id")
+          .single();
+        if (updateError || !updatedMedia) {
           await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-          throw new Error(`A base de dados recusou a media: ${updateError.message}`);
+          throw new Error(`A base de dados recusou a substituição da media: ${updateError?.message ?? "o registo não foi atualizado"}`);
         }
       } else {
-        const { error: insertError } = await looseDb.from("event_media").insert(payload);
-        if (insertError) {
+        const { data: insertedMedia, error: insertError } = await looseDb
+          .from("event_media")
+          .insert(payload)
+          .select("id")
+          .single();
+        if (insertError || !insertedMedia) {
           await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-          throw new Error(`A base de dados recusou a media: ${insertError.message}`);
+          throw new Error(`A base de dados recusou a nova media: ${insertError?.message ?? "o registo não foi criado"}`);
         }
       }
 
@@ -163,8 +169,10 @@ export function MediaManager({ event }: { event: EventRow }) {
         const { error: coverError } = await supabase
           .from("events")
           .update({ cover_image_path: path })
-          .eq("id", event.id);
-        if (coverError) {
+          .eq("id", event.id)
+          .select("id")
+          .single();
+        if (coverError || !updatedEvent) {
           if (existing) {
             await looseDb
               .from("event_media")
