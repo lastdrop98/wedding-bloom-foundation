@@ -722,6 +722,22 @@ main.template-design-limintso-emerald {
   color: var(--lim-ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+main.template-design-limintso-emerald .template-hero::after {
+  content: "";
+  position: absolute;
+  right: 24px;
+  bottom: 88px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255,255,255,.62);
+  border-radius: 50%;
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 8px 20px rgba(30,25,18,.16);
+  z-index: 4;
+}
+main.template-design-limintso-emerald .template-hero::after {
+  clip-path: polygon(42% 32%, 72% 50%, 42% 68%);
+}
 main.template-design-limintso-emerald .template-hero {
   min-height: 100svh;
   padding: 5.5rem 1.25rem 7rem;
@@ -867,31 +883,51 @@ main.template-design-limintso-emerald .draw-rule {
   background: #c9ab68;
 }
 main.template-design-limintso-emerald .invite-quick-actions {
-  z-index: 60;
-  bottom: 14px;
-  padding: 5px;
-  border: 1px solid rgba(120,95,44,.2);
-  border-radius: 999px;
-  background: rgba(255,253,248,.94);
-  box-shadow: 0 12px 32px rgba(60,49,34,.15);
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  bottom: 12px;
+  width: min(96%, 520px);
+  justify-content: center;
+  gap: 2px;
+  padding: 6px;
+  border: 1px solid rgba(170,135,57,.34);
+  border-radius: 18px 18px 26px 26px;
+  background: rgba(201,171,104,.96);
+  box-shadow: 0 16px 38px rgba(60,49,34,.22);
   backdrop-filter: blur(16px);
 }
 main.template-design-limintso-emerald .invite-quick-actions button {
-  min-height: 34px;
-  padding: 0 10px;
-  border: 1px solid rgba(120,95,44,.14);
-  border-radius: 999px;
-  background: #fff;
-  color: #6f5d3c;
-  font-size: 10px;
-  letter-spacing: .08em;
+  min-width: 0;
+  min-height: 40px;
+  flex: 1 1 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 5px 7px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: transparent;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
 }
 main.template-design-limintso-emerald .invite-quick-actions button:hover,
 main.template-design-limintso-emerald .invite-quick-actions button:focus-visible {
-  border-color: rgba(120,95,44,.38);
-  background: #f7f1e5;
-  color: #4f4129;
+  border-color: rgba(255,255,255,.38);
+  background: rgba(255,255,255,.12);
 }
+main.template-design-limintso-emerald .invite-quick-icon {
+  width: 15px;
+  height: 15px;
+}
+main.template-design-limintso-emerald .invite-quick-label {
+  display: block;
+}
+
 main.template-design-limintso-emerald .invite-carousel {
   border-radius: 18px;
   background: #fff;
