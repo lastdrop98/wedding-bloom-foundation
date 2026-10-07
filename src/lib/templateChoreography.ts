@@ -9,7 +9,10 @@ export type TemplateFlow =
   | "heritage"
   | "boho"
   | "destination"
-  | "celestial";
+  | "celestial"
+  | "magazine"
+  | "pearl"
+  | "capulana";
 
 const FLOW_BY_VALUE: Record<string, TemplateFlow> = {
   "golden-classic": "classic",
@@ -51,9 +54,9 @@ const FLOW_BY_VALUE: Record<string, TemplateFlow> = {
   "african-heritage": "heritage",
   "xiguiane-tradicional": "heritage",
   "film-noir-motion": "cinematic",
-  "editorial-magazine": "editorial",
-  "pearl-garden": "romantic",
-  "capulana-contemporary": "heritage",
+  "editorial-magazine": "magazine",
+  "pearl-garden": "pearl",
+  "capulana-contemporary": "capulana",
   "celestial-ivory": "celestial",
   "coastal-blue": "destination",
   "aquarela-botanica": "garden",
@@ -77,6 +80,9 @@ export const TEMPLATE_SECTION_ORDERS: Record<TemplateFlow, string[]> = {
   boho: ["hero", "welcome", "story", "couple", "gallery", "location", "schedule", "dress-code", "countdown", "gifts", "guestbook", "rsvp", "word", "contacts", "closing"],
   destination: ["hero", "welcome", "location", "couple", "gallery", "story", "schedule", "dress-code", "countdown", "gifts", "rsvp", "guestbook", "word", "contacts", "closing"],
   celestial: ["hero", "word", "countdown", "couple", "story", "schedule", "gallery", "location", "gifts", "guestbook", "rsvp", "welcome", "contacts", "closing"],
+  magazine: ["hero", "word", "couple", "story", "gallery", "schedule", "location", "countdown", "party", "gifts", "rsvp", "guestbook", "welcome", "contacts", "closing"],
+  pearl: ["hero", "welcome", "couple", "story", "gallery", "countdown", "schedule", "location", "guestbook", "gifts", "rsvp", "word", "contacts", "closing"],
+  capulana: ["hero", "word", "party", "couple", "story", "moments", "schedule", "location", "gallery", "dress-code", "countdown", "gifts", "rsvp", "guestbook", "welcome", "contacts", "closing"],
 };
 
 export function getTemplateFlow(value?: string | null): TemplateFlow {
