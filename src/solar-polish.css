@@ -3344,9 +3344,9 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
 
 /* Replace generic AI-looking CTA ornament with a simple editorial rule. */
 .solar-cta-rule{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto;width:112px;height:10px;opacity:.8}
-.solar-cta-rule span{display:block;width:32px;height:1px;background:#c9a84c}
-.solar-cta-rule b{display:block;width:7px;height:7px;border:1px solid #c9a84c;border-radius:50%}
+.solar-cta-rule span{display:block;width:42px;height:1px;background:#c9a84c}
 .solar-landing section.bg-black :is(.star,.sparkle,.spark,.stars,.sparkles){display:none!important}
+.solar-landing .solar-cta-rule :is(.star,.sparkle,.spark,.stars,.sparkles){display:none!important}
 
 /* Homepage carousel: larger, clearer, product-showcase treatment. */
 .solar-home-carousel{scroll-margin-top:5rem}
@@ -3447,3 +3447,25 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
 .limintso-section>*:nth-child(2){animation-delay:.06s}
 .limintso-section>*:nth-child(3){animation-delay:.12s}
 @media(max-width:640px){.limintso-section{padding:62px 18px}.limintso-cover{padding-top:12px}.limintso-cover-card{min-height:74svh;border-radius:22px}.limintso-person-photo{height:280px}.limintso-gallery-item{height:170px}.limintso-gallery-item.tall{height:352px}.limintso-bottom-nav{width:calc(100% - 12px)}}
+
+
+/* Admin light mode: keep media, thumbnails and action colours fully visible. */
+.solar-admin-shell.admin-theme-light .admin-workspace img,
+.solar-admin-shell.admin-theme-light .admin-workspace video,
+.solar-admin-shell.admin-theme-light .admin-workspace svg{opacity:1!important;filter:none!important;mix-blend-mode:normal!important}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-black"]{color:#fff}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-primary"]{color:#fff}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-[#C9A84C]"],
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-[#c9a84c]"]{color:#fff}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-white"]{color:inherit}
+.solar-admin-shell.admin-theme-light .admin-workspace .solar-template-collection-card,
+.solar-admin-shell.admin-theme-light .admin-workspace .solar-home-model-card{background:#fff!important;color:#1d1d1f!important}
+.solar-admin-shell.admin-theme-light .admin-workspace .solar-template-collection-card img,
+.solar-admin-shell.admin-theme-light .admin-workspace .solar-home-model-card img{opacity:1!important;visibility:visible!important;display:block!important}
+.solar-admin-shell.admin-theme-light .admin-workspace input,
+.solar-admin-shell.admin-theme-light .admin-workspace textarea,
+.solar-admin-shell.admin-theme-light .admin-workspace select{color:#1d1d1f!important;background:#fff!important}
+.solar-admin-shell.admin-theme-light .admin-workspace input::placeholder,
+.solar-admin-shell.admin-theme-light .admin-workspace textarea::placeholder{color:rgba(29,29,31,.42)!important}
+.solar-admin-shell.admin-theme-light .admin-workspace button:not([disabled]){opacity:1!important}
+.solar-admin-shell.admin-theme-light .admin-workspace .border-border{border-color:rgba(0,0,0,.1)!important}
