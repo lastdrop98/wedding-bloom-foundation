@@ -146,15 +146,10 @@ export function MediaManager({ event }: { event: EventRow }) {
           .from("event_media")
           .update(payload)
           .eq("id", existing.id)
-          .eq("event_id", event.id)
-          .select("id");
+          .eq("event_id", event.id);
         if (updateError) {
           await supabase.storage.from(GALLERY_BUCKET).remove([path]);
           throw new Error(`A base de dados recusou a media: ${updateError.message}`);
-        }
-        if (!updatedRows?.length) {
-          await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-          throw new Error("A media existente não foi atualizada. A sessão de administrador pode ter expirado ou a política do event_media precisa de sincronização.");
         }
       } else {
         const { error: insertError } = await looseDb.from("event_media").insert(payload);
@@ -165,12 +160,11 @@ export function MediaManager({ event }: { event: EventRow }) {
       }
 
       if (slot === "cover") {
-        const { data: coverRows, error: coverError } = await supabase
+        const { error: coverError } = await supabase
           .from("events")
           .update({ cover_image_path: path })
-          .eq("id", event.id)
-          .select("id");
-        if (coverError || !coverRows?.length) {
+          .eq("id", event.id);
+        if (coverError) {
           if (existing) {
             await looseDb
               .from("event_media")
