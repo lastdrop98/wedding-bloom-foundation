@@ -68,6 +68,7 @@ function TemplatePreviewPage() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const visualFamily = getTemplateVisualFamily(template.value);
+  const isLimintsoEmerald = template.value === "limintso-emerald";
   const previewImage = PREVIEW_IMAGES[visualFamily];
   const previewVariantByFamily = {
     classic: 0,
@@ -88,7 +89,7 @@ function TemplatePreviewPage() {
     paper: 7,
     "pearl-editorial": 2,
   } as const;
-  const previewVariant = previewVariantByFamily[visualFamily];
+  const previewVariant = isLimintsoEmerald ? 8 : previewVariantByFamily[visualFamily];
   async function request() {
     if (busy) return;
     if (!name.trim()) {
@@ -185,6 +186,29 @@ function TemplatePreviewPage() {
       <p className="text-[8px] uppercase tracking-[.25em] text-white/45">A celebration in motion</p>
       <h2 className="template-preview-names mt-4 text-6xl font-semibold uppercase leading-[.78]">Ana<br />Miguel</h2>
       <div className="mt-7 flex items-center gap-3 text-[8px] uppercase tracking-[.22em] text-white/55"><span className="h-px w-8 bg-white/40" />24.10.27</div>
+    </div>,
+    <div key="limintso-emerald" className="preview-cover preview-cover-limintso absolute inset-0 flex flex-col items-center justify-between bg-[#f4efe7] px-5 py-7 text-[#5c4d35]">
+      <div className="flex w-full items-center justify-between border-b border-[#c9ab68]/30 pb-3">
+        <span className="font-serif text-[11px] text-[#8f7540]">Solar Eclipse</span>
+        <span className="text-[7px] uppercase tracking-[.18em] text-[#9a8350]">menu</span>
+      </div>
+      <div className="w-full rounded-[18px] border border-[#c9ab68]/30 bg-white p-2.5 shadow-[0_12px_28px_rgba(64,53,39,.12)]">
+        <div className="relative overflow-hidden rounded-[13px]">
+          <img src={previewImage} alt="" className="h-48 w-full object-cover" />
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-4 pb-4 pt-12 text-center text-white">
+            <span className="block text-[6px] uppercase tracking-[.22em] text-white/75">A união matrimonial de</span>
+            <strong className="mt-1 block font-serif text-3xl leading-[.85]">Ana & Miguel</strong>
+          </div>
+        </div>
+        <div className="mt-3 flex items-center justify-between">
+          <span className="text-[7px] uppercase tracking-[.16em] text-[#9a8350]">24 · 10 · 2027</span>
+          <span className="rounded-full bg-[#c9ab68] px-3 py-1.5 text-[7px] font-semibold uppercase tracking-[.12em] text-white">Ver convite</span>
+        </div>
+      </div>
+      <div className="text-center">
+        <p className="font-serif text-lg italic text-[#8f7540]">Com a bênção de Deus</p>
+        <span className="mx-auto mt-2 block h-px w-10 bg-[#c9ab68]" />
+      </div>
     </div>,
   ][previewVariant];
 
