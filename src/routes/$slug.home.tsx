@@ -33,6 +33,7 @@ import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
 import { getTemplateDefinition, templateBaseClass, templateToneClass, templateVisualClass } from "@/lib/templates";
 import { templateFlowClass } from "@/lib/templateChoreography";
 import { AquarelaHome } from "@/components/invite/templates/aquarela-botanica/Home";
+import { LimintsoSignatureHome } from "@/components/invite/templates/limintso/SignatureHome";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -1127,6 +1128,23 @@ function HomePage() {
 
   if (event.template === "aquarela-botanica") {
     return <AquarelaHome event={event} slug={slug} inviteType={inviteType} />;
+  }
+
+  if (event.template.startsWith("limintso-") || event.template === "premium-emerald" || event.template === "diamond-signature") {
+    return (
+      <LimintsoSignatureHome
+        event={event}
+        slug={slug}
+        inviteType={inviteType}
+        content={content}
+        cover={cover}
+        music={music}
+        slotMedia={slotMedia}
+        galleryUrls={galleryUrls}
+        galleryMediaUrls={galleryMediaUrls}
+        giftPhotos={giftPhotos}
+      />
+    );
   }
 
   const badge = inviteBadgeLabel(inviteType);
