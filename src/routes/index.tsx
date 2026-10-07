@@ -36,8 +36,8 @@ const features = [
   { icon: QrCode, title: "Presentes Digitais", text: "Receba contribuições através de QR Code." },
 ];
 
-const HOME_FEATURED_VALUES = ["ceremony-editorial", "portrait-ceremony", "garden-letter", "cinema-love-story", "heritage-ceremony", "pearl-ceremony"];
-const HOME_CAROUSEL_VALUES = ["ceremony-editorial", "portrait-ceremony", "garden-letter", "cinema-love-story", "heritage-ceremony", "pearl-ceremony", "editorial-cinema", "mozambique-luxe"];
+const HOME_FEATURED_VALUES = ["limintso-emerald", "ceremony-editorial", "cinema-love-story", "heritage-ceremony", "pearl-ceremony", "editorial-cinema"];
+const HOME_CAROUSEL_VALUES = ["limintso-emerald", "ceremony-editorial", "portrait-ceremony", "garden-letter", "cinema-love-story", "heritage-ceremony", "pearl-ceremony", "mozambique-luxe"];
 
 const HOME_TEMPLATE_IMAGES = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85",
@@ -323,7 +323,7 @@ function HomePage() {
       </section>
 
       <section className="bg-black px-6 py-24 text-center text-white">
-        <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-16 bg-current/70" /><span className="size-2 rounded-full border border-current bg-black" /><span className="h-px w-16 bg-current/70" /></div>
+        <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-16 bg-current/70" /><span className="inline-flex size-6 items-center justify-center rounded-full border border-current text-[7px] font-semibold tracking-[.08em]">SE</span><span className="h-px w-16 bg-current/70" /></div>
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-neutral-300">
           Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.
