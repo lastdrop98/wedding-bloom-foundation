@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, CalendarDays, Check, Clock, Gift, Heart, Images, MessageCircle, Search, Sparkles, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, getTemplateVisualFamily, type TemplateDefinition } from "@/lib/templates";
+import { getTemplateFlow } from "@/lib/templateChoreography";
 import { getTemplateDirection } from "@/lib/templateDirections";
 import { openWhatsApp } from "@/lib/whatsapp";
 import { createTemplateRequest } from "@/lib/templateRequests";
@@ -293,11 +294,34 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
     </section>
   );
 
-  const content = variant % 3 === 0
-    ? [story, program, gallery, gifts, rsvp, guestbook]
-    : variant % 3 === 1
-      ? [story, gallery, program, guestbook, gifts, rsvp]
-      : [gallery, story, program, rsvp, gifts, guestbook];
+  const demoSectionMap = {
+    historia: story,
+    galeria: gallery,
+    agenda: program,
+    presentes: gifts,
+    rsvp,
+    mensagens: guestbook,
+  } as const;
+
+  const demoOrders = {
+    classic: ["historia", "agenda", "galeria", "presentes", "rsvp", "mensagens"],
+    minimal: ["historia", "galeria", "agenda", "rsvp", "presentes", "mensagens"],
+    editorial: ["historia", "galeria", "agenda", "presentes", "rsvp", "mensagens"],
+    cinematic: ["galeria", "historia", "agenda", "rsvp", "presentes", "mensagens"],
+    romantic: ["historia", "galeria", "mensagens", "agenda", "presentes", "rsvp"],
+    garden: ["galeria", "historia", "agenda", "mensagens", "rsvp", "presentes"],
+    royal: ["agenda", "historia", "galeria", "presentes", "rsvp", "mensagens"],
+    heritage: ["mensagens", "historia", "agenda", "galeria", "presentes", "rsvp"],
+    boho: ["historia", "galeria", "agenda", "mensagens", "rsvp", "presentes"],
+    destination: ["galeria", "agenda", "historia", "presentes", "rsvp", "mensagens"],
+    celestial: ["mensagens", "historia", "galeria", "agenda", "presentes", "rsvp"],
+    magazine: ["historia", "galeria", "agenda", "presentes", "rsvp", "mensagens"],
+    pearl: ["galeria", "mensagens", "historia", "agenda", "presentes", "rsvp"],
+    capulana: ["mensagens", "historia", "agenda", "galeria", "rsvp", "presentes"],
+  } as const;
+
+  const content = demoOrders[getTemplateFlow(template.value)]
+    .map((section) => demoSectionMap[section]);
 
   return (
     <div data-demo-variant={variant} className={`template-demo template-demo-${template.value} demo-variant-${variant} relative mx-auto w-full max-w-[420px] overflow-hidden shadow-2xl ${style.page}`}>
