@@ -629,7 +629,7 @@ export function AquarelaHome({
       {(slotMedia["section_1"] || slotMedia["section_2"]) && (
         <Section sectionKey="moments" title="Momentos especiais" eyebrow="Para guardar na memória" wide flora="bagas">
           <div className="grid gap-6 md:grid-cols-2">
-            {[slotMedia["section_1"], slotMedia["section_2"]].filter(Boolean).map((media, index) => (
+            {[slotMedia["section_1"], slotMedia["section_2"]].flatMap((m) => (m ? [m] : [])).map((media, index) => (
               <div key={media.url} className="card-aquarela overflow-hidden">
                 {media.mediaType === "video" ? (
                   <video src={media.url} controls playsInline preload="metadata" className="h-72 w-full object-cover md:h-96" />
