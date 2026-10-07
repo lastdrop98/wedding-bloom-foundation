@@ -72,7 +72,7 @@ const previewStyles = {
   cinematic: { page: "bg-[#090909] text-white", accent: "text-[#d8b46a]", line: "border-white/25", photo: "brightness-50 contrast-110", label: "A celebration in motion", ornament: "01" },
   magazine: { page: "bg-[#eeeae2] text-black", accent: "text-black/55", line: "border-black/20", photo: "grayscale-[10%]", label: "WEDDING / ISSUE 01", ornament: "02" },
   pearl: { page: "bg-[#f7f0ec] text-[#4b3b3a]", accent: "text-[#9b6f73]", line: "border-[#b89598]/40", photo: "brightness-105", label: "Pearl Garden", ornament: "❦" },
-  celestial: { page: "bg-[#f3efe5] text-[#1d1a16]", accent: "text-[#a47b31]", line: "border-[#a47b31]/40", photo: "brightness-90", label: "Celestial", ornament: "✦" },
+  celestial: { page: "bg-[#f3efe5] text-[#1d1a16]", accent: "text-[#a47b31]", line: "border-[#a47b31]/40", photo: "brightness-90", label: "Celestial", ornament: "03" },
   coastal: { page: "bg-[#eaf2f3] text-[#17333a]", accent: "text-[#2d7280]", line: "border-[#2d7280]/30", photo: "brightness-105", label: "Destination / 01", ornament: "≈" },
   limintso: { page: "bg-[#f4efe7] text-[#5c4d35]", accent: "text-[#b08e4d]", line: "border-[#c9ab68]/60", photo: "brightness-100", label: "EMERALD / WEDDING", ornament: "SE" },
 };
@@ -96,7 +96,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
 
   const sectionClass =
     family === "limintso"
-      ? "border-b border-[#c9ab68]/15 bg-[#fbfaf7] px-7 py-14 text-center"
+      ? "border-b border-[#c9ab68]/18 bg-[#f7f3eb] px-6 py-12 text-center"
       : family === "editorial"
         ? "border-b border-black/10 bg-white px-7 py-14 text-left"
         : family === "botanical"
@@ -109,7 +109,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
 
   const miniCard =
     family === "limintso"
-      ? "rounded-[18px] border border-[#6f5d3c]/12 bg-white shadow-[0_14px_36px_rgba(64,53,39,.08)]"
+      ? "rounded-[16px] border border-[#c9ab68]/25 bg-white shadow-[0_16px_38px_rgba(64,53,39,.10)]"
       : family === "editorial"
         ? "border border-black/10 bg-[#fafafa]"
         : family === "botanical"
@@ -360,7 +360,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
   return (
     <div data-demo-variant={variant} className={`template-demo template-demo-${template.value} demo-variant-${variant} relative mx-auto w-full max-w-[420px] overflow-hidden shadow-2xl ${style.page}`}>
       {cover}
-      <section data-demo-section="direcao" className={`px-7 py-8 ${family === "editorial" ? "bg-white text-black" : family === "botanical" ? "bg-[#fffaf8] text-[#473c39]" : family === "regal" ? "bg-[#21372f] text-cream" : family === "heritage" ? "bg-[#3b281f] text-cream" : "bg-ink text-cream"}`}>
+      <section data-demo-section="direcao" className={`px-7 py-8 ${family === "limintso" ? "bg-[#fbfaf7] text-[#5c4d35]" : family === "editorial" ? "bg-white text-black" : family === "botanical" ? "bg-[#fffaf8] text-[#473c39]" : family === "regal" ? "bg-[#21372f] text-cream" : family === "heritage" ? "bg-[#3b281f] text-cream" : "bg-ink text-cream"}`}>
         <div className="grid grid-cols-2 gap-3 text-left">
           {[
             ["Estrutura", direction.structure],
@@ -376,12 +376,12 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
         </div>
       </section>
       {content}
-      <section data-demo-section="rodape" className={`px-7 py-12 text-center ${family === "editorial" ? "bg-[#111] text-white" : family === "botanical" ? "bg-[#f0dfd8] text-[#473c39]" : family === "regal" ? "bg-[#15251f] text-cream" : family === "heritage" ? "bg-[#2a1b15] text-cream" : "bg-black text-cream"}`}>
+      <section data-demo-section="rodape" className={`px-7 py-12 text-center ${family === "limintso" ? "bg-[#d0b56e] text-white" : family === "editorial" ? "bg-[#111] text-white" : family === "botanical" ? "bg-[#f0dfd8] text-[#473c39]" : family === "regal" ? "bg-[#15251f] text-cream" : family === "heritage" ? "bg-[#2a1b15] text-cream" : "bg-black text-cream"}`}>
         <p className={`text-2xl ${style.accent}`}>{style.ornament}</p>
         <p className="mt-5 font-serif text-3xl">Ana & Miguel</p>
         <p className="mt-3 text-[9px] uppercase tracking-[0.25em] opacity-55">Solar Eclipse · demonstração</p>
       </section>
-      <div className="sticky bottom-3 z-10 mx-auto mt-[-1px] flex w-fit gap-1 rounded-full border border-black/10 bg-white/90 p-1 shadow-xl backdrop-blur">
+      <div className={`sticky bottom-3 z-10 mx-auto mt-[-1px] flex w-fit gap-1 rounded-full border p-1 shadow-xl backdrop-blur ${family === "limintso" ? "border-[#b89752]/40 bg-[#c9ab68]/95" : "border-black/10 bg-white/90"}`}>
         {([
           ["capa", "Capa"],
           ["historia", "História"],
@@ -391,7 +391,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
           ["presentes", "Presentes"],
           ["mensagens", "Mensagens"],
         ] as const).map(([id, label]) => (
-          <button key={id} type="button" onClick={() => scrollTo(id)} className="rounded-full px-2.5 py-2 text-[8px] font-medium text-black/60 hover:bg-black/5">
+          <button key={id} type="button" onClick={() => scrollTo(id)} className={`rounded-full px-2.5 py-2 text-[8px] font-medium transition ${family === "limintso" ? "text-white hover:bg-white/15" : "text-black/60 hover:bg-black/5"}`}>
             {label}
           </button>
         ))}
