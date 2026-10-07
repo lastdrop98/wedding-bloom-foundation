@@ -109,13 +109,27 @@ export function LimintsoSignatureHome({
     <div className="size-full bg-[linear-gradient(145deg,#d8d1c6,#726b61)]" />
   );
 
+  const variantClass = event.template === "premium-emerald"
+    ? "variant-premium-emerald"
+    : event.template === "limintso-mozambique"
+      ? "variant-mozambique"
+      : event.template === "limintso-black"
+        ? "variant-black"
+        : event.template === "limintso-sapphire"
+          ? "variant-sapphire"
+          : event.template === "limintso-forest"
+            ? "variant-forest"
+            : event.template === "limintso-rose"
+              ? "variant-rose"
+              : "variant-ivory";
+
   return (
-    <main className="limintso-signature min-h-screen overflow-x-hidden bg-[#f6f3ee] text-[#51483d]">
+    <main className={`limintso-signature ${variantClass} min-h-screen overflow-x-hidden bg-[#f6f3ee] text-[#51483d]`}>
       <header className="limintso-header sticky top-0 z-50 border-b border-[#c9a84c]/15 bg-[#fbfaf7]/94 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5">
           <a href="#capa" className="flex items-center gap-2 text-xs font-medium tracking-[.16em] uppercase">
             <span className="limintso-mark">SE</span>
-            <span>Solar Eclipse</span>
+            <span>{event.template === "premium-emerald" ? "Pacote Emerald" : "Solar Eclipse"}</span>
           </a>
           <div className="flex items-center gap-2">
             <button type="button" onClick={share} className="limintso-icon-button" aria-label="Partilhar"><Share2 className="size-4" /></button>
@@ -134,9 +148,9 @@ export function LimintsoSignatureHome({
         )}
       </header>
 
-      <section id="capa" className="limintso-section limintso-cover relative mx-auto max-w-3xl px-4 py-6 sm:px-6">
+      <section id="capa" className="limintso-section limintso-cover relative mx-auto max-w-3xl px-4 py-6 sm:px-6" data-signature-cover>
         <div className="limintso-cover-card">
-          <div className="limintso-cover-media">{coverMedia}<div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent" /></div>
+          <div className="limintso-cover-media">{coverMedia}<div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent" />{slotMedia["cover_video"]?.url && <span className="limintso-play-badge" aria-hidden="true">▶</span>}</div>
           <div className="absolute inset-x-7 bottom-8 text-center text-white sm:bottom-10">
             <p className="text-[9px] uppercase tracking-[.32em] text-white/75">A união matrimonial de</p>
             <h1 className="mt-3 font-serif text-[clamp(3.3rem,13vw,6.8rem)] leading-[.8] tracking-[-.055em]">{title}</h1>
