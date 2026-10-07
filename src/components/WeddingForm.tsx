@@ -107,6 +107,8 @@ const GROUPS: { title: string; fields: Field[] }[] = [
       { name: "rsvp_message", label: "Mensagem do RSVP", kind: "textarea", scope: "details" },
       { name: "closing_message", label: "Mensagem final", kind: "textarea", scope: "details" },
       { name: "story_intro", label: "Introdução da história", kind: "textarea", scope: "details" },
+      { name: "bride_letter", label: "Carta da noiva", kind: "textarea", scope: "details" },
+      { name: "groom_letter", label: "Carta do noivo", kind: "textarea", scope: "details" },
       { name: "story_1_date", label: "História 1 — data", scope: "details" },
       { name: "story_1_title", label: "História 1 — título", scope: "details" },
       { name: "story_1_text", label: "História 1 — texto", kind: "textarea", scope: "details" },
