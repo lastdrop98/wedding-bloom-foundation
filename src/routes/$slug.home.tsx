@@ -492,6 +492,7 @@ const PARTY: PartyMember[] = [];
 
 function TemplateHeroAccent({ template }: { template?: string | null }) {
   const family = getTemplateDefinition(template).family;
+  const isDiamond = template === "diamond-signature";
   const isLimintsoEmerald = template === "limintso-emerald";
   const isFilm = template === "film-noir-motion" || template === "cinematic-charcoal";
   const isMagazine = template === "editorial-magazine";
@@ -517,6 +518,14 @@ function TemplateHeroAccent({ template }: { template?: string | null }) {
     template?.startsWith("oriental-") ||
     template === "nikah-emerald" ||
     template === "traditional-bronze";
+
+  if (isDiamond) {
+    return (
+      <div className="template-hero-accent template-hero-accent-diamond" aria-hidden="true">
+        <span>DIAMOND</span><i /><span>WEDDING INVITATION</span>
+      </div>
+    );
+  }
 
   if (isLimintsoEmerald) {
     return (
