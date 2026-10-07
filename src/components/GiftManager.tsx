@@ -75,7 +75,10 @@ export function GiftManager({ eventId }: { eventId: string }) {
         image_path: imagePath,
         sort_order: (items?.length ?? 0) + 1,
       });
-      if (error) throw error;
+      if (error) {
+        if (imagePath) await supabase.storage.from(GALLERY_BUCKET).remove([imagePath]);
+        throw new Error(`A base de dados recusou o presente: ${error.message}`);
+      }
     },
     onSuccess: () => {
       setTitle("");
@@ -86,7 +89,8 @@ export function GiftManager({ eventId }: { eventId: string }) {
       toast.success("Presente adicionado.");
       void refresh();
     },
-    onError: () => toast.error("Não foi possível adicionar o presente."),
+    onError: (error) =>
+      toast.error(error instanceof Error ? error.message : "Não foi possível adicionar o presente."),
   });
 
   const remove = useMutation({
