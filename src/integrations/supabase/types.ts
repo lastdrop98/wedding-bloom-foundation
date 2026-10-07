@@ -299,6 +299,42 @@ export type Database = {
           },
         ]
       }
+      template_requests: {
+        Row: {
+          couple_name: string
+          created_at: string
+          id: string
+          message: string | null
+          phone: string
+          status: string
+          template_label: string
+          template_value: string
+          wedding_date: string | null
+        }
+        Insert: {
+          couple_name: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          phone: string
+          status?: string
+          template_label: string
+          template_value: string
+          wedding_date?: string | null
+        }
+        Update: {
+          couple_name?: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          phone?: string
+          status?: string
+          template_label?: string
+          template_value?: string
+          wedding_date?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
