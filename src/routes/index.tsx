@@ -323,7 +323,7 @@ function HomePage() {
       </section>
 
       <section className="bg-black px-6 py-24 text-center text-white">
-        <CircleDot className="mx-auto text-[#C9A84C]" />
+        <div className="mx-auto flex items-center justify-center gap-3 text-[#C9A84C]" aria-hidden="true"><span className="h-px w-12 bg-current" /><EclipseMark className="size-7" /><span className="h-px w-12 bg-current" /></div>
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-neutral-300">
           Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.
