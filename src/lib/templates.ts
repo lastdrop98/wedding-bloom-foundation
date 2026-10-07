@@ -674,7 +674,7 @@ export function templateBaseClass(value?: string | null) {
     "black-paper",
     "limintso-emerald",
   ]);
-  return special.has(value ?? "") ? "template-base-signature" : "template-base-limintso";
+  return special.has(value ?? "") ? "template-base-signature" : "template-base-standard";
 }
 
 export function templateVisualClass(value?: string | null) {
