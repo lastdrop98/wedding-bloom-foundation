@@ -389,6 +389,14 @@ const DEFAULT_DIRECTION: TemplateDirection = {
   typography: "Serif editorial + sans contemporânea",
   palette: "Neutros sofisticados com uma cor de assinatura",
   motifs: "Linhas finas, selos e detalhes gráficos discretos",
+  "diamond-signature": {
+    structure: "Abertura vertical + bênção + noivos + famílias + convite + agenda + local + história + galeria + countdown + RSVP + felicitações + presentes + encerramento",
+    design: "Sistema mobile-first de cartões premium: cabeçalho branco compacto, capa fotográfica, cartões brancos elevados, molduras finas e navegação inferior fixa",
+    appearance: "Papel branco e cinza muito claro, dourado champagne e grafite, com sombras suaves e fotografias em molduras arredondadas",
+    typography: "Serif editorial de alto contraste para nomes e títulos + sans compacta para etiquetas, horários e ações + script pontual para frases especiais",
+    palette: "Branco #FFFFFF, cinza papel #F0F0EE, dourado #C9A84C, grafite #2F2B27 e taupe #8B8378",
+    motifs: "Cartões empilhados, cantos arredondados, marcadores numerados, linhas finas, botão circular de destaque e barra fixa de ações",
+  },
 };
 
 export function getTemplateDirection(template: TemplateDefinition): TemplateDirection {
