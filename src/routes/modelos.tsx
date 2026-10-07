@@ -46,9 +46,10 @@ function matchesFilter(family: string, filter: string) {
   return value.includes(filter.toLowerCase());
 }
 
-type PreviewFamily = "noir" | "botanical" | "regal" | "heritage" | "editorial" | "cinematic" | "magazine" | "pearl" | "celestial" | "coastal";
+type PreviewFamily = "noir" | "botanical" | "regal" | "heritage" | "editorial" | "cinematic" | "magazine" | "pearl" | "celestial" | "coastal" | "limintso";
 
 function previewFamily(template: TemplateDefinition): PreviewFamily {
+  if (template.value === "limintso-emerald") return "limintso";
   if (template.value === "film-noir-motion") return "cinematic";
   if (template.value === "editorial-magazine") return "magazine";
   if (template.value === "pearl-garden") return "pearl";
@@ -63,16 +64,17 @@ function previewFamily(template: TemplateDefinition): PreviewFamily {
 }
 
 const previewStyles = {
-  noir: { page: "bg-ink text-cream", accent: "text-gold", line: "border-gold/60", photo: "brightness-75", label: "Uma celebração inesquecível", ornament: "✦" },
+  noir: { page: "bg-ink text-cream", accent: "text-gold", line: "border-gold/60", photo: "brightness-75", label: "Uma celebração inesquecível", ornament: "01" },
   botanical: { page: "bg-cream text-foreground", accent: "text-rose", line: "border-rose/50", photo: "opacity-80", label: "Floresce uma nova história", ornament: "❧" },
   regal: { page: "bg-sage text-ink", accent: "text-cream", line: "border-cream/70", photo: "brightness-75", label: "O início de uma história", ornament: "◇" },
-  heritage: { page: "bg-warm text-cream", accent: "text-gold-soft", line: "border-gold-soft/70", photo: "sepia", label: "Juntos em celebração", ornament: "✳" },
+  heritage: { page: "bg-warm text-cream", accent: "text-gold-soft", line: "border-gold-soft/70", photo: "sepia", label: "Juntos em celebração", ornament: "03" },
   editorial: { page: "bg-background text-foreground", accent: "text-wine", line: "border-foreground/40", photo: "grayscale", label: "O nosso dia", ornament: "—" },
   cinematic: { page: "bg-[#090909] text-white", accent: "text-[#d8b46a]", line: "border-white/25", photo: "brightness-50 contrast-110", label: "A celebration in motion", ornament: "01" },
   magazine: { page: "bg-[#eeeae2] text-black", accent: "text-black/55", line: "border-black/20", photo: "grayscale-[10%]", label: "WEDDING / ISSUE 01", ornament: "02" },
   pearl: { page: "bg-[#f7f0ec] text-[#4b3b3a]", accent: "text-[#9b6f73]", line: "border-[#b89598]/40", photo: "brightness-105", label: "Pearl Garden", ornament: "❦" },
   celestial: { page: "bg-[#f3efe5] text-[#1d1a16]", accent: "text-[#a47b31]", line: "border-[#a47b31]/40", photo: "brightness-90", label: "Celestial", ornament: "✦" },
   coastal: { page: "bg-[#eaf2f3] text-[#17333a]", accent: "text-[#2d7280]", line: "border-[#2d7280]/30", photo: "brightness-105", label: "Destination / 01", ornament: "≈" },
+  limintso: { page: "bg-[#f4efe7] text-[#5c4d35]", accent: "text-[#b08e4d]", line: "border-[#c9ab68]/60", photo: "brightness-100", label: "EMERALD / WEDDING", ornament: "SE" },
 };
 
 function InvitationPreview({ template }: { template: TemplateDefinition }) {
@@ -93,31 +95,62 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
   };
 
   const sectionClass =
-    family === "editorial"
-      ? "border-b border-black/10 bg-white px-7 py-14 text-left"
-      : family === "botanical"
-        ? "border-b border-rose/10 bg-[#fffaf8] px-7 py-14 text-center"
-        : family === "heritage"
-          ? "border-b border-gold-soft/15 bg-[#4a3022] px-7 py-14 text-center"
-          : family === "regal"
-            ? "border-b border-black/10 bg-[#21372f] px-7 py-14 text-center text-cream"
-            : "border-b border-gold/10 bg-ink px-7 py-14 text-center text-cream";
+    family === "limintso"
+      ? "border-b border-[#c9ab68]/15 bg-[#fbfaf7] px-7 py-14 text-center"
+      : family === "editorial"
+        ? "border-b border-black/10 bg-white px-7 py-14 text-left"
+        : family === "botanical"
+          ? "border-b border-rose/10 bg-[#fffaf8] px-7 py-14 text-center"
+          : family === "heritage"
+            ? "border-b border-gold-soft/15 bg-[#4a3022] px-7 py-14 text-center"
+            : family === "regal"
+              ? "border-b border-black/10 bg-[#21372f] px-7 py-14 text-center text-cream"
+              : "border-b border-gold/10 bg-ink px-7 py-14 text-center text-cream";
 
   const miniCard =
-    family === "editorial"
-      ? "border border-black/10 bg-[#fafafa]"
-      : family === "botanical"
-        ? "rounded-[28px] border border-rose/15 bg-white shadow-sm"
-        : family === "heritage"
-          ? "border border-gold-soft/20 bg-[#3c271d]"
-          : family === "regal"
-            ? "border border-cream/15 bg-[#1b3029]"
-            : "border border-gold/20 bg-[#17130f]";
+    family === "limintso"
+      ? "rounded-[18px] border border-[#6f5d3c]/12 bg-white shadow-[0_14px_36px_rgba(64,53,39,.08)]"
+      : family === "editorial"
+        ? "border border-black/10 bg-[#fafafa]"
+        : family === "botanical"
+          ? "rounded-[28px] border border-rose/15 bg-white shadow-sm"
+          : family === "heritage"
+            ? "border border-gold-soft/20 bg-[#3c271d]"
+            : family === "regal"
+              ? "border border-cream/15 bg-[#1b3029]"
+              : "border border-gold/20 bg-[#17130f]";
 
   const demoLabel = "DEMONSTRAÇÃO · CONTEÚDO FICTÍCIO";
 
   const cover =
-    family === "editorial" ? (
+    family === "limintso" ? (
+      <section data-demo-section="capa" className="relative min-h-[660px] overflow-hidden bg-[#f4efe7] text-[#5c4d35]">
+        <div className="absolute inset-x-0 top-0 h-16 border-b border-[#c9ab68]/25 bg-white/80" />
+        <div className="relative flex min-h-[660px] flex-col items-center justify-between px-7 py-9">
+          <div className="flex w-full items-center justify-between border-b border-[#c9ab68]/20 pb-4">
+            <span className="font-serif text-sm tracking-wide text-[#8f7540]">Solar Eclipse</span>
+            <span className="text-[10px] uppercase tracking-[.2em] text-[#9a8350]">menu</span>
+          </div>
+          <div className="w-full rounded-[22px] border border-[#c9ab68]/25 bg-white p-3 shadow-[0_18px_44px_rgba(64,53,39,.12)]">
+            <div className="relative overflow-hidden rounded-[16px]">
+              <img src={photoA} alt="" className="h-64 w-full object-cover" />
+              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-5 pb-5 pt-16 text-center text-white">
+                <span className="block text-[9px] uppercase tracking-[.25em] text-white/75">A união matrimonial de</span>
+                <strong className="mt-2 block font-serif text-5xl font-medium leading-[.85]">Ana & Miguel</strong>
+              </span>
+            </div>
+            <div className="mt-4 grid grid-cols-[1fr_auto] items-center gap-3">
+              <span className="text-[9px] uppercase tracking-[.18em] text-[#9a8350]">24 · 10 · 2027</span>
+              <span className="rounded-full bg-[#c9ab68] px-4 py-2 text-[9px] font-semibold uppercase tracking-[.15em] text-white">Ver convite</span>
+            </div>
+          </div>
+          <div className="text-center">
+            <p className="font-serif text-2xl italic text-[#8f7540]">Com a bênção de Deus</p>
+            <div className="mx-auto mt-4 h-px w-14 bg-[#c9ab68]/60" />
+          </div>
+        </div>
+      </section>
+    ) : family === "editorial" ? (
       <section data-demo-section="capa" className="relative min-h-[660px] overflow-hidden bg-[#f1eee8] text-black">
         <div className="grid min-h-[660px] grid-cols-[42%_58%]">
           <div className="flex flex-col justify-between p-7">
@@ -317,6 +350,7 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
     celestial: ["mensagens", "historia", "galeria", "agenda", "presentes", "rsvp"],
     magazine: ["historia", "galeria", "agenda", "presentes", "rsvp", "mensagens"],
     pearl: ["galeria", "mensagens", "historia", "agenda", "presentes", "rsvp"],
+    limintso: ["historia", "agenda", "galeria", "mensagens", "rsvp", "presentes"],
     capulana: ["mensagens", "historia", "agenda", "galeria", "rsvp", "presentes"],
   } as const;
 
