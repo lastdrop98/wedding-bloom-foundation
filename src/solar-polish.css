@@ -2572,3 +2572,87 @@ main.template-base-signature { isolation: isolate; }
   main.template-design-silk-ribbon .template-hero::before,
   main.template-design-ribbon-ivory .template-hero::before { width: 24px; left: 4%; right: auto; }
 }
+
+
+/* Landing/header controls: unmistakable button silhouettes, not plain text links. */
+.solar-landing header nav a {
+  min-height: 42px;
+  border-width: 1.5px !important;
+  border-style: solid !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,.025), inset 0 0 0 1px rgba(255,255,255,.55);
+}
+.solar-landing header nav a:hover {
+  transform: translateY(-1px);
+}
+
+/* Remove decorative star/sparkle glyphs from older template treatments. */
+.solar-landing [aria-hidden="true"]:is(.star,.sparkle),
+.solar-models-page .template-demo [aria-hidden="true"]:is(.star,.sparkle) {
+  display: none !important;
+}
+
+/* Admin light mode: preserve real imagery, strong text, borders and action colours. */
+.solar-admin-shell.admin-theme-light .admin-workspace img,
+.solar-admin-shell.admin-theme-light .admin-workspace video {
+  opacity: 1 !important;
+  filter: none !important;
+  visibility: visible !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button {
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.12) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button.bg-black,
+.solar-admin-shell.admin-theme-light .admin-workspace a.bg-black {
+  background: #1d1d1f !important;
+  color: #fff !important;
+  border-color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button[class*="bg-[#C9A84C]"],
+.solar-admin-shell.admin-theme-light .admin-workspace a[class*="bg-[#C9A84C]"] {
+  background: #b38d35 !important;
+  color: #fff !important;
+  border-color: #b38d35 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button[class*="bg-[#25D366]"],
+.solar-admin-shell.admin-theme-light .admin-workspace a[class*="bg-[#25D366]"] {
+  color: #116b36 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button:hover {
+  filter: brightness(.98);
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-white"] {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-white {
+  background: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-[#111]"],
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-[#181818]"] {
+  background: #fff !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace input[type="file"] {
+  background: #fff !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input,textarea,select) {
+  background: #fff !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.14) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input,textarea,select)::placeholder {
+  color: rgba(29,29,31,.42) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel {
+  background: #181818 !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel :is(p,h1,h2,h3,h4,span) {
+  color: inherit !important;
+}
+
+/* Invitation quick-action icon treatment for all templates. */
+.invite-quick-actions .invite-quick-icon {
+  flex: 0 0 auto;
+}
