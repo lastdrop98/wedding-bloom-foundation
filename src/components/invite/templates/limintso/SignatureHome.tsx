@@ -28,7 +28,6 @@ type Props = {
 
 export function LimintsoSignatureHome({
   event,
-  slug,
   inviteType,
   content,
   cover,
