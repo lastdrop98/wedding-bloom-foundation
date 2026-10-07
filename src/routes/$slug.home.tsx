@@ -1134,7 +1134,6 @@ function HomePage() {
     return (
       <LimintsoSignatureHome
         event={event}
-        slug={slug}
         inviteType={inviteType}
         content={content}
         cover={cover}
