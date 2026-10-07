@@ -112,8 +112,13 @@ export function MediaManager({ event }: { event: EventRow }) {
 
   const uploadSlot = useMutation({
     mutationFn: async ({ slot, file }: { slot: MediaSlot; file: File }) => {
+      if (!file || file.size === 0) throw new Error("O ficheiro está vazio ou não foi selecionado.");
       const mediaType = file.type.startsWith("video/") ? "video" : "image";
       const expectsVideo = slot.includes("video");
+      const maxBytes = mediaType === "video" ? 120 * 1024 * 1024 : 20 * 1024 * 1024;
+      if (file.size > maxBytes) {
+        throw new Error(mediaType === "video" ? "O vídeo ultrapassa o limite de 120 MB." : "A imagem ultrapassa o limite de 20 MB.");
+      }
       if (expectsVideo && mediaType !== "video")
         throw new Error("Escolha um vídeo para este campo.");
       if (!expectsVideo && mediaType !== "image")
@@ -159,7 +164,11 @@ export function MediaManager({ event }: { event: EventRow }) {
           .from("events")
           .update({ cover_image_path: path })
           .eq("id", event.id);
-        if (coverError) throw new Error(`A capa foi enviada, mas não foi possível ligá-la ao evento: ${coverError.message}`);
+        if (coverError) {
+          await looseDb.from("event_media").delete().eq("id", existing?.id ?? "__missing__").eq("event_id", event.id);
+          await supabase.storage.from(GALLERY_BUCKET).remove([path]);
+          throw new Error(`A capa foi enviada, mas não foi possível ligá-la ao evento: ${coverError.message}`);
+        }
       }
       if (existing?.storage_path && existing.storage_path !== path) {
         await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
@@ -170,8 +179,10 @@ export function MediaManager({ event }: { event: EventRow }) {
       void queryClient.invalidateQueries({ queryKey: key });
       toast.success(variables.slot === "cover" ? "Capa atualizada." : "Media adicionada.");
     },
-    onError: (error) =>
-      toast.error(error instanceof Error ? error.message : "Não foi possível guardar esta media. Verifique o ficheiro e tente novamente."),
+    onError: (error) => {
+      const message = error instanceof Error ? error.message : "Não foi possível guardar esta media.";
+      toast.error(message);
+    },
   });
 
   const updateSlot = useMutation({
@@ -222,6 +233,9 @@ export function MediaManager({ event }: { event: EventRow }) {
 
   const saveMusic = useMutation({
     mutationFn: async () => {
+      if (musicFile?.size && musicFile.size > 30 * 1024 * 1024) {
+        throw new Error("A música ultrapassa o limite de 30 MB.");
+      }
       let musicPath = event.music_path;
       const previousPath = event.music_path;
 
