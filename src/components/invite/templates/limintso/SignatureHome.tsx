@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Heart, MapPin, Menu, Play, Share2, Volume2, VolumeX } from "lucide-react";
+import { ChevronDown, Heart, MapPin, Menu, Share2, Volume2, VolumeX } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { GiftQr } from "@/components/invite/GiftQr";
@@ -16,7 +16,6 @@ type SignatureContent = {
 
 type Props = {
   event: EventRow;
-  slug: string;
   inviteType?: "individual" | "casal" | null;
   content?: SignatureContent | null;
   cover?: string | null;
@@ -26,8 +25,6 @@ type Props = {
   galleryMediaUrls: GalleryItem[];
   giftPhotos: Record<string, string>;
 };
-
-const gold = "#c9a84c";
 
 export function LimintsoSignatureHome({
   event,
