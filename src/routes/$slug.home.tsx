@@ -711,6 +711,7 @@ function HomePage() {
   const [playing, setPlaying] = useState(false);
   const [cover, setCover] = useState<string | null>(null);
   const [galleryUrls, setGalleryUrls] = useState<GalleryImage[]>([]);
+  const [galleryMediaUrls, setGalleryMediaUrls] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
   const [giftPhotos, setGiftPhotos] = useState<Record<string, string>>({});
   const [slotMedia, setSlotMedia] = useState<
@@ -739,13 +740,26 @@ function HomePage() {
     Promise.all(
       content.media.map(async (m) => {
         const url = await signedUrl(GALLERY_BUCKET, m.storage_path);
-        return url ? ([m.slot, { url, mediaType: m.media_type }] as const) : null;
+        return url ? ({ slot: m.slot, url, mediaType: m.media_type } as const) : null;
       }),
-    ).then((pairs) => {
-      const next = Object.fromEntries(
-        pairs.filter((p): p is [string, { url: string; mediaType: string }] => Boolean(p)),
+    ).then((items) => {
+      const resolved = items.filter(
+        (item): item is { slot: string; url: string; mediaType: string } => Boolean(item),
       );
+      const next: Record<string, { url: string; mediaType: string }> = {};
+      resolved.forEach((item) => {
+        next[item.slot] = { url: item.url, mediaType: item.mediaType };
+      });
       setSlotMedia(next);
+      setGalleryMediaUrls(
+        resolved
+          .filter((item) => item.slot === "gallery")
+          .map((item) => ({
+            url: item.url,
+            caption: "Momento especial",
+            mediaType: item.mediaType,
+          })),
+      );
       if (!event?.cover_image_path && next["cover"]) setCover(next["cover"].url);
     });
   }, [content, event?.cover_image_path]);
@@ -1229,17 +1243,15 @@ function HomePage() {
         </div>
       </Section>
 
-      {galleryUrls.length > 0 && (
+      {(galleryUrls.length > 0 || galleryMediaUrls.length > 0) && (
         <>
           <VineDivider className="my-6" />
           <Section data-template-section="gallery" sectionKey="gallery" title="Galeria" wide dark vines="c">
             <GalleryCarousel
-              items={[
-                ...galleryUrls,
-                ...(slotMedia["gallery"]?.url
-                  ? [{ url: slotMedia["gallery"]?.url, caption: "Momento especial", mediaType: "image" }]
-                  : []),
-              ].filter((item, index, list) => list.findIndex((candidate) => candidate.url === item.url) === index)}
+              items={[...galleryUrls, ...galleryMediaUrls].filter(
+                (item, index, list) =>
+                  list.findIndex((candidate) => candidate.url === item.url) === index,
+              )}
               eventName={eventTitle(event)}
               onOpen={setLightbox}
             />
