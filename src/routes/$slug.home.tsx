@@ -1085,7 +1085,8 @@ function HomePage() {
             mediaType: item.mediaType,
           })),
       );
-      if (!event?.cover_image_path && next["cover"]) setCover(next["cover"].url);
+      if (next["hero"]?.url) setCover(next["hero"].url);
+      else if (!event?.cover_image_path && next["cover"]) setCover(next["cover"].url);
     });
   }, [content, event?.cover_image_path]);
 
