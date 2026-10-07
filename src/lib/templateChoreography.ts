@@ -90,6 +90,12 @@ const FLOW_BY_VALUE: Record<string, TemplateFlow> = {
   "black-paper": "web",
   "pearl-editorial": "web",
   "limintso-emerald": "limintso",
+  "limintso-rose": "limintso",
+  "limintso-ivory": "limintso",
+  "limintso-sapphire": "limintso",
+  "limintso-black": "limintso",
+  "limintso-forest": "limintso",
+  "limintso-mozambique": "limintso",
 };
 
 const DEFAULT_ORDER = [
