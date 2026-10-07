@@ -1994,3 +1994,352 @@ main.template-design-pearl-editorial [data-template-section="gallery"] .invite-c
     font-size: clamp(3.6rem, 17vw, 6.4rem);
   }
 }
+
+
+/* Premium invitation systems: these families intentionally change composition,
+   not just the palette. The content model stays shared so RSVP/media/gifts remain compatible. */
+.template-visual-portrait {
+  --invite-surface: #f5f0e8;
+  --invite-ink: #211f1b;
+  --invite-accent: #a4875c;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+}
+.template-visual-portrait .template-hero {
+  min-height: 88vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 7rem 1.5rem;
+}
+.template-visual-portrait .template-hero h1 {
+  max-width: 9ch;
+  margin-inline: auto;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: .9;
+  letter-spacing: -.055em;
+}
+.template-visual-portrait .card-elegant {
+  border-radius: 2px;
+  border-color: rgba(33,31,27,.14);
+  box-shadow: 0 18px 55px rgba(33,31,27,.07);
+}
+
+.template-visual-olive {
+  --invite-surface: #eef0e7;
+  --invite-ink: #273024;
+  --invite-accent: #657257;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+}
+.template-visual-olive .template-hero {
+  min-height: 82vh;
+  align-items: end;
+  text-align: left;
+  padding: 8rem max(1.5rem, 7vw) 5rem;
+  border-left: 10px solid var(--invite-accent);
+}
+.template-visual-olive [data-template-section="story"],
+.template-visual-olive [data-template-section="gallery"] {
+  max-width: 1180px;
+  margin-inline: auto;
+}
+.template-visual-olive .card-elegant {
+  border-radius: 14px 44px 14px 44px;
+  border-color: rgba(101,114,87,.24);
+}
+
+.template-visual-atelier {
+  --invite-surface: #f7ecec;
+  --invite-ink: #332729;
+  --invite-accent: #9d6f78;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+}
+.template-visual-atelier .template-hero {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  text-align: center;
+  padding: 5rem 1.5rem 7rem;
+}
+.template-visual-atelier .template-hero h1 {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: .92;
+  letter-spacing: -.06em;
+}
+.template-visual-atelier [data-template-section="story"] .card-elegant {
+  background: #fffaf9;
+  border-radius: 0;
+  border-width: 0 0 1px;
+}
+.template-visual-atelier [data-template-section="gallery"] img {
+  border-radius: 2px;
+}
+
+.template-visual-mozambique {
+  --invite-surface: #251d18;
+  --invite-ink: #f5e8d2;
+  --invite-accent: #c08a4b;
+  background:
+    linear-gradient(135deg, rgba(192,138,75,.07) 25%, transparent 25%) 0 0/34px 34px,
+    linear-gradient(315deg, rgba(192,138,75,.05) 25%, transparent 25%) 0 0/34px 34px,
+    var(--invite-surface);
+  color: var(--invite-ink);
+}
+.template-visual-mozambique .template-hero {
+  min-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: 7rem max(1.5rem, 8vw);
+  border-bottom: 1px solid rgba(245,232,210,.16);
+}
+.template-visual-mozambique .card-elegant {
+  background: rgba(255,255,255,.035);
+  border-color: rgba(192,138,75,.28);
+  border-radius: 0;
+}
+.template-visual-mozambique [data-template-section="party"] .card-elegant {
+  border-left: 4px solid var(--invite-accent);
+}
+
+.template-visual-sunset {
+  --invite-surface: #f3e5dc;
+  --invite-ink: #33211d;
+  --invite-accent: #bd6c4d;
+  background: linear-gradient(180deg, #e8c9bb 0%, #f6eee8 28%, #f3e5dc 100%);
+  color: var(--invite-ink);
+}
+.template-visual-sunset .template-hero {
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 1.5rem 8rem;
+}
+.template-visual-sunset .template-hero h1 {
+  font-size: clamp(3rem, 8vw, 6.8rem);
+  line-height: .9;
+  letter-spacing: -.065em;
+}
+.template-visual-sunset [data-template-section="schedule"] li {
+  border-radius: 999px;
+  border: 1px solid rgba(189,108,77,.25);
+  padding: 1rem 1.4rem;
+}
+
+.template-visual-paper {
+  --invite-surface: #11100f;
+  --invite-ink: #f1eadf;
+  --invite-accent: #b59663;
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 0 0/100% 42px,
+    #11100f;
+  color: var(--invite-ink);
+}
+.template-visual-paper .template-hero {
+  min-height: 90vh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  text-align: left;
+  padding: 7rem max(1.5rem, 8vw);
+}
+.template-visual-paper .template-hero h1 {
+  max-width: 8ch;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: .82;
+  letter-spacing: -.075em;
+  text-transform: uppercase;
+}
+.template-visual-paper .card-elegant {
+  background: #171514;
+  border-color: rgba(241,234,223,.13);
+  border-radius: 0;
+}
+.template-visual-paper [data-template-section="rsvp"] {
+  border-top: 1px solid rgba(181,150,99,.45);
+}
+
+.template-visual-pearl-editorial {
+  --invite-surface: #f6f1ef;
+  --invite-ink: #30282a;
+  --invite-accent: #b78f96;
+  background: radial-gradient(circle at 20% 10%, rgba(255,255,255,.95), transparent 32%), #f3ecea;
+  color: var(--invite-ink);
+}
+.template-visual-pearl-editorial .template-hero {
+  min-height: 86vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 7rem 1.5rem;
+}
+.template-visual-pearl-editorial .template-hero::after {
+  content: "";
+  position: absolute;
+  inset: 5%;
+  border: 1px solid rgba(183,143,150,.25);
+  border-radius: 48% 52% 45% 55%;
+  pointer-events: none;
+}
+.template-visual-pearl-editorial .card-elegant {
+  background: rgba(255,255,255,.62);
+  border-color: rgba(183,143,150,.22);
+  border-radius: 26px;
+}
+
+.template-visual-cinema {
+  --invite-surface: #151515;
+  --invite-ink: #f4f0e8;
+  --invite-accent: #c7a96b;
+  background: #151515;
+  color: var(--invite-ink);
+}
+.template-visual-cinema .template-hero {
+  min-height: 94vh;
+  display: grid;
+  align-content: end;
+  padding: 4rem max(1.5rem, 8vw) 7rem;
+  text-align: left;
+}
+.template-visual-cinema .template-hero h1 {
+  max-width: 8ch;
+  font-size: clamp(4rem, 10vw, 9rem);
+  line-height: .84;
+  letter-spacing: -.07em;
+}
+.template-visual-cinema [data-template-section="story"] {
+  background: #0f0f0f;
+}
+.template-visual-cinema [data-template-section="schedule"] {
+  border-top: 1px solid rgba(199,169,107,.35);
+  border-bottom: 1px solid rgba(199,169,107,.35);
+}
+
+.template-visual-celestial .template-hero {
+  min-height: 90vh;
+}
+.template-visual-celestial [data-template-section="word"] {
+  min-height: 45vh;
+  display: grid;
+  place-items: center;
+}
+.template-visual-celestial [data-template-section="countdown"] {
+  border-block: 1px solid rgba(201,168,76,.22);
+}
+
+.template-visual-coastal .template-hero {
+  min-height: 88vh;
+}
+.template-visual-coastal [data-template-section="location"] {
+  background: linear-gradient(180deg, rgba(224,236,239,.75), rgba(247,244,237,.9));
+}
+.template-visual-coastal [data-template-section="schedule"] li {
+  border-radius: 18px;
+}
+
+@media (max-width: 640px) {
+  .template-visual-portrait .template-hero,
+  .template-visual-olive .template-hero,
+  .template-visual-atelier .template-hero,
+  .template-visual-mozambique .template-hero,
+  .template-visual-sunset .template-hero,
+  .template-visual-paper .template-hero,
+  .template-visual-pearl-editorial .template-hero,
+  .template-visual-cinema .template-hero {
+    min-height: 78vh;
+    padding: 5rem 1.25rem 5.5rem;
+  }
+}
+
+/* Quick navigation should read as five real controls, not text floating inside a pill. */
+.invite-quick-actions {
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(18,16,14,.88);
+}
+.invite-quick-actions button {
+  border: 1px solid rgba(255,255,255,.13);
+  background: rgba(255,255,255,.035);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.025);
+}
+.invite-quick-actions button:hover,
+.invite-quick-actions button:focus-visible {
+  border-color: rgba(255,255,255,.34);
+  background: rgba(255,255,255,.11);
+}
+
+/* Light admin mode: restore contrast, media previews and button colours instead of inheriting dark/white utilities. */
+.solar-admin-shell.admin-theme-light .admin-workspace :is(h1,h2,h3,h4,h5,h6,p,span,label,legend) {
+  color: #1d1d1f;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .text-muted-foreground,
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-black/"],
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-white/"] {
+  color: rgba(29,29,31,.58) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input,textarea,select) {
+  background: #fff !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.14) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input,textarea,select)::placeholder {
+  color: rgba(29,29,31,.38) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-black {
+  background: #1d1d1f !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-black/"] {
+  background: rgba(0,0,0,.035) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-white {
+  background: #fff !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-[#fffdf7]"] {
+  background: #fffdf7 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.border,.border-border) {
+  border-color: rgba(0,0,0,.1) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button,a)[class*="bg-primary"] {
+  color: #fff !important;
+  background: #9a7a2d !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button[class*="bg-black"],
+.solar-admin-shell.admin-theme-light .admin-workspace a[class*="bg-black"] {
+  color: #fff !important;
+  background: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace img,
+.solar-admin-shell.admin-theme-light .admin-workspace video {
+  opacity: 1 !important;
+  filter: none !important;
+  visibility: visible !important;
+  mix-blend-mode: normal !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero-image {
+  opacity: .9 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero-glow {
+  opacity: .16 !important;
+}
+.solar-admin-shell.admin-theme-light aside :is(button,a),
+.solar-admin-shell.admin-theme-light header :is(button,a) {
+  color: #1d1d1f;
+}
+.solar-admin-shell.admin-theme-light aside .bg-black,
+.solar-admin-shell.admin-theme-light header .bg-black {
+  color: #fff !important;
+  background: #1d1d1f !important;
+}
