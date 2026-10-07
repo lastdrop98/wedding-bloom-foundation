@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Check, Search, Sparkles } from "lucide-react";
+import { Check, LayoutGrid, Search } from "lucide-react";
 
 import { TEMPLATE_OPTIONS, templateVisualClass, type TemplateDefinition } from "@/lib/templates";
 import { getTemplateDirection } from "@/lib/templateDirections";
@@ -100,7 +100,7 @@ export function TemplatePicker({
             />
           </div>
           <div className="flex items-center gap-2">
-            <Sparkles className="size-4 text-primary" />
+            <LayoutGrid className="size-4 text-primary" />
             <span className="font-sans text-xs tracking-[0.12em] text-muted-foreground uppercase">
               {filtered.length} modelos
             </span>
