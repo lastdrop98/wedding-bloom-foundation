@@ -26,13 +26,13 @@ export function TemplateAtmosphere({
       {children}
       <span className="template-orb template-orb-a" />
       <span className="template-orb template-orb-b" />
-      {tone === "midnight" && <span className="template-stars" />}
+      {tone === "midnight" && <span className="template-orbit-lines" />}
       {tone === "xiguiane" && <span className="template-geometry" />}
       {tone === "sand" && <span className="template-sun" />}
       {isFilm && <span className="template-film-grain" />}
       {isMagazine && <span className="template-magazine-grid" />}
       {isPearl && <span className="template-pearl-bloom" />}
-      {isCapulana && <span className="template-capulana-pattern" />}\n      {isCelestial && <span className="template-celestial-stars" />}\n      {isCoastal && <span className="template-coastal-wave" />}
+      {isCapulana && <span className="template-capulana-pattern" />}\n      {isCelestial && <span className="template-celestial-orbits" />}\n      {isCoastal && <span className="template-coastal-wave" />}
     </div>
   );
 }
