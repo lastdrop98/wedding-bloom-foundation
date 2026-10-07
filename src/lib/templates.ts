@@ -536,7 +536,7 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   if (/portrait-ceremony|ivory-portrait|classic-ivory/.test(source)) return "portrait";
   if (/modern-olive|emerald-elegante/.test(source)) return "olive";
   if (/rose-atelier/.test(source)) return "atelier";
-  if (/mozambique-luxe/.test(source)) return "mozambique";
+  if (/mozambique-luxe|heritage-ceremony/.test(source)) return source.includes("heritage-ceremony") ? "heritage" : "mozambique";
   if (/sunset-destination|sicilian-terracotta|tropical-sunset/.test(source)) return "sunset";
   if (/black-paper/.test(source)) return "paper";
   if (/pearl-ceremony|pearl-editorial/.test(source)) return "pearl-editorial";
