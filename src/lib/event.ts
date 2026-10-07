@@ -65,6 +65,8 @@ export const WEDDING_DETAIL_FIELDS = [
   "rsvp_message",
   "closing_message",
   "story_intro",
+  "bride_letter",
+  "groom_letter",
   "story_1_date",
   "story_1_title",
   "story_1_text",
