@@ -541,9 +541,6 @@ textarea {
 .solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-black/[0.045]"] {
   background: rgba(0,0,0,.035) !important;
 }
-.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-white/"] {
-  color: rgba(29,29,31,.72) !important;
-}
 .solar-admin-shell.admin-theme-light aside,
 .solar-admin-shell.admin-theme-light header {
   background: rgba(255,255,255,.92) !important;
@@ -1664,5 +1661,110 @@ main.template-design-coastal-blue,
   main.template-design-editorial-dark .template-hero,
   main.template-design-tropical-sunset .template-hero {
     min-height: 90svh;
+  }
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* Landing controls + admin light mode hardening                              */
+/* -------------------------------------------------------------------------- */
+
+.solar-landing header nav > a {
+  border-width: 1px;
+}
+
+.solar-home-carousel img {
+  display: block;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace,
+.solar-admin-shell.admin-theme-light .admin-workspace * {
+  --tw-ring-color: rgba(0,0,0,.08);
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace img,
+.solar-admin-shell.admin-theme-light .admin-workspace video {
+  opacity: 1 !important;
+  filter: none !important;
+  visibility: visible !important;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel * {
+  color: inherit;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel {
+  color: #fff !important;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel [class*="text-white/"] {
+  color: rgba(255,255,255,.72) !important;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel [class*="border-white/"] {
+  border-color: rgba(255,255,255,.12) !important;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace button.bg-black,
+.solar-admin-shell.admin-theme-light .admin-workspace a.bg-black {
+  background: #111 !important;
+  color: #fff !important;
+  border-color: #111 !important;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-white"] {
+  color: #1d1d1f;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker,
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="template-picker"] {
+  color: #1d1d1f;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace input,
+.solar-admin-shell.admin-theme-light .admin-workspace textarea,
+.solar-admin-shell.admin-theme-light .admin-workspace select {
+  color: #1d1d1f !important;
+  background: #fff !important;
+  border-color: rgba(0,0,0,.14) !important;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace input::placeholder,
+.solar-admin-shell.admin-theme-light .admin-workspace textarea::placeholder {
+  color: rgba(29,29,31,.42) !important;
+}
+
+.solar-admin-shell.admin-theme-light .admin-workspace .text-white,
+.solar-admin-shell.admin-theme-light .admin-workspace [class~="text-white"] {
+  color: #fff !important;
+}
+
+.admin-hero-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(201,168,76,.38);
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  color: #d7b56d;
+  background: rgba(215,181,109,.06);
+}
+
+.solar-home-carousel .group:focus-visible,
+.solar-home-carousel button:focus-visible {
+  outline: 2px solid rgba(215,181,109,.85);
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .solar-home-carousel .group {
+    min-height: 360px;
   }
 }
