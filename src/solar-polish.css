@@ -829,6 +829,3 @@ main[class*="template-flow-"] .vine-run {
   background: #1b1b1b !important;
   border-color: rgba(255,255,255,.12) !important;
 }
-.solar-admin-shell.admin-theme-light :is([class~="text-white"],[class*="text-white/"]) {
-  color: rgba(29,29,31,.70) !important;
-}
