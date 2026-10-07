@@ -48,6 +48,13 @@ const FAMILY_ACCENTS: Record<string, string> = {
   Floral: "FLORAL",
   "Tradicional Africano": "AFRICAN",
   "Floral / Garden": "BOTANICAL",
+  "Cinemático / Editorial": "CINEMA",
+  "Minimalista / Fotográfico": "PORTRAIT",
+  "Minimalista / Natural": "OLIVE",
+  "Romântico / Editorial": "ATELIER",
+  "Tradicional Africano / Luxury": "MOÇAMBIQUE",
+  "Destination / Tropical": "DESTINATION",
+  "Garden / Luxury": "PEARL",
 };
 
 export function TemplatePicker({
