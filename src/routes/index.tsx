@@ -344,7 +344,7 @@ function HomePage() {
         <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-[#C9A84C]/35 bg-[#C9A84C]/[.06] px-4 py-2 text-[9px] font-semibold uppercase tracking-[.24em] text-[#C9A84C]">
           Solar Eclipse · 2026
         </div>
-        <div className="solar-cta-rule" aria-hidden="true"><span /><b /><span /></div>
+        <div className="solar-cta-rule" aria-hidden="true"><span /><span /></div>
         <h2 className="mt-6 text-4xl font-light">Criem um convite inesquecível</h2>
         <p className="mx-auto mt-5 max-w-xl leading-7 text-neutral-300">
           Uma experiência digital criada para guardar para sempre o momento mais importante da vossa vida.
