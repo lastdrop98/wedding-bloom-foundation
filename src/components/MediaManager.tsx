@@ -142,7 +142,7 @@ export function MediaManager({ event }: { event: EventRow }) {
       };
 
       if (existing) {
-        const { error: updateError } = await looseDb
+        const { data: updatedMedia, error: updateError } = await looseDb
           .from("event_media")
           .update(payload)
           .eq("id", existing.id)
@@ -166,7 +166,7 @@ export function MediaManager({ event }: { event: EventRow }) {
       }
 
       if (slot === "cover") {
-        const { error: coverError } = await supabase
+        const { data: updatedEvent, error: coverError } = await supabase
           .from("events")
           .update({ cover_image_path: path })
           .eq("id", event.id)
