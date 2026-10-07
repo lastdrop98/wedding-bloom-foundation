@@ -20,6 +20,7 @@ type Props = {
   inviteType?: "individual" | "casal" | null;
   content?: SignatureContent | null;
   cover?: string | null;
+  music?: string | null;
   slotMedia: Record<string, MediaItem>;
   galleryUrls: GalleryItem[];
   galleryMediaUrls: GalleryItem[];
@@ -34,6 +35,7 @@ export function LimintsoSignatureHome({
   inviteType,
   content,
   cover,
+  music,
   slotMedia,
   galleryUrls,
   galleryMediaUrls,
@@ -58,10 +60,9 @@ export function LimintsoSignatureHome({
 
   useEffect(() => {
     if (!audio || !event.music_path) return;
-    const src = slotMedia["music"]?.url;
-    if (src) audio.src = src;
+    if (music) audio.src = music;
     return () => { audio.pause(); };
-  }, [audio, event.music_path, slotMedia]);
+  }, [audio, music]);
 
   function toggleMusic() {
     if (!audio) return;
@@ -147,7 +148,7 @@ export function LimintsoSignatureHome({
           </div>
         </div>
         <div className="mt-4 flex items-center justify-between px-2">
-          <button type="button" onClick={toggleMusic} disabled={!event.music_path && !slotMedia["music"]} className="limintso-round-action" aria-label="Música">
+          <button type="button" onClick={toggleMusic} disabled={!music} className="limintso-round-action" aria-label="Música">
             {musicOn ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
           </button>
           <button type="button" onClick={() => setLiked((v) => !v)} className={`limintso-round-action ${liked ? "is-liked" : ""}`} aria-label="Gostar">
