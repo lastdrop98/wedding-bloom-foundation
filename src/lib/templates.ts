@@ -785,6 +785,7 @@ export function templateBaseClass(value?: string | null) {
     "limintso-forest",
     "limintso-mozambique",
     "diamond-signature",
+    "limintso-premium",
   ]);
   return special.has(value ?? "") ? "template-base-signature" : "template-base-standard";
 }
