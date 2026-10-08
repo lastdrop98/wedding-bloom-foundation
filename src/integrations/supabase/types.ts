@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      event_media: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          media_type: string
+          slot: string
+          sort_order: number
+          storage_path: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          media_type: string
+          slot: string
+          sort_order?: number
+          storage_path: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          media_type?: string
+          slot?: string
+          sort_order?: number
+          storage_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_media_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           contact_1_name: string | null
