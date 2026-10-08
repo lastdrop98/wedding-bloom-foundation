@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Check, LayoutGrid, Search } from "lucide-react";
 
-import { getTemplateVisualFamily, TEMPLATE_OPTIONS, templateVisualClass, type TemplateDefinition } from "@/lib/templates";
+import { getTemplateUsesSignatureBase, getTemplateVisualFamily, TEMPLATE_OPTIONS, templateVisualClass, type TemplateDefinition } from "@/lib/templates";
 import { LimintsoSignaturePreview } from "@/components/invite/templates/limintso/SignaturePreview";
 import { getTemplateDirection } from "@/lib/templateDirections";
 
@@ -294,9 +294,22 @@ export function TemplatePicker({
         })}
       </div>
 
-      {(value === "limintso-emerald" || value === "premium-emerald") && (() => {
+      {getTemplateUsesSignatureBase(value) && (() => {
         const template = TEMPLATE_OPTIONS.find((item) => item.value === value);
-        return template ? <div data-signature-scroll className="signature-admin-preview"><LimintsoSignaturePreview template={template} /></div> : null;
+        return template ? (
+          <div className="mt-6 rounded-2xl border border-border bg-background p-3">
+            <div className="mb-3 flex items-center justify-between gap-3 px-2">
+              <div>
+                <p className="text-sm font-medium">Pré-visualização real do convite</p>
+                <p className="text-xs text-muted-foreground">O mesmo chassis usado no convite publicado.</p>
+              </div>
+              <span className="rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[10px] uppercase tracking-[.12em] text-primary">Live renderer</span>
+            </div>
+            <div data-signature-scroll className="signature-admin-preview">
+              <LimintsoSignaturePreview template={template} />
+            </div>
+          </div>
+        ) : null;
       })()}
 
       {!filtered.length && (
