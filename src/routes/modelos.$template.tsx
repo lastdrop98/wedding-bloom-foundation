@@ -282,7 +282,7 @@ function TemplatePreviewPage() {
                   src={previewImage}
                   alt=""
                   className="absolute inset-0 size-full object-cover"
-                />}
+                />
                 <div className="template-preview-veil absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/85" />
                 <span className="template-preview-pattern pointer-events-none absolute inset-0" aria-hidden="true" />
                                 {previewCover}
