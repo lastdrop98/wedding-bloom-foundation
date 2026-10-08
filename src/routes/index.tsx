@@ -180,10 +180,10 @@ function HomePage() {
               <p className="mt-4 max-w-xl text-sm leading-7 text-white/55">Uma seleção de capas, fotografias e composições diferentes. O carrossel avança automaticamente para mostrar vários estilos sem transformar a página numa parede de cartões.</p>
             </div>
             <div className="flex items-center gap-2">
-              <button type="button" aria-label="Modelo anterior" onClick={() => setCarouselIndex((carouselIndex - 1 + HOME_TEMPLATE_IMAGES.length) % HOME_TEMPLATE_IMAGES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
+              <button type="button" aria-label="Modelo anterior" onClick={() => setCarouselIndex((carouselIndex - 1 + HOME_CAROUSEL_VALUES.length) % HOME_CAROUSEL_VALUES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
                 <span aria-hidden="true">←</span>
               </button>
-              <button type="button" aria-label="Próximo modelo" onClick={() => setCarouselIndex((carouselIndex + 1) % HOME_TEMPLATE_IMAGES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
+              <button type="button" aria-label="Próximo modelo" onClick={() => setCarouselIndex((carouselIndex + 1) % HOME_CAROUSEL_VALUES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
                 <span aria-hidden="true">→</span>
               </button>
             </div>
