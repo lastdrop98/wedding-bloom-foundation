@@ -339,8 +339,9 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
     mensagens: guestbook,
   } as const;
 
-  const demoOrders = {
+  const demoOrders: Partial<Record<ReturnType<typeof getTemplateFlow>, Array<keyof typeof demoSectionMap>>> = {
     classic: ["historia", "agenda", "galeria", "presentes", "rsvp", "mensagens"],
+    web: ["historia", "agenda", "galeria", "presentes", "rsvp", "mensagens"],
     minimal: ["historia", "galeria", "agenda", "rsvp", "presentes", "mensagens"],
     editorial: ["historia", "galeria", "agenda", "presentes", "rsvp", "mensagens"],
     cinematic: ["galeria", "historia", "agenda", "rsvp", "presentes", "mensagens"],
@@ -353,11 +354,21 @@ function InvitationPreview({ template }: { template: TemplateDefinition }) {
     celestial: ["mensagens", "historia", "galeria", "agenda", "presentes", "rsvp"],
     magazine: ["historia", "galeria", "agenda", "presentes", "rsvp", "mensagens"],
     pearl: ["galeria", "mensagens", "historia", "agenda", "presentes", "rsvp"],
-    limintso: ["historia", "agenda", "galeria", "mensagens", "rsvp", "presentes"],
     capulana: ["mensagens", "historia", "agenda", "galeria", "rsvp", "presentes"],
-  } as const;
+    cinema: ["galeria", "historia", "agenda", "rsvp", "presentes", "mensagens"],
+    portrait: ["historia", "galeria", "agenda", "rsvp", "presentes", "mensagens"],
+    olive: ["historia", "galeria", "agenda", "rsvp", "presentes", "mensagens"],
+    atelier: ["historia", "galeria", "agenda", "mensagens", "rsvp", "presentes"],
+    mozambique: ["mensagens", "historia", "agenda", "galeria", "rsvp", "presentes"],
+    sunset: ["galeria", "agenda", "historia", "presentes", "rsvp", "mensagens"],
+    paper: ["historia", "agenda", "galeria", "presentes", "rsvp", "mensagens"],
+    "pearl-editorial": ["galeria", "mensagens", "historia", "agenda", "presentes", "rsvp"],
+    diamond: ["historia", "agenda", "galeria", "mensagens", "rsvp", "presentes"],
+    limintso: ["historia", "agenda", "galeria", "mensagens", "rsvp", "presentes"],
+  };
 
-  const content = demoOrders[getTemplateFlow(template.value)]
+  const flow = getTemplateFlow(template.value);
+  const content = (demoOrders[flow] ?? demoOrders.classic ?? [])
     .map((section) => demoSectionMap[section]);
 
   return (
