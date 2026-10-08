@@ -3751,3 +3751,80 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
   .limintso-signature.variant-editorial .limintso-section { padding-inline:16px; }
   .limintso-signature.variant-portrait .limintso-person-photo { height:300px; }
 }
+
+
+/* Reference-template finishing pass: quiet editorial controls instead of floating ghost buttons. */
+.limintso-signature .signature-header-control{
+  border:1px solid rgba(80,68,50,.16);
+  background:rgba(255,255,255,.78);
+  box-shadow:0 2px 10px rgba(60,50,37,.05);
+  border-radius:12px;
+}
+.limintso-signature .signature-header-control:hover,
+.limintso-signature .signature-header-control:focus-visible{
+  border-color:rgba(201,168,76,.5);
+  background:#fff;
+}
+.limintso-signature.variant-premium-emerald .signature-header-control{
+  border-color:rgba(201,168,76,.32);
+}
+
+/* New Emerald Premium model: the supplied reference is the art direction, while
+   Solar Eclipse keeps its own content, RSVP, guestbook, gifts, media and sharing. */
+.limintso-signature.variant-premium-emerald{
+  width:min(100%,560px);
+  margin-inline:auto;
+}
+.limintso-signature.variant-premium-emerald .limintso-header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding-block:4px;
+}
+.limintso-signature.variant-premium-emerald .limintso-header .signature-brand{
+  letter-spacing:.12em;
+}
+.limintso-signature.variant-premium-emerald .limintso-section{
+  scroll-margin-top:76px;
+}
+.limintso-signature.variant-premium-emerald .limintso-cover-card{
+  overflow:hidden;
+}
+.limintso-signature.variant-premium-emerald .limintso-seal{
+  border:1px solid rgba(201,168,76,.32);
+}
+.limintso-signature.variant-premium-emerald .limintso-bottom-nav{
+  border:1px solid rgba(201,168,76,.32);
+}
+@media(max-width:640px){
+  .limintso-signature.variant-premium-emerald .limintso-section{width:100%}
+}
+
+/* Admin light mode: never wash out thumbnails, cards or semantic button colours. */
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-white/"]{
+  background:rgba(255,255,255,.96)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-black/"]{
+  background:rgba(29,29,31,.96)!important;
+  color:#fff!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-black/"]{
+  color:rgba(29,29,31,.66)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="border-black/"]{
+  border-color:rgba(29,29,31,.14)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero{
+  color:#fff!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero :is(h1,p,span){
+  color:inherit;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero [class*="text-white/"]{
+  color:rgba(255,255,255,.72)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero img,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero-image{
+  opacity:1!important;
+  filter:none!important;
+}
