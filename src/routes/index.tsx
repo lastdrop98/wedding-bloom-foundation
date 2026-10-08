@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   Image,
@@ -194,7 +194,7 @@ function HomePage() {
                 const index = (carouselIndex + offset) % HOME_CAROUSEL_VALUES.length;
                 const item = TEMPLATE_OPTIONS.find((template) => template.value === HOME_CAROUSEL_VALUES[index]) ?? TEMPLATE_OPTIONS[0]!;
                 return (
-                  <a key={`${carouselIndex}-${offset}`} href={`/modelos/${item.value}`} className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#1a1917] shadow-[0_24px_70px_rgba(0,0,0,.32)] ${offset === 1 ? "sm:-translate-y-5 sm:scale-[1.025]" : ""}`}>
+                  <Link key={`${carouselIndex}-${offset}`} to="/modelos/$template" params={{ template: item.value }} className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#1a1917] shadow-[0_24px_70px_rgba(0,0,0,.32)] ${offset === 1 ? "sm:-translate-y-5 sm:scale-[1.025]" : ""}`}>
                     <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" className="h-[390px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
