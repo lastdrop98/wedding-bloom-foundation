@@ -576,7 +576,7 @@ function Dashboard({
                 </div>
                 <div className="flex flex-wrap gap-2 sm:justify-end">
                   <Button asChild size="sm" variant="outline" className="rounded-full">
-                    <a href={`/${event.slug}`} target="_blank" rel="noreferrer">
+                    <a href={`/${encodeURIComponent(event.slug)}/home`} target="_blank" rel="noreferrer">
                       <ExternalLink className="mr-1.5 size-3.5" /> Abrir
                     </a>
                   </Button>
