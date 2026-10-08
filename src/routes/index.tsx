@@ -194,7 +194,7 @@ function HomePage() {
                 const index = (carouselIndex + offset) % HOME_CAROUSEL_VALUES.length;
                 const item = TEMPLATE_OPTIONS.find((template) => template.value === HOME_CAROUSEL_VALUES[index]) ?? TEMPLATE_OPTIONS[0]!;
                 return (
-                  <Link key={`${carouselIndex}-${offset}`} to="/modelos/$template" params={{ template: item.value }} className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#1a1917] shadow-[0_24px_70px_rgba(0,0,0,.32)] ${offset === 1 ? "sm:-translate-y-5 sm:scale-[1.025]" : ""}`}>
+                  <a key={`${carouselIndex}-${offset}`} href={`/modelos/${item.value}`} className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#1a1917] shadow-[0_24px_70px_rgba(0,0,0,.32)] ${offset === 1 ? "sm:-translate-y-5 sm:scale-[1.025]" : ""}`}>
                     <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" className="h-[390px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
@@ -202,7 +202,7 @@ function HomePage() {
                       <h3 className="mt-2 text-2xl font-light">{item.label}</h3>
                       <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-xs text-white/85">Ver coleção <ArrowRight className="size-3.5" /></span>
                     </div>
-                  </Link>
+                  </a>
                 );
               })}
             </div>
@@ -228,7 +228,7 @@ function HomePage() {
             {HOME_FEATURED_VALUES.map((value, index) => {
               const item = TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!;
               return (
-              <Link key={item.value} to="/modelos/$template" params={{ template: item.value }} className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1">
+              <a key={item.value} href={`/modelos/${item.value}`} className="solar-home-model-card group overflow-hidden rounded-3xl bg-white shadow-lg transition duration-500 hover:-translate-y-1">
                 <div className={`solar-home-template-preview ${templateVisualClass(item.value)} relative h-80 overflow-hidden`}>
                   <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
@@ -239,7 +239,7 @@ function HomePage() {
                     <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium">Ver demonstração <ArrowRight className="size-4" /></span>
                   </div>
                 </div>
-              </Link>
+              </a>
               );
             })}
           </div>
