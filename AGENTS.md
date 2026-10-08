@@ -12,3 +12,5 @@
 <!-- LOVABLE:END -->
 
 - Keep catalogue demonstrations and commercial requests as local React dialogs rather than route-dependent actions, so visitors can act without navigating away.
+
+- Render signature previews through LimintsoSignatureHome with a data-only, no-write demo adapter so live and admin presentations cannot drift.

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Check, LayoutGrid, Search } from "lucide-react";
 
 import { getTemplateVisualFamily, TEMPLATE_OPTIONS, templateVisualClass, type TemplateDefinition } from "@/lib/templates";
+import { LimintsoSignaturePreview } from "@/components/invite/templates/limintso/SignaturePreview";
 import { getTemplateDirection } from "@/lib/templateDirections";
 
 const SWATCHES: Record<TemplateDefinition["tone"], string> = {
@@ -292,6 +293,11 @@ export function TemplatePicker({
           );
         })}
       </div>
+
+      {(value === "limintso-emerald" || value === "premium-emerald") && (() => {
+        const template = TEMPLATE_OPTIONS.find((item) => item.value === value);
+        return template ? <div data-signature-scroll className="signature-admin-preview"><LimintsoSignaturePreview template={template} /></div> : null;
+      })()}
 
       {!filtered.length && (
         <div className="rounded-xl border border-dashed border-border px-6 py-10 text-center">

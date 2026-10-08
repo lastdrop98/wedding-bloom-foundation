@@ -70,7 +70,8 @@ function TemplatePreviewPage() {
   const [busy, setBusy] = useState(false);
   const visualFamily = getTemplateVisualFamily(template.value);
   const isLimintsoEmerald = template.value === "limintso-emerald";
-  const previewImage = PREVIEW_IMAGES[visualFamily];
+  const previewImage = PREVIEW_IMAGES[visualFamily as keyof typeof PREVIEW_IMAGES] ?? PREVIEW_IMAGES.classic;
+  const isSignature = visualFamily === "limintso";
   const previewVariantByFamily = {
     classic: 0,
     editorial: 3,
@@ -276,6 +277,7 @@ function TemplatePreviewPage() {
           <div className="relative mx-auto w-full max-w-[420px]">
             <div className="solar-template-device rounded-[44px] bg-[#151515] p-3 shadow-[0_30px_90px_rgba(0,0,0,.25)]">
               <div className="template-preview-screen relative aspect-[9/18] overflow-hidden rounded-[34px] bg-black">
+                {isSignature ? <div data-signature-scroll className="h-full overflow-y-auto overscroll-contain"><LimintsoSignaturePreview template={template} /></div> : <>
                 <img
                   src={previewImage}
                   alt=""
@@ -285,6 +287,7 @@ function TemplatePreviewPage() {
                 <span className="template-preview-pattern pointer-events-none absolute inset-0" aria-hidden="true" />
                                 {previewCover}
                 <span className="pointer-events-none absolute bottom-3 left-1/2 z-20 h-1 w-16 -translate-x-1/2 rounded-full bg-white/40" />
+                </>}
               </div>
             </div>
           </div>

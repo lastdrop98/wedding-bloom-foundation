@@ -208,7 +208,7 @@ function HomePage() {
           </div>
           <div className="mt-5 flex items-center justify-center gap-1.5" aria-label="Posição do carrossel">
             {HOME_CAROUSEL_VALUES.map((_, index) => (
-              <button key={index} type="button" aria-label={`Ir para destaque ${index + 1}`} aria-current={index === carouselIndex} onClick={() => setCarouselIndex(index)} className={``h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-8 bg-[#d7b56d]" : "w-1.5 bg-white/20 hover:bg-white/40"}`} />
+              <button key={index} type="button" aria-label={`Ir para destaque ${index + 1}`} aria-current={index === carouselIndex} onClick={() => setCarouselIndex(index)} className={`h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-8 bg-[#d7b56d]" : "w-1.5 bg-white/20 hover:bg-white/40"}`} />
             ))}
           </div>
         </div>
