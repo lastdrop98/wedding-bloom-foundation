@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/use-admin";
 import { Button } from "@/components/ui/button";
+import { EclipseMark } from "@/components/EclipseMark";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -99,8 +100,8 @@ function AuthPage() {
 
       <div className="flex items-center justify-center px-5 py-12 sm:px-10">
         <div className="w-full max-w-md">
-          <Link to="/" className="inline-flex items-center gap-2 text-sm font-semibold tracking-[-0.02em]">
-            <span className="flex size-7 items-center justify-center rounded-full bg-black text-[9px] text-white">SE</span>
+          <Link to="/" className="inline-flex items-center gap-2.5 text-sm font-semibold tracking-[-0.02em]">
+            <EclipseMark className="size-7" />
             Solar Eclipse
           </Link>
 
