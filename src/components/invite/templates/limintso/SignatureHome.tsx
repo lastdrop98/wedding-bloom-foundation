@@ -173,13 +173,13 @@ export function LimintsoSignatureHome({
       ? "signature-structure-cards"
       : family === "cinema"
         ? "signature-structure-cinema"
-        : family === "editorial" || family === "magazine"
+        : family === "editorial"
           ? "signature-structure-editorial"
           : family === "heritage" || family === "mozambique"
             ? "signature-structure-ceremony"
             : family === "pearl" || family === "botanical"
               ? "signature-structure-organic"
-              : family === "coastal" || family === "destination"
+              : family === "coastal" || family === "sunset"
                 ? "signature-structure-destination"
                 : "signature-structure-classic";
 
