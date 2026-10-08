@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CalendarDays, Check, Clock, Gift, Heart, Images, MessageCircle, Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { TEMPLATE_OPTIONS, getTemplateVisualFamily, type TemplateDefinition } from "@/lib/templates";
@@ -611,7 +611,7 @@ function ModelsPage() {
                   Ver demonstração <ArrowRight className="size-4" />
                 </Button>
                 <Button asChild type="button" className="flex h-auto w-full items-center justify-center gap-3 rounded-full bg-ink px-6 py-4 text-sm font-medium text-cream hover:bg-ink/90">
-                  <a href={`/modelos/${template.value}`}>Abrir modelo <ArrowRight className="size-4" /></a>
+                  <Link to="/modelos/$template" params={{ template: template.value }}>Abrir modelo <ArrowRight className="size-4" /></Link>
                 </Button>
               </div>
             </div>
