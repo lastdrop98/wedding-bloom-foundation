@@ -4261,3 +4261,15 @@ div[id*="lovable-badge"] {
     width: 100%;
   }
 }
+
+/* Shared signature reference roles; identical in live invites and previews. */
+.limintso-signature {
+  --background: oklch(.96 .009 85); --foreground: oklch(.40 .026 75);
+  --card: oklch(1 0 0); --card-foreground: var(--foreground);
+  --primary: oklch(.57 .08 85); --primary-foreground: oklch(1 0 0);
+  --muted: oklch(.88 .017 85); --muted-foreground: oklch(.50 .025 75);
+  --border: oklch(.82 .04 85); --input: var(--border); --ring: var(--primary);
+  --signature-gold: oklch(.75 .11 85); --signature-dark: oklch(.21 .006 75);
+  --signature-cover-veil: linear-gradient(180deg, transparent 30%, oklch(.1 0 0 / .72));
+  --signature-shadow: 0 16px 48px oklch(.3 .025 75 / .12);
+}
