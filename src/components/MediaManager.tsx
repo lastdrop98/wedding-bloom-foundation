@@ -27,6 +27,7 @@ type MediaItem = {
   media_type: "image" | "video";
   storage_path: string;
   sort_order: number;
+  created_at?: string;
 };
 
 const IMAGE_SLOTS: { value: MediaSlot; label: string; hint: string }[] = [
@@ -102,9 +103,10 @@ export function MediaManager({ event }: { event: EventRow }) {
     queryFn: async () => {
       const { data, error } = await looseDb
         .from("event_media")
-        .select("id,event_id,slot,media_type,storage_path,sort_order")
+        .select("id,event_id,slot,media_type,storage_path,sort_order,created_at")
         .eq("event_id", event.id)
-        .order("sort_order", { ascending: true });
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: false });
       if (error) throw error;
       return data as MediaItem[];
     },
