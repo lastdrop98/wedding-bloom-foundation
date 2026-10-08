@@ -88,7 +88,7 @@ function SlotPreview({ item }: { item: MediaItem }) {
   );
 }
 
-export function MediaManager({ event }: { event: EventRow }) {
+export function MediaManager({ event, onEventUpdated }: { event: EventRow; onEventUpdated?: (event: EventRow) => void }) {
   const queryClient = useQueryClient();
   const [fileBySlot, setFileBySlot] = useState<Record<string, File | null>>({});
   const [orderBySlot, setOrderBySlot] = useState<Record<string, string>>({});
@@ -142,6 +142,7 @@ export function MediaManager({ event }: { event: EventRow }) {
         .limit(1)
         .maybeSingle();
       if (latestMediaError) throw new Error(`Não foi possível verificar a media atual: ${latestMediaError.message}`);
+
       const existing = (latestMedia ?? media?.find((item) => item.slot === slot)) as MediaItem | undefined;
       const order = Number(orderBySlot[slot] ?? existing?.sort_order ?? (media?.length ?? 0) + 1);
       const payload = {
@@ -152,33 +153,38 @@ export function MediaManager({ event }: { event: EventRow }) {
         sort_order: Number.isFinite(order) ? order : 1,
       };
 
-      // Insert the replacement as a new row instead of relying on UPDATE RLS.
-      const { error: insertError } = await looseDb
-        .from("event_media")
-        .insert(payload);
-      if (insertError) {
-        await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-        throw new Error("A base de dados recusou a nova media: " + insertError.message);
-      }
-
       if (existing?.id) {
-        const { error: removeRowError } = await looseDb
+        const { error: updateError } = await looseDb
           .from("event_media")
-          .delete()
+          .update({
+            storage_path: path,
+            media_type: mediaType,
+            sort_order: payload.sort_order,
+          })
           .eq("id", existing.id)
           .eq("event_id", event.id);
-        if (!removeRowError && existing.storage_path && existing.storage_path !== path) {
-          await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
+        if (updateError) {
+          await supabase.storage.from(GALLERY_BUCKET).remove([path]);
+          throw new Error("A base de dados recusou a substituição da media: " + updateError.message);
+        }
+      } else {
+        const { error: insertError } = await looseDb.from("event_media").insert(payload);
+        if (insertError) {
+          await supabase.storage.from(GALLERY_BUCKET).remove([path]);
+          throw new Error("A base de dados recusou a nova media: " + insertError.message);
         }
       }
 
+      let updatedEvent: EventRow | null = null;
       if (slot === "cover") {
-        const { error: coverError } = await supabase
+        const { data, error: coverError } = await supabase
           .from("events")
           .update({ cover_image_path: path })
-          .eq("id", event.id);
-        if (coverError) {
-          if (existing) {
+          .eq("id", event.id)
+          .select("*")
+          .single();
+        if (coverError || !data) {
+          if (existing?.id) {
             await looseDb
               .from("event_media")
               .update({
@@ -192,16 +198,21 @@ export function MediaManager({ event }: { event: EventRow }) {
             await looseDb.from("event_media").delete().eq("event_id", event.id).eq("storage_path", path);
           }
           await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-          throw new Error(`A capa foi enviada, mas não foi possível ligá-la ao evento: ${coverError.message}`);
+          throw new Error(`A capa foi enviada, mas não foi possível ligá-la ao evento: ${coverError?.message ?? "evento não encontrado"}`);
         }
+        updatedEvent = data as EventRow;
       }
+
       if (existing?.storage_path && existing.storage_path !== path) {
-        await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
+        const { error: removeError } = await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
+        if (removeError) console.warn("Não foi possível remover a media antiga:", removeError.message);
       }
-    },
-    onSuccess: (_, variables) => {
+
+      return updatedEvent;    },
+    onSuccess: (updatedEvent, variables) => {
       setFileBySlot((current) => ({ ...current, [variables.slot]: null }));
       void queryClient.invalidateQueries({ queryKey: key });
+      if (updatedEvent) onEventUpdated?.(updatedEvent);
       toast.success(variables.slot === "cover" ? "Capa atualizada." : "Media adicionada.");
     },
     onError: (error) => {
@@ -240,17 +251,24 @@ export function MediaManager({ event }: { event: EventRow }) {
         .eq("id", item.id)
         .eq("event_id", event.id);
       if (error) throw error;
+      let updatedEvent: EventRow | null = null;
       if (item.slot === "cover") {
-        const { error: coverError } = await supabase
+        const { data, error: coverError } = await supabase
           .from("events")
           .update({ cover_image_path: null })
-          .eq("id", event.id);
-        if (coverError) throw coverError;
+          .eq("id", event.id)
+          .select("*")
+          .single();
+        if (coverError || !data) throw coverError ?? new Error("Evento não encontrado.");
+        updatedEvent = data as EventRow;
       }
-      await supabase.storage.from(GALLERY_BUCKET).remove([item.storage_path]);
+      const { error: removeError } = await supabase.storage.from(GALLERY_BUCKET).remove([item.storage_path]);
+      if (removeError) console.warn("Não foi possível remover o ficheiro antigo:", removeError.message);
+      return updatedEvent;
     },
-    onSuccess: () => {
+    onSuccess: (updatedEvent) => {
       void queryClient.invalidateQueries({ queryKey: key });
+      if (updatedEvent) onEventUpdated?.(updatedEvent);
       toast.success("Media removida.");
     },
     onError: () => toast.error("Não foi possível remover a media."),
@@ -274,21 +292,26 @@ export function MediaManager({ event }: { event: EventRow }) {
       }
 
       const currentDetails = details(event);
-      const { error } = await supabase
+      const { data: updatedEvent, error } = await supabase
         .from("events")
         .update({
           music_path: musicEnabled ? musicPath : null,
           details: { ...currentDetails, music_title: musicTitle.trim() || null },
         })
-        .eq("id", event.id);
-      if (error) throw error;
+        .eq("id", event.id)
+        .select("*")
+        .single();
+      if (error || !updatedEvent) throw error ?? new Error("Evento não encontrado.");
 
       if (previousPath && previousPath !== musicPath) {
-        await supabase.storage.from(AUDIO_BUCKET).remove([previousPath]);
+        const { error: removeError } = await supabase.storage.from(AUDIO_BUCKET).remove([previousPath]);
+        if (removeError) console.warn("Não foi possível remover a música antiga:", removeError.message);
       }
+      return updatedEvent as EventRow;
     },
-    onSuccess: () => {
+    onSuccess: (updatedEvent) => {
       setMusicFile(null);
+      if (updatedEvent) onEventUpdated?.(updatedEvent);
       toast.success(musicEnabled ? "Música guardada." : "Música desativada.");
     },
     onError: (error) =>
