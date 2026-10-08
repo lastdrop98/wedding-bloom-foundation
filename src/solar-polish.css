@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap");
-
+/* External Google Fonts are intentionally not imported here because Vite/LightningCSS
+   tries to resolve CSS imports as local files during the production build. Templates
+   use the same premium serif/sans stacks with safe system fallbacks below. */
 
 /* Solar Eclipse — premium product polish
    Direction: clarity, hierarchy, restraint, depth only where it helps.
@@ -4123,4 +4124,17 @@ main[class*="template-"] :is(.star,.sparkle,.spark,.stars,.sparkles) {
   .limintso-signature.signature-structure-editorial .limintso-section,
   .limintso-signature.signature-structure-cinema .limintso-section,
   .limintso-signature.signature-structure-destination .limintso-section { width:100%; }
+}
+
+
+/* Stable font stacks for production and offline previews. */
+.solar-landing,
+.solar-admin-shell,
+.limintso-signature,
+.template-demo {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.limintso-signature :is(h1,h2,h3,h4,.font-serif),
+.template-demo :is(h1,h2,h3,h4,.font-serif) {
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 }
