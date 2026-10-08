@@ -3676,3 +3676,78 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
 .signature-admin-preview { height:650px; max-height:75vh; overflow-y:auto; overscroll-behavior:contain; border:1px solid var(--border); border-radius:18px; }
 @media(max-width:400px) { .limintso-signature .limintso-cover-card h1 { font-size:52px; } .limintso-signature .limintso-title { font-size:36px; } }
 @media(prefers-reduced-motion:reduce) { .limintso-signature *, .limintso-signature *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+
+
+/* Signature family variants: same functional chassis, genuinely different art direction. */
+.limintso-signature.variant-cinematic {
+  --limintso-gold:#d6b06a;
+  --signature-gold:#d6b06a;
+  background:#101010 !important;
+  color:#f2eee7;
+}
+.limintso-signature.variant-cinematic .limintso-cover-card { border-radius:10px; aspect-ratio:16/10; min-height:0!important; }
+.limintso-signature.variant-cinematic .limintso-cover-card h1 { font-family:var(--font-sans); font-style:normal; font-weight:700; text-transform:uppercase; letter-spacing:-.055em; }
+.limintso-signature.variant-cinematic .limintso-paper-card,
+.limintso-signature.variant-cinematic .limintso-person-card,
+.limintso-signature.variant-cinematic .limintso-location-card,
+.limintso-signature.variant-cinematic .limintso-schedule-card { background:#171717; color:#f2eee7; border-color:rgba(214,176,106,.18); }
+.limintso-signature.variant-cinematic .limintso-person-photo { height:380px; border-radius:0; }
+
+.limintso-signature.variant-editorial {
+  --limintso-gold:#a88754;
+  background:#ece7de !important;
+  color:#302c27;
+}
+.limintso-signature.variant-editorial .limintso-section { width:min(100%,980px); }
+.limintso-signature.variant-editorial .limintso-cover-card { aspect-ratio:4/5; border-radius:0; border-color:#302c27; box-shadow:none; }
+.limintso-signature.variant-editorial .limintso-cover-card h1 { font-family:var(--font-sans); font-style:normal; font-weight:500; letter-spacing:-.07em; }
+.limintso-signature.variant-editorial .limintso-person-card { border-radius:0; box-shadow:none; }
+.limintso-signature.variant-editorial .limintso-gallery-item { border-radius:0; }
+.limintso-signature.variant-editorial .limintso-bottom-nav { border-radius:0; }
+
+.limintso-signature.variant-portrait {
+  --limintso-gold:#b7a17a;
+  background:#f7f4ee !important;
+}
+.limintso-signature.variant-portrait .limintso-cover-card { aspect-ratio:3/4; border-radius:38px; }
+.limintso-signature.variant-portrait .limintso-cover-card h1 { font-size:clamp(2.8rem,10vw,5rem); }
+.limintso-signature.variant-portrait .limintso-person-photo { height:360px; border-radius:28px 28px 0 0; }
+.limintso-signature.variant-portrait .limintso-person-card { border-radius:28px; }
+
+.limintso-signature.variant-heritage {
+  --limintso-gold:#c89242;
+  background:#eadfcf !important;
+}
+.limintso-signature.variant-heritage .limintso-cover-card { border-radius:0; border-width:2px; }
+.limintso-signature.variant-heritage .limintso-cover-card:before {
+  content:"";
+  position:absolute; inset:12px; z-index:2; pointer-events:none;
+  border:1px solid rgba(200,146,66,.65);
+  background:repeating-linear-gradient(45deg,transparent 0 10px,rgba(112,72,38,.08) 10px 12px);
+  mix-blend-mode:multiply;
+}
+.limintso-signature.variant-heritage .limintso-paper-card { background:#f8f0e2; }
+.limintso-signature.variant-heritage .limintso-person-card { border-radius:6px 22px 6px 22px; }
+
+.limintso-signature.variant-sunset {
+  --limintso-gold:#c27855;
+  background:#f1e3d7 !important;
+}
+.limintso-signature.variant-sunset .limintso-cover-card { border-radius:40px 8px 40px 8px; }
+.limintso-signature.variant-sunset .limintso-dark-card { background:#503f45; }
+.limintso-signature.variant-sunset .limintso-gallery-item { border-radius:40px 8px; }
+
+.limintso-signature.variant-pearl {
+  --limintso-gold:#c59c91;
+  background:#f4eef0 !important;
+}
+.limintso-signature.variant-pearl .limintso-cover-card { border-radius:50% 50% 22px 22px / 18% 18% 22px 22px; }
+.limintso-signature.variant-pearl .limintso-paper-card { background:#fffafb; border-radius:28px; border:1px solid rgba(197,156,145,.22); }
+.limintso-signature.variant-pearl .limintso-person-card { border-radius:30px; }
+.limintso-signature.variant-pearl .limintso-gallery-item { border-radius:28px; }
+
+@media(max-width:640px) {
+  .limintso-signature.variant-cinematic .limintso-cover-card { aspect-ratio:4/5; }
+  .limintso-signature.variant-editorial .limintso-section { padding-inline:16px; }
+  .limintso-signature.variant-portrait .limintso-person-photo { height:300px; }
+}
