@@ -8,7 +8,6 @@ import { openWhatsApp } from "@/lib/whatsapp";
 import { createTemplateRequest } from "@/lib/templateRequests";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
-import { LimintsoSignaturePreview } from "@/components/invite/templates/limintso/SignaturePreview";
 import { EclipseMark } from "@/components/EclipseMark";
 
 export const Route = createFileRoute("/modelos")({
@@ -79,9 +78,42 @@ const previewStyles = {
   limintso: { page: "bg-[#f4efe7] text-[#5c4d35]", accent: "text-[#b08e4d]", line: "border-[#c9ab68]/60", photo: "brightness-100", label: "EMERALD / WEDDING", ornament: "SE" },
 };
 
+function SignatureCatalogPreview({ template }: { template: TemplateDefinition }) {
+  const hash = [...template.value].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const photo = images[hash % images.length];
+  return (
+    <div className="template-demo relative mx-auto w-full max-w-[420px] overflow-hidden bg-[#f4efe7] text-[#5c4d35] shadow-2xl">
+      <section data-demo-section="capa" className="relative min-h-[660px] overflow-hidden px-6 py-8">
+        <div className="flex items-center justify-between border-b border-[#c9ab68]/25 pb-4">
+          <span className="font-serif text-sm text-[#8f7540]">Solar Eclipse</span>
+          <span className="text-[9px] uppercase tracking-[.2em] text-[#9a8350]">Signature</span>
+        </div>
+        <div className="mt-10 rounded-[22px] border border-[#c9ab68]/25 bg-white p-3 shadow-[0_18px_44px_rgba(64,53,39,.12)]">
+          <div className="relative overflow-hidden rounded-[16px]">
+            <img src={photo} alt="" className="h-72 w-full object-cover" />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pb-5 pt-20 text-center text-white">
+              <span className="block text-[9px] uppercase tracking-[.25em] text-white/75">A união matrimonial de</span>
+              <strong className="mt-2 block font-serif text-5xl leading-[.85]">Ana & Miguel</strong>
+            </div>
+          </div>
+          <div className="mt-4 flex items-center justify-between text-[9px] uppercase tracking-[.16em] text-[#9a8350]">
+            <span>24 · 10 · 2027</span>
+            <span className="rounded-full bg-[#c9ab68] px-4 py-2 text-white">Ver convite</span>
+          </div>
+        </div>
+        <div className="mt-12 text-center">
+          <p className="font-serif text-3xl italic text-[#8f7540]">Com a bênção de Deus</p>
+          <div className="mx-auto mt-5 h-px w-14 bg-[#c9ab68]/60" />
+          <p className="mt-5 text-[9px] uppercase tracking-[.22em] text-[#9a8350]">{template.label}</p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function InvitationPreview({ template }: { template: TemplateDefinition }) {
   const family = previewFamily(template);
-  if (family === "limintso") return <LimintsoSignaturePreview template={template} />;
+  if (family === "limintso") return <SignatureCatalogPreview template={template} />;
   const style = previewStyles[family];
   const direction = getTemplateDirection(template);
 
