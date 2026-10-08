@@ -3871,3 +3871,51 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
 .solar-admin-shell.admin-theme-light .admin-workspace .admin-hero-clock :is(span,p){
   color:inherit;
 }
+
+
+/* Final admin light-mode visibility pass: keep media, surfaces and controls fully visible. */
+.solar-admin-shell.admin-theme-light .admin-workspace img,
+.solar-admin-shell.admin-theme-light .admin-workspace video {
+  opacity: 1 !important;
+  filter: none !important;
+  visibility: visible !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button,[role="button"]) {
+  color: #1d1d1f !important;
+  border-color: rgba(0,0,0,.14) !important;
+  background-color: #fff !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button,[role="button"])[class*="bg-black"],
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button,[role="button"])[class*="bg-primary"] {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(a[class*="bg-black"],a[class*="bg-primary"]) {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-black/"] {
+  background-color: rgba(0,0,0,.035) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-white"] {
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="text-white/"] {
+  color: rgba(29,29,31,.62) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .border-border {
+  border-color: rgba(0,0,0,.10) !important;
+}
+
+/* Navigation controls on the public landing page are deliberately button-like. */
+.solar-landing header nav > a {
+  min-height: 40px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgba(0,0,0,.22);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 3px 12px rgba(0,0,0,.045);
+}
+.solar-landing header nav > a:hover {
+  border-color: rgba(0,0,0,.55);
+  transform: translateY(-1px);
+}
