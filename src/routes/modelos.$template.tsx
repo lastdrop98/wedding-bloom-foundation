@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Check, MessageCircle } from "lucide-react";
-import { getTemplateDefinition, getTemplateVisualFamily, templateVisualClass } from "@/lib/templates";
+import { getTemplateDefinition, getTemplateUsesSignatureBase, getTemplateVisualFamily, templateVisualClass } from "@/lib/templates";
 import { createTemplateRequest } from "@/lib/templateRequests";
 import { openWhatsApp, whatsappUrl } from "@/lib/whatsapp";
 import { LimintsoSignaturePreview } from "@/components/invite/templates/limintso/SignaturePreview";
@@ -71,7 +71,7 @@ function TemplatePreviewPage() {
   const visualFamily = getTemplateVisualFamily(template.value);
   const isLimintsoEmerald = template.value === "limintso-emerald";
   const previewImage = PREVIEW_IMAGES[visualFamily as keyof typeof PREVIEW_IMAGES] ?? PREVIEW_IMAGES.classic;
-  const isSignature = visualFamily === "limintso";
+  const isSignature = getTemplateUsesSignatureBase(template.value);
   const previewVariantByFamily = {
     classic: 0,
     editorial: 3,
