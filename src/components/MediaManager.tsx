@@ -150,23 +150,23 @@ export function MediaManager({ event }: { event: EventRow }) {
         sort_order: Number.isFinite(order) ? order : 1,
       };
 
-      if (existing) {
-        const { error: updateError } = await looseDb
+      // Insert the replacement as a new row instead of relying on UPDATE RLS.
+      const { error: insertError } = await looseDb
+        .from("event_media")
+        .insert(payload);
+      if (insertError) {
+        await supabase.storage.from(GALLERY_BUCKET).remove([path]);
+        throw new Error("A base de dados recusou a nova media: " + insertError.message);
+      }
+
+      if (existing?.id) {
+        const { error: removeRowError } = await looseDb
           .from("event_media")
-          .update(payload)
+          .delete()
           .eq("id", existing.id)
           .eq("event_id", event.id);
-        if (updateError) {
-          await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-          throw new Error(`Não foi possível atualizar a media existente: ${updateError?.message ?? "o registo não foi atualizado"}`);
-        }
-      } else {
-        const { error: insertError } = await looseDb
-          .from("event_media")
-          .insert(payload);
-        if (insertError) {
-          await supabase.storage.from(GALLERY_BUCKET).remove([path]);
-          throw new Error(`A base de dados recusou a nova media: ${insertError.message}`);
+        if (!removeRowError && existing.storage_path && existing.storage_path !== path) {
+          await supabase.storage.from(GALLERY_BUCKET).remove([existing.storage_path]);
         }
       }
 
