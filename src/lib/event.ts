@@ -129,36 +129,26 @@ export async function fetchEventBySlug(slug: string) {
 }
 
 export async function fetchEventContent(eventId: string) {
-  const [gallery, schedule, gifts, media] = await Promise.all([
-    supabase
-      .from("gallery")
-      .select("*")
-      .eq("event_id", eventId)
-      .order("sort_order", { ascending: true }),
-    supabase
-      .from("schedule")
-      .select("*")
-      .eq("event_id", eventId)
-      .order("sort_order", { ascending: true }),
-    supabase
-      .from("gifts")
-      .select("*")
-      .eq("event_id", eventId)
-      .order("sort_order", { ascending: true }),
-    looseDb
-      .from("event_media")
-      .select("*")
-      .eq("event_id", eventId)
-      .order("sort_order", { ascending: true }),
+  const results = await Promise.allSettled([
+    supabase.from("gallery").select("*").eq("event_id", eventId).order("sort_order", { ascending: true }),
+    supabase.from("schedule").select("*").eq("event_id", eventId).order("sort_order", { ascending: true }),
+    supabase.from("gifts").select("*").eq("event_id", eventId).order("sort_order", { ascending: true }),
+    looseDb.from("event_media").select("*").eq("event_id", eventId).order("sort_order", { ascending: true }),
   ]);
+
+  const read = <T,>(index: number): T[] => {
+    const result = results[index];
+    if (result?.status !== "fulfilled" || result.value.error) return [];
+    return (result.value.data ?? []) as T[];
+  };
+
   return {
-    gallery: gallery.data ?? [],
-    schedule: schedule.data ?? [],
-    gifts: gifts.data ?? [],
-    media: (media.data ?? []) as EventMediaItem[],
+    gallery: read<GalleryItem>(0),
+    schedule: read<ScheduleItem>(1),
+    gifts: read<GiftItem>(2),
+    media: read<EventMediaItem>(3),
   };
 }
-
 export type InviteType = "individual" | "casal" | null;
 
 export function parseInviteType(value: unknown): InviteType {
