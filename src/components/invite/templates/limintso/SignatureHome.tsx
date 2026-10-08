@@ -168,6 +168,21 @@ export function LimintsoSignatureHome({
   );
 
   const family = getTemplateVisualFamily(event.template);
+  const structureClass =
+    event.template.startsWith("limintso-") || event.template === "premium-emerald" || event.template === "diamond-signature"
+      ? "signature-structure-cards"
+      : family === "cinema"
+        ? "signature-structure-cinema"
+        : family === "editorial" || family === "magazine"
+          ? "signature-structure-editorial"
+          : family === "heritage" || family === "mozambique"
+            ? "signature-structure-ceremony"
+            : family === "pearl" || family === "botanical"
+              ? "signature-structure-organic"
+              : family === "coastal" || family === "destination"
+                ? "signature-structure-destination"
+                : "signature-structure-classic";
+
   const variantClass =
     event.template === "premium-emerald" || event.template === "limintso-emerald" || event.template === "limintso-premium" ? "variant-premium-emerald" :
     event.template === "limintso-mozambique" || family === "mozambique" ? "variant-mozambique" :
@@ -188,7 +203,7 @@ export function LimintsoSignatureHome({
     "variant-ivory";
 
   return (
-    <main ref={rootRef} className={`limintso-signature ${variantClass} ${preview ? "signature-preview" : ""}`} data-signature-template={event.template}>
+    <main ref={rootRef} className={`limintso-signature ${variantClass} ${structureClass} ${preview ? "signature-preview" : ""}`} data-signature-template={event.template}>
       {music && <audio ref={audioRef} src={music} loop preload="none" onPause={() => setMusicOn(false)} />}
       <header className="limintso-header sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5">
