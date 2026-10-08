@@ -9,6 +9,7 @@ import { createTemplateRequest } from "@/lib/templateRequests";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { LimintsoSignaturePreview } from "@/components/invite/templates/limintso/SignaturePreview";
+import { EclipseMark } from "@/components/EclipseMark";
 
 export const Route = createFileRoute("/modelos")({
   component: ModelsPage,
@@ -472,7 +473,10 @@ function ModelsPage() {
     <main className="solar-models-page min-h-screen bg-[#faf8f3] text-neutral-900">
       <header className="sticky top-0 z-40 border-b border-black/5 bg-[#faf8f3]/90 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
-          <a href="/" className="text-sm font-semibold tracking-tight">Solar Eclipse</a>
+          <a href="/" className="inline-flex items-center gap-2.5 text-sm font-semibold tracking-tight" aria-label="Solar Eclipse — início">
+            <EclipseMark className="size-7" />
+            <span>Solar Eclipse</span>
+          </a>
           <a href="/" className="text-xs text-black/50 hover:text-black">Voltar ao início</a>
         </div>
       </header>
