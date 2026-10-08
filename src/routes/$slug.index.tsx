@@ -91,15 +91,7 @@ function CoverPage() {
 
   const badge = inviteBadgeLabel(inviteType);
 
-  function openInvite() {
-    if (leaving) return;
-    void audioRef.current?.play().catch(() => undefined);
-    setLeaving(true);
-    setTimeout(() => {
-      const query = inviteType ? `?tipo=${encodeURIComponent(inviteType)}` : "";
-      window.location.assign(`/${encodeURIComponent(slug)}/home${query}`);
-    }, 500);
-  }
+  const inviteHomeHref = `/${encodeURIComponent(slug)}/home${inviteType ? `?tipo=${encodeURIComponent(inviteType)}` : ""}`;
 
   return (
     <main
@@ -163,13 +155,16 @@ function CoverPage() {
         </div>
 
         <div className="mt-14">
-          <button
-            type="button"
-            onClick={openInvite}
+          <a
+            href={inviteHomeHref}
+            onClick={() => {
+              void audioRef.current?.play().catch(() => undefined);
+              setLeaving(true);
+            }}
             className="inline-flex items-center justify-center rounded-sm border border-gold/70 px-10 py-4 font-sans text-[0.7rem] tracking-[0.35em] text-gold uppercase transition-all duration-500 hover:bg-gold hover:text-[oklch(0.18_0.02_70)]"
           >
             Abrir Convite
-          </button>
+          </a>
         </div>
       </div>
 
