@@ -643,6 +643,14 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
     description: "Pérola contemporânea com fotografia em molduras suaves e ritmo editorial.",
     implemented: true,
   },
+  {
+    value: "limintso-premium",
+    label: "Emerald Premium",
+    family: "Signature Cards / Premium",
+    tone: "sand",
+    description: "Experiência vertical premium baseada no pacote de referência: capa fotográfica, bênção, noivos, famílias, programa, mapa, RSVP, felicitações, presentes e galeria.",
+    implemented: true,
+  },
 ];
 
 export function getTemplateDefinition(value?: string | null) {
@@ -737,6 +745,7 @@ export const SIGNATURE_BASE_TEMPLATES = new Set([
   "limintso-forest",
   "limintso-mozambique",
   "diamond-signature",
+  "limintso-premium",
   "editorial-cinema",
   "cinema-love-story",
   "black-paper",
