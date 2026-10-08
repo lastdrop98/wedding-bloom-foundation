@@ -3850,3 +3850,22 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
 .limintso-signature.variant-coastal .limintso-paper-card{background:#fbfdfe}
 .limintso-signature.variant-coastal .limintso-cover-card{border-radius:10px 34px 10px 34px}
 .limintso-signature.variant-coastal .limintso-dark-card{background:#294355}
+
+
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel :is(h1,h2,h3,h4,p,span,strong,small){
+  color:#fff!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel [class*="text-white/"]{
+  color:rgba(255,255,255,.68)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel [class*="border-white"]{
+  border-color:rgba(255,255,255,.12)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-message-panel [class*="bg-white/"]{
+  background:rgba(255,255,255,.055)!important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero-clock,
+.solar-admin-shell.admin-theme-light .admin-workspace .admin-hero-clock :is(span,p){
+  color:inherit;
+}
