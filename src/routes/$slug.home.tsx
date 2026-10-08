@@ -30,7 +30,7 @@ import { SectionVines, VineDivider } from "@/components/invite/Vines";
 import { Reveal } from "@/components/invite/Reveal";
 import { EventSeals } from "@/components/invite/InvitationSeal";
 import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
-import { getTemplateDefinition, templateBaseClass, templateToneClass, templateVisualClass } from "@/lib/templates";
+import { getTemplateDefinition, getTemplateUsesSignatureBase, templateBaseClass, templateToneClass, templateVisualClass } from "@/lib/templates";
 import { templateFlowClass } from "@/lib/templateChoreography";
 import { AquarelaHome } from "@/components/invite/templates/aquarela-botanica/Home";
 import { LimintsoSignatureHome } from "@/components/invite/templates/limintso/SignatureHome";
@@ -1131,7 +1131,7 @@ function HomePage() {
     return <AquarelaHome event={event} slug={slug} inviteType={inviteType} />;
   }
 
-  if (event.template.startsWith("limintso-") || event.template === "premium-emerald" || event.template === "diamond-signature") {
+  if (getTemplateUsesSignatureBase(event.template)) {
     return (
       <LimintsoSignatureHome
         event={event}
