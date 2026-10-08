@@ -202,7 +202,7 @@ function HomePage() {
                       <h3 className="mt-2 text-2xl font-light">{item.label}</h3>
                       <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-xs text-white/85">Ver coleção <ArrowRight className="size-3.5" /></span>
                     </div>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -239,7 +239,7 @@ function HomePage() {
                     <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium">Ver demonstração <ArrowRight className="size-4" /></span>
                   </div>
                 </div>
-              </a>
+              </Link>
               );
             })}
           </div>
