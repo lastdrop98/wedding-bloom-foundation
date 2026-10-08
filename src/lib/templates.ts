@@ -727,6 +727,35 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   return "classic";
 }
 
+export const SIGNATURE_BASE_TEMPLATES = new Set([
+  "premium-emerald",
+  "limintso-emerald",
+  "limintso-rose",
+  "limintso-ivory",
+  "limintso-sapphire",
+  "limintso-black",
+  "limintso-forest",
+  "limintso-mozambique",
+  "diamond-signature",
+  "editorial-cinema",
+  "cinema-love-story",
+  "black-paper",
+  "ceremony-editorial",
+  "portrait-ceremony",
+  "heritage-ceremony",
+  "pearl-ceremony",
+  "pearl-editorial",
+  "mozambique-luxe",
+  "modern-olive",
+  "rose-atelier",
+  "sunset-destination",
+  "ivory-portrait",
+]);
+
+export function getTemplateUsesSignatureBase(value?: string | null) {
+  return SIGNATURE_BASE_TEMPLATES.has(value ?? "");
+}
+
 export function templateBaseClass(value?: string | null) {
   const special = new Set([
     "film-noir-motion",
