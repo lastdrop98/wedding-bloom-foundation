@@ -169,7 +169,7 @@ export function LimintsoSignatureHome({
 
   const family = getTemplateVisualFamily(event.template);
   const variantClass =
-    event.template === "premium-emerald" || event.template === "limintso-emerald" ? "variant-premium-emerald" :
+    event.template === "premium-emerald" || event.template === "limintso-emerald" || event.template === "limintso-premium" ? "variant-premium-emerald" :
     event.template === "limintso-mozambique" || family === "mozambique" ? "variant-mozambique" :
     event.template === "limintso-black" || family === "paper" ? "variant-black" :
     event.template === "limintso-sapphire" || family === "coastal" ? "variant-sapphire" :
@@ -193,8 +193,8 @@ export function LimintsoSignatureHome({
             <span>{"Solar Eclipse"}</span>
           </Button>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" type="button" onClick={share} className="limintso-icon-button" aria-label="Partilhar"><Share2 className="size-4" /></Button>
-            <Button variant="ghost" type="button" onClick={() => setMenuOpen((v) => !v)} className="limintso-menu-button" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={menuOpen}><Menu className="size-4" /></Button>
+            <Button variant="ghost" type="button" onClick={share} className="limintso-icon-button signature-header-control" aria-label="Partilhar"><Share2 className="size-4" /></Button>
+            <Button variant="ghost" type="button" onClick={() => setMenuOpen((v) => !v)} className="limintso-menu-button signature-header-control" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={menuOpen}><Menu className="size-4" /></Button>
           </div>
         </div>
         {menuOpen && (
