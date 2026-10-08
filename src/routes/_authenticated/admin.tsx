@@ -695,7 +695,7 @@ function EditorShell({
   activeSection: string;
   onSectionChange: (section: string) => void;
   onClose: () => void;
-  onSaved: () => void;
+  onSaved: (event?: EventRow) => void;
   initialValues?: Partial<Record<string, string>> | undefined;
 }) {
   const title = event ? eventTitle(event) : `Novo — ${eventTypeLabel(eventType)}`;
@@ -738,7 +738,7 @@ function EditorShell({
         />}
         {event && activeSection === "media" && (
           <div className="space-y-12">
-            <MediaManager event={event} />
+            <MediaManager event={event} onEventUpdated={onSaved} />
             <div className="border-t border-black/[0.07] pt-10"><GalleryManager eventId={event.id} /></div>
           </div>
         )}
