@@ -226,7 +226,7 @@ function AdminPage() {
             <Link to="/" className="flex items-center gap-2.5">
               <span className="flex size-7 items-center justify-center" aria-hidden="true"><EclipseMark className="size-7" /></span>
               <span className="text-sm font-semibold tracking-[-0.02em]">Solar Eclipse</span>
-            </Link>
+            </a>
           </div>
           <div className="px-4 py-6">
             <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/35">Workspace</p>
@@ -237,7 +237,7 @@ function AdminPage() {
               >
                 <MessageCircle className="size-4" />
                 WhatsApp API
-              </Link>
+              </a>
               <button
                 type="button"
                 onClick={() => setMode({ kind: "dashboard" })}
@@ -282,7 +282,7 @@ function AdminPage() {
                 <Link to="/" className="flex items-center gap-2.5" onClick={() => setMobileNav(false)}>
                   <span className="flex size-7 items-center justify-center" aria-hidden="true"><EclipseMark className="size-7" /></span>
                   <span className="text-sm font-semibold">Solar Eclipse</span>
-                </Link>
+                </a>
                 <button type="button" onClick={() => setMobileNav(false)}><X className="size-5 text-black/50" /></button>
               </div>
               <nav className="mt-8 space-y-1">
@@ -576,9 +576,9 @@ function Dashboard({
                 </div>
                 <div className="flex flex-wrap gap-2 sm:justify-end">
                   <Button asChild size="sm" variant="outline" className="rounded-full">
-                    <Link to="/$slug" params={{ slug: event.slug }} search={{ tipo: undefined }} target="_blank">
+                    <a href={`/${event.slug}`} target="_blank" rel="noreferrer">
                       <ExternalLink className="mr-1.5 size-3.5" /> Abrir
-                    </Link>
+                    </a>
                   </Button>
                   <Button size="sm" className="rounded-full bg-black text-white hover:bg-black/85" onClick={() => onOpen(event)}>
                     Editar <ChevronRight className="ml-1 size-3.5" />
