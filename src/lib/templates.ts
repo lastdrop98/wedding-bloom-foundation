@@ -736,29 +736,17 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
 }
 
 export const SIGNATURE_BASE_TEMPLATES = new Set([
-  "premium-emerald",
-  "limintso-emerald",
-  "limintso-rose",
-  "limintso-ivory",
-  "limintso-sapphire",
-  "limintso-black",
-  "limintso-forest",
-  "limintso-mozambique",
-  "diamond-signature",
-  "limintso-premium",
-  "editorial-cinema",
-  "cinema-love-story",
-  "black-paper",
-  "ceremony-editorial",
-  "portrait-ceremony",
-  "heritage-ceremony",
-  "pearl-ceremony",
-  "pearl-editorial",
-  "mozambique-luxe",
-  "modern-olive",
-  "rose-atelier",
-  "sunset-destination",
-  "ivory-portrait",
+  ...TEMPLATE_OPTIONS
+    .map((template) => template.value)
+    .filter((value) => !new Set([
+      "aquarela-botanica",
+      "film-noir-motion",
+      "editorial-magazine",
+      "pearl-garden",
+      "capulana-contemporary",
+      "celestial-ivory",
+      "coastal-blue",
+    ]).has(value)),
 ]);
 
 export function getTemplateUsesSignatureBase(value?: string | null) {
