@@ -226,7 +226,7 @@ function AdminPage() {
             <Link to="/" className="flex items-center gap-2.5">
               <span className="flex size-7 items-center justify-center" aria-hidden="true"><EclipseMark className="size-7" /></span>
               <span className="text-sm font-semibold tracking-[-0.02em]">Solar Eclipse</span>
-            </a>
+            </Link>
           </div>
           <div className="px-4 py-6">
             <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/35">Workspace</p>
@@ -237,7 +237,7 @@ function AdminPage() {
               >
                 <MessageCircle className="size-4" />
                 WhatsApp API
-              </a>
+              </Link>
               <button
                 type="button"
                 onClick={() => setMode({ kind: "dashboard" })}
@@ -282,7 +282,7 @@ function AdminPage() {
                 <Link to="/" className="flex items-center gap-2.5" onClick={() => setMobileNav(false)}>
                   <span className="flex size-7 items-center justify-center" aria-hidden="true"><EclipseMark className="size-7" /></span>
                   <span className="text-sm font-semibold">Solar Eclipse</span>
-                </a>
+                </Link>
                 <button type="button" onClick={() => setMobileNav(false)}><X className="size-5 text-black/50" /></button>
               </div>
               <nav className="mt-8 space-y-1">
