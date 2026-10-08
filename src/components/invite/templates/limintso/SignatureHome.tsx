@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { GiftQr } from "@/components/invite/GiftQr";
 import { Guestbook } from "@/components/invite/Guestbook";
 import { detail, eventTitle, formatDatePt, mapsUrl, type EventRow } from "@/lib/event";
+import { getTemplateVisualFamily } from "@/lib/templates";
 
 type MediaItem = { url: string; mediaType: string };
 type GalleryItem = { url: string; caption?: string | null; mediaType?: string };
@@ -166,19 +167,21 @@ export function LimintsoSignatureHome({
     <div className="signature-empty-cover" />
   );
 
-  const variantClass = (event.template === "premium-emerald" || event.template === "limintso-emerald")
-    ? "variant-premium-emerald"
-    : event.template === "limintso-mozambique"
-      ? "variant-mozambique"
-      : event.template === "limintso-black"
-        ? "variant-black"
-        : event.template === "limintso-sapphire"
-          ? "variant-sapphire"
-          : event.template === "limintso-forest"
-            ? "variant-forest"
-            : event.template === "limintso-rose"
-              ? "variant-rose"
-              : "variant-ivory";
+  const family = getTemplateVisualFamily(event.template);
+  const variantClass =
+    event.template === "premium-emerald" || event.template === "limintso-emerald" ? "variant-premium-emerald" :
+    event.template === "limintso-mozambique" || family === "mozambique" ? "variant-mozambique" :
+    event.template === "limintso-black" || family === "paper" ? "variant-black" :
+    event.template === "limintso-sapphire" || family === "coastal" ? "variant-sapphire" :
+    event.template === "limintso-forest" || family === "olive" ? "variant-forest" :
+    event.template === "limintso-rose" || family === "atelier" ? "variant-rose" :
+    family === "cinema" ? "variant-cinematic" :
+    family === "portrait" ? "variant-portrait" :
+    family === "heritage" ? "variant-heritage" :
+    family === "sunset" ? "variant-sunset" :
+    family === "pearl-editorial" || family === "pearl" ? "variant-pearl" :
+    family === "editorial" ? "variant-editorial" :
+    "variant-ivory";
 
   return (
     <main ref={rootRef} className={`limintso-signature ${variantClass} ${preview ? "signature-preview" : ""}`} data-signature-template={event.template}>
