@@ -446,7 +446,6 @@ const DEFAULT_DIRECTION: TemplateDirection = {
   palette: "Neutros sofisticados com uma cor de assinatura",
   motifs: "Linhas finas, selos e detalhes gráficos discretos",
 };
-};
 
 export function getTemplateDirection(template: TemplateDefinition): TemplateDirection {
   const source = template.value + " " + template.label + " " + template.family;

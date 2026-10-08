@@ -32,7 +32,9 @@ export function TemplateAtmosphere({
       {isFilm && <span className="template-film-grain" />}
       {isMagazine && <span className="template-magazine-grid" />}
       {isPearl && <span className="template-pearl-bloom" />}
-      {isCapulana && <span className="template-capulana-pattern" />}\n      {isCelestial && <span className="template-celestial-orbits" />}\n      {isCoastal && <span className="template-coastal-wave" />}
+      {isCapulana && <span className="template-capulana-pattern" />}
+      {isCelestial && <span className="template-celestial-orbits" />}
+      {isCoastal && <span className="template-coastal-wave" />}
     </div>
   );
 }
