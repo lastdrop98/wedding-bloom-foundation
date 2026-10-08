@@ -3828,3 +3828,25 @@ main.template-design-diamond-signature .template-hero-content > *:nth-child(4){a
   opacity:1!important;
   filter:none!important;
 }
+
+
+.limintso-signature.variant-royal{--limintso-gold:#b9913e;--signature-gold:#c9a84c;background:#17130f!important;color:#f4ead5}
+.limintso-signature.variant-royal .limintso-header{background:rgba(24,19,14,.95);color:#f4ead5}
+.limintso-signature.variant-royal .limintso-paper-card,.limintso-signature.variant-royal .limintso-person-card,.limintso-signature.variant-royal .limintso-location-card,.limintso-signature.variant-royal .limintso-schedule-card{background:#211a13;color:#f4ead5;border-color:rgba(201,168,76,.24)}
+.limintso-signature.variant-royal .limintso-cover-card{border-radius:8px;border-width:2px}
+
+.limintso-signature.variant-botanical{--limintso-gold:#71885c;--signature-gold:#71885c;background:#edf0e7!important;color:#34402e}
+.limintso-signature.variant-botanical .limintso-paper-card{background:#fbfcf7}
+.limintso-signature.variant-botanical .limintso-cover-card{border-radius:34px 12px 34px 12px}
+.limintso-signature.variant-botanical .limintso-person-card{border-radius:24px 8px 24px 8px}
+
+.limintso-signature.variant-celestial{--limintso-gold:#c7a65a;--signature-gold:#c7a65a;background:#f1eee7!important;color:#332f29}
+.limintso-signature.variant-celestial .limintso-dark-card{background:#29251f}
+.limintso-signature.variant-celestial .limintso-cover-card{border-radius:50% 50% 18px 18px}
+.limintso-signature.variant-celestial .limintso-paper-card{background:#fffdf8}
+
+.limintso-signature.variant-coastal{--limintso-gold:#6287a8;--signature-gold:#6287a8;background:#eaf0f3!important;color:#263746}
+.limintso-signature.variant-coastal .limintso-header{background:rgba(247,250,252,.95)}
+.limintso-signature.variant-coastal .limintso-paper-card{background:#fbfdfe}
+.limintso-signature.variant-coastal .limintso-cover-card{border-radius:10px 34px 10px 34px}
+.limintso-signature.variant-coastal .limintso-dark-card{background:#294355}
