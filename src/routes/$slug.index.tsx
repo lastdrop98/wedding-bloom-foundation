@@ -96,11 +96,8 @@ function CoverPage() {
     void audioRef.current?.play().catch(() => undefined);
     setLeaving(true);
     setTimeout(() => {
-      void navigate({
-        to: "/$slug/home",
-        params: { slug },
-        search: { tipo: inviteType ?? undefined },
-      });
+      const query = inviteType ? `?tipo=${encodeURIComponent(inviteType)}` : "";
+      window.location.assign(`/${encodeURIComponent(slug)}/home${query}`);
     }, 500);
   }
 
