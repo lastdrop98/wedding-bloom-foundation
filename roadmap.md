@@ -1,3 +1,4 @@
+- [ ] Unify and finish the Limintso/Emerald signature invitation and preview, preserving features and validating interactions.
 - [x] Abrir demonstrações longas no catálogo, com variantes visuais e fecho acessível.
 - [x] Preparar pedidos do modelo selecionado e abrir WhatsApp comercial.
 - [x] Validar botões, telemóvel, tipos e compilação.
