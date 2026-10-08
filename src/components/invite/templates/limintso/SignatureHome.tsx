@@ -181,6 +181,10 @@ export function LimintsoSignatureHome({
     family === "sunset" ? "variant-sunset" :
     family === "pearl-editorial" || family === "pearl" ? "variant-pearl" :
     family === "editorial" ? "variant-editorial" :
+    family === "royal" ? "variant-royal" :
+    family === "botanical" ? "variant-botanical" :
+    family === "celestial" ? "variant-celestial" :
+    family === "coastal" ? "variant-coastal" :
     "variant-ivory";
 
   return (
