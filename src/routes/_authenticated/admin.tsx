@@ -349,7 +349,7 @@ function AdminPage() {
                   {adminTheme === "dark" ? "☀️" : "🌙"}
                   <span className="hidden sm:inline">{adminTheme === "dark" ? "Claro" : "Escuro"}</span>
                 </button>
-                <a href="/" target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
+                <a href={getPublicSiteUrl()} target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
                   Ver site
                 </a>
                 <Button
@@ -553,6 +553,9 @@ function Dashboard({
                     <span className="font-medium">{request.couple_name}</span>
                     <span className="rounded-full bg-black/[0.04] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]">{request.template_label}</span>
                     {request.status === "new" && <span className="rounded-full bg-[#C9A84C] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">Novo</span>}
+                    {request.status === "in_progress" && <span className="rounded-full bg-blue-100 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-blue-700">Em andamento</span>}
+                    {request.status === "completed" && <span className="rounded-full bg-emerald-100 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-emerald-700">Concluído</span>}
+                    {request.status === "cancelled" && <span className="rounded-full bg-red-100 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-red-700">Recusado</span>}
                   </div>
                   <p className="mt-1 text-xs text-black/45">{request.phone} · {request.wedding_date || "Data por definir"} · {formatAdminDateTime(request.created_at)}</p>
                 </button>
