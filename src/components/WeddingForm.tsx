@@ -3,6 +3,7 @@ import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
 import { AUDIO_BUCKET, GALLERY_BUCKET, details as readDetails, looseDb, type EventRow } from "@/lib/event";
+import { getPublicSiteUrl } from "@/lib/publicUrl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -684,7 +685,7 @@ export function WeddingForm({
             </a>
             {event && values["slug"] && (
               <a
-                href={`/${values["slug"]}`}
+                href={getPublicSiteUrl() + "/" + encodeURIComponent(values["slug"])}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center rounded-full bg-primary px-3.5 py-2 text-xs font-medium text-primary-foreground transition hover:opacity-90"
