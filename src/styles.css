@@ -4273,3 +4273,91 @@ div[id*="lovable-badge"] {
   --signature-cover-veil: linear-gradient(180deg, transparent 30%, oklch(.1 0 0 / .72));
   --signature-shadow: 0 16px 48px oklch(.3 .025 75 / .12);
 }
+
+
+/* Solar Eclipse — richer, distinct atmospheric backgrounds (additive, non-destructive). */
+.template-atmosphere {
+  isolation: isolate;
+}
+.template-atmosphere .template-orb {
+  mix-blend-mode: multiply;
+}
+.template-atmosphere-midnight {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(94, 103, 153, .20), transparent 54%),
+    linear-gradient(155deg, rgba(8, 13, 30, .14), transparent 58%);
+}
+.template-atmosphere-sand {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(211, 173, 112, .20), transparent 58%),
+    repeating-linear-gradient(0deg, rgba(116, 87, 56, .018) 0 1px, transparent 1px 4px);
+}
+.template-atmosphere-rose {
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(222, 157, 170, .23), transparent 42%),
+    radial-gradient(ellipse at 90% 76%, rgba(170, 115, 132, .14), transparent 42%),
+    linear-gradient(145deg, rgba(255, 246, 242, .32), transparent 60%);
+}
+.template-atmosphere-emerald {
+  background:
+    radial-gradient(ellipse at 88% 8%, rgba(91, 145, 111, .23), transparent 43%),
+    radial-gradient(ellipse at 8% 92%, rgba(199, 166, 104, .14), transparent 40%),
+    linear-gradient(145deg, rgba(11, 62, 48, .08), transparent 64%);
+}
+.template-atmosphere-burgundy {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(139, 37, 58, .22), transparent 52%),
+    linear-gradient(160deg, rgba(50, 9, 24, .08), transparent 70%);
+}
+.template-atmosphere-sapphire {
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(75, 125, 191, .23), transparent 46%),
+    radial-gradient(ellipse at 95% 90%, rgba(203, 170, 108, .16), transparent 42%);
+}
+.template-atmosphere-xiguiane {
+  background-color: rgba(191, 125, 76, .035);
+  background-image:
+    repeating-linear-gradient(45deg, rgba(144, 83, 45, .055) 0 2px, transparent 2px 18px),
+    repeating-linear-gradient(-45deg, rgba(29, 83, 61, .045) 0 2px, transparent 2px 18px),
+    radial-gradient(ellipse at 50% 0%, rgba(211, 164, 105, .20), transparent 62%);
+}
+.template-atmosphere .template-film-grain {
+  position: absolute;
+  inset: 0;
+  opacity: .12;
+  background-image: repeating-radial-gradient(circle at 17% 31%, rgba(255,255,255,.22) 0 .5px, transparent .7px 3px);
+  background-size: 7px 7px;
+}
+.template-atmosphere .template-magazine-grid {
+  position: absolute;
+  inset: 4% 7%;
+  opacity: .18;
+  background-image: linear-gradient(90deg, currentColor 1px, transparent 1px);
+  background-size: 33.333% 100%;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+.template-atmosphere .template-pearl-bloom {
+  position: absolute;
+  width: min(76vw, 680px);
+  aspect-ratio: 1;
+  top: -20%;
+  right: -22%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.42);
+  box-shadow: 0 0 0 18px rgba(255,255,255,.08), 0 0 0 42px rgba(255,255,255,.05), 0 0 0 76px rgba(255,255,255,.035);
+}
+.template-atmosphere .template-coastal-wave {
+  position: absolute;
+  inset: auto -15% -12%;
+  height: 48%;
+  opacity: .22;
+  border-radius: 50% 50% 0 0;
+  background: repeating-linear-gradient(170deg, transparent 0 15px, rgba(69, 135, 164, .20) 16px 18px, transparent 19px 31px);
+  transform: rotate(-5deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .template-atmosphere *, .template-atmosphere *::before, .template-atmosphere *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
