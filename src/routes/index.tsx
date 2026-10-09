@@ -171,45 +171,43 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="solar-home-carousel relative overflow-hidden border-y border-black/5 bg-[#10100f] px-6 py-20 text-white sm:py-28" aria-label="Destaques de modelos">
+      <section className="solar-home-carousel relative overflow-hidden border-y border-black/5 bg-[#10100f] px-6 py-20 text-white sm:py-28" aria-label="Galeria de fotografias de inspiração">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#d7b56d]">Uma coleção feita para o vosso dia</p>
               <h2 className="mt-4 text-4xl font-light tracking-[-0.045em] sm:text-5xl">Veja o convite ganhar forma.</h2>
-              <p className="mt-4 max-w-xl text-sm leading-7 text-white/55">Uma seleção de capas, fotografias e composições diferentes. O carrossel avança automaticamente para mostrar vários estilos sem transformar a página numa parede de cartões.</p>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-white/55">Uma galeria de fotografias de inspiração para celebrar histórias, detalhes e momentos especiais.</p>
             </div>
             <div className="flex items-center gap-2">
-              <button type="button" aria-label="Modelo anterior" onClick={() => setCarouselIndex((carouselIndex - 1 + HOME_CAROUSEL_VALUES.length) % HOME_CAROUSEL_VALUES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
+              <button type="button" aria-label="Fotografia anterior" onClick={() => setCarouselIndex((carouselIndex - 1 + HOME_CAROUSEL_VALUES.length) % HOME_CAROUSEL_VALUES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
                 <span aria-hidden="true">←</span>
               </button>
-              <button type="button" aria-label="Próximo modelo" onClick={() => setCarouselIndex((carouselIndex + 1) % HOME_CAROUSEL_VALUES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
+              <button type="button" aria-label="Fotografia seguinte" onClick={() => setCarouselIndex((carouselIndex + 1) % HOME_CAROUSEL_VALUES.length)} className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[.04] transition hover:border-white/30 hover:bg-white/10">
                 <span aria-hidden="true">→</span>
               </button>
             </div>
           </div>
           <div className="mt-10 overflow-hidden rounded-[30px] border border-white/10 bg-white/[.035] p-2 sm:p-3">
             <div className="grid gap-3 sm:grid-cols-3">
-              {[0,1,2].map((offset) => {
+              {[0, 1, 2].map((offset) => {
                 const index = (carouselIndex + offset) % HOME_CAROUSEL_VALUES.length;
-                const item = TEMPLATE_OPTIONS.find((template) => template.value === HOME_CAROUSEL_VALUES[index]) ?? TEMPLATE_OPTIONS[0]!;
                 return (
-                  <a key={`${carouselIndex}-${offset}`} href={`/modelos/${item.value}`} className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#1a1917] shadow-[0_24px_70px_rgba(0,0,0,.32)] ${offset === 1 ? "sm:-translate-y-5 sm:scale-[1.025]" : ""}`}>
-                    <img src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]} alt="" className="h-[390px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px]" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-6">
-                      <span className="text-[9px] uppercase tracking-[.24em] text-white/55">{String(index + 1).padStart(2, "0")} / Solar Eclipse</span>
-                      <h3 className="mt-2 text-2xl font-light">{item.label}</h3>
-                      <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-xs text-white/85">Ver coleção <ArrowRight className="size-3.5" /></span>
-                    </div>
-                  </a>
+                  <div key={`${carouselIndex}-${offset}`} className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#1a1917] shadow-[0_24px_70px_rgba(0,0,0,.32)] ${offset === 1 ? "sm:-translate-y-5 sm:scale-[1.025]" : ""}`}>
+                    <img
+                      src={HOME_TEMPLATE_IMAGES[index % HOME_TEMPLATE_IMAGES.length]}
+                      alt="Fotografia de inspiração para um casamento"
+                      loading="lazy"
+                      className="h-[390px] w-full object-cover transition duration-700 group-hover:scale-105 sm:h-[500px]"
+                    />
+                  </div>
                 );
               })}
             </div>
           </div>
           <div className="mt-5 flex items-center justify-center gap-1.5" aria-label="Posição do carrossel">
             {HOME_CAROUSEL_VALUES.map((_, index) => (
-              <button key={index} type="button" aria-label={`Ir para destaque ${index + 1}`} aria-current={index === carouselIndex} onClick={() => setCarouselIndex(index)} className={`h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-8 bg-[#d7b56d]" : "w-1.5 bg-white/20 hover:bg-white/40"}`} />
+              <button key={index} type="button" aria-label={`Ir para fotografia ${index + 1}`} aria-current={index === carouselIndex} onClick={() => setCarouselIndex(index)} className={`h-1.5 rounded-full transition-all ${index === carouselIndex ? "w-8 bg-[#d7b56d]" : "w-1.5 bg-white/20 hover:bg-white/40"}`} />
             ))}
           </div>
         </div>
@@ -370,14 +368,17 @@ function HomePage() {
             <div className="inline-flex items-center gap-2.5"><EclipseMark className="size-5 text-white" /><span className="text-sm font-medium">Solar Eclipse</span></div>
             <p className="mt-3 max-w-sm text-xs leading-6 text-white/40">Convites digitais de casamento pensados para serem vistos, partilhados e lembrados.</p>
           </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs text-white/45">
-            <a href="/modelos" className="rounded-full border-2 border-white/12 px-3 py-1.5 transition hover:border-white/30 hover:text-white">Modelos</a>
-            <a href="#experiencia" className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Experiência</a>
-            <a href="#como-funciona" className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Como funciona</a>
-            <a href={whatsappUrl("Olá! Quero saber mais sobre os convites Solar Eclipse.")} onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero saber mais sobre os convites Solar Eclipse."); }} className="rounded-full border border-white/10 px-3 py-1.5 transition hover:border-white/25 hover:text-white">Contacto</a>
+          <div className="flex flex-col gap-4 text-xs text-white/55 sm:items-end">
+            <nav className="flex flex-wrap gap-x-5 gap-y-3">
+              <a href="/modelos" className="transition hover:text-white">Modelos</a>
+              <a href="#experiencia" className="transition hover:text-white">Experiência</a>
+              <a href="#como-funciona" className="transition hover:text-white">Como funciona</a>
+            </nav>
+            <a href="mailto:5olareclips353@gmail.com" className="transition hover:text-white">5olareclips353@gmail.com</a>
+            <a href="https://wa.me/258847404160" target="_blank" rel="noreferrer" className="transition hover:text-white">WhatsApp: 84 740 4160</a>
           </div>
         </div>
-        <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-5 text-[10px] text-white/25">© {new Date().getFullYear()} Solar Eclipse. Todos os direitos reservados.</div>
+        <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-5 text-[10px] text-white/25"><span>© {new Date().getFullYear()} Solar Eclipse. Todos os direitos reservados.</span></div>
       </footer>
     </main>
   );
