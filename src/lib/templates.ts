@@ -10,7 +10,7 @@ export type TemplateDefinition = {
   implemented: boolean;
 };
 
-export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
+const TEMPLATE_CATALOG: TemplateDefinition[] = [
   {
     value: "golden-classic",
     label: "Noir & Ouro",
@@ -653,6 +653,15 @@ export const TEMPLATE_OPTIONS: TemplateDefinition[] = [
   },
 ];
 
+// One canonical catalogue is shared by the admin and public Models page.
+// Keep the first definition for each stable template ID to avoid duplicate cards.
+const seenTemplateValues = new Set<string>();
+export const TEMPLATE_OPTIONS: TemplateDefinition[] = TEMPLATE_CATALOG.filter((template) => {
+  if (seenTemplateValues.has(template.value)) return false;
+  seenTemplateValues.add(template.value);
+  return true;
+});
+
 export function getTemplateDefinition(value?: string | null) {
   return TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!;
 }
@@ -699,6 +708,7 @@ export type TemplateVisualFamily =
   | "sunset"
   | "paper"
   | "pearl-editorial"
+  | "magazine"
   | "limintso"
   | "diamond";
 
@@ -707,6 +717,7 @@ export function getTemplateVisualFamily(value?: string | null): TemplateVisualFa
   const source = `${template.value} ${template.label} ${template.family}`.toLowerCase();
 
   if (/cinema-love-story|editorial-cinema/.test(source)) return "cinema";
+  if (/editorial-magazine/.test(source)) return "magazine";
   if (/portrait-ceremony|ivory-portrait|classic-ivory/.test(source)) return "portrait";
   if (/modern-olive|emerald-elegante/.test(source)) return "olive";
   if (/rose-atelier/.test(source)) return "atelier";
