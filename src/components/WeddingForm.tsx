@@ -180,6 +180,86 @@ function SelectNative({
   );
 }
 
+function createDemoDefaults(): Record<string, string> {
+  const year = new Date().getFullYear() + 1;
+  const suffix = String(Date.now()).slice(-6);
+  const date = `${year}-10-24`;
+  return {
+    slug: `demo-ana-miguel-${suffix}`,
+    template: "golden-classic",
+    groom_name: "Miguel",
+    bride_name: "Ana",
+    display_names: "Ana & Miguel",
+    event_date: `${date}T14:00`,
+    hashtag: "#AnaEMiguel",
+    groom_father_name: "António Manuel (demonstração)",
+    groom_mother_name: "Teresa Manuel (demonstração)",
+    bride_father_name: "Carlos António (demonstração)",
+    bride_mother_name: "Helena António (demonstração)",
+    ceremony_venue: "Igreja de São Gabriel (exemplo)",
+    ceremony_address: "Av. de demonstração, Maputo",
+    ceremony_time: "14:00",
+    civil_ceremony_venue: "Conservatória de exemplo",
+    civil_ceremony_address: "Centro de Maputo",
+    civil_ceremony_time: "10:00",
+    reception_venue: "Jardim das Acácias (exemplo)",
+    reception_address: "Costa do Sol, Maputo",
+    reception_time: "17:00",
+    mpesa_number: "+258 84 000 0000 (fictício)",
+    emola_number: "+258 86 000 0000 (fictício)",
+    mkesh_number: "+258 87 000 0000 (fictício)",
+    bank_payment_note: "Dados de pagamento fictícios. Substituir antes de publicar.",
+    rsvp_deadline: `${year}-10-01`,
+    bank_holder: "Ana & Miguel (exemplo)",
+    bank_name: "Banco de demonstração",
+    bank_account: "000000000 (fictício)",
+    bank_nib: "000000000000000000000 (fictício)",
+    contact_1_name: "Ana (exemplo)",
+    contact_1_phone: "+258 84 000 0000 (fictício)",
+    contact_2_name: "Miguel (exemplo)",
+    contact_2_phone: "+258 86 000 0000 (fictício)",
+    welcome_message: "Com alegria, convidamos a família e os amigos para celebrar connosco este dia especial.",
+    dress_code: "Elegante — tons neutros",
+    rsvp_message: "Por favor, confirme a sua presença até à data indicada.",
+    closing_message: "Será uma alegria partilhar este momento convosco.",
+    story_intro: "A nossa história começou com uma amizade e cresceu com amor.",
+    bride_letter: "Hoje começa um novo capítulo que quero viver com amor, respeito e cumplicidade.",
+    groom_letter: "Escolher-te é a minha promessa para hoje e para todos os dias.",
+    story_1_date: `${year - 3}-05-14`,
+    story_1_title: "O primeiro encontro",
+    story_1_text: "Um encontro inesperado deu início a uma bonita amizade.",
+    story_2_date: `${year - 2}-08-20`,
+    story_2_title: "O início da nossa história",
+    story_2_text: "Descobrimos que partilhávamos sonhos, valores e vontade de construir algo juntos.",
+    story_3_date: `${year - 1}-12-24`,
+    story_3_title: "Uma promessa",
+    story_3_text: "Em família, celebrámos a decisão de caminhar lado a lado.",
+    story_4_date: `${year}-02-14`,
+    story_4_title: "Para sempre",
+    story_4_text: "Decidimos celebrar o nosso amor com as pessoas que mais importam.",
+    party_1_name: "João (exemplo)",
+    party_1_role: "Padrinho",
+    party_2_name: "Marta (exemplo)",
+    party_2_role: "Madrinha",
+    party_3_name: "Paulo (exemplo)",
+    party_3_role: "Padrinho",
+    party_4_name: "Sara (exemplo)",
+    party_4_role: "Madrinha",
+    verse_text: "O amor é paciente, o amor é bondoso.",
+    verse_reference: "1 Coríntios 13:4",
+    verse_2_text: "Acima de tudo, revistam-se do amor.",
+    verse_2_reference: "Colossenses 3:14",
+    seal_enabled: "true",
+    seal_mode: "two",
+    seal_one_text: "A nossa união",
+    seal_two_text: "Com a bênção das famílias",
+    seal_one_label: "Ana & Miguel",
+    seal_two_label: `24 · 10 · ${year}`,
+    seal_one_color: "#C9A84C",
+    seal_two_color: "#1E1A10",
+  };
+}
+
 function toInputValue(value: unknown, kind?: FieldKind) {
   if (value == null) return "";
   if (kind === "datetime") return new Date(String(value)).toISOString().slice(0, 16);
@@ -201,7 +281,8 @@ export function WeddingForm({
 }) {
   const [values, setValues] = useState<Record<string, string>>(() => {
     const detailValues = event ? readDetails(event) : {};
-    const base: Record<string, string> = { template: "golden-classic" };
+    const demoDefaults = createDemoDefaults();
+    const base: Record<string, string> = { ...demoDefaults };
     GROUPS.forEach((g) =>
       g.fields.forEach((f) => {
         const raw =
@@ -210,7 +291,8 @@ export function WeddingForm({
             : event
               ? (event as unknown as Record<string, unknown>)[f.name]
               : null;
-        base[f.name] = toInputValue(raw, f.kind);
+        const currentValue = toInputValue(raw, f.kind);
+        base[f.name] = currentValue || (!event ? demoDefaults[f.name] ?? "" : "");
       }),
     );
     if (!event) base["template"] = initialValues?.["template"] || "golden-classic";
@@ -443,6 +525,11 @@ export function WeddingForm({
 
   return (
     <form onSubmit={save} className="space-y-10">
+      {!event && (
+        <div role="status" className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm leading-6">
+          Os campos estão preenchidos com dados fictícios de demonstração. Substitua nomes, contactos, pagamentos e restantes informações antes de publicar o convite.
+        </div>
+      )}
       {GROUPS.map((group) => (
         <fieldset key={group.title} className="space-y-4">
           <legend className="eyebrow">{group.title}</legend>

@@ -294,6 +294,28 @@ export function TemplatePicker({
         })}
       </div>
 
+      {value && (() => {
+        const selectedTemplate = TEMPLATE_OPTIONS.find((item) => item.value === value);
+        return selectedTemplate ? (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
+            <div>
+              <p className="text-sm font-medium">Quer ver o convite completo?</p>
+              <p className="text-xs text-muted-foreground">
+                Abra a demonstração pública de “{selectedTemplate.label}” para explorar capa, secções e ritmo visual antes de publicar.
+              </p>
+            </div>
+            <a
+              href={`/modelos/${encodeURIComponent(selectedTemplate.value)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-full border border-primary/30 bg-background px-4 py-2 text-xs font-medium text-foreground transition hover:border-primary"
+            >
+              Ver modelo completo
+            </a>
+          </div>
+        ) : null;
+      })()}
+
       {getTemplateUsesSignatureBase(value) && (() => {
         const template = TEMPLATE_OPTIONS.find((item) => item.value === value);
         return template ? (

@@ -50,6 +50,17 @@ function matchesFilter(family: string, filter: string) {
 type PreviewFamily = "noir" | "botanical" | "regal" | "heritage" | "editorial" | "cinematic" | "magazine" | "pearl" | "celestial" | "coastal" | "limintso";
 
 function previewFamily(template: TemplateDefinition): PreviewFamily {
+  const visualFamily = getTemplateVisualFamily(template.value);
+  if (visualFamily === "magazine") return "magazine";
+  if (visualFamily === "cinema" || visualFamily === "cinematic" || visualFamily === "paper") return "cinematic";
+  if (visualFamily === "heritage" || visualFamily === "mozambique") return "heritage";
+  if (visualFamily === "botanical") return "botanical";
+  if (visualFamily === "pearl" || visualFamily === "pearl-editorial" || visualFamily === "atelier") return "pearl";
+  if (visualFamily === "editorial" || visualFamily === "portrait" || visualFamily === "diamond") return "editorial";
+  if (visualFamily === "royal" || visualFamily === "olive") return "regal";
+  if (visualFamily === "celestial") return "celestial";
+  if (visualFamily === "coastal" || visualFamily === "sunset") return "coastal";
+  if (visualFamily === "limintso") return "limintso";
   if (template.value === "limintso-emerald" || template.value === "premium-emerald" || template.value === "diamond-signature" || template.family.includes("Signature Cards") || template.value.startsWith("limintso-")) return "limintso";
   if (template.value === "film-noir-motion") return "cinematic";
   if (template.value === "editorial-magazine") return "magazine";

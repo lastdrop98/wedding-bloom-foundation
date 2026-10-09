@@ -4138,3 +4138,103 @@ main[class*="template-"] :is(.star,.sparkle,.spark,.stars,.sparkles) {
 .template-demo :is(h1,h2,h3,h4,.font-serif) {
   font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 }
+
+
+/* Solar Eclipse — targeted admin contrast safeguards for token-based surfaces.
+   Older admin components mix literal Tailwind colors with semantic background tokens.
+   Normalize those surfaces inside the admin shell only; invitation artwork remains untouched. */
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(.bg-background, .bg-card, .bg-popover) {
+  background-color: #191816 !important;
+  color: #f7f3ea !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace .bg-muted {
+  background-color: #24221e !important;
+  color: #f7f3ea !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace .bg-secondary {
+  background-color: #2a2721 !important;
+  color: #f7f3ea !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(input, textarea, select) {
+  border-color: rgba(255,255,255,.18) !important;
+  background-color: #201f1b !important;
+  color: #fffaf0 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(input, textarea, select)::placeholder {
+  color: rgba(255,250,240,.52) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-background, .bg-card, .bg-popover) {
+  background-color: #fff !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-muted {
+  background-color: #f3f2ef !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-secondary {
+  background-color: #ebe8e1 !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input, textarea, select) {
+  border-color: rgba(29,29,31,.20) !important;
+  background-color: #fff !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input, textarea, select)::placeholder {
+  color: rgba(29,29,31,.52) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-black, [class*="bg-[#111"], [class*="bg-[#1"]) {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-black, [class*="bg-[#111"], [class*="bg-[#1"]) :is(.text-white, .text-white\/80, .text-white\/70, .text-white\/60, .text-white\/50, .text-white\/45, .text-white\/40),
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button, a).bg-black:is(.text-white, .text-white\/80, .text-white\/70, .text-white\/60, .text-white\/50, .text-white\/45, .text-white\/40) {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-white, .bg-background, .bg-card, .bg-popover) .text-muted-foreground {
+  color: #595650 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(.bg-white, .bg-background, .bg-card, .bg-popover) .text-muted-foreground {
+  color: #b9b4aa !important;
+}
+
+
+/* Editorial Magazine — its own art direction, not the generic editorial palette. */
+.template-visual-magazine {
+  --magazine-paper: #eeeae2;
+  --magazine-ink: #191816;
+  --magazine-rule: rgba(25,24,22,.18);
+}
+main.template-visual-magazine {
+  background: var(--magazine-paper) !important;
+  color: var(--magazine-ink) !important;
+}
+main.template-visual-magazine .limintso-signature {
+  background: var(--magazine-paper) !important;
+  color: var(--magazine-ink) !important;
+}
+main.template-visual-magazine .limintso-cover-card {
+  border-radius: 0 !important;
+  border-color: var(--magazine-rule) !important;
+  box-shadow: none !important;
+}
+main.template-visual-magazine .limintso-section {
+  border-radius: 0 !important;
+}
+main.template-visual-magazine .limintso-person-card,
+main.template-visual-magazine .limintso-paper-card,
+main.template-visual-magazine .limintso-location-card,
+main.template-visual-magazine .limintso-schedule-card {
+  border-radius: 0 !important;
+  border-color: var(--magazine-rule) !important;
+  box-shadow: none !important;
+}
+main.template-visual-magazine .limintso-person-photo,
+main.template-visual-magazine .limintso-cover-media {
+  border-radius: 0 !important;
+  aspect-ratio: 4 / 5;
+}
+@media (max-width: 640px) {
+  main.template-visual-magazine .limintso-section {
+    padding-inline: 1rem;
+  }
+}
