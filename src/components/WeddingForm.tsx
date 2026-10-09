@@ -588,7 +588,7 @@ export function WeddingForm({
           </p>
           <div className="flex flex-wrap gap-2">
             <a
-              href={`/modelos/${selected.value}`}
+              href={`/modelos/${getTemplateDefinition(values["template"]).value}`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center rounded-full border border-border px-3.5 py-2 text-xs font-medium transition hover:border-primary hover:text-primary"

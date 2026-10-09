@@ -130,7 +130,7 @@ export function MediaManager({ event, onEventUpdated }: { event: EventRow; onEve
       const path = event.id + "/slots/" + slot + "-" + Date.now() + "." + ext;
       const { error: uploadError } = await supabase.storage
         .from(GALLERY_BUCKET)
-        .upload(path, file, { upsert: false, cacheControl: "3600", contentType: file.type || undefined });
+        .upload(path, file, { upsert: false, cacheControl: "3600", ...(file.type ? { contentType: file.type } : {}) });
       if (uploadError) throw uploadError;
 
       const { data: latestMedia, error: latestMediaError } = await looseDb
