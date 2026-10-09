@@ -4138,3 +4138,57 @@ main[class*="template-"] :is(.star,.sparkle,.spark,.stars,.sparkles) {
 .template-demo :is(h1,h2,h3,h4,.font-serif) {
   font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 }
+
+
+/* Solar Eclipse — targeted admin contrast safeguards for token-based surfaces.
+   Older admin components mix literal Tailwind colors with semantic background tokens.
+   Normalize those surfaces inside the admin shell only; invitation artwork remains untouched. */
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(.bg-background, .bg-card, .bg-popover) {
+  background-color: #191816 !important;
+  color: #f7f3ea !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace .bg-muted {
+  background-color: #24221e !important;
+  color: #f7f3ea !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace .bg-secondary {
+  background-color: #2a2721 !important;
+  color: #f7f3ea !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(input, textarea, select) {
+  border-color: rgba(255,255,255,.18) !important;
+  background-color: #201f1b !important;
+  color: #fffaf0 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(input, textarea, select)::placeholder {
+  color: rgba(255,250,240,.52) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-background, .bg-card, .bg-popover) {
+  background-color: #fff !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-muted {
+  background-color: #f3f2ef !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .bg-secondary {
+  background-color: #ebe8e1 !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input, textarea, select) {
+  border-color: rgba(29,29,31,.20) !important;
+  background-color: #fff !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input, textarea, select)::placeholder {
+  color: rgba(29,29,31,.52) !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-black, [class*="bg-[#111"], [class*="bg-[#1"]) {
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-white, .bg-background, .bg-card, .bg-popover) .text-muted-foreground {
+  color: #595650 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(.bg-white, .bg-background, .bg-card, .bg-popover) .text-muted-foreground {
+  color: #b9b4aa !important;
+}
