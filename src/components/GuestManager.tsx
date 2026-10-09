@@ -1,4 +1,5 @@
 import { looseDb } from "@/lib/event";
+import { getPublicSiteUrl } from "@/lib/publicUrl";
 import { useMemo, useState } from "react";
 import { Download } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -106,7 +107,7 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
       toast.error("Ainda não há convidados para exportar.");
       return;
     }
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const origin = getPublicSiteUrl();
     const rows = [
       ["Nome", "Telefone", "Convidados", "Tipo", "Mesa", "Estado", "Link"],
       ...guests.map((g) => [
@@ -317,7 +318,7 @@ export function GuestManager({ eventId, slug }: { eventId: string; slug: string 
                       <a
                         href={guestWhatsAppUrl(
                           g.phone,
-                          `${typeof window !== "undefined" ? window.location.origin : ""}/${slug}?g=${g.token}`,
+                          `${getPublicSiteUrl()}/${slug}?g=${g.token}`,
                           g.name,
                         )}
                         target="_blank"

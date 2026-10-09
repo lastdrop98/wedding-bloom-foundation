@@ -33,8 +33,13 @@ import {
 import { Petals } from "./Petals";
 import { GiftQr } from "@/components/invite/GiftQr";
 import { Guestbook } from "@/components/invite/Guestbook";
+import { EclipseMark } from "@/components/EclipseMark";
 
 type GalleryImage = { url: string; caption: string | null; mediaType: string };
+
+const DEMO_COVER_IMAGE = "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90";
+const DEMO_BRIDE_IMAGE = "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=900&q=85";
+const DEMO_GROOM_IMAGE = "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=85";
 
 function InviteQuickActions({ event }: { event: Pick<EventRow, "display_names" | "details"> }) {
   const goTo = (section: string) => {
@@ -343,7 +348,7 @@ export function AquarelaHome({
 
   useEffect(() => {
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
-    signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
+    signedUrl(GALLERY_BUCKET, event.cover_image_path).then((url) => setCover(url ?? DEMO_COVER_IMAGE));
   }, [event]);
 
   useEffect(() => {
@@ -525,7 +530,7 @@ export function AquarelaHome({
                 parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean).length
                   ? `Filha de ${[d("bride_father_name"), d("bride_mother_name")].filter(Boolean).join(" e ")}`
                   : "",
-                photo: slotMedia["bride"]?.url ? { url: slotMedia["bride"].url, caption: null, mediaType: slotMedia["bride"].mediaType } : galleryUrls[0],
+                photo: slotMedia["bride"]?.url ? { url: slotMedia["bride"].url, caption: null, mediaType: slotMedia["bride"].mediaType } : galleryUrls[0] ?? { url: DEMO_BRIDE_IMAGE, caption: "Fotografia ilustrativa", mediaType: "image" },
               },
               {
                 role: "O Noivo",
@@ -533,7 +538,7 @@ export function AquarelaHome({
                 parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean).length
                   ? `Filho de ${[d("groom_father_name"), d("groom_mother_name")].filter(Boolean).join(" e ")}`
                   : "",
-                photo: slotMedia["groom"]?.url ? { url: slotMedia["groom"].url, caption: null, mediaType: slotMedia["groom"].mediaType } : galleryUrls[1],
+                photo: slotMedia["groom"]?.url ? { url: slotMedia["groom"].url, caption: null, mediaType: slotMedia["groom"].mediaType } : galleryUrls[1] ?? { url: DEMO_GROOM_IMAGE, caption: "Fotografia ilustrativa", mediaType: "image" },
               },
             ].map((p, i) => (
               <Reveal key={p.role} delay={i * 100}>
@@ -818,10 +823,16 @@ export function AquarelaHome({
           size={150}
         />
         <FloralDivider />
-        <p className="mt-6 font-sans text-xs tracking-[0.25em] text-muted-foreground uppercase">
+        <EclipseMark className="mx-auto mt-6 size-9 text-primary" />
+        <p className="mt-4 font-sans text-[10px] tracking-[0.25em] text-muted-foreground uppercase">
           Convite criado com ♡ por
         </p>
-        <p className="mt-2 text-lg font-light tracking-[0.2em] text-primary">Solar Eclipse</p>
+        <p className="mt-2 text-xl font-light tracking-[0.2em] text-primary">Solar Eclipse</p>
+        <p className="mx-auto mt-4 max-w-xl font-sans text-sm leading-6 text-muted-foreground">Convites digitais elegantes, personalizados para celebrar histórias e aproximar família e amigos.</p>
+        <div className="mt-5 flex flex-col items-center justify-center gap-3 font-sans text-xs text-muted-foreground sm:flex-row sm:gap-6">
+          <a href="mailto:5olareclips353@gmail.com" className="transition-colors hover:text-primary">5olareclips353@gmail.com</a>
+          <a href="https://wa.me/258847404160" target="_blank" rel="noreferrer" className="transition-colors hover:text-primary">WhatsApp: 84 740 4160</a>
+        </div>
         <Link
           to="/$slug"
           params={{ slug }}

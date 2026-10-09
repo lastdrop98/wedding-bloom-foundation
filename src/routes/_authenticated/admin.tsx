@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import {
   BarChart3,
+  Ban,
   CalendarDays,
   ChevronLeft,
   ChevronRight,
@@ -19,6 +20,7 @@ import {
   Plus,
   Printer,
   Settings2,
+  Trash2,
   CircleDot,
   Users,
   X,
@@ -37,6 +39,8 @@ import { Button } from "@/components/ui/button";
 import { EclipseMark } from "@/components/EclipseMark";
 import { fetchTemplateRequests, updateTemplateRequestStatus, type TemplateRequest } from "@/lib/templateRequests";
 import { whatsappUrl } from "@/lib/whatsapp";
+import { getPublicSiteUrl } from "@/lib/publicUrl";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -189,6 +193,25 @@ function AdminPage() {
     navigate({ to: "/auth", replace: true });
   }
 
+  async function handleDeleteEvent(event: EventRow) {
+    const title = eventTitle(event);
+    if (!window.confirm("Tem a certeza de que pretende apagar o projeto “" + title + "”? Esta acção é permanente.")) return;
+    const { error } = await supabase.from("events").delete().eq("id", event.id);
+    if (error) {
+      toast.error("Não foi possível apagar o projeto. Verifique as permissões e tente novamente.");
+      return;
+    }
+    toast.success("Projeto apagado.");
+    if (mode.kind === "form" && mode.event?.id === event.id) setMode({ kind: "dashboard" });
+    await queryClient.invalidateQueries({ queryKey: ["admin-events"] });
+  }
+
+  async function handleRejectTemplateRequest(request: TemplateRequest) {
+    if (!window.confirm("Recusar o pedido de modelo “" + request.template_label + "” de " + request.couple_name + "?")) return;
+    await updateTemplateRequestStatus(request.id, "cancelled");
+    toast.success("Pedido recusado.");
+    await queryClient.invalidateQueries({ queryKey: ["admin-template-requests"] });
+  }
   function openEvent(event: EventRow, section = "dados") {
     setActiveSection(section);
     setMode({ kind: "form", event, eventType: event.event_type });
@@ -326,7 +349,7 @@ function AdminPage() {
                   {adminTheme === "dark" ? "☀️" : "🌙"}
                   <span className="hidden sm:inline">{adminTheme === "dark" ? "Claro" : "Escuro"}</span>
                 </button>
-                <a href="/" target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
+                <a href={getPublicSiteUrl()} target="_blank" rel="noreferrer" className="hidden rounded-full px-3 py-2 text-xs text-black/50 hover:bg-black/[0.04] sm:inline-flex">
                   Ver site
                 </a>
                 <Button
@@ -356,6 +379,8 @@ function AdminPage() {
                 now={now}
                 onNew={() => setMode({ kind: "choose-type" })}
                 onOpen={openEvent}
+                onDeleteEvent={handleDeleteEvent}
+                onRejectTemplateRequest={handleRejectTemplateRequest}
                 onOpenTemplateRequest={async (request) => {
                   setSelectedTemplateRequest(request);
                   setActiveSection("dados");
@@ -431,6 +456,8 @@ function Dashboard({
   now,
   onNew,
   onOpen,
+  onDeleteEvent,
+  onRejectTemplateRequest,
   onOpenTemplateRequest,
 }: {
   events: EventRow[];
@@ -441,6 +468,8 @@ function Dashboard({
   now: Date;
   onNew: () => void;
   onOpen: (event: EventRow, section?: string) => void;
+  onDeleteEvent: (event: EventRow) => void;
+  onRejectTemplateRequest: (request: TemplateRequest) => void;
   onOpenTemplateRequest: (request: TemplateRequest) => void;
 }) {
   const [messageIndex, setMessageIndex] = useState(0);
@@ -524,6 +553,9 @@ function Dashboard({
                     <span className="font-medium">{request.couple_name}</span>
                     <span className="rounded-full bg-black/[0.04] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]">{request.template_label}</span>
                     {request.status === "new" && <span className="rounded-full bg-[#C9A84C] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">Novo</span>}
+                    {request.status === "in_progress" && <span className="rounded-full bg-blue-100 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-blue-700">Em andamento</span>}
+                    {request.status === "completed" && <span className="rounded-full bg-emerald-100 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-emerald-700">Concluído</span>}
+                    {request.status === "cancelled" && <span className="rounded-full bg-red-100 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-red-700">Recusado</span>}
                   </div>
                   <p className="mt-1 text-xs text-black/45">{request.phone} · {request.wedding_date || "Data por definir"} · {formatAdminDateTime(request.created_at)}</p>
                 </button>
@@ -531,9 +563,14 @@ function Dashboard({
                   <a href={whatsappUrl(message, request.phone)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-[#25D366]/30 bg-[#25D366]/10 px-3.5 py-2 text-xs font-medium text-[#168a44] transition hover:bg-[#25D366]/15">
                     <MessageCircle className="size-3.5" /> WhatsApp
                   </a>
-                  <button type="button" onClick={() => onOpenTemplateRequest(request)} className="inline-flex items-center gap-1 rounded-full bg-black px-4 py-2 text-xs font-medium text-white">
-                    Abrir <ChevronRight className="size-3.5" />
-                  </button>
+                  {request.status !== "cancelled" && request.status !== "completed" && (
+  <button type="button" onClick={() => onRejectTemplateRequest(request)} className="inline-flex items-center gap-1 rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-700 transition hover:bg-red-100">
+    <Ban className="size-3.5" /> Recusar
+  </button>
+)}
+<button type="button" onClick={() => onOpenTemplateRequest(request)} className="inline-flex items-center gap-1 rounded-full bg-black px-4 py-2 text-xs font-medium text-white">
+  Abrir <ChevronRight className="size-3.5" />
+</button>
                 </div>
               </article>
             );
@@ -576,12 +613,15 @@ function Dashboard({
                 </div>
                 <div className="flex flex-wrap gap-2 sm:justify-end">
                   <Button asChild size="sm" variant="outline" className="rounded-full">
-                    <a href={`/${encodeURIComponent(event.slug)}/home`} target="_blank" rel="noreferrer">
-                      <ExternalLink className="mr-1.5 size-3.5" /> Abrir
+                    <a href={getPublicSiteUrl() + "/" + encodeURIComponent(event.slug)} target="_blank" rel="noreferrer">
+                      <ExternalLink className="mr-1.5 size-3.5" /> Abrir convite
                     </a>
                   </Button>
                   <Button size="sm" className="rounded-full bg-black text-white hover:bg-black/85" onClick={() => onOpen(event)}>
                     Editar <ChevronRight className="ml-1 size-3.5" />
+                  </Button>
+                  <Button size="sm" variant="outline" className="rounded-full border-red-200 text-red-700 hover:bg-red-50" onClick={() => onDeleteEvent(event)}>
+                    <Trash2 className="mr-1.5 size-3.5" /> Apagar
                   </Button>
                 </div>
               </article>

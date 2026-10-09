@@ -30,6 +30,7 @@ import { SectionVines, VineDivider } from "@/components/invite/Vines";
 import { Reveal } from "@/components/invite/Reveal";
 import { EventSeals } from "@/components/invite/InvitationSeal";
 import { TemplateAtmosphere } from "@/components/invite/TemplateAtmosphere";
+import { EclipseMark } from "@/components/EclipseMark";
 import { getTemplateDefinition, getTemplateUsesSignatureBase, templateBaseClass, templateToneClass, templateVisualClass } from "@/lib/templates";
 import { templateFlowClass } from "@/lib/templateChoreography";
 import { AquarelaHome } from "@/components/invite/templates/aquarela-botanica/Home";
@@ -49,6 +50,10 @@ export const Route = createFileRoute("/$slug/home")({
 });
 
 type GalleryImage = { url: string; caption: string | null; mediaType: string };
+
+const DEMO_COVER_IMAGE = "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90";
+const DEMO_BRIDE_IMAGE = "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=900&q=85";
+const DEMO_GROOM_IMAGE = "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=85";
 
 function GalleryCarousel({
   items,
@@ -1058,7 +1063,7 @@ function HomePage() {
   useEffect(() => {
     if (!event) return;
     signedUrl(AUDIO_BUCKET, event.music_path).then(setMusic);
-    signedUrl(GALLERY_BUCKET, event.cover_image_path).then(setCover);
+    signedUrl(GALLERY_BUCKET, event.cover_image_path).then((url) => setCover(url ?? DEMO_COVER_IMAGE));
   }, [event]);
 
   useEffect(() => {
@@ -1376,7 +1381,7 @@ function HomePage() {
                     : "",
                   photo: slotMedia["bride"]?.url
                     ? { url: slotMedia["bride"]?.url, caption: null, mediaType: "image" }
-                    : galleryUrls[0],
+                    : galleryUrls[0] ?? { url: DEMO_BRIDE_IMAGE, caption: "Fotografia ilustrativa", mediaType: "image" },
                 },
                 {
                   role: "O Noivo",
@@ -1386,7 +1391,7 @@ function HomePage() {
                     : "",
                   photo: slotMedia["groom"]?.url
                     ? { url: slotMedia["groom"]?.url, caption: null, mediaType: "image" }
-                    : galleryUrls[1],
+                    : galleryUrls[1] ?? { url: DEMO_GROOM_IMAGE, caption: "Fotografia ilustrativa", mediaType: "image" },
                 },
               ].map((p, i) => (
                 <Reveal key={p.role} delay={i * 100}>
@@ -1734,18 +1739,25 @@ function HomePage() {
         </section>
       )}
 
-      <footer className="section-dark relative mt-16 overflow-hidden border-t border-gold/25 px-6 pt-14 pb-10 text-center">
-        <FlourishFrame size={80} />
+      <footer className="section-dark relative mt-16 overflow-hidden border-t border-gold/25 px-6 pt-12 pb-10 text-center">
         <Ornament />
-        <p className="mt-6 font-sans text-xs tracking-[0.25em] text-muted-foreground uppercase">
+        <EclipseMark className="mx-auto mt-6 size-9 text-primary" />
+        <p className="mt-4 font-sans text-[10px] tracking-[0.25em] text-muted-foreground uppercase">
           Convite criado com ♡ por
         </p>
-        <p className="mt-2 text-lg font-light tracking-[0.2em] text-primary">Solar Eclipse</p>
+        <p className="mt-2 text-xl font-light tracking-[0.2em] text-primary">Solar Eclipse</p>
+        <p className="mx-auto mt-4 max-w-xl font-sans text-sm leading-6 text-muted-foreground">
+          Convites digitais elegantes, personalizados para celebrar histórias e aproximar família e amigos.
+        </p>
+        <div className="mt-5 flex flex-col items-center justify-center gap-3 font-sans text-xs text-muted-foreground sm:flex-row sm:gap-6">
+          <a href="mailto:5olareclips353@gmail.com" className="transition-colors hover:text-primary">5olareclips353@gmail.com</a>
+          <a href="https://wa.me/258847404160" target="_blank" rel="noreferrer" className="transition-colors hover:text-primary">WhatsApp: 84 740 4160</a>
+        </div>
         <Link
           to="/$slug"
           params={{ slug }}
           search={{ tipo: inviteType ?? undefined }}
-          className="mt-8 inline-block border-b border-gold/40 pb-1 font-sans text-[0.7rem] tracking-[0.3em] text-primary uppercase transition-colors hover:border-gold"
+          className="mt-7 inline-block border-b border-gold/40 pb-1 font-sans text-[0.7rem] tracking-[0.3em] text-primary uppercase transition-colors hover:border-gold"
         >
           Voltar à capa
         </Link>
