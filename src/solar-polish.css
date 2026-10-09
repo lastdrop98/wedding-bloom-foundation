@@ -4186,6 +4186,10 @@ main[class*="template-"] :is(.star,.sparkle,.spark,.stars,.sparkles) {
 .solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-black, [class*="bg-[#111"], [class*="bg-[#1"]) {
   color: #fff !important;
 }
+.solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-black, [class*="bg-[#111"], [class*="bg-[#1"]) :is(.text-white, .text-white\/80, .text-white\/70, .text-white\/60, .text-white\/50, .text-white\/45, .text-white\/40),
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button, a).bg-black:is(.text-white, .text-white\/80, .text-white\/70, .text-white\/60, .text-white\/50, .text-white\/45, .text-white\/40) {
+  color: #fff !important;
+}
 .solar-admin-shell.admin-theme-light .admin-workspace :is(.bg-white, .bg-background, .bg-card, .bg-popover) .text-muted-foreground {
   color: #595650 !important;
 }
