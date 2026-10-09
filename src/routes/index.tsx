@@ -36,23 +36,7 @@ const features = [
 ];
 
 const HOME_FEATURED_VALUES = ["limintso-premium", "premium-emerald", "limintso-emerald", "ceremony-editorial"];
-const HOME_CAROUSEL_VALUES = [
-  "limintso-premium",
-  "premium-emerald",
-  "limintso-emerald",
-  "limintso-rose",
-  "limintso-ivory",
-  "limintso-sapphire",
-  "limintso-black",
-  "limintso-forest",
-  "limintso-mozambique",
-  "ceremony-editorial",
-  "cinema-love-story",
-  "heritage-ceremony",
-  "pearl-ceremony",
-  "mozambique-luxe",
-  "diamond-signature",
-];
+const HOME_CAROUSEL_VALUES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 const HOME_TEMPLATE_IMAGES = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85",
