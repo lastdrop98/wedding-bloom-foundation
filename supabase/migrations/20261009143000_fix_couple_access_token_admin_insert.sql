@@ -11,6 +11,11 @@ CREATE POLICY "admins insert couple access tokens"
   TO authenticated
   WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
 
+-- Older installations used a restrictive slot check and a unique event/slot constraint.
+-- The current editor supports repeatable gallery media and additional semantic slots.
+ALTER TABLE public.event_media DROP CONSTRAINT IF EXISTS event_media_slot_check;
+ALTER TABLE public.event_media DROP CONSTRAINT IF EXISTS event_media_event_slot_unique;
+
 -- Repair older events if a previous migration was only partially applied.
 INSERT INTO public.couple_access_tokens (event_id)
 SELECT e.id
