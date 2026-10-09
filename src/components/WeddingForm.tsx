@@ -254,7 +254,7 @@ function createDemoDefaults(): Record<string, string> {
     seal_one_text: "A nossa união",
     seal_two_text: "Com a bênção das famílias",
     seal_one_label: "Ana & Miguel",
-    seal_two_label: "24 · 10 · ${year}",
+    seal_two_label: `24 · 10 · ${year}`,
     seal_one_color: "#C9A84C",
     seal_two_color: "#1E1A10",
   };
@@ -525,6 +525,11 @@ export function WeddingForm({
 
   return (
     <form onSubmit={save} className="space-y-10">
+      {!event && (
+        <div role="status" className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm leading-6">
+          Os campos estão preenchidos com dados fictícios de demonstração. Substitua nomes, contactos, pagamentos e restantes informações antes de publicar o convite.
+        </div>
+      )}
       {GROUPS.map((group) => (
         <fieldset key={group.title} className="space-y-4">
           <legend className="eyebrow">{group.title}</legend>
