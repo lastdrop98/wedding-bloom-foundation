@@ -40,7 +40,7 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const navigate = useNavigate();
   const { motivo } = Route.useSearch();
-  const { user, isAdmin, loading } = useIsAdmin();
+  const { user, isAdmin, loading, error } = useIsAdmin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -85,6 +85,26 @@ function AuthPage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#f5f5f7]" aria-busy="true">
         <p role="status" className="text-sm text-black/50">A verificar sessão…</p>
+      </main>
+    );
+  }
+
+  if (!loading && error) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#f5f5f7] px-5">
+        <div className="w-full max-w-md rounded-[30px] border border-amber-900/10 bg-white p-8 text-center shadow-[0_20px_70px_rgba(0,0,0,.08)]">
+          <div className="mx-auto flex size-11 items-center justify-center rounded-full bg-amber-50 text-amber-800">
+            <LockKeyhole className="size-4" />
+          </div>
+          <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">Solar Eclipse</p>
+          <h1 className="mt-3 text-3xl font-semibold tracking-[-0.05em]">Verificação temporariamente indisponível.</h1>
+          <p role="alert" className="mt-4 text-sm leading-6 text-black/60">{error}</p>
+          <p className="mt-2 text-xs leading-5 text-black/40">Por segurança, o acesso administrativo permanece bloqueado até ser possível confirmar as permissões.</p>
+          <div className="mt-7 flex gap-2">
+            <Button variant="outline" className="flex-1 rounded-full" onClick={handleSignOut}>Terminar sessão</Button>
+            <Button asChild className="flex-1 rounded-full bg-black text-white hover:bg-black/85"><Link to="/">Início</Link></Button>
+          </div>
+        </div>
       </main>
     );
   }

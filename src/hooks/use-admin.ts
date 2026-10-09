@@ -6,6 +6,7 @@ export function useIsAdmin() {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -15,27 +16,67 @@ export function useIsAdmin() {
         if (!active) return;
         setUser(null);
         setIsAdmin(false);
+        setError(null);
         setLoading(false);
         return;
       }
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", currentUser.id)
-        .eq("role", "admin")
-        .maybeSingle();
-      if (!active) return;
-      setUser(currentUser);
-      setIsAdmin(Boolean(data));
-      setLoading(false);
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const { data, error: roleError } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", currentUser.id)
+          .eq("role", "admin")
+          .maybeSingle();
+
+        if (!active) return;
+        setUser(currentUser);
+
+        if (roleError) {
+          // A failed role lookup is not the same as a confirmed non-admin account.
+          setIsAdmin(false);
+          setError("Não foi possível confirmar as permissões de administrador. Tente novamente.");
+          return;
+        }
+
+        setIsAdmin(Boolean(data));
+      } catch {
+        if (!active) return;
+        setUser(currentUser);
+        setIsAdmin(false);
+        setError("Não foi possível confirmar as permissões de administrador. Tente novamente.");
+      } finally {
+        if (active) setLoading(false);
+      }
     }
 
-    supabase.auth.getUser().then(({ data }) => load(data.user ?? null));
+    supabase.auth
+      .getUser()
+      .then(({ data, error: authError }) => {
+        if (authError) {
+          if (!active) return;
+          setUser(null);
+          setIsAdmin(false);
+          setError("Não foi possível verificar a sessão. Inicie sessão novamente.");
+          setLoading(false);
+          return;
+        }
+        return load(data.user ?? null);
+      })
+      .catch(() => {
+        if (!active) return;
+        setUser(null);
+        setIsAdmin(false);
+        setError("Não foi possível verificar a sessão. Inicie sessão novamente.");
+        setLoading(false);
+      });
 
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "USER_UPDATED") {
-        setLoading(true);
-        load(session?.user ?? null);
+        void load(session?.user ?? null);
       }
     });
 
@@ -45,5 +86,5 @@ export function useIsAdmin() {
     };
   }, []);
 
-  return { user, isAdmin, loading };
+  return { user, isAdmin, loading, error };
 }
