@@ -8,8 +8,12 @@ import { GiftQr } from "@/components/invite/GiftQr";
 import { Guestbook } from "@/components/invite/Guestbook";
 import { detail, eventTitle, formatDatePt, mapsUrl, type EventRow } from "@/lib/event";
 import { getTemplateVisualFamily } from "@/lib/templates";
+import { EclipseMark } from "@/components/EclipseMark";
 
 type MediaItem = { url: string; mediaType: string };
+
+const DEMO_BRIDE_IMAGE = "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=900&q=85";
+const DEMO_GROOM_IMAGE = "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=85";
 type GalleryItem = { url: string; caption?: string | null; mediaType?: string };
 
 type SignatureContent = {
@@ -265,8 +269,8 @@ export function LimintsoSignatureHome({
         <h2 className="limintso-title">O nosso amor</h2>
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
           {[
-            { label: "Noiva", name: d("bride_name"), parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean), photo: slotMedia["bride"]?.url },
-            { label: "Noivo", name: d("groom_name"), parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean), photo: slotMedia["groom"]?.url },
+            { label: "Noiva", name: d("bride_name"), parents: [d("bride_father_name"), d("bride_mother_name")].filter(Boolean), photo: slotMedia["bride"]?.url ?? DEMO_BRIDE_IMAGE },
+            { label: "Noivo", name: d("groom_name"), parents: [d("groom_father_name"), d("groom_mother_name")].filter(Boolean), photo: slotMedia["groom"]?.url ?? DEMO_GROOM_IMAGE },
           ].map((person) => (
             <article key={person.label} className="limintso-person-card">
               <div className="limintso-person-photo">{person.photo ? <img src={person.photo} alt={person.name || person.label} /> : <div className="size-full bg-muted" />}</div>
@@ -429,9 +433,14 @@ export function LimintsoSignatureHome({
       </section>
 
       <footer className="limintso-footer">
-        <div className="limintso-footer-mark">SE</div>
+        <EclipseMark className="mx-auto size-9 text-primary-foreground" />
         <p className="mt-4 text-[9px] uppercase tracking-[.24em] text-muted-foreground">Convite criado com carinho por</p>
         <p className="mt-2 font-serif text-2xl italic text-primary-foreground">Solar Eclipse</p>
+        <p className="mx-auto mt-4 max-w-xl text-xs leading-6 text-primary-foreground/65">Convites digitais elegantes, personalizados para celebrar histórias e aproximar família e amigos.</p>
+        <div className="mt-4 flex flex-col items-center justify-center gap-3 text-xs text-primary-foreground/70 sm:flex-row sm:gap-6">
+          <a href="mailto:5olareclips353@gmail.com" className="transition hover:text-primary-foreground">5olareclips353@gmail.com</a>
+          <a href="https://wa.me/258847404160" target="_blank" rel="noreferrer" className="transition hover:text-primary-foreground">WhatsApp: 84 740 4160</a>
+        </div>
         <Button type="button" variant="ghost" onClick={() => goTo("capa")} className="mt-6 inline-flex items-center gap-2 rounded-full border border-border/30 px-5 py-2 text-[9px] uppercase tracking-[.18em] text-primary-foreground/70 hover:border-border">Voltar à capa</Button>
       </footer>
 
