@@ -6,6 +6,7 @@ export function useIsAdmin() {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [adminCheckError, setAdminCheckError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -15,27 +16,52 @@ export function useIsAdmin() {
         if (!active) return;
         setUser(null);
         setIsAdmin(false);
+        setAdminCheckError(null);
         setLoading(false);
         return;
       }
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", currentUser.id)
-        .eq("role", "admin")
-        .maybeSingle();
-      if (!active) return;
-      setUser(currentUser);
-      setIsAdmin(Boolean(data));
-      setLoading(false);
+
+      try {
+        const { data, error } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", currentUser.id)
+          .eq("role", "admin")
+          .maybeSingle();
+
+        if (!active) return;
+        setUser(currentUser);
+        setIsAdmin(!error && Boolean(data));
+        setAdminCheckError(error ? error.message : null);
+      } catch (error) {
+        if (!active) return;
+        setUser(currentUser);
+        setIsAdmin(false);
+        setAdminCheckError(error instanceof Error ? error.message : "Não foi possível verificar o papel de administrador.");
+      } finally {
+        if (active) setLoading(false);
+      }
     }
 
-    supabase.auth.getUser().then(({ data }) => load(data.user ?? null));
+    supabase.auth
+      .getUser()
+      .then(({ data, error }) => {
+        if (error) throw error;
+        return load(data.user ?? null);
+      })
+      .catch((error: unknown) => {
+        if (!active) return;
+        setUser(null);
+        setIsAdmin(false);
+        setAdminCheckError(error instanceof Error ? error.message : "Não foi possível verificar a sessão.");
+        setLoading(false);
+      });
 
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "USER_UPDATED") {
+      if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "USER_UPDATED" || event === "TOKEN_REFRESHED") {
         setLoading(true);
-        load(session?.user ?? null);
+        setAdminCheckError(null);
+        void load(session?.user ?? null);
       }
     });
 
@@ -45,5 +71,5 @@ export function useIsAdmin() {
     };
   }, []);
 
-  return { user, isAdmin, loading };
+  return { user, isAdmin, loading, adminCheckError };
 }
