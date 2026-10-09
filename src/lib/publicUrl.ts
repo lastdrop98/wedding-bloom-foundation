@@ -7,7 +7,7 @@ const DEFAULT_PUBLIC_SITE_URL =
 
 export function getPublicSiteUrl() {
   const configured = import.meta.env.VITE_PUBLIC_SITE_URL?.trim();
-  if (configured) return configured.replace(/\\/+$/, "");
+  if (configured) return configured.replace(/\/+$/, "");
 
   if (typeof window !== "undefined") {
     const hostname = window.location.hostname.toLowerCase();
