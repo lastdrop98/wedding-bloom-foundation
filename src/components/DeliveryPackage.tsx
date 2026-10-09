@@ -10,29 +10,89 @@ import { supabase } from "@/integrations/supabase/client";
 export function DeliveryPackage({ slug }: { slug: string }) {
   const [origin, setOrigin] = useState("");
   const [coupleToken, setCoupleToken] = useState<string | null>(null);
+  const [coupleTokenLoading, setCoupleTokenLoading] = useState(true);
+  const [coupleTokenError, setCoupleTokenError] = useState<string | null>(null);
   const [qrSrc, setQrSrc] = useState<string | null>(null);
   useEffect(() => {
+    let cancelled = false;
     setOrigin(window.location.origin);
+    setCoupleTokenLoading(true);
+    setCoupleTokenError(null);
+
     void supabase
       .from("events")
       .select("id")
       .eq("slug", slug)
       .maybeSingle()
-      .then(async ({ data }) => {
-        if (!data?.id) return;
-        const { data: token } = await looseDb
+      .then(async ({ data, error: eventError }) => {
+        if (cancelled) return;
+        if (eventError || !data?.id) {
+          setCoupleTokenError("Não foi possível localizar este evento para preparar o acesso privado.");
+          setCoupleTokenLoading(false);
+          return;
+        }
+
+        const { data: existing, error: readError } = await looseDb
           .from("couple_access_tokens")
           .select("token")
           .eq("event_id", data.id)
           .maybeSingle();
-        setCoupleToken(token?.token ?? null);
+
+        if (cancelled) return;
+        if (existing?.token) {
+          setCoupleToken(existing.token);
+          setCoupleTokenLoading(false);
+          return;
+        }
+
+        // Older events may not yet have a private token. Create one from the authenticated
+        // admin workspace; if the database rejects this, never fall back to an unprotected URL.
+        const generatedToken = crypto.randomUUID().replaceAll("-", "");
+        const { data: created, error: createError } = await looseDb
+          .from("couple_access_tokens")
+          .insert({ event_id: data.id, token: generatedToken })
+          .select("token")
+          .single();
+
+        if (cancelled) return;
+        if (created?.token) {
+          setCoupleToken(created.token);
+          setCoupleTokenLoading(false);
+          return;
+        }
+
+        // Another tab may have created the token at the same time; reuse it if present.
+        const { data: retry } = await looseDb
+          .from("couple_access_tokens")
+          .select("token")
+          .eq("event_id", data.id)
+          .maybeSingle();
+
+        if (cancelled) return;
+        if (retry?.token) {
+          setCoupleToken(retry.token);
+        } else {
+          setCoupleTokenError(
+            readError || createError
+              ? "O acesso privado não pôde ser preparado. Verifique as permissões da tabela de acesso no Supabase."
+              : "Não foi possível gerar o link privado deste casal.",
+          );
+        }
+        setCoupleTokenLoading(false);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setCoupleTokenError("Ocorreu um erro ao preparar o acesso privado.");
+        setCoupleTokenLoading(false);
       });
+
+    return () => { cancelled = true; };
   }, [slug]);
 
   const inviteLink = `${origin}/${slug}`;
   const couplePanelLink = coupleToken
     ? `${origin}/${slug}/confirmacoes?acesso=${encodeURIComponent(coupleToken)}`
-    : `${origin}/${slug}/confirmacoes`;
+    : null;
 
   useEffect(() => {
     if (!origin) return;
@@ -161,18 +221,26 @@ export function DeliveryPackage({ slug }: { slug: string }) {
               </Button>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={couplePanelLink} target="_blank" rel="noreferrer">
-                Painel do Casal
-              </a>
-            </Button>
-            <Button type="button" variant="outline" size="sm" onClick={() => void copy(couplePanelLink, "Link privado do casal copiado.")}>
-              Copiar link privado
-            </Button>
-          </div>
+          {couplePanelLink ? (
+            <div className="flex flex-wrap gap-2">
+              <Button asChild variant="outline" size="sm">
+                <a href={couplePanelLink} target="_blank" rel="noreferrer">
+                  Painel do Casal
+                </a>
+              </Button>
+              <Button type="button" variant="outline" size="sm" onClick={() => void copy(couplePanelLink, "Link privado do casal copiado.")}>
+                Copiar link privado
+              </Button>
+            </div>
+          ) : (
+            <p role={coupleTokenError ? "alert" : "status"} className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs leading-5">
+              {coupleTokenLoading
+                ? "A preparar o acesso privado do casal…"
+                : coupleTokenError ?? "O link privado ainda não está disponível."}
+            </p>
+          )}
           <p className="text-xs text-muted-foreground">
-            O Painel do Casal usa um link privado único; partilhe-o apenas com o casal.
+            O painel só é partilhado quando existe um token privado válido. Não é criado um link público para as confirmações.
           </p>
         </div>
       </div>
