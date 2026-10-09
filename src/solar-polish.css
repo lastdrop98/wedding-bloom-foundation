@@ -4192,3 +4192,45 @@ main[class*="template-"] :is(.star,.sparkle,.spark,.stars,.sparkles) {
 .solar-admin-shell.admin-theme-dark .admin-workspace :is(.bg-white, .bg-background, .bg-card, .bg-popover) .text-muted-foreground {
   color: #b9b4aa !important;
 }
+
+
+/* Editorial Magazine — its own art direction, not the generic editorial palette. */
+.template-visual-magazine {
+  --magazine-paper: #eeeae2;
+  --magazine-ink: #191816;
+  --magazine-rule: rgba(25,24,22,.18);
+}
+main.template-visual-magazine {
+  background: var(--magazine-paper) !important;
+  color: var(--magazine-ink) !important;
+}
+main.template-visual-magazine .limintso-signature {
+  background: var(--magazine-paper) !important;
+  color: var(--magazine-ink) !important;
+}
+main.template-visual-magazine .limintso-cover-card {
+  border-radius: 0 !important;
+  border-color: var(--magazine-rule) !important;
+  box-shadow: none !important;
+}
+main.template-visual-magazine .limintso-section {
+  border-radius: 0 !important;
+}
+main.template-visual-magazine .limintso-person-card,
+main.template-visual-magazine .limintso-paper-card,
+main.template-visual-magazine .limintso-location-card,
+main.template-visual-magazine .limintso-schedule-card {
+  border-radius: 0 !important;
+  border-color: var(--magazine-rule) !important;
+  box-shadow: none !important;
+}
+main.template-visual-magazine .limintso-person-photo,
+main.template-visual-magazine .limintso-cover-media {
+  border-radius: 0 !important;
+  aspect-ratio: 4 / 5;
+}
+@media (max-width: 640px) {
+  main.template-visual-magazine .limintso-section {
+    padding-inline: 1rem;
+  }
+}
