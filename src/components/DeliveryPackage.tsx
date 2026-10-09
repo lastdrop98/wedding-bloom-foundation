@@ -6,6 +6,7 @@ import { MessageCircle, Share2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { getPublicSiteUrl } from "@/lib/publicUrl";
 
 export function DeliveryPackage({ slug }: { slug: string }) {
   const [origin, setOrigin] = useState("");
@@ -15,7 +16,7 @@ export function DeliveryPackage({ slug }: { slug: string }) {
   const [qrSrc, setQrSrc] = useState<string | null>(null);
   useEffect(() => {
     let cancelled = false;
-    setOrigin(window.location.origin);
+    setOrigin(getPublicSiteUrl());
     setCoupleTokenLoading(true);
     setCoupleTokenError(null);
 
