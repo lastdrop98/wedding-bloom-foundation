@@ -18,12 +18,12 @@ type SignatureContent = {
 };
 
 type Props = {
-  preview?: boolean;
+  preview?: boolean | undefined;
   event: EventRow;
-  inviteType?: "individual" | "casal" | null;
-  content?: SignatureContent | null;
-  cover?: string | null;
-  music?: string | null;
+  inviteType?: "individual" | "casal" | null | undefined;
+  content?: SignatureContent | null | undefined;
+  cover?: string | null | undefined;
+  music?: string | null | undefined;
   slotMedia: Record<string, MediaItem>;
   galleryUrls: GalleryItem[];
   galleryMediaUrls: GalleryItem[];
@@ -126,7 +126,7 @@ export function LimintsoSignatureHome({
   async function submitRsvp(e: React.FormEvent) {
     e.preventDefault();
     if (rsvpBusy || rsvpSent) return;
-    if (!rsvp.name.trim()) return toast.error("Indique o seu nome.");
+    if (!rsvp.name.trim()) { toast.error("Indique o seu nome."); return; }
     if (preview) { setRsvpSent(true); return; }
     setRsvpBusy(true);
     const { error } = await supabase.from("rsvps").insert({
@@ -167,7 +167,7 @@ export function LimintsoSignatureHome({
     <div className="signature-empty-cover" />
   );
 
-  const family = getTemplateVisualFamily(event.template);
+  const family: string = getTemplateVisualFamily(event.template);
   const structureClass =
     event.template.startsWith("limintso-") || event.template === "premium-emerald" || event.template === "diamond-signature"
       ? "signature-structure-cards"

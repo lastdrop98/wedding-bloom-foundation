@@ -112,8 +112,9 @@ function SignatureCatalogPreview({ template }: { template: TemplateDefinition })
 }
 
 function InvitationPreview({ template }: { template: TemplateDefinition }) {
-  const family = previewFamily(template);
-  if (family === "limintso") return <SignatureCatalogPreview template={template} />;
+  const resolvedFamily = previewFamily(template);
+  if (resolvedFamily === "limintso") return <SignatureCatalogPreview template={template} />;
+  const family = resolvedFamily as PreviewFamily;
   const style = previewStyles[family];
   const direction = getTemplateDirection(template);
 

@@ -92,7 +92,7 @@ function TemplatePreviewPage() {
     "pearl-editorial": 2,
     limintso: 8,
   } as const;
-  const previewVariant = isLimintsoEmerald ? 8 : (previewVariantByFamily[visualFamily] ?? 0);
+  const previewVariant = isLimintsoEmerald ? 8 : ((previewVariantByFamily as Record<string, number>)[visualFamily] ?? 0);
   async function request() {
     if (busy) return;
     if (!name.trim()) {

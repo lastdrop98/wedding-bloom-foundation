@@ -176,7 +176,7 @@ export function TemplatePicker({
                 className={`relative h-36 overflow-hidden ${templateVisualClass(item.value)} bg-gradient-to-br ${SWATCHES[item.tone]}`}
               >
                 <img
-                  src={PREVIEW_IMAGES[getTemplateVisualFamily(item.value)] ?? PREVIEW_IMAGES.classic}
+                  src={PREVIEW_IMAGES[getTemplateVisualFamily(item.value)] ?? PREVIEW_IMAGES["classic"]}
                   alt=""
                   aria-hidden="true"
                   className="absolute inset-0 size-full object-cover opacity-55 transition duration-500 group-hover:scale-105 group-hover:opacity-70"
@@ -203,7 +203,7 @@ export function TemplatePicker({
     <div className="absolute inset-x-4 top-3 h-5 border-b border-[#c9ab68]/45" />
     <div className="absolute inset-x-5 top-8 bottom-3 rounded-xl border border-[#c9ab68]/35 bg-white shadow-sm" />
     <div className="absolute inset-x-9 top-12 bottom-7 overflow-hidden rounded-lg">
-      <img src={PREVIEW_IMAGES.pearl} alt="" className="size-full object-cover opacity-85" />
+      <img src={PREVIEW_IMAGES["pearl"]} alt="" className="size-full object-cover opacity-85" />
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-2 pb-2 pt-7 text-center text-white">
         <span className="block text-[5px] uppercase tracking-[.2em]">A união matrimonial de</span>
         <strong className="block font-serif text-lg">A&amp;M</strong>
@@ -219,7 +219,7 @@ export function TemplatePicker({
     <div className="absolute inset-x-4 top-3 h-5 border-b border-[#c9ab68]/45" />
     <div className="absolute inset-x-5 top-8 bottom-3 rounded-xl border border-[#c9ab68]/35 bg-white shadow-sm" />
     <div className="absolute inset-x-9 top-12 bottom-7 overflow-hidden rounded-lg">
-      <img src={PREVIEW_IMAGES.pearl} alt="" className="size-full object-cover opacity-85" />
+      <img src={PREVIEW_IMAGES["pearl"]} alt="" className="size-full object-cover opacity-85" />
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-2 pb-2 pt-6 text-center text-white">
         <span className="block text-[5px] uppercase tracking-[.2em]">A união matrimonial de</span>
         <strong className="block font-serif text-lg">A&amp;M</strong>

@@ -13,8 +13,20 @@ import { Label } from "@/components/ui/label";
 const IMAGE =
   "https://images.unsplash.com/photo-1519741497674-611481863552?fm=jpg&q=85&w=1800&auto=format&fit=crop";
 
+type AuthReason = "entrar" | "expirada" | "permissao" | "erro";
+const REASON_TEXT: Record<AuthReason, string> = {
+  entrar: "Inicie sessão para aceder à área de administração.",
+  expirada: "A sua sessão expirou. Entre novamente para continuar.",
+  permissao: "Esta conta não tem permissões de administrador.",
+  erro: "Não foi possível verificar as permissões. Verifique a ligação e tente novamente.",
+};
+
 export const Route = createFileRoute("/auth")({
   ssr: false,
+  validateSearch: (search: Record<string, unknown>): { motivo?: AuthReason } => {
+    const m = search["motivo"];
+    return m === "entrar" || m === "expirada" || m === "permissao" || m === "erro" ? { motivo: m } : {};
+  },
   head: () => ({
     meta: [
       { title: "Entrar — Solar Eclipse" },
@@ -27,6 +39,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { motivo } = Route.useSearch();
   const { user, isAdmin, loading } = useIsAdmin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +63,14 @@ function AuthPage() {
           });
     setBusy(false);
     if (result.error) {
-      toast.error(result.error.message);
+      const msg = result.error.message;
+      toast.error(
+        /invalid login credentials/i.test(msg)
+          ? "Email ou palavra-passe incorretos."
+          : /email not confirmed/i.test(msg)
+            ? "Confirme o seu email antes de entrar."
+            : msg,
+      );
       return;
     }
     toast.success(mode === "login" ? "Sessão iniciada" : "Conta criada");
@@ -59,6 +79,14 @@ function AuthPage() {
   async function handleSignOut() {
     await supabase.auth.signOut();
     toast.success("Sessão terminada");
+  }
+
+  if (loading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#f5f5f7]" aria-busy="true">
+        <p role="status" className="text-sm text-black/50">A verificar sessão…</p>
+      </main>
+    );
   }
 
   if (!loading && user && !isAdmin) {
@@ -114,6 +142,12 @@ function AuthPage() {
               {mode === "login" ? "Entre para gerir os seus eventos." : "Crie a conta que será usada para entrar no workspace."}
             </p>
           </div>
+
+          {motivo && (
+            <p role="alert" className="mt-8 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-black/70">
+              {REASON_TEXT[motivo]}
+            </p>
+          )}
 
           <form onSubmit={handleSubmit} className="mt-10 space-y-5">
             <div className="space-y-2">
