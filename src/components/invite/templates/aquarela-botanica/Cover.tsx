@@ -62,7 +62,7 @@ export function AquarelaCover({
             className="ken-burns h-full w-full object-cover will-change-transform"
           />
         ) : (
-          <div className="h-full w-full bg-[radial-gradient(120%_100%_at_50%_0%,oklch(0.98_0.02_20)_0%,oklch(0.95_0.03_150)_55%,oklch(0.99_0.01_60)_100%)]" />
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90" alt="" className="h-full w-full object-cover" />
         )}
         <div className="veil-rose absolute inset-0" />
       </div>
