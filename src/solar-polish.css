@@ -4238,3 +4238,54 @@ main.template-visual-magazine .limintso-cover-media {
     padding-inline: 1rem;
   }
 }
+
+
+/* Solar Eclipse accessibility pass: predictable contrast in the desktop UI.
+   Invitation previews keep their own scoped palettes; these rules target shared
+   controls and the admin workspace only. */
+:root {
+  --primary: oklch(0.43 0.095 70);
+  --primary-foreground: oklch(0.99 0.005 90);
+  --muted-foreground: oklch(0.43 0.018 70);
+  --ring: oklch(0.48 0.09 75);
+}
+.dark {
+  --primary: oklch(0.78 0.09 82);
+  --primary-foreground: oklch(0.18 0.015 70);
+  --muted-foreground: oklch(0.78 0.018 82);
+  --ring: oklch(0.78 0.09 82);
+}
+:where(button, [role="button"], a):focus-visible,
+:where(input, textarea, select):focus-visible {
+  outline: 3px solid var(--ring, #9a7628) !important;
+  outline-offset: 2px;
+}
+:where(button, [role="button"]):disabled,
+:where(button, [role="button"])[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: .72;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button, [role="button"], a[class*="bg-primary"]) {
+  text-shadow: none;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace button[class*="bg-primary"],
+.solar-admin-shell.admin-theme-light .admin-workspace a[class*="bg-primary"] {
+  background-color: #72501a !important;
+  color: #fff !important;
+  border-color: #72501a !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace button[class*="bg-primary"],
+.solar-admin-shell.admin-theme-dark .admin-workspace a[class*="bg-primary"] {
+  background-color: #e5c778 !important;
+  color: #201b11 !important;
+  border-color: #e5c778 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(button, [role="button"]) {
+  text-shadow: none;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(input, textarea, select) {
+  color-scheme: dark;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input, textarea, select) {
+  color-scheme: light;
+}
