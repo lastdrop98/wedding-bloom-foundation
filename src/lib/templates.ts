@@ -653,17 +653,72 @@ const TEMPLATE_CATALOG: TemplateDefinition[] = [
   },
 ];
 
-// One canonical catalogue is shared by the admin and public Models page.
-// Keep the first definition for each stable template ID to avoid duplicate cards.
+// The public catalogue and admin picker intentionally use the same curated list.
+// Legacy definitions remain in TEMPLATE_CATALOG so existing invitations keep their
+// original visual metadata even when a redundant option is no longer offered.
+const UNIQUE_VISIBLE_TEMPLATE_VALUES = new Set([
+  "golden-classic",
+  "classic-ivory",
+  "emerald-elegante",
+  "minimalist-brown",
+  "minimalist-burgundy",
+  "minimalist-lavender",
+  "minimalist-black",
+  "midnight-blue",
+  "sapphire-editorial",
+  "cinematic-charcoal",
+  "baroque-gold",
+  "royal-emerald",
+  "royal-burgundy",
+  "romantic-rose",
+  "romantic-champagne",
+  "garden-green",
+  "garden-ivory",
+  "boho-sand",
+  "vintage-cream",
+  "mediterranean-blue",
+  "sicilian-terracotta",
+  "oriental-red",
+  "nikah-emerald",
+  "tropical-green",
+  "floral-pearl",
+  "african-heritage",
+  "xiguiane-tradicional",
+  "film-noir-motion",
+  "editorial-magazine",
+  "pearl-garden",
+  "capulana-contemporary",
+  "celestial-ivory",
+  "coastal-blue",
+  "ceremony-editorial",
+  "portrait-ceremony",
+  "garden-letter",
+  "cinema-love-story",
+  "heritage-ceremony",
+  "pearl-ceremony",
+  "aquarela-botanica",
+  "editorial-cinema",
+  "ivory-portrait",
+  "modern-olive",
+  "rose-atelier",
+  "mozambique-luxe",
+  "sunset-destination",
+  "black-paper",
+  "diamond-signature",
+  "pearl-editorial",
+  "limintso-rose",
+  "limintso-sapphire",
+  "limintso-mozambique",
+]);
 const seenTemplateValues = new Set<string>();
 export const TEMPLATE_OPTIONS: TemplateDefinition[] = TEMPLATE_CATALOG.filter((template) => {
-  if (seenTemplateValues.has(template.value)) return false;
+  if (!UNIQUE_VISIBLE_TEMPLATE_VALUES.has(template.value) || seenTemplateValues.has(template.value)) return false;
   seenTemplateValues.add(template.value);
   return true;
 });
 
 export function getTemplateDefinition(value?: string | null) {
-  return TEMPLATE_OPTIONS.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!;
+  return TEMPLATE_CATALOG.find((template) => template.value === value) ?? TEMPLATE_OPTIONS[0]!;
 }
 
 export type TemplateLayout =
