@@ -280,30 +280,42 @@ function RsvpForm({
       return;
     }
     setBusy(true);
-    const { error } = await supabase.from("rsvps").insert({
-      event_id: event.id,
-      guest_name: form.guest_name,
-      guest_phone: form.guest_phone || null,
-      attending: form.attending === "sim",
-      guest_count: count,
-      message: form.message || null,
-    });
-    if (!error && guestId) {
-      await supabase
-        .from("guests")
-        .update({ rsvp_status: form.attending === "sim" ? "sim" : "nao" })
-        .eq("id", guestId);
+    try {
+      const { error } = await supabase.from("rsvps").insert({
+        event_id: event.id,
+        guest_name: form.guest_name.trim(),
+        guest_phone: form.guest_phone.trim() || null,
+        attending: form.attending === "sim",
+        guest_count: count,
+        message: form.message.trim() || null,
+      });
+
+      if (error) {
+        toast.error("Não foi possível enviar a confirmação. Verifique a ligação e tente novamente.");
+        return;
+      }
+
+      if (guestId) {
+        const { error: guestError } = await supabase
+          .from("guests")
+          .update({ rsvp_status: form.attending === "sim" ? "sim" : "nao" })
+          .eq("id", guestId);
+        if (guestError) {
+          // The RSVP itself was saved; do not report the whole submission as failed.
+          toast.warning("A confirmação foi enviada, mas o estado do convidado não foi atualizado. Contacte os organizadores se necessário.");
+        }
+      }
+
+      const token = new URLSearchParams(window.location.search).get("g");
+      if (token) window.localStorage.setItem(`solar-rsvp:${event.id}:${token}`, "1");
+      setAlreadySubmitted(true);
+      setDone(true);
+      toast.success("Confirmação enviada. Obrigado!");
+    } catch {
+      toast.error("Ocorreu um erro de ligação ao enviar. Tente novamente.");
+    } finally {
+      setBusy(false);
     }
-    setBusy(false);
-    if (error) {
-      toast.error("Não foi possível enviar a confirmação.");
-      return;
-    }
-    const token = new URLSearchParams(window.location.search).get("g");
-    if (token) window.localStorage.setItem(`solar-rsvp:${event.id}:${token}`, "1");
-    setAlreadySubmitted(true);
-    setDone(true);
-    toast.success("Confirmação enviada. Obrigado!");
   }
 
   if (done || alreadySubmitted) {
