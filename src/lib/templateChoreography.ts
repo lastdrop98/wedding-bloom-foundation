@@ -97,6 +97,7 @@ const FLOW_BY_VALUE: Record<string, TemplateFlow> = {
   "heritage-ceremony": "heritage",
   "pearl-ceremony": "pearl",
   "limintso-emerald": "limintso",
+  "limintso-premium": "limintso",
   "limintso-rose": "limintso",
   "limintso-ivory": "limintso",
   "limintso-sapphire": "limintso",
