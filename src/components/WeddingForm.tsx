@@ -540,7 +540,7 @@ export function WeddingForm({
               return (
                 <div
                   key={id}
-                  className={f.kind === "textarea" ? "space-y-2 sm:col-span-2" : "space-y-2"}
+                  className={f.kind === "textarea" || f.name === "template" ? "space-y-2 sm:col-span-2" : "space-y-2"}
                 >
                   <Label htmlFor={id}>{f.label}</Label>
                   {f.kind === "textarea" ? (
