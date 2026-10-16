@@ -72,14 +72,14 @@ function HomePage() {
             <EclipseMark className="size-7 text-black" />
             <span>Solar Eclipse</span>
           </a>
-          <nav className="hidden items-center gap-7 text-xs text-black/55 md:flex">
-            <a href="#modelos" className="rounded-full border-2 border-black/35 bg-white px-4 py-2.5 font-medium shadow-[inset_0_0_0_1px_rgba(255,255,255,.7),0_2px_10px_rgba(0,0,0,.05)] transition hover:border-black/45 hover:bg-white hover:shadow-md">Modelos</a>
-            <a href="#experiencia" className="rounded-full border-2 border-black/25 bg-white px-4 py-2.5 font-medium shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/30 hover:bg-white hover:shadow-sm">Experiência</a>
-            <a href="#como-funciona" className="rounded-full border-2 border-black/30 bg-white px-4 py-2.5 shadow-[inset_0_0_0_1px_rgba(255,255,255,.8)] transition hover:border-black/35 hover:bg-white hover:shadow-sm">Como funciona</a>
+          <nav className="hidden items-center gap-7 text-xs text-black md:flex">
+            <a href="#modelos" className="rounded-full border-2 border-black/45 bg-white px-4 py-2.5 font-medium !text-black shadow-[inset_0_0_0_1px_rgba(255,255,255,.7),0_2px_10px_rgba(0,0,0,.05)] transition hover:border-black/60 hover:bg-white hover:shadow-md">Modelos</a>
+            <a href="#experiencia" className="rounded-full border-2 border-black/40 bg-white px-4 py-2.5 font-medium !text-black shadow-[0_1px_0_rgba(0,0,0,.04)] transition hover:border-black/60 hover:bg-white hover:shadow-sm">Experiência</a>
+            <a href="#como-funciona" className="rounded-full border-2 border-black/45 bg-white px-4 py-2.5 !text-black shadow-[inset_0_0_0_1px_rgba(255,255,255,.8)] transition hover:border-black/60 hover:bg-white hover:shadow-sm">Como funciona</a>
             <a
               href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
               onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-4 py-2.5 font-medium text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.08),0_4px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-900"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-4 py-2.5 font-medium !text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.08),0_4px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-900"
             >
               Falar connosco <MessageCircle className="size-3.5" />
             </a>
@@ -89,7 +89,7 @@ function HomePage() {
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((value) => !value)}
-            className="rounded-full border-2 border-black/15 bg-white p-2 shadow-sm md:hidden"
+            className="rounded-full border-2 border-black/30 bg-white p-2 !text-black shadow-sm md:hidden"
           >
             {menuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
@@ -103,7 +103,7 @@ function HomePage() {
               <a
                 href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
                 onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }}
-                className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl border border-black bg-black px-4 py-3 text-white shadow-sm"
+                className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl border border-black bg-black px-4 py-3 !text-white shadow-sm"
               >
                 Falar connosco <MessageCircle className="size-4" />
               </a>
@@ -128,13 +128,13 @@ function HomePage() {
               Convites digitais premium com fotografia, música, confirmação de convidados, presentes e versão para impressão.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <a href="/modelos" className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-8 py-4 text-white shadow-[0_8px_24px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-800">
+              <a href="/modelos" className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-8 py-4 !text-white shadow-[0_8px_24px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-800">
                 Ver modelos <ArrowRight className="size-4" />
               </a>
               <a
                 href={whatsappUrl("Olá! Quero criar o meu convite de casamento com a Solar Eclipse.")}
                 onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero criar o meu convite de casamento com a Solar Eclipse."); }}
-                className="inline-flex items-center gap-2 rounded-full border-2 border-[#C9A84C] bg-white/70 px-8 py-4 transition hover:-translate-y-px hover:bg-[#C9A84C]/10"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-[#9b7b2f] bg-[#fffdf7] px-8 py-4 !text-[#171717] transition hover:-translate-y-px hover:bg-[#f5e9c9]"
               >
                 Criar meu convite <MessageCircle className="size-4" />
               </a>
