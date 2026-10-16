@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, type ErrorComponentProps } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -51,6 +51,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
     ],
   }),
   component: AdminPage,
+  errorComponent: AdminRouteError,
 });
 
 type AdminMessage = {
@@ -793,5 +794,39 @@ function EditorShell({
         )}
       </section>
     </div>
+  );
+}
+
+
+/** Route-level recovery UI: keep admin failures visible instead of a blank screen. */
+function AdminRouteError({ reset }: ErrorComponentProps) {
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-[#111] px-5 py-12 text-[#f5f1e8]">
+      <section className="w-full max-w-lg rounded-3xl border border-white/15 bg-[#1b1b1d] p-8 text-center shadow-2xl">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-full border border-[#d7b56d]/40 bg-[#d7b56d]/10 text-[#e9d8a6]">
+          <Settings2 className="size-5" />
+        </div>
+        <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-[#d7b56d]">Solar Eclipse · Administração</p>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight">Não foi possível carregar esta área.</h1>
+        <p className="mt-3 text-sm leading-6 text-white/70">
+          Ocorreu um erro ao abrir o painel. Tente novamente ou volte à autenticação para verificar o acesso.
+        </p>
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <button
+            type="button"
+            onClick={reset}
+            className="rounded-full border border-[#d7b56d] bg-[#e9d8a6] px-5 py-3 text-sm font-semibold text-[#171717] transition hover:bg-[#f3e6c2]"
+          >
+            Tentar novamente
+          </button>
+          <a
+            href="/auth"
+            className="rounded-full border border-white/25 bg-transparent px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+          >
+            Voltar ao acesso
+          </a>
+        </div>
+      </section>
+    </main>
   );
 }
