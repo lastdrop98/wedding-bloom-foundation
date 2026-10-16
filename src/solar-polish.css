@@ -4316,3 +4316,86 @@ main.template-visual-magazine .limintso-cover-media {
   outline: 3px solid #b08a2e !important;
   outline-offset: 3px !important;
 }
+
+
+/* 2026-10 visual repair: keep the event template chooser full-width and its artwork layered. */
+.solar-admin-shell .admin-workspace .template-picker {
+  width: 100%;
+  min-width: 0;
+}
+.solar-admin-shell .admin-workspace .template-picker > div:nth-child(2) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 1rem;
+}
+@media (min-width: 1280px) {
+  .solar-admin-shell .admin-workspace .template-picker > div:nth-child(2) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.solar-admin-shell .admin-workspace .template-picker > div:nth-child(2) > button {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+}
+.solar-admin-shell .admin-workspace .template-picker > div:nth-child(2) > button > div:first-child {
+  position: relative;
+  isolation: isolate;
+  min-height: 9rem;
+  background-color: #25211c;
+}
+.solar-admin-shell .admin-workspace .template-picker > div:nth-child(2) > button > div:first-child > img:first-child {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+}
+.solar-admin-shell .admin-workspace .template-picker > div:nth-child(2) > button > div:first-child > .absolute.inset-0.bg-black\/35 {
+  z-index: 1;
+  background: rgba(0,0,0,.32) !important;
+}
+/* Never let the global light-theme button reset flatten invitation thumbnail artwork. */
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker > div:nth-child(2) > button > div:first-child {
+  background-color: #25211c !important;
+  color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace .template-picker > div:nth-child(2) > button > div:first-child [class*="text-white"] {
+  color: #fff !important;
+}
+/* Landing header: target the actual WhatsApp destination, not a guessed URL fragment. */
+.solar-landing header nav > a.solar-header-contact,
+.solar-landing header nav > a[href^="https://wa.me/"],
+.solar-landing header nav > a[href*="api.whatsapp.com"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: .5rem !important;
+  min-width: 150px !important;
+  min-height: 42px !important;
+  padding-inline: 1rem !important;
+  overflow: visible !important;
+  background: #171717 !important;
+  color: #fff !important;
+  border: 1.5px solid #171717 !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  text-indent: 0 !important;
+  white-space: nowrap !important;
+  opacity: 1 !important;
+}
+.solar-landing header nav > a.solar-header-contact svg,
+.solar-landing header nav > a[href^="https://wa.me/"] svg,
+.solar-landing header nav > a[href*="api.whatsapp.com"] svg {
+  flex: 0 0 auto;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #fff !important;
+}
