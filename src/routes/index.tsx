@@ -79,7 +79,7 @@ function HomePage() {
             <a
               href={whatsappUrl("Olá! Gostaria de conhecer os convites Solar Eclipse.")}
               onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Gostaria de conhecer os convites Solar Eclipse."); }}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-4 py-2.5 font-medium !text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.08),0_4px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-900"
+              className="solar-header-contact inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border-2 border-black bg-black px-4 py-2.5 text-xs font-semibold !text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.08),0_4px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-px hover:bg-neutral-900"
             >
               Falar connosco <MessageCircle className="size-3.5" />
             </a>
