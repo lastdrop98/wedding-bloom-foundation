@@ -4399,3 +4399,84 @@ main.template-visual-magazine .limintso-cover-media {
   opacity: 1 !important;
   color: #fff !important;
 }
+
+
+/* 2026-10-16 follow-up: fix the actual admin canvas and hero CTA, not template artwork. */
+.solar-admin-shell.admin-theme-dark {
+  background: #101010 !important;
+  color: #f5f3ee !important;
+}
+.solar-admin-shell.admin-theme-dark > .flex,
+.solar-admin-shell.admin-theme-dark .admin-workspace {
+  background-color: #101010 !important;
+  color: #f5f3ee !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(section, article, [role="dialog"], [data-radix-dialog-content]) {
+  color: #f5f3ee;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="bg-white"],
+.solar-admin-shell.admin-theme-dark aside,
+.solar-admin-shell.admin-theme-dark header {
+  background-color: #171717 !important;
+  background-image: none !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="bg-white/"],
+.solar-admin-shell.admin-theme-dark .admin-workspace [class*="bg-white\\/"] {
+  background-color: #202020 !important;
+}
+.solar-admin-shell.admin-theme-dark .admin-workspace :is(button, a)[class*="bg-white"] {
+  color: #f5f3ee !important;
+  border-color: #57534e !important;
+}
+.solar-admin-shell.admin-theme-light {
+  background: #f3f2ef !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light > .flex,
+.solar-admin-shell.admin-theme-light .admin-workspace {
+  background-color: #f3f2ef !important;
+  color: #1d1d1f !important;
+}
+.solar-admin-shell.admin-theme-light aside,
+.solar-admin-shell.admin-theme-light header {
+  background-color: #fff !important;
+  background-image: none !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-white/"],
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-white\\/"] {
+  background-color: #fff !important;
+  background-image: none !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input, textarea, select, [role="combobox"]) {
+  background-color: #fff !important;
+  color: #1d1d1f !important;
+  border-color: #77716a !important;
+}
+.solar-landing .solar-hero-create-cta,
+.solar-landing .solar-hero-create-cta:link,
+.solar-landing .solar-hero-create-cta:visited {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: .5rem !important;
+  min-height: 52px !important;
+  background: #fff8e8 !important;
+  color: #171717 !important;
+  border: 2px solid #8a6821 !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  box-shadow: 0 5px 16px rgba(0,0,0,.14) !important;
+}
+.solar-landing .solar-hero-create-cta svg {
+  color: #171717 !important;
+  opacity: 1 !important;
+  flex: 0 0 auto !important;
+}
+.solar-landing .solar-hero-create-cta:hover,
+.solar-landing .solar-hero-create-cta:focus-visible {
+  background: #f3dfad !important;
+  color: #111 !important;
+  border-color: #171717 !important;
+}

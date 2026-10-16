@@ -134,7 +134,7 @@ function HomePage() {
               <a
                 href={whatsappUrl("Olá! Quero criar o meu convite de casamento com a Solar Eclipse.")}
                 onClick={(event) => { event.preventDefault(); openWhatsApp("Olá! Quero criar o meu convite de casamento com a Solar Eclipse."); }}
-                className="inline-flex items-center gap-2 rounded-full border-2 border-[#9b7b2f] bg-[#fffdf7] px-8 py-4 !text-[#171717] transition hover:-translate-y-px hover:bg-[#f5e9c9]"
+                className="solar-hero-create-cta inline-flex items-center gap-2 rounded-full border-2 border-[#9b7b2f] bg-[#fffdf7] px-8 py-4 !text-[#171717] transition hover:-translate-y-px hover:bg-[#f5e9c9]"
               >
                 Criar meu convite <MessageCircle className="size-4" />
               </a>
