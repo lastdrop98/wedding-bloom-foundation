@@ -513,7 +513,10 @@ function ModelsPage() {
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
+    // Keep legacy template IDs available to existing invitations, but remove redundant public cards.
+    const redundantPublicModels = new Set(["premium-emerald", "diamond-signature", "limintso-premium"]);
     return TEMPLATE_OPTIONS.filter((template) => {
+      if (redundantPublicModels.has(template.value)) return false;
       const matchesCategory = matchesFilter(template.family, filter);
       const matchesSearch =
         !q ||
