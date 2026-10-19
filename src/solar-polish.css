@@ -4695,3 +4695,75 @@ main.min-h-screen.bg-muted\/40.pb-16 :is(a, button):focus-visible {
   outline: 3px solid #9a7626 !important;
   outline-offset: 3px !important;
 }
+
+
+/* 2026-10-19 — final light-mode repair: make interface surfaces opaque.
+   Keep invitation artwork and the image-based template picker untouched. */
+.solar-admin-shell.admin-theme-light .admin-workspace
+  :is([class*="bg-white/"], [class*="bg-background/"], [class*="backdrop-blur"]) {
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-white/"] {
+  background-color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace [class*="bg-background/"] {
+  background-color: #fff !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input, textarea, select) {
+  background-color: #fff !important;
+  background-image: none !important;
+  color: #1d1b18 !important;
+  -webkit-text-fill-color: #1d1b18 !important;
+  border-color: #81796d !important;
+  opacity: 1 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(input, textarea, select)::placeholder {
+  color: #6b655c !important;
+  -webkit-text-fill-color: #6b655c !important;
+  opacity: 1 !important;
+}
+.solar-admin-shell.admin-theme-light .admin-workspace :is(button, a):focus-visible {
+  outline: 3px solid #9a7626 !important;
+  outline-offset: 3px !important;
+}
+
+/* The public model preview uses these translucent white bands as interface chrome,
+   not invitation artwork. Make the bands fully opaque and readable in light mode. */
+.solar-template-page > header,
+.solar-template-page > section.bg-white\/80 {
+  background-color: #faf8f3 !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+.solar-template-page #pedido > div,
+.solar-template-page #pedido form,
+.solar-template-page #pedido form > div {
+  opacity: 1 !important;
+}
+.solar-template-page #pedido label,
+.solar-template-page #pedido p,
+.solar-template-page #pedido h2 {
+  color: #29251f !important;
+}
+.solar-template-page #pedido :is(input, textarea, select) {
+  background: #fff !important;
+  color: #1d1b18 !important;
+  -webkit-text-fill-color: #1d1b18 !important;
+  border: 1px solid #81796d !important;
+  opacity: 1 !important;
+}
+.solar-template-page #pedido button {
+  background: #171717 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  opacity: 1 !important;
+}
+.solar-models-page header {
+  background: #faf8f3 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
