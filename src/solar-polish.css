@@ -4580,3 +4580,118 @@ main.template-visual-magazine .limintso-cover-media {
   outline: 3px solid #b08a2e !important;
   outline-offset: 3px !important;
 }
+
+
+/* 2026-10-19 — targeted contrast repair for model previews, request forms and public RSVP.
+   Keep decorative invitation artwork intact; only interface chrome and form controls are hardened. */
+.solar-template-page > header {
+  background: #faf8f3 !important;
+  background-color: #faf8f3 !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border-bottom-color: #d2cbbf !important;
+}
+.solar-template-page > header :is(a, button) {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+}
+.solar-template-page > header a[href="#pedido"],
+.solar-template-page .solar-template-hero a[href="#pedido"],
+.solar-template-page #pedido button,
+.solar-template-page > section:last-of-type a {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+}
+.solar-template-page > header a[href="#pedido"],
+.solar-template-page .solar-template-hero a[href="#pedido"],
+.solar-template-page #pedido button {
+  background: #171717 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border: 1px solid #171717 !important;
+}
+.solar-template-page #pedido input,
+.solar-template-page #pedido textarea,
+.solar-template-page #pedido select {
+  background: #fff !important;
+  background-image: none !important;
+  color: #1d1b18 !important;
+  -webkit-text-fill-color: #1d1b18 !important;
+  border: 1px solid #81796d !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+.solar-template-page #pedido input::placeholder,
+.solar-template-page #pedido textarea::placeholder {
+  color: #6b655c !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #6b655c !important;
+}
+.solar-template-page #pedido label {
+  color: #4b463e !important;
+}
+.solar-template-page #pedido :is(input, textarea, select):focus-visible,
+.solar-template-page :is(a, button):focus-visible {
+  outline: 3px solid #9a7626 !important;
+  outline-offset: 3px !important;
+}
+.solar-template-page #pedido button:disabled {
+  background: #45413b !important;
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
+/* The RSVP dashboard is a UI page, not invitation artwork: remove translucent
+   header/card surfaces that can wash out text and keep controls fully legible. */
+main.min-h-screen.bg-muted\/40.pb-16 > header {
+  background: #faf8f3 !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+main.min-h-screen.bg-muted\/40.pb-16 :is(input, textarea, select, button, a) {
+  opacity: 1;
+  text-shadow: none;
+}
+main.min-h-screen.bg-muted\/40.pb-16 :is(input, textarea, select) {
+  background: #fff !important;
+  color: #1d1b18 !important;
+  border-color: #8b8377 !important;
+}
+main.min-h-screen.bg-muted\/40.pb-16 :is(a, button):focus-visible {
+  outline: 3px solid #9a7626 !important;
+  outline-offset: 3px !important;
+}
+
+/* Authentication: solid, readable form surfaces regardless of inherited theme rules. */
+.solar-auth-page :is(input, textarea, select) {
+  background: #fff !important;
+  background-image: none !important;
+  color: #171717 !important;
+  -webkit-text-fill-color: #171717 !important;
+  border-color: #81796d !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+.solar-auth-page :is(input, textarea, select)::placeholder {
+  color: #625d55 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #625d55 !important;
+}
+.solar-auth-page button[type="submit"] {
+  background: #171717 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+.solar-auth-page :is(a, button, input):focus-visible {
+  outline: 3px solid #9a7626 !important;
+  outline-offset: 3px !important;
+}
